@@ -361,6 +361,11 @@ namespace opennlp.tools.util
 	    {
 	        throw new NotImplementedException();
 	    }
+
+	    public static string[] spansToStrings(Span[] tokenizePos, string tokens)
+	    {
+	        throw new NotImplementedException();
+	    }
 	}
 
 }
