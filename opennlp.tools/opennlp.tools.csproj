@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1B99D396-BA39-4390-A8F0-FEA274470368}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>opennlp.tools</RootNamespace>
+    <AssemblyName>opennlp.tools</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\dictionary\Dictionary.cs" />
+    <Compile Include="src\dictionary\serializer\Attributes.cs" />
+    <Compile Include="src\dictionary\serializer\DictionarySerializer.cs" />
+    <Compile Include="src\dictionary\serializer\Entry.cs" />
+    <Compile Include="src\dictionary\serializer\EntryInserter.cs" />
+    <Compile Include="src\sentdetect\AbstractEndOfSentenceScanner.cs" />
+    <Compile Include="src\sentdetect\DefaultEndOfSentenceScanner.cs" />
+    <Compile Include="src\sentdetect\DefaultSDContextGenerator.cs" />
+    <Compile Include="src\sentdetect\EmptyLinePreprocessorStream.cs" />
+    <Compile Include="src\sentdetect\EndOfSentenceScanner.cs" />
+    <Compile Include="src\sentdetect\lang\Factory.cs" />
+    <Compile Include="src\sentdetect\lang\th\SentenceContextGenerator.cs" />
+    <Compile Include="src\sentdetect\package-info.cs" />
+    <Compile Include="src\sentdetect\SDContextGenerator.cs" />
+    <Compile Include="src\sentdetect\SDCrossValidator.cs" />
+    <Compile Include="src\sentdetect\SDEventStream.cs" />
+    <Compile Include="src\sentdetect\SentenceDetector.cs" />
+    <Compile Include="src\sentdetect\SentenceDetectorEvaluationMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\sentdetect\SentenceDetectorEvaluator.cs" />
+    <Compile Include="src\sentdetect\SentenceDetectorFactory.cs" />
+    <Compile Include="src\sentdetect\SentenceDetectorME.cs" />
+    <Compile Include="src\sentdetect\SentenceModel.cs" />
+    <Compile Include="src\sentdetect\SentenceSample.cs" />
+    <Compile Include="src\sentdetect\SentenceSampleStream.cs" />
+    <Compile Include="src\tokenize\AbstractTokenizer.cs" />
+    <Compile Include="src\tokenize\DefaultTokenContextGenerator.cs" />
+    <Compile Include="src\tokenize\DetokenizationDictionary.cs" />
+    <Compile Include="src\tokenize\Detokenizer.cs" />
+    <Compile Include="src\tokenize\DictionaryDetokenizer.cs" />
+    <Compile Include="src\tokenize\lang\en\TokenSampleStream.cs" />
+    <Compile Include="src\tokenize\lang\Factory.cs" />
+    <Compile Include="src\tokenize\package-info.cs" />
+    <Compile Include="src\tokenize\SimpleTokenizer.cs" />
+    <Compile Include="src\tokenize\TokenContextGenerator.cs" />
+    <Compile Include="src\tokenize\Tokenizer.cs" />
+    <Compile Include="src\tokenize\TokenizerCrossValidator.cs" />
+    <Compile Include="src\tokenize\TokenizerEvaluationMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\tokenize\TokenizerEvaluator.cs" />
+    <Compile Include="src\tokenize\TokenizerFactory.cs" />
+    <Compile Include="src\tokenize\TokenizerME.cs" />
+    <Compile Include="src\tokenize\TokenizerModel.cs" />
+    <Compile Include="src\tokenize\TokenizerStream.cs" />
+    <Compile Include="src\tokenize\TokenSample.cs" />
+    <Compile Include="src\tokenize\TokenSampleStream.cs" />
+    <Compile Include="src\tokenize\TokSpanEventStream.cs" />
+    <Compile Include="src\tokenize\WhitespaceTokenizer.cs" />
+    <Compile Include="src\tokenize\WhitespaceTokenStream.cs" />
+    <Compile Include="src\util\AbstractEventStream.cs" />
+    <Compile Include="src\util\BaseToolFactory.cs" />
+    <Compile Include="src\util\eval\EvaluationMonitor.cs" />
+    <Compile Include="src\util\eval\Evaluator.cs" />
+    <Compile Include="src\util\eval\FMeasure.cs" />
+    <Compile Include="src\util\ext\ExtensionLoader.cs" />
+    <Compile Include="src\util\FilterObjectStream.cs" />
+    <Compile Include="src\util\InvalidFormatException.cs" />
+    <Compile Include="src\util\model\BaseModel.cs" />
+    <Compile Include="src\util\model\ModelUtil.cs" />
+    <Compile Include="src\util\Span.cs" />
+    <Compile Include="src\util\StringList.cs" />
+    <Compile Include="src\util\StringUtil.cs" />
+    <Compile Include="src\util\TrainingParameters.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\j4n\j4n.csproj">
+      <Project>{66194037-42ff-4de7-b998-ba387370a440}</Project>
+      <Name>j4n</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\opennlp.maxent\opennlp.maxent.csproj">
+      <Project>{162209cb-1acc-4539-8ce7-055fb3d8469c}</Project>
+      <Name>opennlp.maxent</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

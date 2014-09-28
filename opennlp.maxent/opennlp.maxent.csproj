@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{162209CB-1ACC-4539-8CE7-055FB3D8469C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>opennlp.maxent</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>opennlp</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nonjava\helperclasses\Arrays.cs" />
+    <Compile Include="nonjava\helperclasses\DateTimeHelperClass.cs" />
+    <Compile Include="nonjava\extensions\EnumeratorExtensions.cs" />
+    <Compile Include="nonjava\extensions\IListComparableEventExtensions.cs" />
+    <Compile Include="nonjava\helperclasses\RectangularArrays.cs" />
+    <Compile Include="src\maxent\BasicContextGenerator.cs" />
+    <Compile Include="src\maxent\BasicEventStream.cs" />
+    <Compile Include="src\maxent\BinToAscii.cs" />
+    <Compile Include="src\maxent\ContextGenerator.cs" />
+    <Compile Include="src\maxent\Counter.cs" />
+    <Compile Include="src\maxent\DataStream.cs" />
+    <Compile Include="src\maxent\DomainToModelMap.cs" />
+    <Compile Include="src\maxent\DoubleStringPair.cs" />
+    <Compile Include="src\maxent\Evalable.cs" />
+    <Compile Include="src\maxent\GIS.cs" />
+    <Compile Include="src\maxent\GISModel.cs" />
+    <Compile Include="src\maxent\GISTrainer.cs" />
+    <Compile Include="src\maxent\IntegerPool.cs" />
+    <Compile Include="src\maxent\io\BinaryGISModelReader.cs" />
+    <Compile Include="src\maxent\io\BinaryGISModelWriter.cs" />
+    <Compile Include="src\maxent\io\BinaryQNModelReader.cs" />
+    <Compile Include="src\maxent\io\BinaryQNModelWriter.cs" />
+    <Compile Include="src\maxent\io\BinToAscii.cs" />
+    <Compile Include="src\maxent\io\GISModelReader.cs" />
+    <Compile Include="src\maxent\io\GISModelWriter.cs" />
+    <Compile Include="src\maxent\io\ObjectGISModelReader.cs" />
+    <Compile Include="src\maxent\io\ObjectGISModelWriter.cs" />
+    <Compile Include="src\maxent\io\ObjectQNModelReader.cs" />
+    <Compile Include="src\maxent\io\ObjectQNModelWriter.cs" />
+    <Compile Include="src\maxent\io\OldFormatGISModelReader.cs" />
+    <Compile Include="src\maxent\io\PlainTextGISModelReader.cs" />
+    <Compile Include="src\maxent\io\PlainTextGISModelWriter.cs" />
+    <Compile Include="src\maxent\io\PooledGISModelReader.cs" />
+    <Compile Include="src\maxent\io\QNModelReader.cs" />
+    <Compile Include="src\maxent\io\QNModelWriter.cs" />
+    <Compile Include="src\maxent\io\SuffixSensitiveGISModelReader.cs" />
+    <Compile Include="src\maxent\io\SuffixSensitiveGISModelWriter.cs" />
+    <Compile Include="src\maxent\ModelApplier.cs" />
+    <Compile Include="src\maxent\ModelDomain.cs" />
+    <Compile Include="src\maxent\ModelReplacementManager.cs" />
+    <Compile Include="src\maxent\ModelSetter.cs" />
+    <Compile Include="src\maxent\ModelTrainer.cs" />
+    <Compile Include="src\maxent\PlainTextByLineDataStream.cs" />
+    <Compile Include="src\maxent\quasinewton\ArrayMath.cs" />
+    <Compile Include="src\maxent\quasinewton\DifferentiableFunction.cs" />
+    <Compile Include="src\maxent\quasinewton\Function.cs" />
+    <Compile Include="src\maxent\quasinewton\LineSearch.cs" />
+    <Compile Include="src\maxent\quasinewton\LineSearchResult.cs" />
+    <Compile Include="src\maxent\quasinewton\LogLikelihoodFunction.cs" />
+    <Compile Include="src\maxent\quasinewton\QNModel.cs" />
+    <Compile Include="src\maxent\quasinewton\QNTrainer.cs" />
+    <Compile Include="src\maxent\RealBasicEventStream.cs" />
+    <Compile Include="src\maxent\TrainEval.cs" />
+    <Compile Include="src\model\AbstractDataIndexer.cs" />
+    <Compile Include="src\model\AbstractEventStream.cs" />
+    <Compile Include="src\model\AbstractModel.cs" />
+    <Compile Include="src\model\AbstractModelReader.cs" />
+    <Compile Include="src\model\AbstractModelWriter.cs" />
+    <Compile Include="src\model\BinaryFileDataReader.cs" />
+    <Compile Include="src\model\ComparableEvent.cs" />
+    <Compile Include="src\model\ComparablePredicate.cs" />
+    <Compile Include="src\model\Context.cs" />
+    <Compile Include="src\model\DataIndexer.cs" />
+    <Compile Include="src\model\DataReader.cs" />
+    <Compile Include="src\model\EvalParameters.cs" />
+    <Compile Include="src\model\Event.cs" />
+    <Compile Include="src\model\EventCollector.cs" />
+    <Compile Include="src\model\EventCollectorAsStream.cs" />
+    <Compile Include="src\model\EventStream.cs" />
+    <Compile Include="src\model\FileEventStream.cs" />
+    <Compile Include="src\model\GenericModelReader.cs" />
+    <Compile Include="src\model\GenericModelWriter.cs" />
+    <Compile Include="src\model\HashSumEventStream.cs" />
+    <Compile Include="src\model\IndexHashTable.cs" />
+    <Compile Include="src\model\ListEventStream.cs" />
+    <Compile Include="src\model\MaxentModel.cs" />
+    <Compile Include="src\model\MutableContext.cs" />
+    <Compile Include="src\model\ObjectDataReader.cs" />
+    <Compile Include="src\model\OnePassDataIndexer.cs" />
+    <Compile Include="src\model\OnePassRealValueDataIndexer.cs" />
+    <Compile Include="src\model\PlainTextFileDataReader.cs" />
+    <Compile Include="src\model\Prior.cs" />
+    <Compile Include="src\model\RealValueFileEventStream.cs" />
+    <Compile Include="src\model\Sequence.cs" />
+    <Compile Include="src\model\SequenceStream.cs" />
+    <Compile Include="src\model\SequenceStreamEventStream.cs" />
+    <Compile Include="src\model\TrainUtil.cs" />
+    <Compile Include="src\model\TwoPassDataIndexer.cs" />
+    <Compile Include="src\model\UniformPrior.cs" />
+    <Compile Include="src\perceptron\BinaryPerceptronModelReader.cs" />
+    <Compile Include="src\perceptron\BinaryPerceptronModelWriter.cs" />
+    <Compile Include="src\perceptron\PerceptronModel.cs" />
+    <Compile Include="src\perceptron\PerceptronModelReader.cs" />
+    <Compile Include="src\perceptron\PerceptronModelWriter.cs" />
+    <Compile Include="src\perceptron\PerceptronTrainer.cs" />
+    <Compile Include="src\perceptron\PlainTextPerceptronModelReader.cs" />
+    <Compile Include="src\perceptron\PlainTextPerceptronModelWriter.cs" />
+    <Compile Include="src\perceptron\SimplePerceptronSequenceTrainer.cs" />
+    <Compile Include="src\perceptron\SuffixSensitivePerceptronModelWriter.cs" />
+    <Compile Include="nonjava\helperclasses\StringHelperClass.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\j4n\j4n.csproj">
+      <Project>{66194037-42ff-4de7-b998-ba387370a440}</Project>
+      <Name>j4n</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
