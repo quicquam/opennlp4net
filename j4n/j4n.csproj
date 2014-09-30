@@ -89,6 +89,7 @@
     <Compile Include="IO\Writer\Writer.cs" />
     <Compile Include="Javax\TransformerHandler.cs" />
     <Compile Include="Lang\CharSequence.cs" />
+    <Compile Include="Lang\Matcher.cs" />
     <Compile Include="Lang\Pattern.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Object\StringTokenizer.cs" />

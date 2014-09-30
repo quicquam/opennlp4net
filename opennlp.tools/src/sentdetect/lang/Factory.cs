@@ -74,7 +74,7 @@ namespace opennlp.tools.sentdetect.lang
 
 	  public virtual SDContextGenerator createSentenceContextGenerator(string languageCode)
 	  {
-		return createSentenceContextGenerator(languageCode, System.Linq.Enumerable.Empty<string>());
+		return createSentenceContextGenerator(languageCode, new HashSet<string>());
 	  }
 
 	  public virtual char[] getEOSCharacters(string languageCode)

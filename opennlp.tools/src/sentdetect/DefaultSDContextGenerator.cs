@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -51,7 +52,7 @@ namespace opennlp.tools.sentdetect
 	  /// no induced abbreviations.
 	  /// </summary>
 	  /// <param name="eosCharacters"> </param>
-	  public DefaultSDContextGenerator(char[] eosCharacters) : this(System.Linq.Enumerable.Empty<string>(), eosCharacters)
+	  public DefaultSDContextGenerator(char[] eosCharacters) : this(new HashSet<string>(), eosCharacters)
 	  {
 	  }
 
@@ -126,10 +127,10 @@ namespace opennlp.tools.sentdetect
 			  }
 			}
 		  }
-		  prefix = (new StringBuilder(sb.subSequence(prefixStart, position))).ToString().Trim();
+		  prefix = (new StringBuilder(sb.subSequence(prefixStart, position).ToString())).ToString().Trim();
 		}
 		int prevStart = previousSpaceIndex(sb, prefixStart);
-		previous = (new StringBuilder(sb.subSequence(prevStart, prefixStart))).ToString().Trim();
+		previous = (new StringBuilder(sb.subSequence(prevStart, prefixStart).ToString())).ToString().Trim();
 
 		int suffixEnd = nextSpaceIndex(sb, position, lastIndex);
 		{
@@ -155,16 +156,13 @@ namespace opennlp.tools.sentdetect
 		}
 		else
 		{
-		  suffix = (new StringBuilder(sb.subSequence(position + 1, suffixEnd))).ToString().Trim();
-		  next = (new StringBuilder(sb.subSequence(suffixEnd + 1, nextEnd))).ToString().Trim();
+		  suffix = (new StringBuilder(sb.subSequence(position + 1, suffixEnd).ToString())).ToString().Trim();
+		  next = (new StringBuilder(sb.subSequence(suffixEnd + 1, nextEnd).ToString())).ToString().Trim();
 		}
 
 		collectFeatures(prefix,suffix,previous,next, sb.charAt(position));
 
-		string[] context = new string[collectFeats.Count];
-		context = collectFeats.toArray(context);
-		collectFeats.Clear();
-		return context;
+       return collectFeats.ToArray();
 	  }
 
 	  /// <summary>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -56,7 +58,7 @@ namespace opennlp.tools.tokenize.lang.en
 
 	  public virtual TokenSample next()
 	  {
-		string[] tokens = line.Split("\\s+", true);
+		string[] tokens = line.Split(null);
 		if (tokens.Length == 0)
 		{
 		  evenq = true;
@@ -176,7 +178,7 @@ namespace opennlp.tools.tokenize.lang.en
 		  }
 		  ai++;
 		}
-		TokenSampleStream tss = new TokenSampleStream(Console.OpenStandardInput);
+		TokenSampleStream tss = new TokenSampleStream((InputStream) Console.OpenStandardInput());
 		while (tss.hasNext())
 		{
 		  TokenSample ts = tss.next();

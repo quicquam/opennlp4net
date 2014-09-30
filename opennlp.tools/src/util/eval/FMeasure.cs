@@ -6,5 +6,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public void mergeInto(FMeasure fMeasure)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

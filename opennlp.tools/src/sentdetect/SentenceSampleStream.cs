@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -44,7 +45,7 @@ namespace opennlp.tools.sentdetect
 	  {
 
 		StringBuilder sentencesString = new StringBuilder();
-		IList<Span> sentenceSpans = new LinkedList<Span>();
+		LinkedList<Span> sentenceSpans = new LinkedList<Span>();
 
 		string sentence;
 		while ((sentence = samples.read()) != null && !sentence.Equals(""))
@@ -53,7 +54,7 @@ namespace opennlp.tools.sentdetect
 		  int begin = sentencesString.Length;
 		  sentencesString.Append(sentence.Trim());
 		  int end = sentencesString.Length;
-		  sentenceSpans.Add(new Span(begin, end));
+		  sentenceSpans.AddLast(new Span(begin, end));
 		  sentencesString.Append(' ');
 		}
 

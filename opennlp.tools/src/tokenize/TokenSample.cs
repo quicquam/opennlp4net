@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,6 +18,7 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using opennlp.nonjava.helperclasses;
 
 
 namespace opennlp.tools.tokenize
@@ -59,7 +60,7 @@ namespace opennlp.tools.tokenize
 		}
 
 		this.text = text;
-		this.tokenSpans = Collections.unmodifiableList(new List<Span>(Arrays.asList(tokenSpans)));
+		this.tokenSpans = new List<Span>(tokenSpans.ToList());
 
 		foreach (Span tokenSpan in tokenSpans)
 		{
@@ -95,7 +96,7 @@ namespace opennlp.tools.tokenize
 		}
 
 		text = sentence.ToString();
-		tokenSpans = Collections.unmodifiableList(mergedTokenSpans);
+		tokenSpans = mergedTokenSpans;
 	  }
 
 	  private bool isMergeToRight(Detokenizer_DetokenizationOperation operation)

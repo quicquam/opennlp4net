@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,9 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Linq;
+using j4n.IO.Reader;
 
 
 namespace opennlp.tools.tokenize
@@ -115,7 +117,7 @@ namespace opennlp.tools.tokenize
 		  Environment.Exit(1);
 		}
 		opennlp.tools.tokenize.Tokenizer tokenizer = new SimpleTokenizer();
-		java.io.BufferedReader inReader = new java.io.BufferedReader(new java.io.InputStreamReader(Console.OpenStandardInput));
+		BufferedReader inReader = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
 		for (string line = inReader.readLine(); line != null; line = inReader.readLine())
 		{
 		  if (line.Equals(""))

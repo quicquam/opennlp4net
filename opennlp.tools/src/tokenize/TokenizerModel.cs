@@ -17,8 +17,10 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using System.IO;
+using j4n.Interfaces;
 using j4n.IO.File;
 using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
 
 
 namespace opennlp.tools.tokenize
@@ -52,7 +54,8 @@ namespace opennlp.tools.tokenize
 	  /// <param name="tokenizerModel"> the model </param>
 	  /// <param name="manifestInfoEntries"> the manifest </param>
 	  /// <param name="tokenizerFactory"> the factory </param>
-	  public TokenizerModel(AbstractModel tokenizerModel, IDictionary<string, string> manifestInfoEntries, TokenizerFactory tokenizerFactory) : base(COMPONENT_NAME, tokenizerFactory.LanguageCode, manifestInfoEntries, tokenizerFactory)
+	  public TokenizerModel(AbstractModel tokenizerModel, IDictionary<string, string> manifestInfoEntries, TokenizerFactory tokenizerFactory) 
+          : base(COMPONENT_NAME, tokenizerFactory.LanguageCode, manifestInfoEntries, tokenizerFactory)
 	  {
 		artifactMap[TOKENIZER_MODEL_ENTRY] = tokenizerModel;
 		checkArtifactMap();
@@ -160,7 +163,9 @@ namespace opennlp.tools.tokenize
 		  }
 	  }
 
-	  protected internal override Type DefaultFactory
+	    public TokenizerFactory toolFactory { get; set; }
+
+	    protected internal override Type DefaultFactory
 	  {
 		  get
 		  {
@@ -239,6 +244,11 @@ namespace opennlp.tools.tokenize
 		  }
 		}
 	  }
+
+	    private void serialize(OutputStream @out)
+	    {
+	        throw new NotImplementedException();
+	    }
 	}
 
 }

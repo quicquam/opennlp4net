@@ -45,7 +45,8 @@ namespace opennlp.tools.sentdetect
 	  /// </summary>
 	  /// <param name="sentenceDetector"> </param>
 	  /// <param name="listeners"> evaluation sample listeners </param>
-	  public SentenceDetectorEvaluator(SentenceDetector sentenceDetector, params SentenceDetectorEvaluationMonitor[] listeners) : base(listeners)
+	  public SentenceDetectorEvaluator(SentenceDetector sentenceDetector, params SentenceDetectorEvaluationMonitor[] listeners)
+          : base(listeners)
 	  {
 		this.sentenceDetector = sentenceDetector;
 	  }
@@ -67,6 +68,11 @@ namespace opennlp.tools.sentdetect
 			return fmeasure;
 		  }
 	  }
+
+	    public void evaluate(object testSampleStream)
+	    {
+	        throw new System.NotImplementedException();
+	    }
 	}
 
 }

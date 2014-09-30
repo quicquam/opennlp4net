@@ -68,6 +68,11 @@ namespace opennlp.tools.tokenize
 			return fmeasure;
 		  }
 	  }
+
+	    public void evaluate(object testSampleStream)
+	    {
+	        throw new System.NotImplementedException();
+	    }
 	}
 
 }

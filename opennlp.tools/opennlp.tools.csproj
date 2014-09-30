@@ -45,6 +45,7 @@
     <Compile Include="src\dictionary\serializer\DictionarySerializer.cs" />
     <Compile Include="src\dictionary\serializer\Entry.cs" />
     <Compile Include="src\dictionary\serializer\EntryInserter.cs" />
+    <Compile Include="src\nonjava\StringHelperClass.cs" />
     <Compile Include="src\sentdetect\AbstractEndOfSentenceScanner.cs" />
     <Compile Include="src\sentdetect\DefaultEndOfSentenceScanner.cs" />
     <Compile Include="src\sentdetect\DefaultSDContextGenerator.cs" />

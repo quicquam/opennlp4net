@@ -55,7 +55,7 @@ namespace opennlp.tools.sentdetect
 		  for (IEnumerator<int?> it = scanner.getPositions(sentenceString).GetEnumerator(); it.MoveNext();)
 		  {
 
-			int candidate = it.Current;
+			int candidate = it.Current.GetValueOrDefault();
 			string type = SentenceDetectorME.NO_SPLIT;
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
 			if (!it.hasNext())

@@ -45,7 +45,8 @@ namespace opennlp.tools.sentdetect
 
 	  private const string MAXENT_MODEL_ENTRY_NAME = "sent.model";
 
-	  public SentenceModel(string languageCode, AbstractModel sentModel, IDictionary<string, string> manifestInfoEntries, SentenceDetectorFactory sdFactory) : base(COMPONENT_NAME, languageCode, manifestInfoEntries, sdFactory)
+	  public SentenceModel(string languageCode, AbstractModel sentModel, IDictionary<string, string> manifestInfoEntries, SentenceDetectorFactory sdFactory)
+          : base(COMPONENT_NAME, languageCode, manifestInfoEntries, sdFactory)
 	  {
 		artifactMap[MAXENT_MODEL_ENTRY_NAME] = sentModel;
 		checkArtifactMap();
@@ -169,6 +170,8 @@ namespace opennlp.tools.sentdetect
 			return null;
 		  }
 	  }
+
+	    public string Language { get; set; }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static void main(String[] args) throws java.io.FileNotFoundException, java.io.IOException, opennlp.tools.util.InvalidFormatException

@@ -18,6 +18,7 @@ using System.Collections.Generic;
  */
 using j4n.Lang;
 using j4n.Serialization;
+using opennlp.tools.nonjava;
 
 namespace opennlp.tools.tokenize
 {

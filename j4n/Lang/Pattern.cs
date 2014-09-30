@@ -13,7 +13,12 @@ namespace j4n.Lang
             throw new NotImplementedException();
         }
 
-        public void matcher(string line)
+        public Matcher matcher(string line)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string pattern()
         {
             throw new NotImplementedException();
         }

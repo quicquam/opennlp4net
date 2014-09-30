@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-
+﻿using System.Collections;
+using System.Collections.Generic;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 
 
 namespace opennlp.tools.tokenize
@@ -35,7 +36,7 @@ namespace opennlp.tools.tokenize
 	  /// <summary>
 	  /// Creates a default context generator for tokenizer.
 	  /// </summary>
-	  public DefaultTokenContextGenerator() : this(System.Linq.Enumerable.Empty<string>())
+	  public DefaultTokenContextGenerator() : this(new HashSet<string>())
 	  {
 	  }
 
@@ -54,9 +55,7 @@ namespace opennlp.tools.tokenize
 	  public virtual string[] getContext(string sentence, int index)
 	  {
 		IList<string> preds = createContext(sentence, index);
-		string[] context = new string[preds.Count];
-		preds.toArray(context);
-		return context;
+		return preds.ToArray();
 	  }
 
 	  /// <summary>

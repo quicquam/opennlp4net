@@ -17,5 +17,15 @@ namespace j4n.Lang
         {
             throw new NotImplementedException();
         }
+
+        public char charAt(int p0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
