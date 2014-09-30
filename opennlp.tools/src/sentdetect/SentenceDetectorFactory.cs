@@ -236,7 +236,7 @@ namespace opennlp.tools.sentdetect
 			}
 			else
 			{
-			  abbs = Collections.emptySet();
+			  abbs = new HashSet<string>();
 			}
 			if (eosChars != null && eosChars.Length > 0)
 			{

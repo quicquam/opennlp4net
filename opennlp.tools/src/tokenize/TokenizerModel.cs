@@ -193,7 +193,7 @@ namespace opennlp.tools.tokenize
 		  }
 	  }
 
-	  public bool useAlphaNumericOptimization()
+	    public bool useAlphaNumericOptimization()
 	  {
 		if (Factory != null)
 		{

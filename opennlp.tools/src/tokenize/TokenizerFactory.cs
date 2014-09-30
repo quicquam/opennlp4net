@@ -244,7 +244,7 @@ namespace opennlp.tools.tokenize
 			}
 			else
 			{
-			  abbs = Collections.emptySet();
+			  abbs = new HashSet<string>();
 			}
 			return f.createTokenContextGenerator(LanguageCode, abbs);
 		  }

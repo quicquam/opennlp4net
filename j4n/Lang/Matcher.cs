@@ -12,5 +12,10 @@ namespace j4n.Lang
         {
             throw new NotImplementedException();
         }
+
+        public bool matches()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

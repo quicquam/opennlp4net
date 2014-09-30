@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.Lang;
 using j4n.Serialization;
 using opennlp.tools.nonjava;
@@ -231,9 +232,7 @@ namespace opennlp.tools.tokenize
 		  }
 		}
 
-		Span[] spans = new Span[newTokens.Count];
-		newTokens.toArray(spans);
-		return spans;
+		return newTokens.ToArray();
 	  }
 
 	  /// <summary>
