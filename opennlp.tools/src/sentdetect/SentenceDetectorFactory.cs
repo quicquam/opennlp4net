@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,6 +17,7 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using opennlp.tools.util.ext;
 
 namespace opennlp.tools.sentdetect
 {
@@ -27,7 +27,6 @@ namespace opennlp.tools.sentdetect
 	using Factory = opennlp.tools.sentdetect.lang.Factory;
 	using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
 	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using ExtensionLoader = opennlp.tools.util.ext.ExtensionLoader;
 
 	/// <summary>
 	/// The factory that provides SentenceDetecor default implementations and
@@ -83,7 +82,7 @@ namespace opennlp.tools.sentdetect
 		  throw new InvalidFormatException(TOKEN_END_PROPERTY + " is a mandatory property!");
 		}
 
-		object abbreviationsEntry = this.artifactProvider.getArtifact(ABBREVIATIONS_ENTRY_NAME);
+		object abbreviationsEntry = this.artifactProvider.getArtifact<SentenceDetector>(ABBREVIATIONS_ENTRY_NAME);
 
 		if (abbreviationsEntry != null && !(abbreviationsEntry is Dictionary))
 		{
@@ -130,7 +129,7 @@ namespace opennlp.tools.sentdetect
 		}
 		try
 		{
-		  SentenceDetectorFactory theFactory = ExtensionLoader.instantiateExtension(typeof(SentenceDetectorFactory), subclassName);
+          SentenceDetectorFactory theFactory = ExtensionLoader<SentenceDetectorFactory>.instantiateExtension(subclassName);
 		  theFactory.init(languageCode, useTokenEnd, abbreviationDictionary, eosCharacters);
 		  return theFactory;
 		}
@@ -187,7 +186,7 @@ namespace opennlp.tools.sentdetect
 		  {
 			if (this.abbreviationDictionary == null && artifactProvider != null)
 			{
-			  this.abbreviationDictionary = artifactProvider.getArtifact(ABBREVIATIONS_ENTRY_NAME);
+			  this.abbreviationDictionary = artifactProvider.getArtifact<Dictionary>(ABBREVIATIONS_ENTRY_NAME);
 			}
 			return this.abbreviationDictionary;
 		  }

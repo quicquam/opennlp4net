@@ -8,5 +8,8 @@ namespace opennlp.tools.dictionary.serializer
         {
             throw new System.NotImplementedException();
         }
+
+        public Attributes Attributes { get; set; }
+        public StringList Tokens { get; set; }
     }
 }

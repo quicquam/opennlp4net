@@ -17,6 +17,7 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using j4n.Lang;
+using opennlp.tools.util.ext;
 
 namespace opennlp.tools.tokenize
 {
@@ -26,7 +27,6 @@ namespace opennlp.tools.tokenize
 	using Factory = opennlp.tools.tokenize.lang.Factory;
 	using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
 	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using ExtensionLoader = opennlp.tools.util.ext.ExtensionLoader;
 
 	/// <summary>
 	/// The factory that provides <seealso cref="Tokenizer"/> default implementations and
@@ -89,7 +89,7 @@ namespace opennlp.tools.tokenize
 		  throw new InvalidFormatException(USE_ALPHA_NUMERIC_OPTIMIZATION + " is a mandatory property!");
 		}
 
-		object abbreviationsEntry = this.artifactProvider.getArtifact(ABBREVIATIONS_ENTRY_NAME);
+		object abbreviationsEntry = this.artifactProvider.getArtifact<Tokenizer>(ABBREVIATIONS_ENTRY_NAME);
 
 		if (abbreviationsEntry != null && !(abbreviationsEntry is Dictionary))
 		{
@@ -139,7 +139,7 @@ namespace opennlp.tools.tokenize
 		}
 		try
 		{
-		  TokenizerFactory theFactory = ExtensionLoader.instantiateExtension(typeof(TokenizerFactory), subclassName);
+          TokenizerFactory theFactory = ExtensionLoader<TokenizerFactory>.instantiateExtension(subclassName);
 		  theFactory.init(languageCode, abbreviationDictionary, useAlphaNumericOptimization, alphaNumericPattern);
 		  return theFactory;
 		}
@@ -207,7 +207,7 @@ namespace opennlp.tools.tokenize
 		  {
 			if (this.abbreviationDictionary == null && artifactProvider != null)
 			{
-			  this.abbreviationDictionary = artifactProvider.getArtifact(ABBREVIATIONS_ENTRY_NAME);
+			  this.abbreviationDictionary = artifactProvider.getArtifact<Dictionary>(ABBREVIATIONS_ENTRY_NAME);
 			}
 			return this.abbreviationDictionary;
 		  }

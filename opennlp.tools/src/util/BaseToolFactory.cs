@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using opennlp.tools.util.model;
 
 namespace opennlp.tools.util
 {
     public abstract class BaseToolFactory
     {
+        protected internal ArtifactProvider artifactProvider;
+
         public virtual void validateArtifactMap()
         {
             throw new NotImplementedException();

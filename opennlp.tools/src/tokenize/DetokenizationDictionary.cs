@@ -253,13 +253,14 @@ namespace opennlp.tools.tokenize
 
 		  public virtual bool hasNext()
 		  {
-			return iterator.hasNext();
+			return iterator.MoveNext();
 		  }
 
 		  public virtual Entry next()
 		  {
 
-			string token = iterator.next();
+              iterator.MoveNext();
+		      string token = iterator.Current;
 
 			Attributes attributes = new Attributes();
 			attributes.setValue("operation", outerInstance.getOperation(token).ToString());

@@ -11,5 +11,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public int size()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

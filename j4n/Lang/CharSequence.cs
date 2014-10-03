@@ -8,6 +8,11 @@ namespace j4n.Lang
 {
     public class CharSequence
     {
+        public CharSequence(string document)
+        {
+            throw new NotImplementedException();
+        }
+
         public int length()
         {
             throw new NotImplementedException();

@@ -205,7 +205,7 @@ namespace opennlp.tools.sentdetect
 
 		AbstractModel model = (new GenericModelReader(new Jfile(modelName))).Model;
 		SentenceModel packageModel = new SentenceModel(languageCode, model, useTokenEnd, abbreviations, (char[]) null);
-	packageModel.serialize(new FileOutputStream(packageName));
+	    packageModel.serialize(new FileOutputStream(packageName));
 	  }
 	}
 

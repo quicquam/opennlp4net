@@ -6,5 +6,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public string getValue(string operation)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

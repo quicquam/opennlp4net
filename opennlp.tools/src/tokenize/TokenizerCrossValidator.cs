@@ -17,6 +17,7 @@
 
 using System.IO;
 using j4n.Serialization;
+using opennlp.tools.util;
 
 namespace opennlp.tools.tokenize
 {
@@ -91,7 +92,7 @@ namespace opennlp.tools.tokenize
 		 while (partitioner.hasNext())
 		 {
 
-		   CrossValidationPartitioner.TrainingSampleStream<TokenSample> trainingSampleStream = partitioner.next();
+             CrossValidationPartitioner<TokenSample>.TrainingSampleStream trainingSampleStream = partitioner.next();
 
 		   // Maybe throws IOException if temporary file handling fails ...
 		   TokenizerModel model;

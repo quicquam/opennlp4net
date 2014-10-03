@@ -155,7 +155,7 @@ namespace opennlp.tools.tokenize
 	  {
 		if (abbreviations == null)
 		{
-		  return System.Linq.Enumerable.Empty<string>();
+		  return new HashSet<string>();
 		}
 		return abbreviations.asStringSet();
 	  }
@@ -174,7 +174,7 @@ namespace opennlp.tools.tokenize
 			double[] tokProbArray = new double[tokProbs.Count];
 			for (int i = 0; i < tokProbArray.Length; i++)
 			{
-			  tokProbArray[i] = tokProbs[i];
+			  tokProbArray[i] = tokProbs[i].GetValueOrDefault();
 			}
 			return tokProbArray;
 		  }

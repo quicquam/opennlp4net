@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using j4n.IO.File;
 using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
 using opennlp.tools.sentdetect;
 
 namespace opennlp.tools.util.model
@@ -42,6 +43,12 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
+        protected void serialize(FileOutputStream fileOutputStream)
+        {
+            throw new NotImplementedException();
+        }
+
+
         protected virtual internal Type DefaultFactory
         {
             get
@@ -49,5 +56,7 @@ namespace opennlp.tools.util.model
                 return null;
             }
         }
+
+        protected internal BaseToolFactory toolFactory;
     }
 }

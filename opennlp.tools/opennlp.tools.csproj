@@ -94,12 +94,14 @@
     <Compile Include="src\tokenize\WhitespaceTokenStream.cs" />
     <Compile Include="src\util\AbstractEventStream.cs" />
     <Compile Include="src\util\BaseToolFactory.cs" />
+    <Compile Include="src\util\CrossValidationPartitioner.cs" />
     <Compile Include="src\util\eval\EvaluationMonitor.cs" />
     <Compile Include="src\util\eval\Evaluator.cs" />
     <Compile Include="src\util\eval\FMeasure.cs" />
     <Compile Include="src\util\ext\ExtensionLoader.cs" />
     <Compile Include="src\util\FilterObjectStream.cs" />
     <Compile Include="src\util\InvalidFormatException.cs" />
+    <Compile Include="src\util\model\ArtifactProvider.cs" />
     <Compile Include="src\util\model\BaseModel.cs" />
     <Compile Include="src\util\model\ModelUtil.cs" />
     <Compile Include="src\util\Span.cs" />

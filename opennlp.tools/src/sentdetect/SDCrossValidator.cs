@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using j4n.Serialization;
 
 namespace opennlp.tools.sentdetect
@@ -102,7 +103,7 @@ namespace opennlp.tools.sentdetect
 	   while (partitioner.hasNext())
 	   {
 
-		 CrossValidationPartitioner.TrainingSampleStream<SentenceSample> trainingSampleStream = partitioner.next();
+           CrossValidationPartitioner<SentenceSample>.TrainingSampleStream trainingSampleStream = partitioner.next();
 
 		  SentenceModel model;
 

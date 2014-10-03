@@ -17,6 +17,7 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.Lang;
 using j4n.Serialization;
 
 
@@ -194,7 +195,7 @@ namespace opennlp.tools.sentdetect
 			continue;
 		  }
 
-		  double[] probs = model.eval(cgen.getContext(sb, cint));
+		  double[] probs = model.eval(cgen.getContext(new CharSequence(sb.ToString()), cint));
 		  string bestOutcome = model.getBestOutcome(probs);
 
 		  if (bestOutcome.Equals(SPLIT) && isAcceptableBreak(s, index, cint))

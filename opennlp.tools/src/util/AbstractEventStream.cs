@@ -66,7 +66,7 @@ namespace opennlp.tools.util
         {
 
             //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-            if (events.hasNext())
+            if (events.MoveNext())
             {
                 return true;
             }
@@ -80,7 +80,7 @@ namespace opennlp.tools.util
                 }
 
                 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-                return events.hasNext();
+                return events.MoveNext();
             }
         }
 

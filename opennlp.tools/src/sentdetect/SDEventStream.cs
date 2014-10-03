@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.Lang;
 using j4n.Serialization;
 using j4n.Utils;
 
@@ -50,23 +51,22 @@ namespace opennlp.tools.sentdetect
 
 		foreach (Span sentenceSpan in sample.Sentences)
 		{
-		  string sentenceString = sentenceSpan.getCoveredText(sample.Document).ToString();
+		  string sentenceString = sentenceSpan.getCoveredText(sample.Document);
 
-		  for (IEnumerator<int?> it = scanner.getPositions(sentenceString).GetEnumerator(); it.MoveNext();)
+          IEnumerator<int?> it = scanner.getPositions(sentenceString).GetEnumerator();
+		  while (it.MoveNext())
 		  {
 
 			int candidate = it.Current.GetValueOrDefault();
-			string type = SentenceDetectorME.NO_SPLIT;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (!it.hasNext())
+			var type = SentenceDetectorME.NO_SPLIT;
+     		if (!it.MoveNext())
 			{
 			  type = SentenceDetectorME.SPLIT;
 			}
 
-			events.Add(new Event(type, cg.getContext(sample.Document, sentenceSpan.Start + candidate)));
+			events.Add(new Event(type, cg.getContext(new CharSequence(sample.Document), sentenceSpan.Start + candidate)));
 		  }
 		}
-
 
 		return events.GetEnumerator();
 	  }

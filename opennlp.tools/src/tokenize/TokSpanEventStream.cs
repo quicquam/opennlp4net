@@ -142,7 +142,7 @@ namespace opennlp.tools.tokenize
 				}
 				else
 				{
-				  if (logger.isLoggable(Level.WARNING))
+				  if (logger.isLoggable(Logger.Level.WARNING))
 				  {
 					logger.warning("Bad training token: " + tokens[ti] + " cand: " + cSpan + " token=" + StringHelperClass.SubstringSpecial(text, tokens[ti].Start, tokens[ti].End));
 				  }
