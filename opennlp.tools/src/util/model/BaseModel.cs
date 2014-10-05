@@ -4,7 +4,8 @@ using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using j4n.Utils;
-using opennlp.tools.sentdetect;
+using opennlp.model;
+using opennlp.tools.dictionary;
 
 namespace opennlp.tools.util.model
 {
@@ -13,7 +14,7 @@ namespace opennlp.tools.util.model
         public string Language { get; set; }
 
         protected internal readonly IDictionary<string, object> artifactMap = new Dictionary<string, object>();
-        private IDictionary<string, ArtifactSerializer<T>> artifactSerializers = new Dictionary<string, ArtifactSerializer<T>>();
+        private ArtifactSerializers artifactSerializers;
 
         protected internal BaseToolFactory toolFactory;
         private bool isLoadedFromSerialized;
@@ -76,8 +77,7 @@ namespace opennlp.tools.util.model
             {
 
                 string extension = getEntryExtension(entry.Name);
-
-                var factory = artifactSerializers[extension];
+                var factory = artifactSerializers.GetSerializerFromName(extension);
 
                 if (factory == null)
                 {
@@ -112,15 +112,21 @@ namespace opennlp.tools.util.model
             return entry.Substring(extensionIndex);
         }
 
-        private void createBaseArtifactSerializers(IDictionary<string, ArtifactSerializer<T>> serializers)
+        private void createBaseArtifactSerializers(ArtifactSerializers serializers)
         {
             //JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
             serializers.putAll(createArtifactSerializers());
         }
 
-        private object createArtifactSerializers()
+        private ArtifactSerializers createArtifactSerializers()
         {
-            throw new NotImplementedException();
+            var serializers = new ArtifactSerializers();
+            
+            serializers.Add<ArtifactSerializer<AbstractModel>>("model", new GenericModelSerializer());
+            serializers.Add<ArtifactSerializer<Dictionary>>("dictionary", new DictionarySerializer());
+            serializers.Add<ArtifactSerializer<Properties>>("properties", new PropertiesSerializer());
+
+            return serializers;
         }
 
         private void initializeFactory()

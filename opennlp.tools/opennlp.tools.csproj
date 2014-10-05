@@ -103,8 +103,12 @@
     <Compile Include="src\util\InvalidFormatException.cs" />
     <Compile Include="src\util\model\ArtifactProvider.cs" />
     <Compile Include="src\util\model\ArtifactSerializer.cs" />
+    <Compile Include="src\util\model\ArtifactSerializers.cs" />
     <Compile Include="src\util\model\BaseModel.cs" />
+    <Compile Include="src\util\model\DictionarySerializer.cs" />
+    <Compile Include="src\util\model\GenericModelSerializer.cs" />
     <Compile Include="src\util\model\ModelUtil.cs" />
+    <Compile Include="src\util\model\PropertiesSerializer.cs" />
     <Compile Include="src\util\Span.cs" />
     <Compile Include="src\util\StringList.cs" />
     <Compile Include="src\util\StringUtil.cs" />
