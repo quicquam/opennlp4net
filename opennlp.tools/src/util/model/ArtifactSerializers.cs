@@ -19,7 +19,7 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
-        public object GetSerializerFromName(string name)
+        public ArtifactSerializer<object> GetSerializerFromName(string name)
         {
             throw new NotImplementedException();
         }
