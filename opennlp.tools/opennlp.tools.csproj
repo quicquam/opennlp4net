@@ -102,6 +102,7 @@
     <Compile Include="src\util\FilterObjectStream.cs" />
     <Compile Include="src\util\InvalidFormatException.cs" />
     <Compile Include="src\util\model\ArtifactProvider.cs" />
+    <Compile Include="src\util\model\ArtifactSerializer.cs" />
     <Compile Include="src\util\model\BaseModel.cs" />
     <Compile Include="src\util\model\ModelUtil.cs" />
     <Compile Include="src\util\Span.cs" />

@@ -30,7 +30,7 @@ namespace opennlp.tools.sentdetect
 	using Dictionary = opennlp.tools.dictionary.Dictionary;
 	using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
 	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using BaseModel = opennlp.tools.util.model.BaseModel;
+    using BaseModel = opennlp.tools.util.model.BaseModel<SentenceModel>;
 	using ModelUtil = opennlp.tools.util.model.ModelUtil;
 
 	/// <summary>
@@ -38,7 +38,7 @@ namespace opennlp.tools.sentdetect
 	/// by a learnable <seealso cref="SentenceDetector"/>.
 	/// </summary>
 	/// <seealso cref= SentenceDetectorME </seealso>
-	public class SentenceModel : BaseModel
+    public class SentenceModel : BaseModel
 	{
 
 	  private const string COMPONENT_NAME = "SentenceDetectorME";

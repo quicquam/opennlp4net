@@ -178,7 +178,7 @@ namespace opennlp.tools.tokenize.lang.en
 		  }
 		  ai++;
 		}
-		TokenSampleStream tss = new TokenSampleStream((InputStream) Console.OpenStandardInput());
+		TokenSampleStream tss = new TokenSampleStream(new InputStream(Console.OpenStandardInput()));
 		while (tss.hasNext())
 		{
 		  TokenSample ts = tss.next();

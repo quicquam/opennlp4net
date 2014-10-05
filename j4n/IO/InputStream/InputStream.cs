@@ -3,30 +3,30 @@ using j4n.Interfaces;
 
 namespace j4n.IO.InputStream
 {
-    public class InputStream : Stream, Closeable
+    public class InputStream : Closeable
     {
         public readonly string Path;
-        protected readonly Stream File;
+        protected readonly Stream Stream;
         public InputStream(string path)
         {
             Path = path;
-            File = new FileStream(path, FileMode.Open);
+            Stream = new FileStream(path, FileMode.Open);
         }
 
         public InputStream(Stream stream)
         {
             Path = "stdin";
-            File = stream;
+            Stream = stream;
         }
 
-        protected InputStream(InputStream fileInputStream)
+        protected InputStream(InputStream stream)
         {
             throw new System.NotImplementedException();
         }
 
         public void close()
         {
-            File.Close();
+            Stream.Close();
         }
 
         public int read(sbyte[] buffer, int i, int length)
@@ -34,51 +34,62 @@ namespace j4n.IO.InputStream
             throw new System.NotImplementedException();
         }
 
-        public override void Flush()
+        public void Flush()
+        {
+            Stream.Flush();
+        }
+
+        public long Seek(long offset, SeekOrigin origin)
+        {
+            return Stream.Seek(offset, origin);
+        }
+
+        public void SetLength(long value)
+        {
+            Stream.SetLength(value);
+        }
+
+        public int Read(byte[] buffer, int offset, int count)
+        {
+            return Stream.Read(buffer, offset, count);
+        }
+
+     /*   public void Write(byte[] buffer, int offset, int count)
         {
             throw new System.NotImplementedException();
         }
-
-        public override long Seek(long offset, SeekOrigin origin)
+        */
+        public bool CanRead
         {
-            throw new System.NotImplementedException();
+            get { return Stream.CanRead; }
         }
 
-        public override void SetLength(long value)
+        public bool CanSeek
         {
-            throw new System.NotImplementedException();
+            get { return Stream.CanSeek; }
         }
 
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override bool CanRead
+/*        public override bool CanWrite
         {
             get { throw new System.NotImplementedException(); }
         }
-
-        public override bool CanSeek
+        */
+        public long Length
         {
-            get { throw new System.NotImplementedException(); }
+            get { return Stream.Length; }
         }
 
-        public override bool CanWrite
+        public long Position
         {
-            get { throw new System.NotImplementedException(); }
-        }
+            get
+            {
+                return Stream.Position;
+            }
 
-        public override long Length
-        {
-            get { throw new System.NotImplementedException(); }
+            set
+            {
+                Stream.Position = value;
+            }
         }
-
-        public override long Position { get; set; }
     }
 }

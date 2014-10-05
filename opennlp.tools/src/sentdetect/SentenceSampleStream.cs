@@ -24,9 +24,8 @@ namespace opennlp.tools.sentdetect
 {
 
 
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-	using Span = opennlp.tools.util.Span;
+	using util;
+	using Span = util.Span;
 
 	/// <summary>
 	/// This class is a stream filter which reads a sentence by line samples from

@@ -13,7 +13,7 @@ namespace j4n.IO.InputStream
         public FileInputStream(string path)
             :base(path)
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

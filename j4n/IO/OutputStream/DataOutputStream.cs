@@ -32,11 +32,6 @@ namespace j4n.IO.OutputStream
             throw new NotImplementedException();
         }
 
-        public void close()
-        {
-            throw new NotImplementedException();
-        }
-
         public void flush()
         {
             throw new NotImplementedException();
