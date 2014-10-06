@@ -21,7 +21,7 @@ namespace j4n.IO.InputStream
 
         protected InputStream(InputStream stream)
         {
-            throw new System.NotImplementedException();
+            Stream = stream.Stream;
         }
 
         public void close()

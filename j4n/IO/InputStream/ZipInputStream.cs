@@ -12,7 +12,6 @@ namespace j4n.IO.InputStream
         public ZipInputStream(InputStream @in)
             :base(@in)
         {
-            throw new NotImplementedException();
         }
 
         public ZipEntry NextEntry { get; set; }

@@ -62,7 +62,7 @@ namespace opennlp.tools.util.model
 
         private void loadModel(InputStream @in)
         {
-            createBaseArtifactSerializers(artifactSerializers);
+            createBaseArtifactSerializers();
 
             //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
             //ORIGINAL LINE: final java.util.zip.ZipInputStream zip = new java.util.zip.ZipInputStream(in);
@@ -77,7 +77,7 @@ namespace opennlp.tools.util.model
             {
 
                 string extension = getEntryExtension(entry.Name);
-                var factory = artifactSerializers.GetSerializerFromName(extension);
+                var factory = artifactSerializers.GetValueObject(extension) as ArtifactSerializer<T>;
 
                 if (factory == null)
                 {
@@ -112,10 +112,10 @@ namespace opennlp.tools.util.model
             return entry.Substring(extensionIndex);
         }
 
-        private void createBaseArtifactSerializers(ArtifactSerializers serializers)
+        private void createBaseArtifactSerializers()
         {
             //JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
-            serializers.putAll(createArtifactSerializers());
+            artifactSerializers = createArtifactSerializers();
         }
 
         private ArtifactSerializers createArtifactSerializers()
