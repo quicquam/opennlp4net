@@ -6,27 +6,35 @@ namespace j4n.IO.InputStream
     public class InputStream : Closeable
     {
         public readonly string Path;
-        protected readonly Stream Stream;
+        protected readonly Stream InnerStream;
+
+        public Stream Stream
+        {
+            get
+            {
+                return InnerStream;
+            } 
+        }
+        
         public InputStream(string path)
         {
-            Path = path;
-            Stream = new FileStream(path, FileMode.Open);
+            Path = path;            
+            InnerStream = new FileStream(path, FileMode.Open);
         }
 
         public InputStream(Stream stream)
         {
-            Path = "stdin";
-            Stream = stream;
+            InnerStream = stream;
         }
 
         protected InputStream(InputStream stream)
         {
-            Stream = stream.Stream;
+            InnerStream = stream.InnerStream;
         }
 
         public void close()
         {
-            Stream.Close();
+            InnerStream.Close();
         }
 
         public int read(sbyte[] buffer, int i, int length)
@@ -36,22 +44,22 @@ namespace j4n.IO.InputStream
 
         public void Flush()
         {
-            Stream.Flush();
+            InnerStream.Flush();
         }
 
         public long Seek(long offset, SeekOrigin origin)
         {
-            return Stream.Seek(offset, origin);
+            return InnerStream.Seek(offset, origin);
         }
 
         public void SetLength(long value)
         {
-            Stream.SetLength(value);
+            InnerStream.SetLength(value);
         }
 
         public int Read(byte[] buffer, int offset, int count)
         {
-            return Stream.Read(buffer, offset, count);
+            return InnerStream.Read(buffer, offset, count);
         }
 
      /*   public void Write(byte[] buffer, int offset, int count)
@@ -61,12 +69,12 @@ namespace j4n.IO.InputStream
         */
         public bool CanRead
         {
-            get { return Stream.CanRead; }
+            get { return InnerStream.CanRead; }
         }
 
         public bool CanSeek
         {
-            get { return Stream.CanSeek; }
+            get { return InnerStream.CanSeek; }
         }
 
 /*        public override bool CanWrite
@@ -76,19 +84,19 @@ namespace j4n.IO.InputStream
         */
         public long Length
         {
-            get { return Stream.Length; }
+            get { return InnerStream.Length; }
         }
 
         public long Position
         {
             get
             {
-                return Stream.Position;
+                return InnerStream.Position;
             }
 
             set
             {
-                Stream.Position = value;
+                InnerStream.Position = value;
             }
         }
     }

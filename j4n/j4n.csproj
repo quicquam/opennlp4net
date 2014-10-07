@@ -64,7 +64,6 @@
     <Compile Include="IO\InputStream\FilterInputStream.cs" />
     <Compile Include="IO\InputStream\Native\ByteInputStream.cs" />
     <Compile Include="IO\InputStream\UncloseableInputStream.cs" />
-    <Compile Include="IO\InputStream\ZipInputStream.cs" />
     <Compile Include="IO\OutputStream\BufferedOutputStream.cs" />
     <Compile Include="IO\OutputStream\ByteArrayOutputStream.cs" />
     <Compile Include="IO\OutputStream\PrintStream.cs" />
@@ -102,6 +101,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\Internal\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

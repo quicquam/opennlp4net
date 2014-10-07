@@ -53,7 +53,7 @@ namespace opennlp.tools.util.model
     {
         public void load(InputStream @in)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public void store(OutputStream @out, string empty)

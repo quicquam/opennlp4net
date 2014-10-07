@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Ionic.Zip;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
-using j4n.Utils;
 using opennlp.model;
 using opennlp.tools.dictionary;
+
 
 namespace opennlp.tools.util.model
 {
@@ -66,31 +68,33 @@ namespace opennlp.tools.util.model
 
             //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
             //ORIGINAL LINE: final java.util.zip.ZipInputStream zip = new java.util.zip.ZipInputStream(in);
-            ZipInputStream zip = new ZipInputStream(@in);
-
-            // will read it in two steps, first using the known factories, latter the
-            // unknown.
-            leftoverArtifacts = new Dictionary<string, sbyte[]>();
-
-            ZipEntry entry;
-            while ((entry = zip.NextEntry) != null)
+            using (var zip = new ZipInputStream(@in.Stream))
             {
+                // will read it in two steps, first using the known factories, latter the
+                // unknown.
+                leftoverArtifacts = new Dictionary<string, sbyte[]>();
 
-                string extension = getEntryExtension(entry.Name);
-                var factory = artifactSerializers.GetValueObject(extension) as ArtifactSerializer<T>;
-
-                if (factory == null)
+                ZipEntry entry;
+                while ((entry = zip.GetNextEntry()) != null)
                 {
-                    /* TODO: find a better solution, that would consume less memory */
-                    sbyte[] bytes = toByteArray(zip);
-                    leftoverArtifacts[entry.Name] = bytes;
-                }
-                else
-                {
-                    artifactMap[entry.Name] = factory.create(zip);
-                }
 
-                zip.closeEntry();
+                    string extension = getEntryExtension(entry.FileName);
+                    var factory = artifactSerializers.GetValueObject(extension);
+
+                    if (factory == null)
+                    {
+                        /* TODO: find a better solution, that would consume less memory */
+                        sbyte[] bytes = toByteArray(zip);
+                        leftoverArtifacts[entry.FileName] = bytes;
+                    }
+                    else
+                    {
+                        var data = new byte[entry.UncompressedSize];
+                        zip.Read(data, 0, data.Length);
+                        var stream = new MemoryStream(data);
+                        artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
+                    }
+                }
             }
 
             initializeFactory();
@@ -98,6 +102,26 @@ namespace opennlp.tools.util.model
             loadArtifactSerializers();
             finishLoadingArtifacts();
             checkArtifactMap();
+        }
+
+        private object GetConcreteType(object factory, InputStream inputStream)
+        {
+            if (factory is PropertiesSerializer)
+            {
+                var serializer = factory as PropertiesSerializer;
+                return serializer.create(inputStream);
+            }
+            if (factory is GenericModelSerializer)
+            {
+                var serializer = factory as GenericModelSerializer;
+                return serializer.create(inputStream);
+            }
+            if (factory is DictionarySerializer)
+            {
+                var serializer = factory as DictionarySerializer;
+                return serializer.create(inputStream);
+            }
+            return null;
         }
 
         private string getEntryExtension(string entry)
@@ -158,7 +182,7 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
-        private sbyte[] toByteArray(InputStream stream)
+        private sbyte[] toByteArray(ZipInputStream stream)
         {
             throw new NotImplementedException();
         }
