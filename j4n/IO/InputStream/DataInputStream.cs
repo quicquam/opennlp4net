@@ -20,21 +20,5 @@ namespace j4n.IO.InputStream
         {
             throw new NotImplementedException();
         }
-
-// ReSharper disable InconsistentNaming
-        public double readDouble()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int readInt()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string readUTF()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
