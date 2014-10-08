@@ -13,6 +13,20 @@ namespace opennlp.tools.util.model
 {
     public class BaseModel<T>
     {
+        protected internal const string MANIFEST_ENTRY = "manifest.properties";
+        protected internal const string FACTORY_NAME = "factory";
+
+        private const string MANIFEST_VERSION_PROPERTY = "Manifest-Version";
+        private const string COMPONENT_NAME_PROPERTY = "Component-Name";
+        private const string VERSION_PROPERTY = "OpenNLP-Version";
+        private const string TIMESTAMP_PROPERTY = "Timestamp";
+        private const string LANGUAGE_PROPERTY = "Language";
+
+        public const string TRAINING_CUTOFF_PROPERTY = "Training-Cutoff";
+        public const string TRAINING_ITERATIONS_PROPERTY = "Training-Iterations";
+        public const string TRAINING_EVENTHASH_PROPERTY = "Training-Eventhash";
+
+
         public string Language { get; set; }
 
         protected internal readonly IDictionary<string, object> artifactMap = new Dictionary<string, object>();
@@ -104,6 +118,34 @@ namespace opennlp.tools.util.model
             checkArtifactMap();
         }
 
+        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        //ORIGINAL LINE: private void initializeFactory() throws opennlp.tools.util.InvalidFormatException
+        private void initializeFactory()
+        {
+            string factoryName = getManifestProperty(FACTORY_NAME);
+            if (factoryName == null)
+            {
+                // load the default factory
+                Type factoryClass = DefaultFactory;
+                if (factoryClass != null)
+                {
+                   // this.toolFactory = BaseToolFactory.create(factoryClass, this);
+                }
+            }
+            else
+            {
+                try
+                {
+                   // this.toolFactory = BaseToolFactory.create(factoryName, this);
+                }
+                catch (InvalidFormatException e)
+                {
+                    throw new System.ArgumentException(e.Message);
+                }
+            }
+        }
+
+
         private object GetConcreteType(object factory, InputStream inputStream)
         {
             if (factory is PropertiesSerializer)
@@ -153,11 +195,6 @@ namespace opennlp.tools.util.model
             return serializers;
         }
 
-        private void initializeFactory()
-        {
-            
-        }
-
         private void loadArtifactSerializers()
         {
         }
@@ -193,6 +230,20 @@ namespace opennlp.tools.util.model
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Retrieves the value to the given key from the manifest.properties
+        /// entry.
+        /// </summary>
+        /// <param name="key">
+        /// </param>
+        /// <returns> the value </returns>
+        public string getManifestProperty(string key)
+        {
+            Properties manifest = (Properties)artifactMap[MANIFEST_ENTRY];
+
+            return manifest.getProperty(key);
         }
     }
 }

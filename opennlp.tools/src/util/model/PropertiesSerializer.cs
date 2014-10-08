@@ -70,5 +70,10 @@ namespace opennlp.tools.util.model
         {
             throw new System.NotImplementedException();
         }
+
+        public string getProperty(string key)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
