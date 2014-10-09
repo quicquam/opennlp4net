@@ -17,6 +17,7 @@
  */
 using j4n.Interfaces;
 using j4n.IO.InputStream;
+using j4n.Utils;
 
 
 namespace opennlp.tools.util.model
@@ -48,32 +49,4 @@ namespace opennlp.tools.util.model
 		factories["properties"] = new PropertiesSerializer();
 	  }
 	}
-
-    internal class Properties
-    {
-        public void load(InputStream @in)
-        {
-
-        }
-
-        public void store(OutputStream @out, string empty)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void setProperty(string manifestVersionProperty, string p1)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<KeyValuePair<object, object>> entrySet()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public string getProperty(string key)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
 }

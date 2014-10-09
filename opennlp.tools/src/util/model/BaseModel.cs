@@ -5,13 +5,14 @@ using Ionic.Zip;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
+using j4n.Utils;
 using opennlp.model;
 using opennlp.tools.dictionary;
 
 
 namespace opennlp.tools.util.model
 {
-    public class BaseModel<T>
+    public class BaseModel<T> : ArtifactProvider
     {
         protected internal const string MANIFEST_ENTRY = "manifest.properties";
         protected internal const string FACTORY_NAME = "factory";
@@ -28,6 +29,7 @@ namespace opennlp.tools.util.model
 
 
         public string Language { get; set; }
+        public bool LoadedFromSerialized { get; private set; }
 
         protected internal readonly IDictionary<string, object> artifactMap = new Dictionary<string, object>();
         private ArtifactSerializers artifactSerializers;
@@ -129,20 +131,21 @@ namespace opennlp.tools.util.model
                 Type factoryClass = DefaultFactory;
                 if (factoryClass != null)
                 {
-                   // this.toolFactory = BaseToolFactory.create(factoryClass, this);
+                   this.toolFactory = BaseToolFactory.create(factoryClass, this);
                 }
             }
             else
             {
                 try
                 {
-                   // this.toolFactory = BaseToolFactory.create(factoryName, this);
+                   this.toolFactory = BaseToolFactory.create(factoryName, this);
                 }
                 catch (InvalidFormatException e)
                 {
                     throw new System.ArgumentException(e.Message);
                 }
             }
+            this.toolFactory.init(this);
         }
 
 
@@ -230,6 +233,11 @@ namespace opennlp.tools.util.model
             {
                 return null;
             }
+        }
+
+        public T1 getArtifact<T1>(string key)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

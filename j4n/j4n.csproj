@@ -97,7 +97,7 @@
     <Compile Include="Serialization\ObjectStream.cs" />
     <Compile Include="Utils\IterableAdapter.cs" />
     <Compile Include="Utils\DecimalFormat.cs" />
-    <Compile Include="Utils\ZipEntry.cs" />
+    <Compile Include="Utils\Properties.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\Internal\" />
