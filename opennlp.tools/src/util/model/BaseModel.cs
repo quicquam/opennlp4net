@@ -27,6 +27,10 @@ namespace opennlp.tools.util.model
         public const string TRAINING_ITERATIONS_PROPERTY = "Training-Iterations";
         public const string TRAINING_EVENTHASH_PROPERTY = "Training-Eventhash";
 
+          private static String SERIALIZER_CLASS_NAME_PREFIX = "serializer-class-";
+
+        private bool subclassSerializersInitiated = false;
+        private bool finishedLoadingArtifacts = false;
 
         public string Language { get; set; }
         public bool LoadedFromSerialized { get; private set; }
@@ -116,7 +120,7 @@ namespace opennlp.tools.util.model
             initializeFactory();
 
             loadArtifactSerializers();
-            finishLoadingArtifacts();
+            finishLoadingArtifacts(@in);
             checkArtifactMap();
         }
 
@@ -200,10 +204,47 @@ namespace opennlp.tools.util.model
 
         private void loadArtifactSerializers()
         {
+            if (!subclassSerializersInitiated)
+                createArtifactSerializers();
+            subclassSerializersInitiated = true;
         }
 
-        private void finishLoadingArtifacts()
-        {
+        private void finishLoadingArtifacts(InputStream @in)
+        {    
+            var zip = new ZipInputStream(@in.Stream);
+
+            ZipEntry entry;
+            while((entry = zip.GetNextEntry()) != null ) {
+
+                // Note: The manifest.properties file will be read here again,
+                // there should be no need to prevent that.
+
+                String entryName = entry.FileName;
+                String extension = getEntryExtension(entryName);
+
+                var factory = artifactSerializers.GetValueObject(extension);
+
+                String artifactSerializerClazzName =
+                    getManifestProperty(SERIALIZER_CLASS_NAME_PREFIX + entryName);
+
+                if (artifactSerializerClazzName != null)
+                {
+                        factory = artifactSerializers.GetValueObject(artifactSerializerClazzName);
+                }
+            
+                if (factory != null)
+                {
+                    artifactMap.Add(entryName, GetConcreteType(factory, @in));
+                }
+                else
+                {
+                    throw new InvalidFormatException("Unknown artifact format: " + extension);
+                }
+
+                zip.Close();
+            }
+
+            finishedLoadingArtifacts = true;
 
         }        
 
