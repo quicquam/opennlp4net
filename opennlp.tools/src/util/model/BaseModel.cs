@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Ionic.Zip;
+using j4n.Exceptions;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
@@ -115,12 +116,13 @@ namespace opennlp.tools.util.model
                         artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
                     }
                 }
+
+                initializeFactory();
+
+                loadArtifactSerializers();
+                finishLoadingArtifacts(@in);
             }
 
-            initializeFactory();
-
-            loadArtifactSerializers();
-            finishLoadingArtifacts(@in);
             checkArtifactMap();
         }
 
@@ -250,12 +252,22 @@ namespace opennlp.tools.util.model
 
         protected internal virtual void validateArtifactMap()
         {
-            throw new NotImplementedException();
+            
         }
 
         protected internal virtual void checkArtifactMap()
         {
-            throw new NotImplementedException();
+            if (!finishedLoadingArtifacts)
+                throw new IllegalStateException(
+                    "The method BaseModel.finishLoadingArtifacts(..) was not called by BaseModel sub-class.");
+            try
+            {
+                validateArtifactMap();
+            }
+            catch (InvalidFormatException e)
+            {
+                throw new IllegalArgumentException(e.Message);
+            }
         }
 
         protected void serialize(FileOutputStream fileOutputStream)

@@ -42,6 +42,7 @@
     <Compile Include="Exceptions\ClassNotFoundException.cs" />
     <Compile Include="Exceptions\FileNotFoundException.cs" />
     <Compile Include="Exceptions\IllegalAccessException.cs" />
+    <Compile Include="Exceptions\IllegalArgumentException.cs" />
     <Compile Include="Exceptions\IllegalStateException.cs" />
     <Compile Include="Exceptions\InstantiationException.cs" />
     <Compile Include="Exceptions\InterruptedException.cs" />
