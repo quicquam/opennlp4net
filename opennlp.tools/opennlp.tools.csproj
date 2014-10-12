@@ -116,6 +116,7 @@
     <Compile Include="src\util\StringList.cs" />
     <Compile Include="src\util\StringUtil.cs" />
     <Compile Include="src\util\TrainingParameters.cs" />
+    <Compile Include="src\util\Version.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\j4n\j4n.csproj">

@@ -186,7 +186,7 @@ namespace opennlp.tools.sentdetect
 		  {
 			if (this.abbreviationDictionary == null && artifactProvider != null)
 			{
-			  this.abbreviationDictionary = artifactProvider.getArtifact<Dictionary>(ABBREVIATIONS_ENTRY_NAME);
+                this.abbreviationDictionary = (Dictionary)artifactProvider.getArtifact<Dictionary>(ABBREVIATIONS_ENTRY_NAME);
 			}
 			return this.abbreviationDictionary;
 		  }

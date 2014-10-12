@@ -52,5 +52,15 @@ namespace j4n.Utils
             TryGetValue(key, out val);
             return val;
         }
+
+        public string getProperty(string key, string defaultValue)
+        {
+            string val;
+            if (!TryGetValue(key, out val))
+            {
+                val = defaultValue;
+            }
+            return val;
+        }
     }
 }
