@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="sentdetectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokenizeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
