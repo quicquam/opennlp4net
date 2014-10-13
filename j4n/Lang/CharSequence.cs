@@ -8,29 +8,31 @@ namespace j4n.Lang
 {
     public class CharSequence
     {
-        public CharSequence(string document)
+        private string _innerstring;
+
+        public CharSequence(string s)
         {
-            throw new NotImplementedException();
+            _innerstring = s;
         }
 
         public int length()
         {
-            throw new NotImplementedException();
+            return _innerstring.Length;
         }
 
         public CharSequence subSequence(int start, int end)
         {
-            throw new NotImplementedException();
+            return new CharSequence(_innerstring.Substring(start, (end - start)));
         }
 
-        public char charAt(int p0)
+        public char charAt(int index)
         {
-            throw new NotImplementedException();
+            return _innerstring[index];
         }
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return _innerstring;
         }
     }
 }

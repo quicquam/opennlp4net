@@ -15,11 +15,14 @@ namespace opennlp.tools.Tests
     {
         private const string ModelPath = "C:\\opennlp-models\\";
         private string _modelFilePath;
+        private string _testSentence;
 
         [SetUp]
         public void Setup()
         {
             _modelFilePath = string.Format("{0}{1}", ModelPath, "en-sent.bin");
+            var sr = new StreamReader("C:\\opennlp-models\\test-sentence.txt");
+            _testSentence = sr.ReadToEnd();
         }
 
         [TearDown]
@@ -35,10 +38,12 @@ namespace opennlp.tools.Tests
             try
             {
                 var model = new SentenceModel(modelIn);
+                var sd = new SentenceDetectorME(model);
+                var sentences = sd.sentDetect(_testSentence);                
             }
             catch (IOException e)
             {
-                var s = e.StackTrace.ToString();
+                var s = e.StackTrace;
             }
             finally
             {

@@ -359,8 +359,13 @@ namespace opennlp.tools.util
 
 	    public string getCoveredText(string text)
 	    {
-	        throw new NotImplementedException();
-	    }
+            if (End > text.Length)
+            {
+                throw new System.ArgumentException("The span " + ToString() + " is outside the given text which has length " + text.Length + "!");
+            }
+
+            return text.Substring(Start, (End - Start));
+        }
 
 	    public static string[] spansToStrings(Span[] tokenizePos, string tokens)
 	    {
