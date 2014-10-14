@@ -17,20 +17,16 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using System.IO;
+using System.Xml;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
-using saxlib.Entities;
-using saxlib.Exceptions;
-using saxlib.Factories;
-using saxlib.Helpers;
+
 
 namespace opennlp.tools.util.featuregen
 {
-
-
-
+    
 	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using ExtensionLoader = opennlp.tools.util.ext.ExtensionLoader;
+    using ExtensionLoader = opennlp.tools.util.ext.ExtensionLoader<AdaptiveFeatureGenerator>;
 
 	/// <summary>
 	/// Creates a set of feature generators based on a provided XML descriptor.
@@ -52,20 +48,20 @@ namespace opennlp.tools.util.featuregen
 	///   </cache>
 	/// </generators>
 	/// 
-	/// Each XML element is mapped to a <seealso cref="GeneratorFactory.XmlFeatureGeneratorFactory"/> which
-	/// is responsible to process the element and create the specified
-	/// <seealso cref="AdaptiveFeatureGenerator"/>. Elements can contain other
-	/// elements in this case it is the responsibility of the mapped factory to process
-	/// the child elements correctly. In some factories this leads to recursive
+	/// Each XML XmlElement is mapped to a <seealso cref="GeneratorFactory.XmlFeatureGeneratorFactory"/> which
+	/// is responsible to process the XmlElement and create the specified
+	/// <seealso cref="AdaptiveFeatureGenerator"/>. XmlElements can contain other
+	/// XmlElements in this case it is the responsibility of the mapped factory to process
+	/// the child XmlElements correctly. In some factories this leads to recursive
 	/// calls the 
-	/// <seealso cref="GeneratorFactory.XmlFeatureGeneratorFactory#create(Element, FeatureGeneratorResourceProvider)"/>
+	/// <seealso cref="GeneratorFactory.XmlFeatureGeneratorFactory#create(XmlElement, FeatureGeneratorResourceProvider)"/>
 	/// method.
 	/// 
-	/// In the example above the generators element is mapped to the
+	/// In the example above the generators XmlElement is mapped to the
 	/// <seealso cref="GeneratorFactory.AggregatedFeatureGeneratorFactory"/> which then
 	/// creates all the aggregated <seealso cref="AdaptiveFeatureGenerator"/>s to
 	/// accomplish this it evaluates the mapping with the same mechanism
-	/// and gives the child element to the corresponding factories. All
+	/// and gives the child XmlElement to the corresponding factories. All
 	/// created generators are added to a new instance of the
 	/// <seealso cref="AggregatedFeatureGenerator"/> which is then returned.
 	/// </summary>
@@ -74,7 +70,7 @@ namespace opennlp.tools.util.featuregen
 
 	  /// <summary>
 	  /// The <seealso cref="XmlFeatureGeneratorFactory"/> is responsible to construct
-	  /// an <seealso cref="AdaptiveFeatureGenerator"/> from an given XML <seealso cref="Element"/>
+	  /// an <seealso cref="AdaptiveFeatureGenerator"/> from an given XML <seealso cref="XmlElement"/>
 	  /// which contains all necessary configuration if any.
 	  /// </summary>
 	  internal interface XmlFeatureGeneratorFactory
@@ -82,16 +78,16 @@ namespace opennlp.tools.util.featuregen
 
 		/// <summary>
 		/// Creates an <seealso cref="AdaptiveFeatureGenerator"/> from a the describing
-		/// XML element.
+		/// XML XmlElement.
 		/// </summary>
-		/// <param name="generatorElement"> the element which contains the configuration </param>
+		/// <param name="generatorXmlElement"> the XmlElement which contains the configuration </param>
 		/// <param name="resourceManager"> the resource manager which could be used
 		///     to access referenced resources
 		/// </param>
 		/// <returns> the configured <seealso cref="AdaptiveFeatureGenerator"/> </returns>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: AdaptiveFeatureGenerator create(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException;
-		AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager);
+//ORIGINAL LINE: AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException;
+		AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager);
 	  }
 
 	  /// <seealso cref= AggregatedFeatureGenerator </seealso>
@@ -99,27 +95,27 @@ namespace opennlp.tools.util.featuregen
 	  {
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
 		  ICollection<AdaptiveFeatureGenerator> aggregatedGenerators = new LinkedList<AdaptiveFeatureGenerator>();
 
-		  NodeList childNodes = generatorElement.ChildNodes;
+		  XmlNodeList childNodes = generatorXmlElement.ChildNodes;
 
-		  for (int i = 0; i < childNodes.Length; i++)
+		  for (int i = 0; i < childNodes.Count; i++)
 		  {
-			Node childNode = childNodes.item(i);
+			XmlNode childNode = childNodes[i];
 
-			if (childNode is Element)
+			if (childNode is XmlElement)
 			{
-			  Element aggregatedGeneratorElement = (Element) childNode;
+			  XmlElement aggregatedGeneratorXmlElement = (XmlElement) childNode;
 
-			  aggregatedGenerators.Add(GeneratorFactory.createGenerator(aggregatedGeneratorElement, resourceManager));
+			  aggregatedGenerators.Add(GeneratorFactory.createGenerator(aggregatedGeneratorXmlElement, resourceManager));
 			}
 		  }
 
-		  return new AggregatedFeatureGenerator(aggregatedGenerators.toArray(new AdaptiveFeatureGenerator[aggregatedGenerators.Count]));
+		  return new AggregatedFeatureGenerator(aggregatedGenerators.ToArray(new AdaptiveFeatureGenerator[aggregatedGenerators.Count]));
 		}
 
 		internal static void register(IDictionary<string, XmlFeatureGeneratorFactory> factoryMap)
@@ -137,31 +133,31 @@ namespace opennlp.tools.util.featuregen
 		}
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
-		  Element cachedGeneratorElement = null;
+		  XmlElement cachedGeneratorXmlElement = null;
 
-		  NodeList kids = generatorElement.ChildNodes;
+		  XmlNodeList kids = generatorXmlElement.ChildNodes;
 
-		  for (int i = 0; i < kids.Length; i++)
+		  for (int i = 0; i < kids.Count; i++)
 		  {
-			Node childNode = kids.item(i);
+			XmlNode childNode = kids[i];
 
-			if (childNode is Element)
+			if (childNode is XmlElement)
 			{
-			  cachedGeneratorElement = (Element) childNode;
+			  cachedGeneratorXmlElement = (XmlElement) childNode;
 			  break;
 			}
 		  }
 
-		  if (cachedGeneratorElement == null)
+		  if (cachedGeneratorXmlElement == null)
 		  {
-			throw new InvalidFormatException("Could not find containing generator element!");
+			throw new InvalidFormatException("Could not find containing generator XmlElement!");
 		  }
 
-		  AdaptiveFeatureGenerator cachedGenerator = GeneratorFactory.createGenerator(cachedGeneratorElement, resourceManager);
+		  AdaptiveFeatureGenerator cachedGenerator = GeneratorFactory.createGenerator(cachedGeneratorXmlElement, resourceManager);
 
 		  return new CachedFeatureGenerator(cachedGenerator);
 		}
@@ -177,11 +173,11 @@ namespace opennlp.tools.util.featuregen
 	  {
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
-		  string minString = generatorElement.getAttribute("min");
+		  string minString = generatorXmlElement.GetAttribute("min");
 
 		  int min;
 
@@ -194,7 +190,7 @@ namespace opennlp.tools.util.featuregen
 			throw new InvalidFormatException("min attribute '" + minString + "' is not a number!", e);
 		  }
 
-		  string maxString = generatorElement.getAttribute("max");
+		  string maxString = generatorXmlElement.GetAttribute("max");
 
 		  int max;
 
@@ -220,22 +216,22 @@ namespace opennlp.tools.util.featuregen
 	  internal class DefinitionFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		internal const string ELEMENT_NAME = "definition";
+		internal const string XmlElement_NAME = "definition";
 
 		internal DefinitionFeatureGeneratorFactory()
 		{
 		}
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 		  return new OutcomePriorFeatureGenerator();
 		}
 
 		internal static void register(IDictionary<string, XmlFeatureGeneratorFactory> factoryMap)
 		{
-		  factoryMap[ELEMENT_NAME] = new DefinitionFeatureGeneratorFactory();
+		  factoryMap[XmlElement_NAME] = new DefinitionFeatureGeneratorFactory();
 		}
 	  }
 
@@ -244,11 +240,11 @@ namespace opennlp.tools.util.featuregen
 	  {
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
-		  string dictResourceKey = generatorElement.getAttribute("dict");
+		  string dictResourceKey = generatorXmlElement.GetAttribute("dict");
 
 		  object dictResource = resourceManager.getResource(dictResourceKey);
 
@@ -257,7 +253,7 @@ namespace opennlp.tools.util.featuregen
 			throw new InvalidFormatException("No dictionary resource for key: " + dictResourceKey);
 		  }
 
-		  string prefix = generatorElement.getAttribute("prefix");
+		  string prefix = generatorXmlElement.GetAttribute("prefix");
 
 		  return new DictionaryFeatureGenerator(prefix, (Dictionary) dictResource);
 		}
@@ -272,7 +268,7 @@ namespace opennlp.tools.util.featuregen
 	  internal class PreviousMapFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 		  return new PreviousMapFeatureGenerator();
 		}
@@ -289,10 +285,10 @@ namespace opennlp.tools.util.featuregen
 	  internal class SentenceFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
-		  string beginFeatureString = generatorElement.getAttribute("begin");
+		  string beginFeatureString = generatorXmlElement.GetAttribute("begin");
 
 		  bool beginFeature = true;
 		  if (beginFeatureString.Length != 0)
@@ -300,7 +296,7 @@ namespace opennlp.tools.util.featuregen
 			beginFeature = Convert.ToBoolean(beginFeatureString);
 		  }
 
-		  string endFeatureString = generatorElement.getAttribute("end");
+		  string endFeatureString = generatorXmlElement.GetAttribute("end");
 		  bool endFeature = true;
 		  if (endFeatureString.Length != 0)
 		  {
@@ -320,7 +316,7 @@ namespace opennlp.tools.util.featuregen
 	  internal class TokenClassFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 		  // TODO: Make it configurable ...
 		  return new TokenClassFeatureGenerator(true);
@@ -335,7 +331,7 @@ namespace opennlp.tools.util.featuregen
 	  internal class TokenFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
 		  return new TokenFeatureGenerator();
@@ -350,7 +346,7 @@ namespace opennlp.tools.util.featuregen
 	  internal class BigramNameFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
 		  return new BigramNameFeatureGenerator();
@@ -366,7 +362,7 @@ namespace opennlp.tools.util.featuregen
 	  internal class TokenPatternFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 		  return new TokenPatternFeatureGenerator();
 		}
@@ -382,33 +378,33 @@ namespace opennlp.tools.util.featuregen
 	  {
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
-		  Element nestedGeneratorElement = null;
+		  XmlElement nestedGeneratorXmlElement = null;
 
-		  NodeList kids = generatorElement.ChildNodes;
+		  XmlNodeList kids = generatorXmlElement.ChildNodes;
 
-		  for (int i = 0; i < kids.Length; i++)
+		  for (int i = 0; i < kids.Count; i++)
 		  {
-			Node childNode = kids.item(i);
+              XmlNode childNode = kids[i];
 
-			if (childNode is Element)
+			if (childNode is XmlElement)
 			{
-			  nestedGeneratorElement = (Element) childNode;
+			  nestedGeneratorXmlElement = (XmlElement) childNode;
 			  break;
 			}
 		  }
 
-		  if (nestedGeneratorElement == null)
+		  if (nestedGeneratorXmlElement == null)
 		  {
-			throw new InvalidFormatException("window feature generator must contain" + " an aggregator element");
+			throw new InvalidFormatException("window feature generator must contain" + " an aggregator XmlElement");
 		  }
 
-		  AdaptiveFeatureGenerator nestedGenerator = GeneratorFactory.createGenerator(nestedGeneratorElement, resourceManager);
+		  AdaptiveFeatureGenerator nestedGenerator = GeneratorFactory.createGenerator(nestedGeneratorXmlElement, resourceManager);
 
-		  string prevLengthString = generatorElement.getAttribute("prevLength");
+		  string prevLengthString = generatorXmlElement.GetAttribute("prevLength");
 
 		  int prevLength;
 
@@ -421,7 +417,7 @@ namespace opennlp.tools.util.featuregen
 			throw new InvalidFormatException("prevLength attribute '" + prevLengthString + "' is not a number!", e);
 		  }
 
-		  string nextLengthString = generatorElement.getAttribute("nextLength");
+		  string nextLengthString = generatorXmlElement.GetAttribute("nextLength");
 
 		  int nextLength;
 
@@ -447,7 +443,7 @@ namespace opennlp.tools.util.featuregen
 	  internal class PrefixFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 		  return new PrefixFeatureGenerator();
 		}
@@ -462,7 +458,7 @@ namespace opennlp.tools.util.featuregen
 	  internal class SuffixFeatureGeneratorFactory : XmlFeatureGeneratorFactory
 	  {
 
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 		  return new SuffixFeatureGenerator();
 		}
@@ -477,13 +473,13 @@ namespace opennlp.tools.util.featuregen
 	  {
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
-		public virtual AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
+		public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 		{
 
-		  string featureGeneratorClassName = generatorElement.getAttribute("class");
+		  string featureGeneratorClassName = generatorXmlElement.GetAttribute("class");
 
-		  AdaptiveFeatureGenerator generator = ExtensionLoader.instantiateExtension(typeof(AdaptiveFeatureGenerator), featureGeneratorClassName);
+		  AdaptiveFeatureGenerator generator = ExtensionLoader.instantiateExtension(featureGeneratorClassName);
 
 		  return generator;
 		}
@@ -516,30 +512,30 @@ namespace opennlp.tools.util.featuregen
 	  }
 
 	  /// <summary>
-	  /// Creates a <seealso cref="AdaptiveFeatureGenerator"/> for the provided element.
+	  /// Creates a <seealso cref="AdaptiveFeatureGenerator"/> for the provided XmlElement.
 	  /// To accomplish this it looks up the corresponding factory by the
-	  /// element tag name. The factory is then responsible for the creation
-	  /// of the generator from the element.
+	  /// XmlElement tag name. The factory is then responsible for the creation
+	  /// of the generator from the XmlElement.
 	  /// </summary>
-	  /// <param name="generatorElement"> </param>
+	  /// <param name="generatorXmlElement"> </param>
 	  /// <param name="resourceManager">
 	  /// 
 	  /// @return </param>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: static AdaptiveFeatureGenerator createGenerator(org.w3c.dom.Element generatorElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
-	  internal static AdaptiveFeatureGenerator createGenerator(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+//ORIGINAL LINE: static AdaptiveFeatureGenerator createGenerator(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
+	  internal static AdaptiveFeatureGenerator createGenerator(XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager)
 	  {
 
-		string elementName = generatorElement.TagName;
+		string XmlElementName = generatorXmlElement.Name;
 
-		XmlFeatureGeneratorFactory generatorFactory = factories[elementName];
+		XmlFeatureGeneratorFactory generatorFactory = factories[XmlElementName];
 
 		if (generatorFactory == null)
 		{
-		  throw new InvalidFormatException("Unexpected element: " + elementName);
+		  throw new InvalidFormatException("Unexpected XmlElement: " + XmlElementName);
 		}
 
-		return generatorFactory.create(generatorElement, resourceManager);
+		return generatorFactory.create(generatorXmlElement, resourceManager);
 	  }
 
 	  /// <summary>
@@ -577,7 +573,7 @@ namespace opennlp.tools.util.featuregen
 		  throw new IllegalStateException(e);
 		}
 
-		Document xmlDescriptorDOM;
+		XmlDocument xmlDescriptorDOM;
 
 		try
 		{
@@ -588,9 +584,9 @@ namespace opennlp.tools.util.featuregen
 		  throw new InvalidFormatException("Descriptor is not valid XML!", e);
 		}
 
-		Element generatorElement = xmlDescriptorDOM.DocumentElement;
+		XmlElement generatorXmlElement = xmlDescriptorDOM.DocumentElement;
 
-		return createGenerator(generatorElement, resourceManager);
+		return createGenerator(generatorXmlElement, resourceManager);
 	  }
 	}
 

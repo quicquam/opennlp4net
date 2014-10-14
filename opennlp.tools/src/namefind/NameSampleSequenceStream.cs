@@ -82,7 +82,7 @@ namespace opennlp.tools.namefind
 
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @SuppressWarnings("unchecked") public java.util.Iterator<opennlp.model.Sequence> iterator()
-	  public virtual IEnumerator<Sequence> iterator()
+	  public virtual IEnumerator<Sequence<NameSample>> iterator()
 	  {
 		return new NameSampleSequenceIterator(samples.GetEnumerator());
 	  }
@@ -98,7 +98,7 @@ namespace opennlp.tools.namefind
          }
 	}
 
-	internal class NameSampleSequenceIterator : IEnumerator<Sequence>
+	internal class NameSampleSequenceIterator : IEnumerator<Sequence<NameSample>>
 	{
 
 	  private IEnumerator<NameSample> psi;
@@ -158,7 +158,7 @@ namespace opennlp.tools.namefind
 	        throw new NotImplementedException();
 	    }
 
-	    public Sequence Current { get; private set; }
+	    public Sequence<NameSample> Current { get; private set; }
 
 	    object IEnumerator.Current
 	    {

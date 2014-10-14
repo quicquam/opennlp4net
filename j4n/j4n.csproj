@@ -49,6 +49,7 @@
     <Compile Include="Exceptions\NoSuchAlgorithmException.cs" />
     <Compile Include="Exceptions\NoSuchElementException.cs" />
     <Compile Include="Exceptions\NumberFormatException.cs" />
+    <Compile Include="Exceptions\ParserConfigurationException.cs" />
     <Compile Include="Exceptions\UnsupportedEncodingException.cs" />
     <Compile Include="Interfaces\Callable.cs" />
     <Compile Include="Interfaces\Closeable.cs" />
