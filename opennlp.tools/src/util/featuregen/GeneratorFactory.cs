@@ -18,6 +18,7 @@ using System.Collections.Generic;
  */
 using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 
@@ -560,29 +561,9 @@ namespace opennlp.tools.util.featuregen
 	  public static AdaptiveFeatureGenerator create(InputStream xmlDescriptorIn, FeatureGeneratorResourceProvider resourceManager)
 	  {
 
-		DocumentBuilderFactory documentBuilderFacoty = DocumentBuilderFactory.newInstance();
+		var xmlDescriptorDOM = new XmlDocument();
 
-		DocumentBuilder documentBuilder;
-
-		try
-		{
-		  documentBuilder = documentBuilderFacoty.newDocumentBuilder();
-		}
-		catch (ParserConfigurationException e)
-		{
-		  throw new IllegalStateException(e);
-		}
-
-		XmlDocument xmlDescriptorDOM;
-
-		try
-		{
-		  xmlDescriptorDOM = documentBuilder.parse(xmlDescriptorIn);
-		}
-		catch (SAXException e)
-		{
-		  throw new InvalidFormatException("Descriptor is not valid XML!", e);
-		}
+          xmlDescriptorDOM.Load(xmlDescriptorIn.Stream);
 
 		XmlElement generatorXmlElement = xmlDescriptorDOM.DocumentElement;
 
