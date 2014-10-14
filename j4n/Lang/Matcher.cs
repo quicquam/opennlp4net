@@ -8,14 +8,28 @@ namespace j4n.Lang
 {
     public class Matcher
     {
+        private string _input;
+        private Pattern _pattern;
+
+        public Matcher(string input)
+        {
+            _input = input;
+        }
+        
+        public Matcher(Pattern pattern, string input)
+        {
+            _pattern = pattern;
+            _input = input;
+        }
+
         public bool find()
         {
-            throw new NotImplementedException();
+            return _pattern.ToString() == _input;
         }
 
         public bool matches()
         {
-            throw new NotImplementedException();
+            return _pattern._regex.IsMatch(_input);
         }
     }
 }

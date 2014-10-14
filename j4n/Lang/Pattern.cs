@@ -2,25 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace j4n.Lang
 {
     public class Pattern
     {
+        public readonly Regex _regex;
+        
         public static Pattern compile(string s)
         {
-            throw new NotImplementedException();
+            return new Pattern(s);
         }
 
-        public Matcher matcher(string line)
+        public Pattern(string s)
         {
-            throw new NotImplementedException();
+            _regex = new Regex(s);
+        }
+
+        public Matcher matcher(string input)
+        {
+            return new Matcher(this, input);
         }
 
         public string pattern()
         {
-            throw new NotImplementedException();
+            return _regex.ToString();
         }
     }
 }

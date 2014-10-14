@@ -15,14 +15,14 @@ namespace opennlp.tools.Tests
     {
         private const string ModelPath = "C:\\opennlp-models\\";
         private string _modelFilePath;
-        private string _testSentence;
+        private string _testTextBlock;
 
         [SetUp]
         public void Setup()
         {
             _modelFilePath = string.Format("{0}{1}", ModelPath, "en-sent.bin");
             var sr = new StreamReader("C:\\opennlp-models\\test-sentence.txt");
-            _testSentence = sr.ReadToEnd();
+            _testTextBlock = sr.ReadToEnd();
         }
 
         [TearDown]
@@ -31,7 +31,7 @@ namespace opennlp.tools.Tests
         }
 
         [Test]
-        public void SentdetectCanLoadModelFile()
+        public void SentdetectCanGetSentenceArrayFromTestData()
         {
             InputStream modelIn = new FileInputStream(_modelFilePath);
 
@@ -39,7 +39,8 @@ namespace opennlp.tools.Tests
             {
                 var model = new SentenceModel(modelIn);
                 var sd = new SentenceDetectorME(model);
-                var sentences = sd.sentDetect(_testSentence);                
+                var sentences = sd.sentDetect(_testTextBlock);
+                Assert.AreEqual(sentences.Count(), 7);
             }
             catch (IOException e)
             {

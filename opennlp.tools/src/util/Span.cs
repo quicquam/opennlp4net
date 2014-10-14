@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -369,7 +371,7 @@ namespace opennlp.tools.util
 
 	    public static string[] spansToStrings(Span[] tokenizePos, string tokens)
 	    {
-	        throw new NotImplementedException();
+	        return tokenizePos.Select(span => tokens.Substring(span.Start, span.length())).ToArray();
 	    }
 	}
 

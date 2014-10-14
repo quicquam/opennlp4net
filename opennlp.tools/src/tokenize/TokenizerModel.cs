@@ -154,15 +154,13 @@ namespace opennlp.tools.tokenize
 		}
 	  }
 
-	  public TokenizerFactory Factory
+      public TokenizerFactory Factory
 	  {
 		  get
 		  {
 			return (TokenizerFactory) this.toolFactory;
 		  }
 	  }
-
-	    public TokenizerFactory toolFactory { get; set; }
 
 	    protected internal override Type DefaultFactory
 	  {

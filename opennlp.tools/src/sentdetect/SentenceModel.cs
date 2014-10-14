@@ -28,7 +28,6 @@ namespace opennlp.tools.sentdetect
 	using AbstractModel = opennlp.model.AbstractModel;
 	using GenericModelReader = opennlp.model.GenericModelReader;
 	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
 	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
     using BaseModel = opennlp.tools.util.model.BaseModel<SentenceModel>;
 	using ModelUtil = opennlp.tools.util.model.ModelUtil;
