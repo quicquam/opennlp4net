@@ -71,6 +71,7 @@
     <Compile Include="IO\Reader\BufferedReader.cs" />
     <Compile Include="IO\InputStream\DataInputStream.cs" />
     <Compile Include="IO\InputStream\FileInputStream.cs" />
+    <Compile Include="IO\Reader\Channels.cs" />
     <Compile Include="IO\Reader\FileReader.cs" />
     <Compile Include="IO\InputStream\GZIPInputStream.cs" />
     <Compile Include="IO\InputStream\InputStream.cs" />

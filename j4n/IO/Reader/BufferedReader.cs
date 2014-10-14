@@ -18,6 +18,11 @@ namespace j4n.IO.Reader
         public string readLine()
         {
             throw new NotImplementedException();
-        }        
+        }
+
+        public void reset()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

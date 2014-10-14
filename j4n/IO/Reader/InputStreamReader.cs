@@ -33,5 +33,10 @@ namespace j4n.IO.Reader
         {
             throw new System.NotImplementedException();
         }
+
+        public InputStreamReader(InputStream.InputStream bufferedInputStream, Charset encoding)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
