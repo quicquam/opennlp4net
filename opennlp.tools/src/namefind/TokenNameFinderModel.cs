@@ -47,7 +47,7 @@ namespace opennlp.tools.namefind
 
 	  public class FeatureGeneratorCreationError : Exception
 	  {
-		internal FeatureGeneratorCreationError(Exception t) : base(t)
+		internal FeatureGeneratorCreationError(Exception t) : base(t.Message)
 		{
 		}
 	  }
@@ -63,12 +63,22 @@ namespace opennlp.tools.namefind
 		  return ModelUtil.read(@in);
 		}
 
+	      public void serialize(byte[] artifact, OutputStream @out)
+	      {
+	          throw new NotImplementedException();
+	      }
+
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void serialize(byte[] artifact, java.io.OutputStream out) throws java.io.IOException
 		public virtual void serialize(sbyte[] artifact, OutputStream @out)
 		{
 		  @out.write(artifact);
 		}
+
+	      byte[] ArtifactSerializer<byte[]>.create(InputStream @in)
+	      {
+	          throw new NotImplementedException();
+	      }
 	  }
 
 	  private const string COMPONENT_NAME = "NameFinderME";

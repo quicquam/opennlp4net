@@ -86,7 +86,7 @@ namespace opennlp.tools.namefind
 	  public void updateAdaptiveData(string[] tokens, String[] outcomes)
 	  {
 
-		if (tokens != null && outcomes != null && tokens.length != outcomes.length)
+		if (tokens != null && outcomes != null && tokens.Length != outcomes.Length)
 		{
 			throw new System.ArgumentException("The tokens and outcome arrays MUST have the same size!");
 		}
@@ -115,7 +115,7 @@ namespace opennlp.tools.namefind
 	  /// <returns> the context for finding names at the specified index. </returns>
 	  public string[] getContext(int index, String[] tokens, String[] preds, Object[] additionalContext)
 	  {
-		IList<string> features = new List<string>();
+		List<string> features = new List<string>();
 
 		foreach (AdaptiveFeatureGenerator featureGenerator in featureGenerators)
 		{

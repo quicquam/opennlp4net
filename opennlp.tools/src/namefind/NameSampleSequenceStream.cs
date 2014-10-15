@@ -70,12 +70,12 @@ namespace opennlp.tools.namefind
 	  public virtual Event[] updateContext(Sequence<NameSample> sequence, AbstractModel model)
 	  {
 		Sequence<NameSample> pss = sequence;
-		TokenNameFinder tagger = new NameFinderME(new TokenNameFinderModel("x-unspecified", model, System.Linq.Enumerable.Empty<string, object>(), null));
+		TokenNameFinder tagger = new NameFinderME(new TokenNameFinderModel("x-unspecified", model, new Dictionary<string, object>(), null));
 		string[] sentence = pss.Source.Sentence;
 		string[] tags = NameFinderEventStream.generateOutcomes(tagger.find(sentence), null, sentence.Length);
 		Event[] events = new Event[sentence.Length];
 
-		NameFinderEventStream.generateEvents(sentence,tags,pcg).toArray(events);
+		events = NameFinderEventStream.generateEvents(sentence,tags,pcg).ToArray();
 
 		return events;
 	  }

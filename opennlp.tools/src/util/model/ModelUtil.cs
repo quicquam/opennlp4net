@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using j4n.Interfaces;
+using j4n.IO.InputStream;
 using opennlp.model;
 using opennlp.nonjava.helperclasses;
 
@@ -43,6 +44,11 @@ namespace opennlp.tools.util.model
         public static void writeModel(AbstractModel artifact, OutputStream @out)
         {
             throw new System.NotImplementedException();
+        }
+
+        public static sbyte[] read(InputStream @in)
+        {
+            throw new NotImplementedException();
         }
     }
 }

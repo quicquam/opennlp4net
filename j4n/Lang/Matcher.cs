@@ -31,5 +31,20 @@ namespace j4n.Lang
         {
             return _pattern._regex.IsMatch(_input);
         }
+
+        public string group(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int? start()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int? end()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

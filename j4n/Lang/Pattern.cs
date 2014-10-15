@@ -30,5 +30,10 @@ namespace j4n.Lang
         {
             return _regex.ToString();
         }
+
+        public Matcher matcher(StringBuilder sentenceString)
+        {
+            return matcher(sentenceString.ToString());
+        }
     }
 }

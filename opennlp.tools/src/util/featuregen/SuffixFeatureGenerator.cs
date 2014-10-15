@@ -36,7 +36,7 @@ namespace opennlp.tools.util.featuregen
 		return suffs;
 	  }
 
-	  public override void createFeatures(IList<string> features, string[] tokens, int index, string[] previousOutcomes)
+	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
 	  {
 		string[] suffs = SuffixFeatureGenerator.getSuffixes(tokens[index]);
 		foreach (string suff in suffs)

@@ -7,6 +7,11 @@
             throw new System.NotImplementedException();
         }
 
+        public StringList(string[] tokensSearching)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public string getToken(int i)
         {
             throw new System.NotImplementedException();

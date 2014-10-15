@@ -29,7 +29,7 @@ namespace opennlp.tools.util.featuregen
 
 	  private IDictionary<string, string> previousMap = new Dictionary<string, string>();
 
-	  public virtual void createFeatures(IList<string> features, string[] tokens, int index, string[] preds)
+	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
 	  {
 		features.Add("pd=" + previousMap[tokens[index]]);
 	  }

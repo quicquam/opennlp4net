@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -18,6 +20,7 @@ using System.Text;
  * limitations under the License.
  */
 using j4n.Lang;
+using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.namefind
 {
@@ -62,8 +65,8 @@ namespace opennlp.tools.namefind
 		  names = new Span[0];
 		}
 
-		this.sentence = Collections.unmodifiableList(new List<string>(Arrays.asList(sentence)));
-		this.names = Collections.unmodifiableList(new List<Span>(Arrays.asList(names)));
+		this.sentence = sentence.ToList();
+		this.names = names.ToList();
 
 		if (additionalContext != null)
 		{

@@ -81,7 +81,7 @@ namespace opennlp.tools.util.featuregen
 	  {
 	  }
 
-	  public virtual void createFeatures(IList<string> features, string[] tokens, int index, string[] preds)
+	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
 	  {
 		// current features
 		generator.createFeatures(features, tokens, index, preds);
@@ -92,7 +92,7 @@ namespace opennlp.tools.util.featuregen
 		  if (index - i >= 0)
 		  {
 
-			IList<string> prevFeatures = new List<string>();
+			List<string> prevFeatures = new List<string>();
 
 			generator.createFeatures(prevFeatures, tokens, index - i, preds);
 
@@ -109,7 +109,7 @@ namespace opennlp.tools.util.featuregen
 		  if (i + index < tokens.Length)
 		  {
 
-			IList<string> nextFeatures = new List<string>();
+			List<string> nextFeatures = new List<string>();
 
 			generator.createFeatures(nextFeatures, tokens, index + i, preds);
 

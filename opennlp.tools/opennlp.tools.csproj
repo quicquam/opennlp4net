@@ -66,6 +66,7 @@
     <Compile Include="src\namefind\TokenNameFinderEvaluationMonitor.cs" />
     <Compile Include="src\namefind\TokenNameFinderEvaluator.cs" />
     <Compile Include="src\namefind\TokenNameFinderModel.cs" />
+    <Compile Include="src\ngram\NGramModel.cs" />
     <Compile Include="src\nonjava\StringHelperClass.cs" />
     <Compile Include="src\sentdetect\AbstractEndOfSentenceScanner.cs" />
     <Compile Include="src\sentdetect\DefaultEndOfSentenceScanner.cs" />
@@ -115,6 +116,9 @@
     <Compile Include="src\tokenize\WhitespaceTokenStream.cs" />
     <Compile Include="src\util\AbstractEventStream.cs" />
     <Compile Include="src\util\BaseToolFactory.cs" />
+    <Compile Include="src\util\BeamSearch.cs" />
+    <Compile Include="src\util\BeamSearchContextGenerator.cs" />
+    <Compile Include="src\util\Cache.cs" />
     <Compile Include="src\util\cmdline\PerformanceMonitor.cs" />
     <Compile Include="src\util\CrossValidationPartitioner.cs" />
     <Compile Include="src\util\eval\EvaluationMonitor.cs" />
@@ -157,6 +161,8 @@
     <Compile Include="src\util\model\ModelUtil.cs" />
     <Compile Include="src\util\model\PropertiesSerializer.cs" />
     <Compile Include="src\util\PlainTextByLineStream.cs" />
+    <Compile Include="src\util\Sequence.cs" />
+    <Compile Include="src\util\SequenceValidator.cs" />
     <Compile Include="src\util\Span.cs" />
     <Compile Include="src\util\StringList.cs" />
     <Compile Include="src\util\StringUtil.cs" />

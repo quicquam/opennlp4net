@@ -53,7 +53,7 @@ namespace opennlp.tools.util.featuregen
 			tokenizer = supportTokenizer;
 		}
 
-		public override void createFeatures(IList<string> feats, string[] toks, int index, string[] preds)
+		public override void createFeatures(List<string> feats, string[] toks, int index, string[] preds)
 		{
 
 		  string[] tokenized = tokenizer.tokenize(toks[index]);

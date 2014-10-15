@@ -126,7 +126,7 @@ namespace opennlp.tools.util.featuregen
 	  }
 
 
-	  public override void createFeatures(IList<string> features, string[] tokens, int index, string[] preds)
+	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
 	  {
 		string wordClass = tokenFeature(tokens[index]);
 		features.Add(TOKEN_CLASS_PREFIX + "=" + wordClass);

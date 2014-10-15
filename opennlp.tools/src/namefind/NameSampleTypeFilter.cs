@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.Serialization;
 using opennlp.nonjava.helperclasses;
 
@@ -36,12 +37,12 @@ namespace opennlp.tools.namefind
 
 	  public NameSampleTypeFilter(string[] types, ObjectStream<NameSample> samples) : base(samples)
 	  {
-		this.types = Collections.unmodifiableSet(new HashSet<string>(Arrays.asList(types)));
+		this.types = new HashSet<string>(types);
 	  }
 
 	  public NameSampleTypeFilter(HashSet<string> types, ObjectStream<NameSample> samples) : base(samples)
 	  {
-		this.types = Collections.unmodifiableSet(new HashSet<string>(types));
+		this.types = new HashSet<string>(types);
 	  }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:

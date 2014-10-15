@@ -67,7 +67,7 @@ namespace opennlp.tools.namefind
 
 	  public virtual Span[] find(string[] textTokenized)
 	  {
-		IList<Span> namesFound = new LinkedList<Span>();
+		var namesFound = new LinkedList<Span>();
 
 		for (int offsetFrom = 0; offsetFrom < textTokenized.Length; offsetFrom++)
 		{

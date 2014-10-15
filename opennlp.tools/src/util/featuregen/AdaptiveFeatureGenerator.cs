@@ -52,7 +52,7 @@ namespace opennlp.tools.util.featuregen
 	  /// <param name="tokens"> The tokens of the sentence or other text unit being processed. </param>
 	  /// <param name="index"> The index of the token which is currently being processed. </param>
 	  /// <param name="previousOutcomes"> The outcomes for the tokens prior to the specified index. </param>
-	  void createFeatures(IList<string> features, string[] tokens, int index, string[] previousOutcomes);
+	  void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes);
 
 	  /// <summary>
 	  /// Informs the feature generator that the specified tokens have been classified with the

@@ -29,7 +29,7 @@ namespace opennlp.tools.util.featuregen
 
 	  public const string OUTCOME_PRIOR_FEATURE = "def";
 
-	  public override void createFeatures(IList<string> features, string[] tokens, int index, string[] previousOutcomes)
+	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
 	  {
 		features.Add(OUTCOME_PRIOR_FEATURE);
 	  }

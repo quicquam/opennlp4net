@@ -39,7 +39,7 @@ namespace opennlp.tools.util.featuregen
 	  {
 	  }
 
-	  public override void createFeatures(IList<string> features, string[] tokens, int index, string[] preds)
+	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
 	  {
 		if (lowercase)
 		{

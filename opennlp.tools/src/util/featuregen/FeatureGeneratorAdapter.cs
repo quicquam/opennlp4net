@@ -28,7 +28,7 @@ namespace opennlp.tools.util.featuregen
 	/// </summary>
 	public abstract class FeatureGeneratorAdapter : AdaptiveFeatureGenerator
 	{
-		public abstract void createFeatures(IList<string> features, string[] tokens, int index, string[] previousOutcomes);
+		public abstract void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes);
 
 	  public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
 	  {

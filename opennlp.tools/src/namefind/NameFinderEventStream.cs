@@ -109,9 +109,9 @@ namespace opennlp.tools.namefind
 		return outcomes;
 	  }
 
-	  public static IList<Event> generateEvents(string[] sentence, string[] outcomes, NameContextGenerator cg)
+	  public static List<Event> generateEvents(string[] sentence, string[] outcomes, NameContextGenerator cg)
 	  {
-		IList<Event> events = new List<Event>(outcomes.Length);
+		List<Event> events = new List<Event>(outcomes.Length);
 		for (int i = 0; i < outcomes.Length; i++)
 		{
 		  events.Add(new Event(outcomes[i], cg.getContext(i, sentence, outcomes,null)));

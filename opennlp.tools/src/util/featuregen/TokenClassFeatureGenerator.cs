@@ -41,7 +41,7 @@ namespace opennlp.tools.util.featuregen
 		this.generateWordAndClassFeature = genearteWordAndClassFeature;
 	  }
 
-	  public override void createFeatures(IList<string> features, string[] tokens, int index, string[] preds)
+	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
 	  {
 		string wordClass = FeatureGeneratorUtil.tokenFeature(tokens[index]);
 		features.Add(TOKEN_CLASS_PREFIX + "=" + wordClass);

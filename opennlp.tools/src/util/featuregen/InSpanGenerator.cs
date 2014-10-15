@@ -62,7 +62,7 @@ namespace opennlp.tools.util.featuregen
 		this.finder = finder;
 	  }
 
-	  public override void createFeatures(IList<string> features, string[] tokens, int index, string[] preds)
+	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
 	  {
 		// cache results for sentence
 		if (currentSentence != tokens)

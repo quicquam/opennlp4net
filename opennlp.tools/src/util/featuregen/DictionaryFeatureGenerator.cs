@@ -57,7 +57,7 @@ namespace opennlp.tools.util.featuregen
 		isg = new InSpanGenerator(name, new DictionaryNameFinder(dict));
 	  }
 
-	  public override void createFeatures(IList<string> features, string[] tokens, int index, string[] previousOutcomes)
+	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
 	  {
 		isg.createFeatures(features, tokens, index, previousOutcomes);
 	  }

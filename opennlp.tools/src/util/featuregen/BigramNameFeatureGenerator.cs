@@ -23,7 +23,7 @@ namespace opennlp.tools.util.featuregen
 	public class BigramNameFeatureGenerator : FeatureGeneratorAdapter
 	{
 
-	  public override void createFeatures(IList<string> features, string[] tokens, int index, string[] previousOutcomes)
+	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
 	  {
 		string wc = FeatureGeneratorUtil.tokenFeature(tokens[index]);
 		//bi-gram features 

@@ -12,6 +12,8 @@ namespace opennlp.tools.dictionary
             throw new System.NotImplementedException();
         }
 
+        public decimal MaxTokenCount { get; set; }
+
         public HashSet<string> asStringSet()
         {
             throw new System.NotImplementedException();

@@ -77,7 +77,7 @@ namespace opennlp.tools.util.featuregen
 	  /// Calls the <seealso cref="AdaptiveFeatureGenerator#createFeatures(List, String[], int, String[])"/>
 	  /// method on all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
 	  /// </summary>
-	  public virtual void createFeatures(IList<string> features, string[] tokens, int index, string[] previousOutcomes)
+	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
 	  {
 
 		foreach (AdaptiveFeatureGenerator generator in generators)
