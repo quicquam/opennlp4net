@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -98,7 +99,7 @@ namespace opennlp.tools.namefind
 		  }
 		}
 
-		return annotations.toArray(new Span[annotations.Count]);
+		return annotations.ToArray();
 	  }
 
 	  public void clearAdaptiveData()

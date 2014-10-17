@@ -11,5 +11,13 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public string getFMeasure()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string RecallScore { get; set; }
+        public string PrecisionScore { get; set; }
     }
 }

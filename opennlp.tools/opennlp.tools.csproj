@@ -151,7 +151,9 @@
     <Compile Include="src\util\featuregen\TokenPatternFeatureGenerator.cs" />
     <Compile Include="src\util\featuregen\WindowFeatureGenerator.cs" />
     <Compile Include="src\util\FilterObjectStream.cs" />
+    <Compile Include="src\util\Heap.cs" />
     <Compile Include="src\util\InvalidFormatException.cs" />
+    <Compile Include="src\util\ListHeap.cs" />
     <Compile Include="src\util\model\ArtifactProvider.cs" />
     <Compile Include="src\util\model\ArtifactSerializer.cs" />
     <Compile Include="src\util\model\ArtifactSerializers.cs" />

@@ -172,7 +172,8 @@ namespace opennlp.tools.util
 		last.next = null;
 
 		// remove old value from cache
-		temp = (ObjectWrapper) map.Remove(lastKey);
+	    temp = (ObjectWrapper) map[lastKey];
+        map.Remove(lastKey);
 		//update wrapper
 		temp.@object = value;
 		temp.listItem = first;
@@ -226,12 +227,13 @@ namespace opennlp.tools.util
 
 	  public virtual bool containsValue(object value)
 	  {
-		return map.ContainsValue(value);
+		return map.Contains(value);
 	  }
 
 	  public virtual HashSet<Object> entrySet()
 	  {
-          return map.SetOfKeyValuePairs<Object>();
+          //return map.SetOfKeyValuePairs<Object>();
+	      throw new NotFiniteNumberException();
 	  }
 
 	  public virtual bool Empty
@@ -244,18 +246,21 @@ namespace opennlp.tools.util
 
 	  public virtual HashSet<Object> keySet()
 	  {
-		return map.Keys;
+          throw new NotImplementedException();
+		//return map.Keys;
 	  }
 
 	  public virtual void putAll(IDictionary t)
 	  {
 //JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
-		map.putAll(t);
+	      map = t;
 	  }
 
 	  public virtual object remove(object key)
 	  {
-		return map.Remove(key);
+	      var o = map[key];
+          map.Remove(key);
+	      return o;
 	  }
 
 	    public void CopyTo(Array array, int index)

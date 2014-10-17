@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+using System;
+
 namespace opennlp.tools.util.featuregen
 {
 
@@ -141,20 +143,19 @@ namespace opennlp.tools.util.featuregen
 		{
 //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
 //ORIGINAL LINE: final char ch = token.charAt(i);
-		  char ch = token[i];
+		  Char ch = token[i];
 
 //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
 //ORIGINAL LINE: final int letterType = Character.getType(ch);
-		  int letterType = char.getType(ch);
 
-		  bool isLetter = letterType == char.UPPERCASE_LETTER || letterType == char.LOWERCASE_LETTER || letterType == char.TITLECASE_LETTER || letterType == char.MODIFIER_LETTER || letterType == char.OTHER_LETTER;
+		  bool isLetter = Char.IsUpper(ch) || Char.IsLower(ch); // || letterType == char.TITLECASE_LETTER || letterType == char.MODIFIER_LETTER || letterType == char.OTHER_LETTER;
 
 		  if (isLetter)
 		  {
 			pattern |= CONTAINS_LETTERS;
 			pattern &= ~ALL_DIGIT;
 
-			if (letterType == char.UPPERCASE_LETTER)
+            if (Char.IsUpper(ch))
 			{
 			  if (i == 0)
 			  {
@@ -178,7 +179,7 @@ namespace opennlp.tools.util.featuregen
 			pattern &= ~ALL_CAPITAL_LETTER;
 			pattern &= ~ALL_LOWERCASE_LETTER;
 
-			if (letterType == char.DECIMAL_DIGIT_NUMBER)
+			if (Char.IsDigit(ch))
 			{
 			  pattern |= CONTAINS_DIGIT;
 			  digits++;

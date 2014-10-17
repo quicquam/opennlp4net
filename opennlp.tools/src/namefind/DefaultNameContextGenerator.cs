@@ -51,7 +51,7 @@ namespace opennlp.tools.namefind
 	  [Obsolete("use the other constructor and always provide the feature generators")]
 	  public DefaultNameContextGenerator()
 	  {
-		this((AdaptiveFeatureGenerator[]) null);
+		Init(null);
 	  }
 
 	  /// <summary>
@@ -59,18 +59,23 @@ namespace opennlp.tools.namefind
 	  /// </summary>
 	  public DefaultNameContextGenerator(AdaptiveFeatureGenerator featureGenerators)
 	  {
-
-		if (featureGenerators != null)
-		{
-		  this.featureGenerators = new[] {featureGenerators};
-		}
-		else
-		{
-		  // use defaults
-
-		  this.featureGenerators = new AdaptiveFeatureGenerator[]{windowFeatures, new PreviousMapFeatureGenerator()};
-		}
+          Init(featureGenerators);		
 	  }
+
+      private void Init(AdaptiveFeatureGenerator featureGenerators)
+      {
+
+          if (featureGenerators != null)
+          {
+              this.featureGenerators = new[] { featureGenerators };
+          }
+          else
+          {
+              // use defaults
+
+              this.featureGenerators = new AdaptiveFeatureGenerator[] { windowFeatures, new PreviousMapFeatureGenerator() };
+          }
+      }
 
 	  public void addFeatureGenerator(AdaptiveFeatureGenerator generator)
 	  {

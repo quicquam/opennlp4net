@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 
 
 namespace opennlp.tools.util.featuregen
@@ -40,23 +40,15 @@ namespace opennlp.tools.util.featuregen
 	  /// <param name="generators"> array of generators, null values are not permitted </param>
 	  public AggregatedFeatureGenerator(params AdaptiveFeatureGenerator[] generators)
 	  {
+	      if (generators.Any(generator => generator == null))
+	      {
+	          throw new System.ArgumentException("null values in generators are not permitted!");
+	      }
 
-		foreach (AdaptiveFeatureGenerator generator in generators)
-		{
-		  if (generator == null)
-		  {
-			throw new System.ArgumentException("null values in generators are not permitted!");
-		  }
-		}
-
-		this.generators = new List<AdaptiveFeatureGenerator>(generators.Length);
-
-		Collections.addAll(this.generators, generators);
-
-		this.generators = Collections.unmodifiableCollection(this.generators);
+	      this.generators = generators;
 	  }
 
-	  public AggregatedFeatureGenerator(ICollection<AdaptiveFeatureGenerator> generators) : this(generators.toArray(new AdaptiveFeatureGenerator[generators.Count]))
+	  public AggregatedFeatureGenerator(ICollection<AdaptiveFeatureGenerator> generators) : this(generators.ToArray())
 	  {
 	  }
 

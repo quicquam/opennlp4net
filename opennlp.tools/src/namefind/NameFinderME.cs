@@ -16,6 +16,8 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
+using j4n.IO.InputStream;
 using j4n.Lang;
 using j4n.Serialization;
 
@@ -539,24 +541,24 @@ namespace opennlp.tools.namefind
 	  public static Span[] dropOverlappingSpans(Span[] spans)
 	  {
 
-		IList<Span> sortedSpans = new List<Span>(spans.Length);
-		Collections.addAll(sortedSpans, spans);
-		sortedSpans.Sort();
+		var sortedSpans = spans.ToArray();
 
-		IEnumerator<Span> it = sortedSpans.GetEnumerator();
+	      Array.Sort(sortedSpans);
+
+		var it = sortedSpans.GetEnumerator();
 
 
 		Span lastSpan = null;
 
 		while (it.MoveNext())
 		{
-		  Span span = it.Current;
+		  Span span = it.Current as Span;
 
 		  if (lastSpan != null)
 		  {
 			if (lastSpan.intersects(span))
 			{
-			  it.remove();
+			  it.Remove();
 			  span = lastSpan;
 			}
 		  }

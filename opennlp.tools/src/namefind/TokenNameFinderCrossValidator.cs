@@ -18,6 +18,7 @@ using System.Collections.Generic;
  */
 using System.Linq;
 using j4n.Serialization;
+using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.namefind
 {
@@ -158,7 +159,7 @@ namespace opennlp.tools.namefind
 
 			if (docSample != null)
 			{
-			  documentSamples = Arrays.asList(docSample.Samples).GetEnumerator();
+			  documentSamples = docSample.Samples.ToArray().GetEnumerator();
 
 			  return read();
 			}

@@ -83,6 +83,11 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
+        protected BaseModel(string namefinderme, string languageCode, IDictionary<string, string> manifestInfoEntries)
+        {
+            throw new NotImplementedException();
+        }
+
         private void loadModel(InputStream @in)
         {
             createBaseArtifactSerializers();
@@ -187,13 +192,18 @@ namespace opennlp.tools.util.model
             return entry.Substring(extensionIndex);
         }
 
+        public static IDictionary<string, ArtifactSerializer<Object>> staticCreateBaseArtifactSerializers()
+        {
+           throw new NotImplementedException();
+        }
+
         private void createBaseArtifactSerializers()
         {
             //JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
             artifactSerializers = createArtifactSerializers();
         }
 
-        private ArtifactSerializers createArtifactSerializers()
+        protected ArtifactSerializers createArtifactSerializers()
         {
             var serializers = new ArtifactSerializers();
 

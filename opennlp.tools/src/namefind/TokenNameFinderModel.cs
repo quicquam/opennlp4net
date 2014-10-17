@@ -114,7 +114,10 @@ namespace opennlp.tools.namefind
 		  // TODO: Add checks to not put resources where no serializer exists,
 		  // make that case fail here, should be done in the BaseModel
 //JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
-		  artifactMap.putAll(resources);
+		    foreach (var resource in resources)
+		    {
+                artifactMap.Add(resource);
+		    }
 		}
 		checkArtifactMap();
 	  }
@@ -223,12 +226,12 @@ namespace opennlp.tools.namefind
 	  public virtual TokenNameFinderModel updateFeatureGenerator(sbyte[] descriptor)
 	  {
 
-		TokenNameFinderModel model = new TokenNameFinderModel(Language, NameFinderModel, descriptor, System.Linq.Enumerable.Empty<string, object>(), System.Linq.Enumerable.Empty<string, string>());
+		TokenNameFinderModel model = new TokenNameFinderModel(Language, NameFinderModel, descriptor, new Dictionary<string, object>(), new Dictionary<string, string>());
 
 		// TODO: Not so nice!
 		model.artifactMap.Clear();
 //JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
-		model.artifactMap.putAll(artifactMap);
+		//model.artifactMap.putAll(artifactMap);
 		model.artifactMap[GENERATOR_DESCRIPTOR_ENTRY_NAME] = descriptor;
 
 		return model;
@@ -248,7 +251,7 @@ namespace opennlp.tools.namefind
 		//       Has to be redesigned, we need static access to default serializers
 		//       and these should be able to extend during runtime ?! 
 
-		IDictionary<string, ArtifactSerializer> serializers = BaseModel.createArtifactSerializers();
+          IDictionary<string, ArtifactSerializer<Object>> serializers = BaseModel<Object>.createArtifactSerializers();
 
 		serializers["featuregen"] = new ByteArraySerializer();
 

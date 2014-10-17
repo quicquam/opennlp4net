@@ -150,7 +150,12 @@ namespace opennlp.tools.namefind
 		}
 	  }
 
-	  private class ObjectStreamAnonymousInnerClassHelper : ObjectStream<NameSample>
+	    private void evaluate(ObjectStream<NameSample> iterator)
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    private class ObjectStreamAnonymousInnerClassHelper : ObjectStream<NameSample>
 	  {
 		  private opennlp.tools.namefind.NameSampleDataStream sampleStream;
 		  private PerformanceMonitor monitor;

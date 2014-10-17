@@ -18,6 +18,7 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using System.IO;
+using j4n.Exceptions;
 using j4n.Interfaces;
 using j4n.IO.InputStream;
 
@@ -62,7 +63,7 @@ namespace opennlp.tools.ngram
 //ORIGINAL LINE: public NGramModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
 	  public NGramModel(InputStream @in)
 	  {
-		DictionarySerializer.create(@in, new EntryInserterAnonymousInnerClassHelper(this));
+          DictionarySerializer.create(@in, new EntryInserterAnonymousInnerClassHelper(this));
 	  }
 
 	  private class EntryInserterAnonymousInnerClassHelper : EntryInserter
@@ -136,7 +137,7 @@ namespace opennlp.tools.ngram
 		if (oldCount == null)
 		{
 		  mNGrams.Remove(ngram);
-		  throw new NoSuchElementException();
+		  throw new NoSuchElementException("");
 		}
 	  }
 
@@ -280,7 +281,7 @@ namespace opennlp.tools.ngram
 		if (cutoffUnder > 0 || cutoffOver < int.MaxValue)
 		{
 
-		  for (IEnumerator<StringList> it = iterator(); it.MoveNext();)
+		  for (IEnumerator<StringList> it = GetEnumerator(); it.MoveNext();)
 		  {
 
 			StringList ngram = it.Current;
@@ -289,7 +290,7 @@ namespace opennlp.tools.ngram
 
 			if (count < cutoffUnder || count > cutoffOver)
 			{
-			  it.remove();
+			  remove(ngram);
 			}
 		  }
 		}
