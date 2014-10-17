@@ -541,9 +541,11 @@ namespace opennlp.tools.namefind
 	  public static Span[] dropOverlappingSpans(Span[] spans)
 	  {
 
-		var sortedSpans = spans.ToArray();
+		var sortedArray = spans.ToArray();
 
-	      Array.Sort(sortedSpans);
+        Array.Sort(sortedArray);
+
+	      var sortedSpans = sortedArray.ToList();
 
 		var it = sortedSpans.GetEnumerator();
 
@@ -552,13 +554,13 @@ namespace opennlp.tools.namefind
 
 		while (it.MoveNext())
 		{
-		  Span span = it.Current as Span;
+		  Span span = it.Current;
 
 		  if (lastSpan != null)
 		  {
 			if (lastSpan.intersects(span))
 			{
-			  it.Remove();
+			  sortedSpans.Remove(span);
 			  span = lastSpan;
 			}
 		  }
