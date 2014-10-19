@@ -5,7 +5,7 @@
 //	This class provides the logic to simulate Java rectangular arrays, which are jagged
 //	arrays with inner arrays of the same length. A size of -1 indicates unknown length.
 //----------------------------------------------------------------------------------------
-namespace opennlp.nonjava.helperclasses
+namespace opennlp.tools.nonjava.helperclasses
 {
     internal static class RectangularArrays
     {
@@ -74,6 +74,11 @@ namespace opennlp.nonjava.helperclasses
                 Array = null;
 
             return Array;
+        }
+
+        public static string[][] ReturnRectangularStringArray(int length, int i)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

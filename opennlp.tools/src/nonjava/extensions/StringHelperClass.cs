@@ -4,7 +4,7 @@
 //
 //	This class is used to convert some aspects of the Java String class.
 //-------------------------------------------------------------------------------------------
-namespace opennlp.tools.nonjava
+namespace opennlp.tools.nonjava.extensions
 {
     internal static class StringHelperClass
     {

@@ -236,28 +236,28 @@ namespace opennlp.tools.namefind
 
 		return model;
 	  }
-
-	  protected internal void createArtifactSerializers(IDictionary<string, ArtifactSerializer<Object>> serializers)
+/*
+	  protected internal void createArtifactSerializers(IDictionary<string, ArtifactSerializer<TokenNameFinderModel>> serializers)
 	  {
 		base.createArtifactSerializers(serializers);
 
 		serializers["featuregen"] = new ByteArraySerializer();
 	  }
 
-	  public static IDictionary<string, ArtifactSerializer<Object>> createArtifactSerializers()
+      public static IDictionary<string, ArtifactSerializer<TokenNameFinderModel>> createArtifactSerializers()
 	  {
 
 		// TODO: Not so nice, because code cannot really be reused by the other create serializer method
 		//       Has to be redesigned, we need static access to default serializers
 		//       and these should be able to extend during runtime ?! 
 
-          IDictionary<string, ArtifactSerializer<Object>> serializers = BaseModel<Object>.createArtifactSerializers();
+          IDictionary<string, ArtifactSerializer<TokenNameFinderModel>> serializers = BaseModel<TokenNameFinderModel>.createArtifactSerializers();
 
 		serializers["featuregen"] = new ByteArraySerializer();
 
 		return serializers;
 	  }
-
+        */
 	  // TODO: Write test for this method
 	  public static bool isModelValid(MaxentModel model)
 	  {

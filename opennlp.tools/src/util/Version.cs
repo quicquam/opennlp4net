@@ -20,6 +20,7 @@ using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Utils;
 using opennlp.tools.nonjava;
+using opennlp.tools.nonjava.extensions;
 
 
 namespace opennlp.tools.util

@@ -113,13 +113,14 @@ namespace opennlp.tools.namefind
 	  public virtual bool hasNext()
 	  {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		return psi.hasNext();
+		return psi.Current != null;
 	  }
 
 	  public virtual Sequence<NameSample> next()
 	  {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		NameSample sample = psi.next();
+	      psi.MoveNext();
+          NameSample sample = psi.Current;
 
 		string[] sentence = sample.Sentence;
 		string[] tags = NameFinderEventStream.generateOutcomes(sample.Names, null, sentence.Length);

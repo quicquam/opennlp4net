@@ -34,5 +34,10 @@ namespace opennlp.tools.dictionary
         {
             throw new System.NotImplementedException();
         }
+
+        public void put(StringList stringList)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

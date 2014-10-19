@@ -150,11 +150,6 @@ namespace opennlp.tools.namefind
 		}
 	  }
 
-	    private void evaluate(ObjectStream<NameSample> iterator)
-	    {
-	        throw new NotImplementedException();
-	    }
-
 	    private class ObjectStreamAnonymousInnerClassHelper : ObjectStream<NameSample>
 	  {
 		  private opennlp.tools.namefind.NameSampleDataStream sampleStream;
@@ -180,13 +175,6 @@ namespace opennlp.tools.namefind
 		  public virtual void reset()
 		  {
 			sampleStream.reset();
-		  }
-
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
-		  public virtual void close()
-		  {
-			sampleStream.close();
 		  }
 	  }
 	}

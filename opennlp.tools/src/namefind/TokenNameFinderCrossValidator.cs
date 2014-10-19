@@ -138,7 +138,7 @@ namespace opennlp.tools.namefind
 			this.outerInstance = outerInstance;
 		}
 
-		internal IEnumerator<NameSample> documentSamples = System.Linq.Enumerable.Empty<NameSample>().GetEnumerator();
+		internal IEnumerable<NameSample> documentSamples = new List<NameSample>();
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public NameSample read() throws java.io.IOException
@@ -148,10 +148,11 @@ namespace opennlp.tools.namefind
 		  // Note: Empty document samples should be skipped
 
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		  if (documentSamples.hasNext())
+		  if (documentSamples.GetEnumerator().Current != null)
 		  {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			return documentSamples.next();
+              documentSamples.GetEnumerator().MoveNext();
+              return documentSamples.GetEnumerator().Current;
 		  }
 		  else
 		  {
@@ -159,7 +160,7 @@ namespace opennlp.tools.namefind
 
 			if (docSample != null)
 			{
-			  documentSamples = docSample.Samples.ToArray().GetEnumerator();
+			  documentSamples = docSample.Samples.ToArray();
 
 			  return read();
 			}

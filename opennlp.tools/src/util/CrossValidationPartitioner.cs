@@ -17,7 +17,7 @@ namespace opennlp.tools.util
 
         public class TrainingSampleStream : ObjectStream<T>
         {
-            public object TestSampleStream { get; set; }
+            public ObjectStream<T> TestSampleStream { get; set; }
         }
 
         public TrainingSampleStream next()

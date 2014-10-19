@@ -66,7 +66,7 @@ namespace opennlp.tools.ngram
           DictionarySerializer.create(@in, new EntryInserterAnonymousInnerClassHelper(this));
 	  }
 
-	  private class EntryInserterAnonymousInnerClassHelper : EntryInserter
+	  public class EntryInserterAnonymousInnerClassHelper : EntryInserter
 	  {
 		  private readonly NGramModel outerInstance;
 
@@ -359,13 +359,14 @@ namespace opennlp.tools.ngram
 
 		  public virtual bool hasNext()
 		  {
-			return mDictionaryIterator.hasNext();
+		      return mDictionaryIterator.Current != null;
 		  }
 
 		  public virtual Entry next()
 		  {
 
-			StringList tokens = mDictionaryIterator.next();
+            mDictionaryIterator.MoveNext();
+		    StringList tokens = mDictionaryIterator.Current;
 
 			Attributes attributes = new Attributes();
 

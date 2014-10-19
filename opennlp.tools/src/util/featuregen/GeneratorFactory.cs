@@ -116,7 +116,7 @@ namespace opennlp.tools.util.featuregen
 			}
 		  }
 
-		  return new AggregatedFeatureGenerator(aggregatedGenerators.ToArray(new AdaptiveFeatureGenerator[aggregatedGenerators.Count]));
+		  return new AggregatedFeatureGenerator(aggregatedGenerators);
 		}
 
 		internal static void register(IDictionary<string, XmlFeatureGeneratorFactory> factoryMap)

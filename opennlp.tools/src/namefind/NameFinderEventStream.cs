@@ -18,6 +18,7 @@ using System.Collections.Generic;
  */
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.nonjava.helperclasses;
 
 namespace opennlp.tools.namefind
 {

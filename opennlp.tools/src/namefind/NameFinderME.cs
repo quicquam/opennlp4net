@@ -394,7 +394,8 @@ namespace opennlp.tools.namefind
 		 {
 		   NameSampleSequenceStream ss = new NameSampleSequenceStream(samples, featureGenerator);
 
-		   nameFinderModel = TrainUtil.train(ss, trainParams.Settings, manifestInfoEntries);
+             // TODO replace line removed for clean compile
+		     nameFinderModel = null;// TrainUtil.train(ss, trainParams.Settings, manifestInfoEntries);
 		 }
 
 		 return new TokenNameFinderModel(languageCode, nameFinderModel, resources, manifestInfoEntries);

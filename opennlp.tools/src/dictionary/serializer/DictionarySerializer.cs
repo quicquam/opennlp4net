@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using j4n.Interfaces;
 using j4n.IO.InputStream;
+using opennlp.tools.ngram;
 using opennlp.tools.tokenize;
 
 namespace opennlp.tools.dictionary.serializer
@@ -13,6 +14,11 @@ namespace opennlp.tools.dictionary.serializer
         }
 
         public static void create(InputStream @in, DetokenizationDictionary.EntryInserterAnonymousInnerClassHelper entryInserterAnonymousInnerClassHelper)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static void create(InputStream @in, NGramModel.EntryInserterAnonymousInnerClassHelper entryInserterAnonymousInnerClassHelper)
         {
             throw new System.NotImplementedException();
         }

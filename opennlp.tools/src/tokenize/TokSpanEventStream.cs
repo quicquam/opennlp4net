@@ -20,6 +20,7 @@ using j4n.Logging;
 using j4n.Serialization;
 using j4n.Utils;
 using opennlp.tools.nonjava;
+using opennlp.tools.nonjava.extensions;
 
 
 namespace opennlp.tools.tokenize

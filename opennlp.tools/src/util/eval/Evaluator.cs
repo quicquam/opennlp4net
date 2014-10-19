@@ -1,4 +1,7 @@
-﻿using opennlp.tools.sentdetect;
+﻿using System;
+using j4n.Serialization;
+using opennlp.tools.namefind;
+using opennlp.tools.sentdetect;
 using opennlp.tools.tokenize;
 
 namespace opennlp.tools.util.eval
@@ -9,6 +12,13 @@ namespace opennlp.tools.util.eval
         {
             throw new System.NotImplementedException();
         }
+
+
+        public void evaluate(ObjectStream<T> iterator)
+        {
+            throw new NotImplementedException();
+        }
+
 
         protected internal abstract T processSample(T sample);
     }

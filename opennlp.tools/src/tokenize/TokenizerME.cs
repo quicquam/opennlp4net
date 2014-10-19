@@ -20,6 +20,7 @@ using System.Linq;
 using j4n.Lang;
 using j4n.Serialization;
 using opennlp.tools.nonjava;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.tokenize
 {
