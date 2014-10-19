@@ -163,7 +163,7 @@ namespace opennlp.tools.namefind
 		beam = new BeamSearch<string>(beamSize, cg, mod, new NameFinderSequenceValidator(), beamSize);
 	  }
 
-	  private static AdaptiveFeatureGenerator createFeatureGenerator()
+	  public static AdaptiveFeatureGenerator createFeatureGenerator()
 	  {
 	   return new CachedFeatureGenerator(new AdaptiveFeatureGenerator[]{ new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2), new WindowFeatureGenerator(new TokenClassFeatureGenerator(true), 2, 2), new OutcomePriorFeatureGenerator(), new PreviousMapFeatureGenerator(), new BigramNameFeatureGenerator(), new SentenceFeatureGenerator(true, false)
 	  });

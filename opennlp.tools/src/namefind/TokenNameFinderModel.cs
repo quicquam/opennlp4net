@@ -44,8 +44,9 @@ namespace opennlp.tools.namefind
 	/// <seealso cref= NameFinderME </seealso>
     public class TokenNameFinderModel : BaseModel<TokenNameFinderModel>
 	{
+	    public static string SEQUENCE_CODEC_CLASS_NAME_PARAMETER;
 
-	  public class FeatureGeneratorCreationError : Exception
+	    public class FeatureGeneratorCreationError : Exception
 	  {
 		internal FeatureGeneratorCreationError(Exception t) : base(t.Message)
 		{
@@ -84,7 +85,7 @@ namespace opennlp.tools.namefind
 	  private const string COMPONENT_NAME = "NameFinderME";
 	  private const string MAXENT_MODEL_ENTRY_NAME = "nameFinder.model";
 
-	  private const string GENERATOR_DESCRIPTOR_ENTRY_NAME = "generator.featuregen";
+	    public const string GENERATOR_DESCRIPTOR_ENTRY_NAME = "generator.featuregen";
 
 	  public TokenNameFinderModel(string languageCode, AbstractModel nameFinderModel, sbyte[] generatorDescriptor, IDictionary<string, object> resources, IDictionary<string, string> manifestInfoEntries) : base(COMPONENT_NAME, languageCode, manifestInfoEntries)
 	  {
@@ -326,6 +327,11 @@ namespace opennlp.tools.namefind
 		  throw new InvalidFormatException("Token Name Finder model is incomplete!");
 		}
 	  }
+
+	    protected internal override Type DefaultFactory
+	    {
+	        get { return typeof(TokenNameFinderFactory); }
+	    }
 	}
 
 }

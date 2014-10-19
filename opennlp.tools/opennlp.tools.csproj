@@ -48,6 +48,7 @@
     <Compile Include="src\dictionary\serializer\DictionarySerializer.cs" />
     <Compile Include="src\dictionary\serializer\Entry.cs" />
     <Compile Include="src\dictionary\serializer\EntryInserter.cs" />
+    <Compile Include="src\namefind\BioCodec.cs" />
     <Compile Include="src\namefind\DefaultNameContextGenerator.cs" />
     <Compile Include="src\namefind\DictionaryNameFinder.cs" />
     <Compile Include="src\namefind\DocumentNameFinder.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="src\namefind\TokenNameFinderCrossValidator.cs" />
     <Compile Include="src\namefind\TokenNameFinderEvaluationMonitor.cs" />
     <Compile Include="src\namefind\TokenNameFinderEvaluator.cs" />
+    <Compile Include="src\namefind\TokenNameFinderFactory.cs" />
     <Compile Include="src\namefind\TokenNameFinderModel.cs" />
     <Compile Include="src\ngram\NGramModel.cs" />
     <Compile Include="src\nonjava\helperclasses\RectangularArrays.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="src\util\model\PropertiesSerializer.cs" />
     <Compile Include="src\util\PlainTextByLineStream.cs" />
     <Compile Include="src\util\Sequence.cs" />
+    <Compile Include="src\util\SequenceCodec.cs" />
     <Compile Include="src\util\SequenceValidator.cs" />
     <Compile Include="src\util\Span.cs" />
     <Compile Include="src\util\StringList.cs" />
@@ -186,6 +189,10 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\chunker\" />
+    <Folder Include="src\postag\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
