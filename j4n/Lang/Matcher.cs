@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace j4n.Lang
@@ -34,7 +35,9 @@ namespace j4n.Lang
 
         public string group(int i)
         {
-            throw new NotImplementedException();
+            var m = _pattern._regex.Match(_input);
+            var g = m.Groups[i];
+            return g.Value;
         }
 
         public int? start()
