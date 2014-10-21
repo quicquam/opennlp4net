@@ -53,12 +53,9 @@ namespace opennlp.tools.Tests
                 };
 
                 var nameSpans = nameFinder.find(sentence);
-                var res = "";
-
-                foreach (Span nameSpan in nameSpans)
-                {
-                    res = nameSpan.ToString();
-                }
+                Assert.AreEqual(1, nameSpans.Count());
+                Assert.AreEqual(0, nameSpans[0].Start);
+                Assert.AreEqual(2, nameSpans[0].End);
             }
             catch (IOException e)
             {
