@@ -31,7 +31,10 @@ namespace opennlp.tools.util.featuregen
 
 	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
 	  {
-		features.Add("pd=" + previousMap[tokens[index]]);
+	      if (previousMap.ContainsKey(tokens[index]))
+	      {
+              features.Add("pd=" + previousMap[tokens[index]]);
+          }
 	  }
 
 	  /// <summary>

@@ -168,8 +168,12 @@ namespace opennlp.tools.namefind
 	  /// <returns> the feature generator or null if there is no descriptor in the model </returns>
 	  public virtual AdaptiveFeatureGenerator createFeatureGenerators()
 	  {
-
-		sbyte[] descriptorBytes = (sbyte[]) artifactMap[GENERATOR_DESCRIPTOR_ENTRY_NAME];
+	      sbyte[] descriptorBytes = null;
+          
+          if (artifactMap.ContainsKey(GENERATOR_DESCRIPTOR_ENTRY_NAME))
+	      {
+              descriptorBytes = (sbyte[])artifactMap[GENERATOR_DESCRIPTOR_ENTRY_NAME];
+	      } 
 
 		if (descriptorBytes != null)
 		{
