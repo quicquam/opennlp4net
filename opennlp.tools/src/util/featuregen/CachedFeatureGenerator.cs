@@ -52,7 +52,7 @@ namespace opennlp.tools.util.featuregen
 
 		if (tokens == prevTokens)
 		{
-		  cacheFeatures = (List<string>) contextsCache[index];
+		  cacheFeatures = (List<string>) contextsCache.get(index);
 
 		  if (cacheFeatures != null)
 		  {
@@ -74,7 +74,7 @@ namespace opennlp.tools.util.featuregen
 
 		generator.createFeatures(cacheFeatures, tokens, index, previousOutcomes);
 
-		contextsCache[index] = cacheFeatures;
+        contextsCache.put(index, cacheFeatures);
 		features.AddRange(cacheFeatures);
 	  }
 

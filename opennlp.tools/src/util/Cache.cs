@@ -17,6 +17,7 @@ using System.Collections;
  * limitations under the License.
  */
 using System.Collections.Generic;
+using opennlp.tools.dictionary;
 
 namespace opennlp.tools.util
 {
@@ -27,7 +28,7 @@ namespace opennlp.tools.util
 	/// </summary>
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @SuppressWarnings("unchecked") public class Cache implements java.util.Map
-	public class Cache : IDictionary
+	public class Cache
 	{
 
 	  /// <summary>
@@ -101,23 +102,7 @@ namespace opennlp.tools.util
 		}
 	  }
 
-	    public IDictionaryEnumerator GetEnumerator()
-	    {
-	        throw new NotImplementedException();
-	    }
-
-	    public void Remove(object key)
-	    {
-	        throw new NotImplementedException();
-	    }
-
-	    public object this[object key]
-	    {
-	        get { throw new NotImplementedException(); }
-	        set { throw new NotImplementedException(); }
-	    }
-
-	    public virtual object put(object key, object value)
+	  public virtual object put(object key, object value)
 	  {
 		ObjectWrapper o = (ObjectWrapper) map[key];
 		if (o != null)
@@ -291,11 +276,6 @@ namespace opennlp.tools.util
 
 	    public bool IsReadOnly { get; private set; }
 	    public bool IsFixedSize { get; private set; }
-
-	    IEnumerator IEnumerable.GetEnumerator()
-	    {
-	        return GetEnumerator();
-	    }
 	}
 
 	internal class ObjectWrapper

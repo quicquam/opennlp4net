@@ -133,11 +133,11 @@ namespace opennlp.tools.util
 			double[] scores;
 			if (contextsCache != null)
 			{
-			  scores = (double[]) contextsCache[contexts];
+			  scores = (double[]) contextsCache.get(contexts);
 			  if (scores == null)
 			  {
 				scores = model.eval(contexts, probs);
-				contextsCache[contexts] = scores;
+				contextsCache.put(contexts, scores);
 			  }
 			}
 			else
