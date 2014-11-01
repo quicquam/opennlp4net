@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using j4n.IO.InputStream;
 using NUnit.Framework;
+using opennlp.maxent;
 using opennlp.tools.namefind;
 using opennlp.tools.sentdetect;
+using opennlp.tools.tokenize;
 using opennlp.tools.util;
 
 namespace opennlp.tools.Tests
@@ -42,17 +44,25 @@ namespace opennlp.tools.Tests
                 var model = new TokenNameFinderModel(modelIn);
                 var nameFinder = new NameFinderME(model);
 
-                var sentence = new []
-                {   "Pierre",
-                    "Vinken",
-                    "is",
-                    "61",
-                    "years",
-                    "old",
-                    "."
-                };
+                //1. convert sentence into tokens
+                var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
+                TokenizerModel modelToken = new TokenizerModel(modelInToken);
+                Tokenizer tokenizer = new TokenizerME(modelToken);
+                var tokens = tokenizer.tokenize("How far is it to the moon?");
 
-                var nameSpans = nameFinder.find(sentence);
+
+                var nameSpans = nameFinder.find(tokens);
+
+                //find probabilities for names
+                double[] spanProbs = nameFinder.probs(nameSpans);
+
+                //3. print names
+                for (int i = 0; i < nameSpans.Length; i++)
+                {
+                    var s = string.Format("Span: " + nameSpans[i].ToString());
+                    var c = string.Format("Covered text is: " + tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].Start + 1]);
+                    var p = string.Format("Probability is: " + spanProbs[i]);
+                }
                 Assert.AreEqual(1, nameSpans.Count());
                 Assert.AreEqual(0, nameSpans[0].Start);
                 Assert.AreEqual(2, nameSpans[0].End);
@@ -76,5 +86,63 @@ namespace opennlp.tools.Tests
             }
         }
 
+        [Test]
+        public void Test2()
+        {
+            			//1. convert sentence into tokens
+            var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
+		    	TokenizerModel modelToken = new TokenizerModel(modelInToken);
+                DumpObject(modelToken, "modelToken", "modelToken.out");
+
+                var gisModel = modelToken.MaxentModel as GISModel;
+                if (gisModel != null)
+                {
+                    DumpObject(gisModel, "GISModel", "gisModel.out");
+                }
+
+		    	Tokenizer tokenizer = new TokenizerME(modelToken);
+                DumpObject(tokenizer, "tokenizer", "tokenizer.out");
+
+                var tokens = new string[]
+                {
+                  "Why", "is", "Jack", "London", "so", "famous", "?"
+                };
+
+                ; // tokenizer.tokenize("Why is Jack London so famous?");
+ 
+		    	//2. find names
+                var modelIn = new FileInputStream("C:\\opennlp-models\\en-ner-person.bin");
+		    	TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
+                DumpObject(model, "tokenNameFinder", "tokenNameFinder.out");
+                
+                NameFinderME nameFinder = new NameFinderME(model);
+                DumpObject(nameFinder, "nameFinder", "nameFinder.out");
+
+		    	var nameSpans = nameFinder.find(tokens);
+		    	
+		    	//find probabilities for names
+		    	double[] spanProbs = nameFinder.probs(nameSpans);
+		    	
+		    	//3. print names
+		    	for( int i = 0; i<nameSpans.Length; i++) {
+		    		var s = string.Format("Span: "+nameSpans[i].ToString());
+		    		var c = string.Format("Covered text is: "+tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].Start+1]);
+		    		var p = string.Format("Probability is: "+spanProbs[i]);
+		    	}		    	
+
+        }
+
+        private void DumpObject(object value, string name, string fileName)
+        {
+            using (var writer = new StreamWriter(fileName))
+            {
+                Dumper.Dump(value, name, writer);
+            }
+
+            using (var writer = new StreamWriter(string.Format("x{0}", fileName)))
+            {
+                FullDumper.Write(value, 50, writer);
+            }
+        }
     }
 }

@@ -211,9 +211,7 @@ namespace opennlp.tools.tokenize
 		  {
 			int start = s.Start;
 			int end = s.End;
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final int origStart = s.getStart();
-			int origStart = s.Start;
+            int origStart = s.Start;
 			double tokenProb = 1.0;
 			for (int j = origStart + 1; j < end; j++)
 			{

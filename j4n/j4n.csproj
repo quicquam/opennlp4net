@@ -94,6 +94,7 @@
     <Compile Include="Lang\Matcher.cs" />
     <Compile Include="Lang\Pattern.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Object\HashExtension.cs" />
     <Compile Include="Object\StringTokenizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\MessageDigest.cs" />

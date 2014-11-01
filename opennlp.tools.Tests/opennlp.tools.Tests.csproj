@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dumper.cs" />
+    <Compile Include="FullDumper.cs" />
     <Compile Include="namefinderTests.cs" />
     <Compile Include="sentdetectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

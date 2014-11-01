@@ -17,6 +17,8 @@
  * under the License.
  */
 
+using j4n.Object;
+
 namespace opennlp.model
 {
 
@@ -74,7 +76,9 @@ namespace opennlp.model
 
 		for (int i = 0; i < mapping.Length; i++)
 		{
-		  int startIndex = indexForHash(mapping[i].GetHashCode(), keys.Length);
+            var s = mapping[i] as string;
+		    var hash = s != null ? s.hashCode() : mapping[i].GetHashCode();
+		    int startIndex = indexForHash(hash, keys.Length);
 
 		  int index = searchKey(startIndex, null, true);
 
@@ -135,7 +139,9 @@ namespace opennlp.model
 	  public virtual int get(T key)
 	  {
 
-		int startIndex = indexForHash(key.GetHashCode(), keys.Length);
+        var s = key as string;
+        var hash = s != null ? s.hashCode() : key.GetHashCode();
+        int startIndex = indexForHash(hash, keys.Length);
 
 		int index = searchKey(startIndex, key, false);
 

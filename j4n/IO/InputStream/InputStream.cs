@@ -149,7 +149,7 @@ namespace j4n.IO.InputStream
             {
                 throw new IOException("EOF");
             }
-            return Encoding.Default.GetString(buffer);
+            return Encoding.ASCII.GetString(buffer);
         }
 
         public static UInt64 ReverseBytes(UInt64 value)
