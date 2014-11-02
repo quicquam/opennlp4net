@@ -31,10 +31,15 @@ namespace opennlp.tools.util.featuregen
 
 	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
 	  {
+	      var feature = string.Format("pd=");
+	      var mapValue = "null";
+
 	      if (previousMap.ContainsKey(tokens[index]))
 	      {
-              features.Add("pd=" + previousMap[tokens[index]]);
-          }
+	          mapValue += previousMap[tokens[index]];
+	      }
+
+          features.Add(feature + mapValue);
 	  }
 
 	  /// <summary>
