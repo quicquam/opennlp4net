@@ -19,102 +19,84 @@
  * under the License.
  */
 using j4n.IO.File;
+using opennlp.model;
 
 namespace opennlp.maxent.io
 {
+    /// <summary>
+    /// Abstract parent class for readers of GISModels.
+    /// </summary>
+    public class GISModelReader : AbstractModelReader
+    {
 
+        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        //ORIGINAL LINE: public GISModelReader(java.io.File file) throws java.io.IOException
+        public GISModelReader(Jfile file)
+            : base(file)
+        {
+        }
 
-	using AbstractModel = opennlp.model.AbstractModel;
-	using AbstractModelReader = opennlp.model.AbstractModelReader;
-	using Context = opennlp.model.Context;
-	using DataReader = opennlp.model.DataReader;
+        public GISModelReader(DataReader dataReader)
+            : base(dataReader)
+        {
+        }
 
-	/// <summary>
-	/// Abstract parent class for readers of GISModels.
-	/// </summary>
-	public class GISModelReader : AbstractModelReader
-	{
+        /// <summary>
+        /// Retrieve a model from disk. It assumes that models are saved in the
+        /// following sequence:
+        /// 
+        /// <br/>
+        /// GIS (model type identifier) <br/>
+        /// 1. # of parameters (int) <br/>
+        /// 2. the correction constant (int) <br/>
+        /// 3. the correction constant parameter (double) <br/>
+        /// 4. # of outcomes (int) <br/>
+        /// * list of outcome names (String) <br/>
+        /// 5. # of different types of outcome patterns (int) <br/>
+        /// * list of (int int[]) <br/>
+        /// [# of predicates for which outcome pattern is true] [outcome pattern] <br/>
+        /// 6. # of predicates (int) <br/>
+        /// * list of predicate names (String)
+        /// 
+        /// <para>
+        /// If you are creating a reader for a format which won't work with this
+        /// (perhaps a database or xml file), override this method and ignore the other
+        /// methods provided in this abstract class.
+        /// 
+        /// </para>
+        /// </summary>
+        /// <returns> The GISModel stored in the format and location specified to this
+        ///         GISModelReader (usually via its the constructor). </returns>
+        public override AbstractModel constructModel()
+        {
+            int correctionConstant = GetCorrectionConstant();
+            double correctionParam = GetCorrectionParameter();
+            string[] outcomeLabels = GetOutcomes();
+            int[][] outcomePatterns = GetOutcomePatterns();
+            string[] predLabels = GetPredicates();
+            Context[] @params = GetParameters(outcomePatterns);
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public GISModelReader(java.io.File file) throws java.io.IOException
-	  public GISModelReader(Jfile file) : base(file)
-	  {
-	  }
+            return new GISModel(@params, predLabels, outcomeLabels, correctionConstant, correctionParam);
+        }
 
-	  public GISModelReader(DataReader dataReader) : base(dataReader)
-	  {
-	  }
+        public override void checkModelType()
+        {
+            string modelType = readUTF();
+            if (!modelType.Equals("GIS"))
+            {
+                Console.WriteLine("Error: attempting to load a " + modelType + " model as a GIS model." + " You should expect problems.");
+            }
+        }
 
-	  /// <summary>
-	  /// Retrieve a model from disk. It assumes that models are saved in the
-	  /// following sequence:
-	  /// 
-	  /// <br>
-	  /// GIS (model type identifier) <br>
-	  /// 1. # of parameters (int) <br>
-	  /// 2. the correction constant (int) <br>
-	  /// 3. the correction constant parameter (double) <br>
-	  /// 4. # of outcomes (int) <br>
-	  /// * list of outcome names (String) <br>
-	  /// 5. # of different types of outcome patterns (int) <br>
-	  /// * list of (int int[]) <br>
-	  /// [# of predicates for which outcome pattern is true] [outcome pattern] <br>
-	  /// 6. # of predicates (int) <br>
-	  /// * list of predicate names (String)
-	  /// 
-	  /// <para>
-	  /// If you are creating a reader for a format which won't work with this
-	  /// (perhaps a database or xml file), override this method and ignore the other
-	  /// methods provided in this abstract class.
-	  /// 
-	  /// </para>
-	  /// </summary>
-	  /// <returns> The GISModel stored in the format and location specified to this
-	  ///         GISModelReader (usually via its the constructor). </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.model.AbstractModel constructModel() throws java.io.IOException
-	  public override AbstractModel constructModel()
-	  {
-		int correctionConstant = CorrectionConstant;
-		double correctionParam = CorrectionParameter;
-		string[] outcomeLabels = Outcomes;
-		int[][] outcomePatterns = OutcomePatterns;
-		string[] predLabels = Predicates;
-		Context[] @params = getParameters(outcomePatterns);
+        protected int GetCorrectionConstant()
+        {
+            return readInt();
+        }
 
-		return new GISModel(@params, predLabels, outcomeLabels, correctionConstant, correctionParam);
-	  }
-
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void checkModelType() throws java.io.IOException
-	  public override void checkModelType()
-	  {
-		string modelType = readUTF();
-		if (!modelType.Equals("GIS"))
-		{
-		  Console.WriteLine("Error: attempting to load a " + modelType + " model as a GIS model." + " You should expect problems.");
-		}
-	  }
-
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: protected int getCorrectionConstant() throws java.io.IOException
-	  protected internal virtual int CorrectionConstant
-	  {
-		  get
-		  {
-			return readInt();
-		  }
-	  }
-
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: protected double getCorrectionParameter() throws java.io.IOException
-	  protected internal virtual double CorrectionParameter
-	  {
-		  get
-		  {
-			return readDouble();
-		  }
-	  }
-	}
+        protected double GetCorrectionParameter()
+        {
+            return readDouble();
+        }
+    }
 
 }

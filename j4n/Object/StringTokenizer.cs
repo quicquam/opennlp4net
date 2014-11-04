@@ -18,17 +18,22 @@ namespace j4n.Object
                 _tokens.AddLast(token);
             }
             _current = _tokens.First;
-            throw new NotImplementedException();
         }
-        
+
         public StringTokenizer(string str, string delimiter)
         {
-            var tokens = str.Split(new[] { delimiter }, StringSplitOptions.None);
+            Init(str, new[] { delimiter });
+        }
+
+        private void Init(string str, string[] delimiters)
+        {
+            var tokens = str.Split(delimiters, StringSplitOptions.None);
             foreach (var token in tokens)
             {
                 _tokens.AddLast(token);
             }
             _current = _tokens.First;
+
         }
 
         public string nextToken()

@@ -17,6 +17,7 @@
  * under the License.
  */
 
+using j4n.Exceptions;
 using j4n.Object;
 
 namespace opennlp.model

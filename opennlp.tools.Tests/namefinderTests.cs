@@ -92,16 +92,8 @@ namespace opennlp.tools.Tests
             			//1. convert sentence into tokens
             var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
 		    	TokenizerModel modelToken = new TokenizerModel(modelInToken);
-                DumpObject(modelToken, "modelToken", "modelToken.out");
-
-                var gisModel = modelToken.MaxentModel as GISModel;
-                if (gisModel != null)
-                {
-                    DumpObject(gisModel, "GISModel", "gisModel.out");
-                }
 
 		    	Tokenizer tokenizer = new TokenizerME(modelToken);
-                DumpObject(tokenizer, "tokenizer", "tokenizer.out");
 
                 var tokens = new string[]
                 {
@@ -113,10 +105,8 @@ namespace opennlp.tools.Tests
 		    	//2. find names
                 var modelIn = new FileInputStream("C:\\opennlp-models\\en-ner-person.bin");
 		    	TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-                DumpObject(model, "tokenNameFinder", "tokenNameFinder.out");
                 
                 NameFinderME nameFinder = new NameFinderME(model);
-                DumpObject(nameFinder, "nameFinder", "nameFinder.out");
 
 		    	var nameSpans = nameFinder.find(tokens);
 		    	

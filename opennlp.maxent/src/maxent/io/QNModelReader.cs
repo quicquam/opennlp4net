@@ -58,8 +58,8 @@ namespace opennlp.maxent.io
 //ORIGINAL LINE: @Override public opennlp.model.AbstractModel constructModel() throws java.io.IOException
 	  public override AbstractModel constructModel()
 	  {
-		string[] predNames = Predicates;
-		string[] outcomeNames = Outcomes;
+		string[] predNames = GetPredicates();
+		string[] outcomeNames = GetOutcomes();
 		Context[] @params = Parameters;
 		double[] parameters = DoubleArrayParams;
 		return new QNModel(predNames, outcomeNames, @params, parameters);

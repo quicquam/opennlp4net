@@ -72,10 +72,10 @@ namespace opennlp.perceptron
 //ORIGINAL LINE: public opennlp.model.AbstractModel constructModel() throws java.io.IOException
 		public override AbstractModel constructModel()
 		{
-		  string[] outcomeLabels = Outcomes;
-		  int[][] outcomePatterns = OutcomePatterns;
-		  string[] predLabels = Predicates;
-		  Context[] @params = getParameters(outcomePatterns);
+		  string[] outcomeLabels = GetOutcomes();
+		  int[][] outcomePatterns = GetOutcomePatterns();
+		  string[] predLabels = GetPredicates();
+		  Context[] @params = GetParameters(outcomePatterns);
 
 		  return new PerceptronModel(@params, predLabels, outcomeLabels);
 		}

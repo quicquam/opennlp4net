@@ -64,7 +64,7 @@ namespace opennlp.maxent.io
 	  ///           not be read. </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: protected opennlp.model.Context[] getParameters(int[][] outcomePatterns) throws java.io.IOException
-	  protected internal override Context[] getParameters(int[][] outcomePatterns)
+	  protected new Context[] GetParameters(int[][] outcomePatterns)
 	  {
 		Context[] @params = new Context[NUM_PREDS];
 		int pid = 0;
