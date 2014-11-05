@@ -15,7 +15,9 @@ namespace opennlp.tools.util.model
 {
     public class BaseModel<T> : ArtifactProvider
     {
-        protected internal const string MANIFEST_ENTRY = "manifest.properties";
+		private static int MODEL_BUFFER_SIZE_LIMIT = Int32.MaxValue;
+
+		protected internal const string MANIFEST_ENTRY = "manifest.properties";
         protected internal const string FACTORY_NAME = "factory";
 
         private const string MANIFEST_VERSION_PROPERTY = "Manifest-Version";
