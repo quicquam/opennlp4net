@@ -1,15 +1,21 @@
 ﻿using System;
+using System.IO;
+using Microsoft.Win32.SafeHandles;
 
 namespace j4n.IO.File
 {
     public class Jfile
     {
-        public Jfile(string s)
+        public SafeFileHandle FileHandle;
+        public FileStream FileStream;
+
+        public Jfile(string fileName, FileMode filemode = FileMode.Open)
         {
-            throw new NotImplementedException();
+            Name = fileName;
+            FileStream = System.IO.File.Open(fileName, filemode);
         }
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
         public bool IsFile { get; private set; }
         public bool IsDirectory { get; set; }
         public string AbsolutePath { get; set; }

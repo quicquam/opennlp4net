@@ -7,6 +7,11 @@ namespace j4n.IO.OutputStream
     {
         public Stream InnerStream;
 
+        public OutputStream(OutputStream os)
+        {
+            InnerStream = os.InnerStream;
+        }
+        
         public OutputStream(Stream stream)
         {
             InnerStream = stream;

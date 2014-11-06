@@ -6,12 +6,12 @@ namespace j4n.IO.Writer
     {
         public BufferedWriter(OutputStreamWriter outputStreamWriter)
         {
-            throw new NotImplementedException();
+            InnerStream = outputStreamWriter.InnerStream;
         }
 
         public void newLine()
         {
-            throw new NotImplementedException();
+            write(Environment.NewLine);
         }
     }
 }
