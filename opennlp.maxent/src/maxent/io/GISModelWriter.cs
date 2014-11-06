@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -150,7 +151,7 @@ namespace opennlp.maxent.io
 		  sortPreds[pid] = new ComparablePredicate(PRED_LABELS[pid], activeOutcomes, activeParams);
 		}
 
-		Arrays.sort(sortPreds);
+		Array.Sort(sortPreds);
 		return sortPreds;
 	  }
 
