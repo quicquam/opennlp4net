@@ -96,7 +96,7 @@ namespace opennlp.perceptron
 		  Console.Error.WriteLine("Compressed " + PARAMS.Length + " parameters to " + numPreds);
 		  sortPreds = new ComparablePredicate[numPreds];
 		  Array.Copy(tmpPreds, 0, sortPreds, 0, numPreds);
-		  Arrays.sort(sortPreds);
+		  Array.Sort(sortPreds);
 		  return sortPreds;
 		}
 

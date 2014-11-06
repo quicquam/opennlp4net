@@ -47,11 +47,6 @@ namespace opennlp.nonjava.helperclasses
             throw new System.NotImplementedException();
         }
 
-        public static void sort(ComparablePredicate[] sortPreds)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public static string asList(string[] context)
         {
             throw new System.NotImplementedException();
