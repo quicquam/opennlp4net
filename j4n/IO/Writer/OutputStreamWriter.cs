@@ -5,7 +5,7 @@ namespace j4n.IO.Writer
 {
     public class OutputStreamWriter
     {
-        public OutputStreamWriter(Interfaces.OutputStream os)
+        public OutputStreamWriter(OutputStream.OutputStream os)
         {
             throw new NotImplementedException();
         }

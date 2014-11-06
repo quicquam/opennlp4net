@@ -1,18 +1,21 @@
 ﻿using System;
+using System.IO;
 using j4n.Interfaces;
 
 namespace j4n.IO.OutputStream
 {
-    public class DataOutputStream : Interfaces.OutputStream, Closeable
+    public class DataOutputStream : OutputStream, Closeable
     {
 // ReSharper disable InconsistentNaming
 
-        public DataOutputStream(Interfaces.OutputStream os)
+        public DataOutputStream(OutputStream os)
+            : base(os.InnerStream)
         {
             
         }
 
-        public DataOutputStream()
+        public DataOutputStream() 
+            : base(new FileStream("outputstream.out", FileMode.Create))
         {
             
         }

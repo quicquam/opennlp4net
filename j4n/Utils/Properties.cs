@@ -4,6 +4,7 @@ using System.Linq;
 using j4n.Interfaces;
 using j4n.IO.InputStream;
 using System.Collections.Generic;
+using j4n.IO.OutputStream;
 
 namespace j4n.Utils
 {

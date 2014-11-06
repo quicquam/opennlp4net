@@ -85,7 +85,7 @@
     <Compile Include="IO\Writer\FileWriter.cs" />
     <Compile Include="IO\OutputStream\GZIPOutputStream.cs" />
     <Compile Include="IO\OutputStream\ObjectOutputStream.cs" />
-    <Compile Include="Interfaces\OutputStream.cs" />
+    <Compile Include="IO\OutputStream\OutputStream.cs" />
     <Compile Include="IO\Writer\OutputStreamWriter.cs" />
     <Compile Include="IO\Writer\PrintWriter.cs" />
     <Compile Include="IO\Writer\Writer.cs" />

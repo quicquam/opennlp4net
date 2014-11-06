@@ -17,6 +17,7 @@
  */
 using j4n.Interfaces;
 using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
 using j4n.Utils;
 
 

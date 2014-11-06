@@ -9,7 +9,7 @@ namespace j4n.IO.OutputStream
 {
     public class PrintStream
     {
-        public PrintStream(Interfaces.OutputStream outputStream)
+        public PrintStream(OutputStream outputStream)
         {
             throw new NotImplementedException();
         }

@@ -9,5 +9,10 @@ namespace j4n.IO.Writer
         {
             throw new NotImplementedException();
         }
+
+        public FileWriter(string filename)
+        {
+            
+        }
     }
 }

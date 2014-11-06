@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace j4n.IO.OutputStream
 {
-    public class BufferedOutputStream : Interfaces.OutputStream
+    public class BufferedOutputStream : OutputStream
     {
         public BufferedOutputStream(FileOutputStream fileOutputStream, int ioBufferSize)
+            : base(fileOutputStream.InnerStream)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

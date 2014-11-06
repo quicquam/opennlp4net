@@ -4,9 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using j4n.IO.File;
 using j4n.IO.InputStream;
+using j4n.IO.Writer;
 using NUnit.Framework;
 using opennlp.maxent;
+using opennlp.maxent.io;
 using opennlp.tools.namefind;
 using opennlp.tools.sentdetect;
 using opennlp.tools.tokenize;
@@ -109,7 +112,14 @@ namespace opennlp.tools.Tests
                 NameFinderME nameFinder = new NameFinderME(model);
 
 		    	var nameSpans = nameFinder.find(tokens);
-		    	
+                
+                var nameGis = model.NameFinderModel as GISModel;
+                if (nameGis != null)
+                {
+                    var modelWriter = new PlainTextGISModelWriter(nameGis, new Jfile("nameGis.txt"));
+                    modelWriter.persist();
+                }	
+
 		    	//find probabilities for names
 		    	double[] spanProbs = nameFinder.probs(nameSpans);
 		    	

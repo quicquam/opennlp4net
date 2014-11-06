@@ -21,6 +21,7 @@ using System.IO;
 using j4n.Exceptions;
 using j4n.Interfaces;
 using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
 
 
 namespace opennlp.tools.ngram
