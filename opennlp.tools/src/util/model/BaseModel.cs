@@ -39,7 +39,7 @@ namespace opennlp.tools.util.model
         public bool LoadedFromSerialized { get; private set; }
 
         protected internal readonly IDictionary<string, object> artifactMap = new Dictionary<string, object>();
-        private ArtifactSerializers artifactSerializers;
+        protected ArtifactSerializers artifactSerializers;
 
         protected internal BaseToolFactory toolFactory;
         private bool isLoadedFromSerialized;
@@ -199,21 +199,26 @@ namespace opennlp.tools.util.model
            throw new NotImplementedException();
         }
 
-        private void createBaseArtifactSerializers()
+        protected void createBaseArtifactSerializers()
         {
             //JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
-            artifactSerializers = createArtifactSerializers();
+            createArtifactSerializers();
         }
 
-        protected ArtifactSerializers createArtifactSerializers()
+        public virtual void createArtifactSerializers()
         {
-            var serializers = new ArtifactSerializers();
+            if(artifactSerializers == null)
+                artifactSerializers = new ArtifactSerializers();
 
-            serializers.Add<ArtifactSerializer<AbstractModel>>("model", new GenericModelSerializer());
-            serializers.Add<ArtifactSerializer<Dictionary>>("dictionary", new DictionarySerializer());
-            serializers.Add<ArtifactSerializer<Properties>>("properties", new PropertiesSerializer());
+            if(!artifactSerializers.Contains("model"))
+                artifactSerializers.Add<ArtifactSerializer<AbstractModel>>("model", new GenericModelSerializer());
 
-            return serializers;
+            if (!artifactSerializers.Contains("dictionary"))
+                artifactSerializers.Add<ArtifactSerializer<Dictionary>>("dictionary", new DictionarySerializer());
+
+            if (!artifactSerializers.Contains("properties"))
+                artifactSerializers.Add<ArtifactSerializer<Properties>>("properties", new PropertiesSerializer());
+
         }
 
         private void loadArtifactSerializers()

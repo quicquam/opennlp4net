@@ -7,6 +7,11 @@ namespace opennlp.tools.util.model
     {
         private readonly Dictionary<string, object> _dictionary = new Dictionary<string, object>();
 
+        public bool Contains(string name)
+        {
+            return _dictionary.ContainsKey(name);
+        }
+
         public T Get<T>(string name) where T : class
         {
             var serializer = _dictionary[name];
