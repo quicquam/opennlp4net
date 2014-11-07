@@ -40,7 +40,7 @@ namespace opennlp.tools.Tests
                 var model = new TokenizerModel(modelIn);
                 var tokenizer = new TokenizerME(model);
                 var tokens = tokenizer.tokenize(_testTextBlock);
-                Assert.AreEqual(tokens.Count(), 201);
+                Assert.AreEqual(tokens.Count(), 217);
             }
             catch (IOException e)
             {

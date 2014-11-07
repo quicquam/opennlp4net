@@ -43,6 +43,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\chunker\Chunker.cs" />
+    <Compile Include="src\chunker\ChunkerContextGenerator.cs" />
+    <Compile Include="src\chunker\ChunkerCrossValidator.cs" />
+    <Compile Include="src\chunker\ChunkerEvaluationMonitor.cs" />
+    <Compile Include="src\chunker\ChunkerEvaluator.cs" />
+    <Compile Include="src\chunker\ChunkerEventStream.cs" />
+    <Compile Include="src\chunker\ChunkerFactory.cs" />
+    <Compile Include="src\chunker\ChunkerME.cs" />
+    <Compile Include="src\chunker\ChunkerModel.cs" />
+    <Compile Include="src\chunker\ChunkSample.cs" />
+    <Compile Include="src\chunker\ChunkSampleStream.cs" />
+    <Compile Include="src\chunker\DefaultChunkerContextGenerator.cs" />
+    <Compile Include="src\chunker\DefaultChunkerSequenceValidator.cs" />
     <Compile Include="src\dictionary\Dictionary.cs" />
     <Compile Include="src\dictionary\serializer\Attributes.cs" />
     <Compile Include="src\dictionary\serializer\DictionarySerializer.cs" />
@@ -60,7 +73,6 @@
     <Compile Include="src\namefind\NameSampleDataStream.cs" />
     <Compile Include="src\namefind\NameSampleSequenceStream.cs" />
     <Compile Include="src\namefind\NameSampleTypeFilter.cs" />
-    <Compile Include="src\namefind\package-info.cs" />
     <Compile Include="src\namefind\RegexNameFinder.cs" />
     <Compile Include="src\namefind\TokenNameFinder.cs" />
     <Compile Include="src\namefind\TokenNameFinderCrossValidator.cs" />
@@ -78,7 +90,6 @@
     <Compile Include="src\sentdetect\EndOfSentenceScanner.cs" />
     <Compile Include="src\sentdetect\lang\Factory.cs" />
     <Compile Include="src\sentdetect\lang\th\SentenceContextGenerator.cs" />
-    <Compile Include="src\sentdetect\package-info.cs" />
     <Compile Include="src\sentdetect\SDContextGenerator.cs" />
     <Compile Include="src\sentdetect\SDCrossValidator.cs" />
     <Compile Include="src\sentdetect\SDEventStream.cs" />
@@ -99,7 +110,6 @@
     <Compile Include="src\tokenize\DictionaryDetokenizer.cs" />
     <Compile Include="src\tokenize\lang\en\TokenSampleStream.cs" />
     <Compile Include="src\tokenize\lang\Factory.cs" />
-    <Compile Include="src\tokenize\package-info.cs" />
     <Compile Include="src\tokenize\SimpleTokenizer.cs" />
     <Compile Include="src\tokenize\TokenContextGenerator.cs" />
     <Compile Include="src\tokenize\Tokenizer.cs" />
@@ -191,7 +201,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\chunker\" />
     <Folder Include="src\postag\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

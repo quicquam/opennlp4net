@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-/// <summary>
-/// Contains classes related to finding token or words in a string. All
-/// tokenizer implement the Tokenizer interface. Currently there is the
-/// learnable <code>TokenizerME</code>, the <code>WhitespaceTokenizer</code> and
-/// the <code>SimpleTokenizer</code> which is a character class tokenizer.
-/// </summary>
-namespace opennlp.tools.tokenize
+namespace opennlp.tools.chunker
 {
+
+	using opennlp.tools.util.eval;
+
+	public interface ChunkerEvaluationMonitor : EvaluationMonitor<ChunkSample>
+	{
+
+	}
+
 }

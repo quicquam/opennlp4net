@@ -9,15 +9,15 @@ using NUnit.Framework;
 namespace j4n.Tests
 {
     [TestFixture]
-    public class Class1
+    public class TestRunner
     {
         [Test]
         public void NetStringHashMethodReturnsSameAsJava()
         {
+            const int knownHashValue = 111833954;
             const string testString = "w=why";
             var hash = testString.hashCode();
-            var h = testString.GetHashCode();
-            Assert.AreEqual(hash, 111833954);
+            Assert.AreEqual(hash, knownHashValue);
         }
     }
 }

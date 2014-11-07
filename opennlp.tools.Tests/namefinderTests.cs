@@ -20,7 +20,7 @@ namespace opennlp.tools.Tests
     [TestFixture]
     public class namefinderTests
     {
-        private const string ModelPath = "E:\\opennlp-models\\";
+        private const string ModelPath = "C:\\opennlp-models\\";
         private string _modelFilePath;
         private string _testTextBlock;
         
@@ -28,7 +28,7 @@ namespace opennlp.tools.Tests
         public void Setup()
         {
             _modelFilePath = string.Format("{0}{1}", ModelPath, "en-ner-person.bin");
-            var sr = new StreamReader("E:\\opennlp-models\\test-sentence.txt");
+            var sr = new StreamReader("C:\\opennlp-models\\test-sentence.txt");
             _testTextBlock = sr.ReadToEnd();
         }
 
@@ -48,10 +48,10 @@ namespace opennlp.tools.Tests
                 var nameFinder = new NameFinderME(model);
 
                 //1. convert sentence into tokens
-                var modelInToken = new FileInputStream("E:\\opennlp-models\\en-token.bin");
+                var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
                 TokenizerModel modelToken = new TokenizerModel(modelInToken);
                 Tokenizer tokenizer = new TokenizerME(modelToken);
-                var tokens = tokenizer.tokenize("How far is it to the moon?");
+                var tokens = tokenizer.tokenize("Why is Jack London so famous?");
 
 
                 var nameSpans = nameFinder.find(tokens);
@@ -63,12 +63,12 @@ namespace opennlp.tools.Tests
                 for (int i = 0; i < nameSpans.Length; i++)
                 {
                     var s = string.Format("Span: " + nameSpans[i].ToString());
-                    var c = string.Format("Covered text is: " + tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].Start + 1]);
+                    var c = string.Format("Covered text is: " + tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].End - 1]);
                     var p = string.Format("Probability is: " + spanProbs[i]);
                 }
                 Assert.AreEqual(1, nameSpans.Count());
-                Assert.AreEqual(0, nameSpans[0].Start);
-                Assert.AreEqual(2, nameSpans[0].End);
+                Assert.AreEqual(2, nameSpans[0].Start);
+                Assert.AreEqual(4, nameSpans[0].End);
             }
             catch (IOException e)
             {
@@ -93,20 +93,15 @@ namespace opennlp.tools.Tests
         public void Test2()
         {
             			//1. convert sentence into tokens
-            var modelInToken = new FileInputStream("E:\\opennlp-models\\en-token.bin");
+            var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
 		    	TokenizerModel modelToken = new TokenizerModel(modelInToken);
 
 		    	Tokenizer tokenizer = new TokenizerME(modelToken);
 
-                var tokens = new string[]
-                {
-                  "Why", "is", "Jack", "London", "so", "famous", "?"
-                };
-
-                ; // tokenizer.tokenize("Why is Jack London so famous?");
+               var tokens = tokenizer.tokenize("Why is Jack London so famous?");
  
 		    	//2. find names
-                var modelIn = new FileInputStream("E:\\opennlp-models\\en-ner-person.bin");
+                var modelIn = new FileInputStream("C:\\opennlp-models\\en-ner-person.bin");
 		    	TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
                 
                 NameFinderME nameFinder = new NameFinderME(model);
@@ -126,7 +121,7 @@ namespace opennlp.tools.Tests
 		    	//3. print names
 		    	for( int i = 0; i<nameSpans.Length; i++) {
 		    		var s = string.Format("Span: "+nameSpans[i].ToString());
-		    		var c = string.Format("Covered text is: "+tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].Start+1]);
+		    		var c = string.Format("Covered text is: "+tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].End-1]);
 		    		var p = string.Format("Probability is: "+spanProbs[i]);
 		    	}		    	
 
