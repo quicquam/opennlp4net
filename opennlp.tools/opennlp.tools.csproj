@@ -61,6 +61,17 @@
     <Compile Include="src\dictionary\serializer\DictionarySerializer.cs" />
     <Compile Include="src\dictionary\serializer\Entry.cs" />
     <Compile Include="src\dictionary\serializer\EntryInserter.cs" />
+    <Compile Include="src\doccat\BagOfWordsFeatureGenerator.cs" />
+    <Compile Include="src\doccat\DoccatModel.cs" />
+    <Compile Include="src\doccat\DocumentCategorizer.cs" />
+    <Compile Include="src\doccat\DocumentCategorizerContextGenerator.cs" />
+    <Compile Include="src\doccat\DocumentCategorizerEvaluator.cs" />
+    <Compile Include="src\doccat\DocumentCategorizerEventStream.cs" />
+    <Compile Include="src\doccat\DocumentCategorizerME.cs" />
+    <Compile Include="src\doccat\DocumentSample.cs" />
+    <Compile Include="src\doccat\DocumentSampleStream.cs" />
+    <Compile Include="src\doccat\FeatureGenerator.cs" />
+    <Compile Include="src\doccat\NGramFeatureGenerator.cs" />
     <Compile Include="src\namefind\BioCodec.cs" />
     <Compile Include="src\namefind\DefaultNameContextGenerator.cs" />
     <Compile Include="src\namefind\DictionaryNameFinder.cs" />
@@ -83,6 +94,26 @@
     <Compile Include="src\ngram\NGramModel.cs" />
     <Compile Include="src\nonjava\helperclasses\RectangularArrays.cs" />
     <Compile Include="src\nonjava\extensions\StringHelperClass.cs" />
+    <Compile Include="src\postag\DefaultPOSContextGenerator.cs" />
+    <Compile Include="src\postag\DefaultPOSSequenceValidator.cs" />
+    <Compile Include="src\postag\MutableTagDictionary.cs" />
+    <Compile Include="src\postag\package-info.cs" />
+    <Compile Include="src\postag\POSContextGenerator.cs" />
+    <Compile Include="src\postag\POSDictionary.cs" />
+    <Compile Include="src\postag\POSDictionaryWriter.cs" />
+    <Compile Include="src\postag\POSEvaluator.cs" />
+    <Compile Include="src\postag\POSModel.cs" />
+    <Compile Include="src\postag\POSSample.cs" />
+    <Compile Include="src\postag\POSSampleEventStream.cs" />
+    <Compile Include="src\postag\POSSampleSequenceStream.cs" />
+    <Compile Include="src\postag\POSTagger.cs" />
+    <Compile Include="src\postag\POSTaggerCrossValidator.cs" />
+    <Compile Include="src\postag\POSTaggerEvaluationMonitor.cs" />
+    <Compile Include="src\postag\POSTaggerFactory.cs" />
+    <Compile Include="src\postag\POSTaggerME.cs" />
+    <Compile Include="src\postag\POSTaggerTrainer.cs" />
+    <Compile Include="src\postag\TagDictionary.cs" />
+    <Compile Include="src\postag\WordTagSampleStream.cs" />
     <Compile Include="src\sentdetect\AbstractEndOfSentenceScanner.cs" />
     <Compile Include="src\sentdetect\DefaultEndOfSentenceScanner.cs" />
     <Compile Include="src\sentdetect\DefaultSDContextGenerator.cs" />
@@ -133,10 +164,12 @@
     <Compile Include="src\util\BeamSearchContextGenerator.cs" />
     <Compile Include="src\util\Cache.cs" />
     <Compile Include="src\util\cmdline\PerformanceMonitor.cs" />
+    <Compile Include="src\util\CountedSet.cs" />
     <Compile Include="src\util\CrossValidationPartitioner.cs" />
     <Compile Include="src\util\eval\EvaluationMonitor.cs" />
     <Compile Include="src\util\eval\Evaluator.cs" />
     <Compile Include="src\util\eval\FMeasure.cs" />
+    <Compile Include="src\util\eval\Mean.cs" />
     <Compile Include="src\util\ext\ExtensionLoader.cs" />
     <Compile Include="src\util\featuregen\AdaptiveFeatureGenerator.cs" />
     <Compile Include="src\util\featuregen\AdditionalContextFeatureGenerator.cs" />
@@ -173,8 +206,10 @@
     <Compile Include="src\util\model\BaseModel.cs" />
     <Compile Include="src\util\model\DictionarySerializer.cs" />
     <Compile Include="src\util\model\GenericModelSerializer.cs" />
+    <Compile Include="src\util\model\ModelType.cs" />
     <Compile Include="src\util\model\ModelUtil.cs" />
     <Compile Include="src\util\model\PropertiesSerializer.cs" />
+    <Compile Include="src\util\model\UncloseableInputStream.cs" />
     <Compile Include="src\util\PlainTextByLineStream.cs" />
     <Compile Include="src\util\Sequence.cs" />
     <Compile Include="src\util\SequenceCodec.cs" />
@@ -200,9 +235,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\postag\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

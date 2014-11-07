@@ -19,5 +19,10 @@ namespace j4n.IO.Writer
         {
             throw new NotImplementedException();
         }
+
+        public void println(string readDouble)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

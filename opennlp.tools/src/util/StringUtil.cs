@@ -122,6 +122,11 @@ namespace opennlp.tools.util
 	    {
 	        return string.IsNullOrEmpty(theString);
 	    }
+
+	    public static string ToLower(string s)
+	    {
+	        return s.ToLower();
+	    }
 	}
 
 }
