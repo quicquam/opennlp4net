@@ -135,7 +135,7 @@ namespace opennlp.maxent.io
 		for (int pid = 0; pid < PARAMS.Length; pid++)
 		{
 		  int[] predkeys = PARAMS[pid].Outcomes;
-		  // Arrays.sort(predkeys);
+		  // Array.Sort(predkeys);
 		  int numActive = predkeys.Length;
 		  int[] activeOutcomes = predkeys;
 		  double[] activeParams = PARAMS[pid].Parameters;

@@ -103,41 +103,65 @@ namespace opennlp.model
 
         protected string[] GetOutcomes()
         {
-            int numOutcomes = readInt();
-            string[] outcomeLabels = new string[numOutcomes];
-            for (int i = 0; i < numOutcomes; i++)
+            try
             {
-                outcomeLabels[i] = readUTF();
+                int numOutcomes = readInt();
+                string[] outcomeLabels = new string[numOutcomes];
+                for (int i = 0; i < numOutcomes; i++)
+                {
+                    outcomeLabels[i] = readUTF();
+                }
+                return outcomeLabels;
             }
-            return outcomeLabels;
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         protected int[][] GetOutcomePatterns()
         {
-            int numOCTypes = readInt();
-            int[][] outcomePatterns = new int[numOCTypes][];
-            for (int i = 0; i < numOCTypes; i++)
+            try
             {
-                StringTokenizer tok = new StringTokenizer(readUTF(), " ");
-                int[] infoInts = new int[tok.countTokens()];
-                for (int j = 0; tok.hasMoreTokens(); j++)
+                int numOCTypes = readInt();
+                int[][] outcomePatterns = new int[numOCTypes][];
+                for (int i = 0; i < numOCTypes; i++)
                 {
-                    infoInts[j] = Convert.ToInt32(tok.nextToken());
+                    StringTokenizer tok = new StringTokenizer(readUTF(), " ");
+                    int[] infoInts = new int[tok.countTokens()];
+                    for (int j = 0; tok.hasMoreTokens(); j++)
+                    {
+                        infoInts[j] = Convert.ToInt32(tok.nextToken());
+                    }
+                    outcomePatterns[i] = infoInts;
                 }
-                outcomePatterns[i] = infoInts;
+                return outcomePatterns;
             }
-            return outcomePatterns;
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         protected string[] GetPredicates()
         {
-            NUM_PREDS = readInt();
-            string[] predLabels = new string[NUM_PREDS];
-            for (int i = 0; i < NUM_PREDS; i++)
+            try
             {
-                predLabels[i] = readUTF();
+                NUM_PREDS = readInt();
+                string[] predLabels = new string[NUM_PREDS];
+                for (int i = 0; i < NUM_PREDS; i++)
+                {
+                    predLabels[i] = readUTF();
+                }
+                return predLabels;
             }
-            return predLabels;
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         /// <summary>

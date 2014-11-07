@@ -50,7 +50,7 @@ namespace j4n.Object
 
         public bool hasMoreTokens()
         {
-            return _current != _tokens.Last;
+            return _current != null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -71,7 +72,14 @@ namespace opennlp.model
 //ORIGINAL LINE: public AbstractModel constructModel() throws java.io.IOException
 	  public override AbstractModel constructModel()
 	  {
-		return delegateModelReader.constructModel();
+	      try
+	      {
+              return delegateModelReader.constructModel();
+	      }
+	      catch (Exception ex)
+	      {
+	          throw ex;
+	      }
 	  }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
