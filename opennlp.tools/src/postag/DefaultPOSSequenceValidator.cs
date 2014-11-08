@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace opennlp.tools.postag
 {
 
@@ -45,7 +48,7 @@ namespace opennlp.tools.postag
 		  }
 		  else
 		  {
-			return Arrays.asList(tags).contains(outcome);
+		      return tags.Any(tag => tag.Contains(outcome));
 		  }
 		}
 	  }

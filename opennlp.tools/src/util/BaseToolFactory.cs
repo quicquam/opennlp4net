@@ -85,5 +85,10 @@ namespace opennlp.tools.util
         {
             return Type.GetType(factoryClass);
         }
+
+        protected IDictionary<string, ArtifactSerializer<object>> createArtifactSerializersMap()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -81,7 +81,7 @@ namespace opennlp.tools.postag
 		  catch (InvalidFormatException)
 		  {
 
-			if (logger.isLoggable(Level.WARNING))
+			if (logger.isLoggable(Logger.Level.WARNING))
 			{
 			  logger.warning("Error during parsing, ignoring sentence: " + sentence);
 			}

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +17,7 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using opennlp.nonjava.helperclasses;
 
 
 namespace opennlp.tools.doccat
@@ -50,7 +51,7 @@ namespace opennlp.tools.doccat
 		}
 
 		this.category = category;
-		this.text = Collections.unmodifiableList(new List<string>(Arrays.asList(text)));
+	    this.text = text.ToList();
 	  }
 
 	  public virtual string Category
@@ -100,7 +101,7 @@ namespace opennlp.tools.doccat
 		{
 		  DocumentSample a = (DocumentSample) obj;
 
-		  return Category.Equals(a.Category) && Arrays.Equals(Text, a.Text);
+		  return Category.Equals(a.Category) && Equals(Text, a.Text);
 		}
 		else
 		{

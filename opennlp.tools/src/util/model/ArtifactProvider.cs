@@ -27,7 +27,7 @@ namespace opennlp.tools.util.model
 	  /// <summary>
 	  /// Gets an artifact by name
 	  /// </summary>
-	  object getArtifact<T>(string key);
+	  T getArtifact<T>(string key);
 
 	  /// <summary>
 	  /// Retrieves the value to the given key from the manifest.properties

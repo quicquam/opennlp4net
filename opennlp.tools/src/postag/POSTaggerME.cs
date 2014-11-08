@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -17,6 +18,8 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.Concurrency;
+using j4n.Object;
 using j4n.Serialization;
 
 
@@ -84,23 +87,7 @@ namespace opennlp.tools.postag
 	  /// </summary>
 	  protected internal BeamSearch<string> beam;
 
-	  /// <summary>
-	  /// Constructor that overrides the <seealso cref="SequenceValidator"/> from the model.
-	  /// </summary>
-	  /// @deprecated use <seealso cref="#POSTaggerME(POSModel, int, int)"/> instead. The model
-	  ///             knows which <seealso cref="SequenceValidator"/> to use. 
-	  public POSTaggerME(POSModel model, int beamSize, int cacheSize, SequenceValidator<string> sequenceValidator)
-	  {
-		POSTaggerFactory factory = model.Factory;
-		posModel = model.PosModel;
-		model.TagDictionary;
-		contextGen = factory.getPOSContextGenerator(beamSize);
-		tagDictionary = factory.TagDictionary;
-		size = beamSize;
-		beam = new BeamSearch<string>(size, contextGen, posModel, sequenceValidator, cacheSize);
-	  }
-
-	  /// <summary>
+        /// <summary>
 	  /// Initializes the current instance with the provided
 	  /// model and provided beam size.
 	  /// </summary>
@@ -379,9 +366,9 @@ namespace opennlp.tools.postag
 
 		TrainingParameters @params = new TrainingParameters();
 
-		@params.put(TrainingParameters.ALGORITHM_PARAM, modelType.ToString());
-		@params.put(TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-		@params.put(TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
+		@params.Put(TrainingParameters.ALGORITHM_PARAM, modelType.ToString());
+		@params.Put(TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+		@params.Put(TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
 
 		return train(languageCode, samples, @params, tagDictionary, ngramDictionary);
 	  }
@@ -414,7 +401,7 @@ namespace opennlp.tools.postag
 	  public static void populatePOSDictionary(ObjectStream<POSSample> samples, MutableTagDictionary dict, int cutoff)
 	  {
 		Console.WriteLine("Expanding POS Dictionary ...");
-		long start = System.nanoTime();
+	    long start = DateTime.Now.Ticks;
 
 		// the data structure will store the word, the tag, and the number of
 		// occurrences
@@ -473,10 +460,10 @@ namespace opennlp.tools.postag
 
 		// now we check if the word + tag pairs have enough occurrences, if yes we
 		// add it to the dictionary 
-		foreach (KeyValuePair<string, IDictionary<string, AtomicInteger>> wordEntry in newEntries.SetOfKeyValuePairs())
+		foreach (KeyValuePair<string, IDictionary<string, AtomicInteger>> wordEntry in newEntries)
 		{
 		  IList<string> tagsForWord = new List<string>();
-		  foreach (KeyValuePair<string, AtomicInteger> entry in wordEntry.Value.entrySet())
+		  foreach (KeyValuePair<string, AtomicInteger> entry in wordEntry.Value)
 		  {
 			if (entry.Value.get() >= cutoff)
 			{
@@ -489,7 +476,7 @@ namespace opennlp.tools.postag
 		  }
 		}
 
-		Console.WriteLine("... finished expanding POS Dictionary. [" + (System.nanoTime() - start) / 1000000 + "ms]");
+		Console.WriteLine("... finished expanding POS Dictionary. [" + (DateTime.Now.Ticks - start) / 1000000 + "ms]");
 	  }
 	}
 

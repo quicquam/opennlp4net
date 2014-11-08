@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concurrency\AtomicInteger.cs" />
     <Compile Include="Exceptions\ClassNotFoundException.cs" />
     <Compile Include="Exceptions\FileNotFoundException.cs" />
     <Compile Include="Exceptions\IllegalAccessException.cs" />

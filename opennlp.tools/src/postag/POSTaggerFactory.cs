@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -22,6 +23,7 @@ using j4n.Interfaces;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.postag
 {
@@ -75,7 +77,7 @@ namespace opennlp.tools.postag
 
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @Override @SuppressWarnings("rawtypes") public java.util.Map<String, opennlp.tools.util.model.ArtifactSerializer> createArtifactSerializersMap()
-	  public override IDictionary<string, ArtifactSerializer<Object>> createArtifactSerializersMap()
+	  public IDictionary<string, ArtifactSerializer<Object>> createArtifactSerializersMap()
 	  {
 		IDictionary<string, ArtifactSerializer<Object>> serializers = base.createArtifactSerializersMap();
 		POSDictionarySerializer.register(serializers);
@@ -128,7 +130,7 @@ namespace opennlp.tools.postag
 		  {
 			if (this.posDictionary == null && artifactProvider != null)
 			{
-			  this.posDictionary = artifactProvider.getArtifact(TAG_DICTIONARY_ENTRY_NAME);
+			  this.posDictionary = artifactProvider.getArtifact<TagDictionary>(TAG_DICTIONARY_ENTRY_NAME);
 			}
 			return this.posDictionary;
 		  }
@@ -141,7 +143,7 @@ namespace opennlp.tools.postag
 		  {
 			if (this.ngramDictionary == null && artifactProvider != null)
 			{
-			  this.ngramDictionary = artifactProvider.getArtifact(NGRAM_DICTIONARY_ENTRY_NAME);
+			  this.ngramDictionary = artifactProvider.getArtifact<Dictionary>(NGRAM_DICTIONARY_ENTRY_NAME);
 			}
 			return this.ngramDictionary;
 		  }
@@ -198,7 +200,8 @@ namespace opennlp.tools.postag
 //ORIGINAL LINE: @SuppressWarnings("rawtypes") static void register(java.util.Map<String, opennlp.tools.util.model.ArtifactSerializer> factories)
 		internal static void register(IDictionary<string, ArtifactSerializer<Object>> factories)
 		{
-		  factories["tagdict"] = new POSDictionarySerializer();
+            throw new NotImplementedException();
+            // was factories["tagdict"] = new POSDictionarySerializer();
 		}
 	  }
 
@@ -208,9 +211,9 @@ namespace opennlp.tools.postag
 	  {
 		HashSet<string> dictTags = new HashSet<string>();
 
-		foreach (string word in posDict)
+		foreach (var tag in posDict.SelectMany(posDict.getTags))
 		{
-		  Collections.addAll(dictTags, posDict.getTags(word));
+		    dictTags.Add(tag);
 		}
 
 		HashSet<string> modelTags = new HashSet<string>();
@@ -220,7 +223,6 @@ namespace opennlp.tools.postag
 		  modelTags.Add(posModel.getOutcome(i));
 		}
 
-//JAVA TO C# CONVERTER TODO TASK: There is no .NET equivalent to the java.util.Collection 'containsAll' method:
 		if (!modelTags.containsAll(dictTags))
 		{
 		  StringBuilder unknownTag = new StringBuilder();
@@ -242,7 +244,7 @@ namespace opennlp.tools.postag
 
 		// Ensure that the tag dictionary is compatible with the model
 
-		object tagdictEntry = this.artifactProvider.getArtifact(TAG_DICTIONARY_ENTRY_NAME);
+          object tagdictEntry = this.artifactProvider.getArtifact<POSDictionary>(TAG_DICTIONARY_ENTRY_NAME);
 
 		if (tagdictEntry != null)
 		{
@@ -250,7 +252,7 @@ namespace opennlp.tools.postag
 		  {
 			if (!this.artifactProvider.LoadedFromSerialized)
 			{
-			  AbstractModel posModel = this.artifactProvider.getArtifact(POSModel.POS_MODEL_ENTRY_NAME);
+			  AbstractModel posModel = this.artifactProvider.getArtifact<AbstractModel>(POSModel.POS_MODEL_ENTRY_NAME);
 			  POSDictionary posDict = (POSDictionary) tagdictEntry;
 			  validatePOSDictionary(posDict, posModel);
 			}
@@ -261,7 +263,7 @@ namespace opennlp.tools.postag
 		  }
 		}
 
-		object ngramDictEntry = this.artifactProvider.getArtifact(NGRAM_DICTIONARY_ENTRY_NAME);
+		object ngramDictEntry = this.artifactProvider.getArtifact<Dictionary>(NGRAM_DICTIONARY_ENTRY_NAME);
 
 		if (ngramDictEntry != null && !(ngramDictEntry is Dictionary))
 		{
@@ -281,7 +283,7 @@ namespace opennlp.tools.postag
 		}
 		try
 		{
-		  POSTaggerFactory theFactory = ExtensionLoader.instantiateExtension(typeof(POSTaggerFactory), subclassName);
+		  POSTaggerFactory theFactory = ExtensionLoader.instantiateExtension(subclassName);
 		  theFactory.init(ngramDictionary, posDictionary);
 		  return theFactory;
 		}

@@ -395,14 +395,14 @@ namespace opennlp.tools.util.model
             }
         }
 
-        public object getArtifact<T>(string key)
+        public T getArtifact<T>(string key)
         {
             if (artifactMap.ContainsKey(key))
             {
                 var artifact = artifactMap[key];
                 return (T)artifact;
             }
-            return null;
+            return default(T);
         }
 
         /// <summary>

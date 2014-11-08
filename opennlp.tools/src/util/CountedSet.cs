@@ -199,14 +199,14 @@ namespace opennlp.tools.util
 		cset.Clear();
 	  }
 
-	  public virtual bool contains(object o)
+	  public virtual bool contains(E o)
 	  {
-		return cset.Keys.contains(o);
+		return cset.Keys.Contains(o);
 	  }
 
 	  public virtual bool containsAll<T1>(ICollection<T1> c)
 	  {
-		return cset.Keys.containsAll(c);
+          throw new NotImplementedException();
 	  }
 
 	  public virtual bool Empty
@@ -222,9 +222,9 @@ namespace opennlp.tools.util
 		return cset.Keys.GetEnumerator();
 	  }
 
-	  public virtual bool remove(object o)
+	  public virtual bool remove(E o)
 	  {
-		return cset.Remove(o) != null;
+		return cset.ContainsKey(o) && cset.Remove(o) != null;
 	  }
 
 	  public virtual bool removeAll<T1>(ICollection<T1> c)
@@ -239,18 +239,8 @@ namespace opennlp.tools.util
 
 	  public virtual bool retainAll<T1>(ICollection<T1> c)
 	  {
-		bool changed = false;
-		for (IEnumerator<E> ki = cset.Keys.GetEnumerator(); ki.MoveNext();)
-		{
-		  object key = ki.Current;
-		  if (!c.Contains(key))
-		  {
-			cset.Remove(key);
-			changed = true;
-		  }
-		}
-		return changed;
-	  }
+          throw new NotImplementedException();
+      }
 
 	  public virtual int size()
 	  {
@@ -259,13 +249,13 @@ namespace opennlp.tools.util
 
 	  public virtual object[] toArray()
 	  {
-		return cset.Keys.toArray();
-	  }
+        throw new NotImplementedException(); 
+        }
 
 	  public virtual T[] toArray<T>(T[] a)
 	  {
-		return cset.Keys.toArray(a);
-	  }
+          throw new NotImplementedException();
+      }
 	}
 
 }

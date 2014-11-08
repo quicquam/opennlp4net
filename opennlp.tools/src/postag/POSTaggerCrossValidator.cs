@@ -139,7 +139,7 @@ namespace opennlp.tools.postag
 		while (partitioner.hasNext())
 		{
 
-            CrossValidationPartitioner<POSSample>.TrainingSampleStream<POSSample> trainingSampleStream = partitioner.next();
+            CrossValidationPartitioner<POSSample>.TrainingSampleStream trainingSampleStream = partitioner.next();
 
 		  if (this.factory == null)
 		  {
@@ -227,7 +227,7 @@ namespace opennlp.tools.postag
 	  private static TrainingParameters create(ModelType type, int cutoff, int iterations)
 	  {
 		TrainingParameters @params = ModelUtil.createTrainingParameters(iterations, cutoff);
-		@params.put(TrainingParameters.ALGORITHM_PARAM, type.ToString());
+		@params.Put(TrainingParameters.ALGORITHM_PARAM, type.ToString());
 		return @params;
 	  }
 

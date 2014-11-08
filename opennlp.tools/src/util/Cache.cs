@@ -276,6 +276,12 @@ namespace opennlp.tools.util
 
 	    public bool IsReadOnly { get; private set; }
 	    public bool IsFixedSize { get; private set; }
+
+	    public string[] this[string cacheKey]
+	    {
+	        get { throw new NotImplementedException(); }
+	        set { throw new NotImplementedException(); }
+	    }
 	}
 
 	internal class ObjectWrapper

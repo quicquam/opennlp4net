@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Text.RegularExpressions;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using j4n.IO.Reader;
@@ -38,7 +39,7 @@ namespace opennlp.tools.postag
 	  private Writer dictFile;
 	  private IDictionary<string, HashSet<string>> dictionary;
 	  private CountedSet<string> wordCounts;
-	  private string newline = System.getProperty("line.separator");
+	  private string newline = Environment.NewLine;
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public POSDictionaryWriter(String file, String encoding) throws java.io.IOException
@@ -148,7 +149,7 @@ namespace opennlp.tools.postag
 		  {
 			if (!line.Equals(""))
 			{
-			  string[] parts = line.Split("\\s+", true);
+			  string[] parts = Regex.Split(line,"\\s+");
 			  for (int pi = 0;pi < parts.Length;pi++)
 			  {
 				int index = parts[pi].LastIndexOf('_');

@@ -23,6 +23,8 @@ using j4n.Interfaces;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using j4n.IO.Reader;
+using opennlp.nonjava.helperclasses;
+using UncloseableInputStream = opennlp.tools.util.model.UncloseableInputStream;
 
 
 namespace opennlp.tools.postag
@@ -132,7 +134,7 @@ namespace opennlp.tools.postag
 		this.caseSensitive = caseSensitive;
 		for (string line = reader.readLine(); line != null; line = reader.readLine())
 		{
-		  string[] parts = line.Split(" ", true);
+		  string[] parts = line.Split(' ');
 		  string[] tags = new string[parts.Length - 1];
 		  for (int ti = 0, tl = parts.Length - 1; ti < tl; ti++)
 		  {
@@ -230,9 +232,9 @@ namespace opennlp.tools.postag
           // Commented out 07/11/2014 MJJ
 
           throw new NotImplementedException();
-		IEnumerator<Entry> entries = new IteratorAnonymousInnerClassHelper(this);
+	/*	IEnumerator<Entry> entries = new IteratorAnonymousInnerClassHelper(this);
 
-		DictionarySerializer.serialize(@out, entries, caseSensitive);
+		DictionarySerializer.serialize(@out, entries, caseSensitive); */
 	  }
 /*
 	  private class IteratorAnonymousInnerClassHelper : IEnumerator<Entry>
@@ -290,7 +292,7 @@ namespace opennlp.tools.postag
 			  string[] aTags = getTags(word);
 			  string[] bTags = dictionary.getTags(word);
 
-			  if (!Arrays.Equals(aTags, bTags))
+			  if (!Equals(aTags, bTags))
 			  {
 				return false;
 			  }
@@ -337,7 +339,9 @@ namespace opennlp.tools.postag
 //ORIGINAL LINE: final POSDictionary newPosDict = new POSDictionary();
 		POSDictionary newPosDict = new POSDictionary();
 
-		bool isCaseSensitive = DictionarySerializer.create(@in, new EntryInserterAnonymousInnerClassHelper(newPosDict));
+	      bool isCaseSensitive = true;
+          // 08/11/2014 MJJ Commented this out temporarily
+          // was isCaseSensitive = DictionarySerializer.create(@in, new EntryInserterAnonymousInnerClassHelper(newPosDict));
 
 		newPosDict.caseSensitive = isCaseSensitive;
 
@@ -346,7 +350,7 @@ namespace opennlp.tools.postag
 		{
 		  IDictionary<string, String[]> lowerCasedDictionary = new Dictionary<string, String[]>();
 
-		  foreach (KeyValuePair<string, String[]> entry in newPosDict.dictionary.SetOfKeyValuePairs())
+		  foreach (KeyValuePair<string, String[]> entry in newPosDict.dictionary)
 		  {
 			lowerCasedDictionary[StringUtil.ToLower(entry.Key)] = entry.Value;
 		  }
@@ -405,6 +409,11 @@ namespace opennlp.tools.postag
 			return this.caseSensitive;
 		  }
 	  }
+
+	    public static POSDictionary create(UncloseableInputStream @in)
+	    {
+	        throw new NotImplementedException();
+	    }
 	}
 
 }

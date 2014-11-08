@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 
 
 namespace opennlp.tools.doccat
@@ -41,10 +41,13 @@ namespace opennlp.tools.doccat
 		for (int i = 0; i < mFeatureGenerators.Length; i++)
 		{
 		  ICollection<string> extractedFeatures = mFeatureGenerators[i].extractFeatures(text);
-		  context.addAll(extractedFeatures);
+		foreach (var feature in extractedFeatures)
+		{
+            context.Add(feature);
+		}
 		}
 
-		return context.toArray(new string[context.Count]);
+		return context.ToArray();
 	  }
 	}
 

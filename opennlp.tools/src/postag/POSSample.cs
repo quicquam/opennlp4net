@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,6 +18,7 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using opennlp.nonjava.helperclasses;
 
 
 namespace opennlp.tools.postag
@@ -49,8 +50,8 @@ namespace opennlp.tools.postag
 
 	  public POSSample(IList<string> sentence, IList<string> tags, string[][] additionalContext)
 	  {
-		this.sentence = Collections.unmodifiableList(sentence);
-		this.tags = Collections.unmodifiableList(tags);
+		this.sentence = sentence;
+		this.tags = tags;
 
 		checkArguments();
 		string[][] ac;
@@ -71,7 +72,7 @@ namespace opennlp.tools.postag
 		this.additionalContext = ac;
 	  }
 
-	  public POSSample(string[] sentence, string[] tags, string[][] additionalContext) : this(Arrays.asList(sentence), Arrays.asList(tags), additionalContext)
+	  public POSSample(string[] sentence, string[] tags, string[][] additionalContext) : this(sentence.ToList(), tags.ToList(), additionalContext)
 	  {
 	  }
 

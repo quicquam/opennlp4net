@@ -17,6 +17,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.Serialization;
 using opennlp.model;
 
@@ -28,7 +29,7 @@ namespace opennlp.tools.postag
 	using Event = opennlp.model.Event;
 	using opennlp.tools.util;
 
-     public class POSSampleSequenceStream : SequenceStream<POSSample>
+     public class POSSampleSequenceStream : SequenceStream<Event>
 	{
 
 	  private POSContextGenerator pcg;
@@ -65,8 +66,7 @@ namespace opennlp.tools.postag
 		string[] sentence = pss.Source.Sentence;
 		object[] ac = pss.Source.AddictionalContext;
 		string[] tags = tagger.tag(pss.Source.Sentence);
-		Event[] events = new Event[sentence.Length];
-		POSSampleEventStream.generateEvents(sentence, tags, ac, pcg).toArray(events);
+		Event[] events = POSSampleEventStream.generateEvents(sentence, tags, ac, pcg).ToArray();
 		return events;
 	  }
 
@@ -77,7 +77,12 @@ namespace opennlp.tools.postag
 		return new POSSampleSequenceIterator(samples.GetEnumerator());
 	  }
 
-        public IEnumerator<Sequence<POSSample>> GetEnumerator()
+         public Event[] updateContext(Sequence<Event> sequence, AbstractModel model)
+         {
+             throw new NotImplementedException();
+         }
+
+         public IEnumerator<Sequence<Event>> GetEnumerator()
          {
              throw new NotImplementedException();
          }
@@ -103,13 +108,13 @@ namespace opennlp.tools.postag
 	  public virtual bool hasNext()
 	  {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		return psi.hasNext();
+	      return psi.MoveNext();
 	  }
 
 	  public virtual Sequence<POSSample> next()
 	  {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		POSSample sample = psi.next();
+		POSSample sample = psi.Current;
 
 		string[] sentence = sample.Sentence;
 		string[] tags = sample.Tags;
