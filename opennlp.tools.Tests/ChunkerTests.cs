@@ -6,7 +6,7 @@ using opennlp.tools.chunker;
 namespace opennlp.tools.Tests
 {
     [TestFixture]
-    public class ChunkerTests
+    public class chunkerTests
     {
         [SetUp]
         public void Setup()
