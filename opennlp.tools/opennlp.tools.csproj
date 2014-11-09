@@ -166,7 +166,7 @@
     <Compile Include="src\util\Cache.cs" />
     <Compile Include="src\util\cmdline\PerformanceMonitor.cs" />
     <Compile Include="src\util\CountedSet.cs" />
-    <Compile Include="src\util\CrossValidationPartitioner.cs" />
+    <Compile Include="src\util\eval\CrossValidationPartitioner.cs" />
     <Compile Include="src\util\eval\EvaluationMonitor.cs" />
     <Compile Include="src\util\eval\Evaluator.cs" />
     <Compile Include="src\util\eval\FMeasure.cs" />
