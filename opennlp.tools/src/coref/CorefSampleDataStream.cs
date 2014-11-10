@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+using j4n.Serialization;
+
 namespace opennlp.tools.coref
 {
 

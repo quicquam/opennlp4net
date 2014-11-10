@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using j4n.Serialization;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -82,13 +84,17 @@ namespace opennlp.tools.coref
 				  extents[ei].Id = corefParseNode.EntityId;
 				  break;
 				}
-
-				nodes.addAll(Arrays.asList(node.Children));
+                foreach (var child in node.Children)
+			      {
+			          nodes.Push(child);
+			      }
 			  }
 			}
 		  }
-
-		  mentions.AddRange(Arrays.asList(extents));
+		    foreach (var mention in extents)
+		    {
+		        mentions.Add(mention);
+		    }
 		}
 
 		return mentions.ToArray();

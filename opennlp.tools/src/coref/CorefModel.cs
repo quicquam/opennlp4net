@@ -26,7 +26,7 @@ namespace opennlp.tools.coref
 	using AbstractModel = opennlp.model.AbstractModel;
 	using Dictionary = opennlp.tools.dictionary.Dictionary;
 	using StringList = opennlp.tools.util.StringList;
-	using BaseModel = opennlp.tools.util.model.BaseModel;
+	using BaseModel = opennlp.tools.util.model.BaseModel<CorefModel>;
 
 	public class CorefModel : BaseModel
 	{
