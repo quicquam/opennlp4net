@@ -13,5 +13,10 @@ namespace opennlp.tools.util
         {
             Settings.Add(new KeyValuePair<string, string>(key, value));
         }
+
+        public void Put(string dict, string cutoffParam, string toString)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

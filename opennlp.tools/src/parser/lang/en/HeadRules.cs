@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using j4n.IO.Reader;
 using j4n.IO.Writer;
 using j4n.Object;
+using opennlp.nonjava.helperclasses;
 
 
 namespace opennlp.tools.parser.lang.en
@@ -62,7 +63,7 @@ namespace opennlp.tools.parser.lang.en
 		  {
 			HeadRule rule = (HeadRule) obj;
 
-			return (rule.leftToRight == leftToRight) && Arrays.Equals(rule.tags, tags);
+			return (rule.leftToRight == leftToRight) && Equals(rule.tags, tags);
 		  }
 		  else
 		  {

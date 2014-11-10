@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,8 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
+using j4n.Serialization;
 
 
 namespace opennlp.tools.parser.chunking
@@ -277,8 +278,7 @@ namespace opennlp.tools.parser.chunking
 			}
 		  }
 		}
-		Parse[] newParses = new Parse[newParsesList.Count];
-		newParsesList.toArray(newParses);
+        Parse[] newParses = newParsesList.ToArray();		
 		return newParses;
 	  }
 
@@ -353,16 +353,16 @@ namespace opennlp.tools.parser.chunking
 	  {
 
 		TrainingParameters @params = new TrainingParameters();
-		@params.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+		@params.Put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
 
-		@params.put("tagger", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-		@params.put("tagger", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-		@params.put("chunker", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-		@params.put("chunker", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-		@params.put("check", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-		@params.put("check", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-		@params.put("build", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-		@params.put("build", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.Put("tagger", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.Put("tagger", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.Put("chunker", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.Put("chunker", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.Put("check", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.Put("check", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.Put("build", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.Put("build", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
 
 		return train(languageCode, parseSamples, rules, @params);
 	  }

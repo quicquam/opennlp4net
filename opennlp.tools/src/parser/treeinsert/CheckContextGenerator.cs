@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 
 
 namespace opennlp.tools.parser.treeinsert
@@ -46,7 +46,7 @@ namespace opennlp.tools.parser.treeinsert
 		IList<string> features = new List<string>(100);
 		//default
 		features.Add("default");
-		Parse[] children = Parser.collapsePunctuation(parent.Children,punctSet);
+		Parse[] children = AbstractBottomUpParser.collapsePunctuation(parent.Children,punctSet);
 		Parse pstart = children[0];
 		Parse pend = children[children.Length - 1];
 		string type = parent.Type;

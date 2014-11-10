@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,6 +18,7 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.Serialization;
 
 namespace opennlp.tools.parser
 {
@@ -126,27 +127,27 @@ namespace opennlp.tools.parser
 	  /// <summary>
 	  /// Prefix for outcomes starting a constituent. 
 	  /// </summary>
-	  public const string START = "S-";
+	  public static string START = "S-";
 
 	  /// <summary>
 	  /// Prefix for outcomes continuing a constituent. 
 	  /// </summary>
-	  public const string CONT = "C-";
+      public static string CONT = "C-";
 
 	  /// <summary>
 	  /// Outcome for token which is not contained in a basal constituent. 
 	  /// </summary>
-	  public const string OTHER = "O";
+      public static string OTHER = "O";
 
 	  /// <summary>
 	  /// Outcome used when a constituent is complete. 
 	  /// </summary>
-	  public const string COMPLETE = "c";
+      public static string COMPLETE = "c";
 
 	  /// <summary>
 	  /// Outcome used when a constituent is incomplete. 
 	  /// </summary>
-	  public const string INCOMPLETE = "i";
+      public static string INCOMPLETE = "i";
 
 	  /// <summary>
 	  /// The pos-tagger that the parser uses. 
@@ -705,7 +706,7 @@ namespace opennlp.tools.parser
 	  {
 
 		TrainingParameters @params = new TrainingParameters();
-		@params.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
+		@params.Put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
 
 		return buildDictionary(data, rules, @params);
 	  }

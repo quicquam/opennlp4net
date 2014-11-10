@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -17,7 +18,9 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.Reader;
 using j4n.Lang;
+using opennlp.tools.nonjava.extensions;
 
 
 namespace opennlp.tools.parser
@@ -145,7 +148,7 @@ namespace opennlp.tools.parser
 		this.prob = p;
 		this.head = this;
 		this.headIndex = index;
-		this.parts = new LinkedList<Parse>();
+		this.parts = new List<Parse>();
 		this.label = null;
 		this.parent = null;
 	  }
@@ -168,21 +171,6 @@ namespace opennlp.tools.parser
 		}
 	  }
 
-	  public override object clone()
-	  {
-		Parse p = new Parse(this.text, this.span, this.type, this.prob, this.head);
-		p.parts = new LinkedList<Parse>();
-		p.parts.AddRange(this.parts);
-
-		if (derivation != null)
-		{
-		  p.derivation = new StringBuilder(100);
-		  p.derivation.Append(this.derivation.ToString());
-		}
-		p.label = this.label;
-		return (p);
-	  }
-
 	  /// <summary>
 	  /// Clones the right frontier of parse up to the specified node.
 	  /// </summary>
@@ -190,13 +178,13 @@ namespace opennlp.tools.parser
 	  /// <returns> A clone of this parse and its right frontier up to and including the specified node. </returns>
 	  public virtual Parse clone(Parse node)
 	  {
-		if (this == node)
+		if (this.Equals(node))
 		{
-		  return (Parse) this.clone();
+		  return (Parse) this.clone(node);
 		}
 		else
 		{
-		  Parse c = (Parse) this.clone();
+		  Parse c = (Parse) this.clone(node);
 		  Parse lc = c.parts[parts.Count - 1];
 		  c.parts[parts.Count - 1] = lc.clone(node);
 		  return c;
@@ -210,7 +198,7 @@ namespace opennlp.tools.parser
 	  /// <returns> A clone of this root parse and its right frontier up to and including the specified node. </returns>
 	  public virtual Parse cloneRoot(Parse node, int parseIndex)
 	  {
-		Parse c = (Parse) this.clone();
+		Parse c = (Parse) this.clone(node);
 		Parse fc = c.parts[parseIndex];
 		c.parts[parseIndex] = fc.clone(node);
 		return c;
@@ -463,7 +451,7 @@ namespace opennlp.tools.parser
 	  {
 		  get
 		  {
-			return StringHelperClass.SubstringSpecial(text, span.Start, span.End);
+			return text.SubstringSpecial(span.Start, span.End);
 		  }
 	  }
 
@@ -550,11 +538,19 @@ namespace opennlp.tools.parser
 		parts[index] = newChild;
 	  }
 
-	  public virtual void add(Parse daughter, HeadRules rules)
+	    private Parse clone()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public virtual void add(Parse daughter, HeadRules rules)
 	  {
 		if (daughter.prevPunctSet != null)
 		{
-		  parts.AddRange(daughter.prevPunctSet);
+            foreach (var parse in daughter.prevPunctSet)
+		    {
+		         parts.Add(parse);
+		    }
 		}
 		parts.Add(daughter);
 		this.span = new Span(span.Start,daughter.Span.End);
@@ -582,7 +578,10 @@ namespace opennlp.tools.parser
 		adjNode.parts.Add(lastChild);
 		if (node.prevPunctSet != null)
 		{
-		  adjNode.parts.AddRange(node.prevPunctSet);
+            foreach (var parse in node.prevPunctSet)
+		    {
+		        adjNode.parts.Add(parse);
+		    }
 		}
 		adjNode.parts.Add(node);
 		parts[parseIndex] = adjNode;
@@ -603,7 +602,10 @@ namespace opennlp.tools.parser
 		adjNode.parts.Add(lastChild);
 		if (sister.prevPunctSet != null)
 		{
-		  adjNode.parts.AddRange(sister.prevPunctSet);
+            foreach (var parse in sister.prevPunctSet)
+		    {
+		        adjNode.parts.Add(parse);
+		    }
 		}
 		adjNode.parts.Add(sister);
 		parts[parts.Count - 1] = adjNode;
@@ -627,13 +629,13 @@ namespace opennlp.tools.parser
 		  else if (beforeRoot)
 		  {
 			root.parts.Insert(ai,node);
-			parts.Remove(pi);
+			parts.RemoveAt(pi);
 			pi--;
 		  }
 		  else
 		  {
 			root.parts.Add(node);
-			parts.Remove(pi);
+			parts.RemoveAt(pi);
 			pi--;
 		  }
 		}
@@ -851,11 +853,11 @@ namespace opennlp.tools.parser
 	  /// <param name="parse"> </param>
 	  public static void pruneParse(Parse parse)
 	  {
-		IList<Parse> nodes = new LinkedList<Parse>();
+		IList<Parse> nodes = new List<Parse>();
 		nodes.Add(parse);
 		while (nodes.Count != 0)
 		{
-		  Parse node = nodes.Remove(0);
+		  Parse node = nodes.ElementAt(0);
 		  Parse[] children = node.Children;
 		  if (children.Length == 1 && node.Type.Equals(children[0].Type))
 		  {
@@ -865,7 +867,11 @@ namespace opennlp.tools.parser
 			node.parent = null;
 			node.parts = null;
 		  }
-		  nodes.AddRange(Arrays.asList(children));
+          foreach (var child in children)
+		    {
+		        nodes.Add(child);
+		    }
+         nodes.RemoveAt(0);
 		}
 	  }
 
@@ -899,14 +905,14 @@ namespace opennlp.tools.parser
 	  }
 
 
-
-	  /// <summary>
-	  /// Parses the specified tree-bank style parse string and return a Parse structure for that string.
-	  /// </summary>
-	  /// <param name="parse"> A tree-bank style parse string.
-	  /// </param>
-	  /// <returns> a Parse structure for the specified tree-bank style parse string. </returns>
-	  public static Parse parseParse(string parse)
+	    /// <summary>
+	    /// Parses the specified tree-bank style parse string and return a Parse structure for that string.
+	    /// </summary>
+	    /// <param name="parse"> A tree-bank style parse string.
+	    /// </param>
+	    /// <param name="rules"></param>
+	    /// <returns> a Parse structure for the specified tree-bank style parse string. </returns>
+	    public static Parse parseParse(string parse, HeadRules rules)
 	  {
 		return parseParse(parse,null);
 	  }
@@ -924,7 +930,7 @@ namespace opennlp.tools.parser
 		StringBuilder text = new StringBuilder();
 		int offset = 0;
 		Stack<Constituent> stack = new Stack<Constituent>();
-		IList<Constituent> cons = new LinkedList<Constituent>();
+		IList<Constituent> cons = new List<Constituent>();
 		for (int ci = 0, cl = parse.Length; ci < cl; ci++)
 		{
 		  char c = parse[ci];
@@ -1052,20 +1058,23 @@ namespace opennlp.tools.parser
 	  {
 		  get
 		  {
-			IList<Parse> tags = new LinkedList<Parse>();
-			IList<Parse> nodes = new LinkedList<Parse>();
-			nodes.AddRange(this.parts);
-			while (nodes.Count != 0)
+			IList<Parse> tags = new List<Parse>();
+			IList<Parse> nodes = parts.ToList();
+		      while (nodes.Count != 0)
 			{
-			  Parse p = nodes.Remove(0);
+			  Parse p = nodes.ElementAt(0);
 			  if (p.PosTag)
 			  {
 				tags.Add(p);
 			  }
 			  else
 			  {
-				nodes.AddRange(0,p.parts);
+                  foreach (var part in p.parts)
+			      {
+			          nodes.Add(part);
+			      }
 			  }
+                  nodes.RemoveAt(0);
 			}
 			return tags.ToArray();
 		  }
@@ -1154,7 +1163,24 @@ namespace opennlp.tools.parser
 		return result;
 	  }
 
-	  public virtual int CompareTo(Parse p)
+	    public object Clone()
+	    {
+		Parse p = new Parse(this.text, this.span, this.type, this.prob, this.head);
+		p.parts = new List<Parse>();
+	        foreach (var part in parts)
+	        {
+	            p.parts.Add(part);
+	        }
+
+	        if (derivation != null)
+	        {
+	            p.derivation = new StringBuilder(100);
+	            p.derivation.Append(this.derivation.ToString());
+	        }
+	        return p;
+	    }
+
+	    public virtual int CompareTo(Parse p)
 	  {
 		if (this.Prob > p.Prob)
 		{
@@ -1299,12 +1325,12 @@ namespace opennlp.tools.parser
 		  }
 		}
 
-		opennlp.tools.parser.lang.en.HeadRules rules = new opennlp.tools.parser.lang.en.HeadRules(args[ai]);
-		java.io.BufferedReader @in = new java.io.BufferedReader(new java.io.InputStreamReader(Console.OpenStandardInput));
+		HeadRules rules = new opennlp.tools.parser.lang.en.HeadRules(args[ai]);
+		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
 
 		for (string line = @in.readLine(); line != null; line = @in.readLine())
 		{
-		  Parse p = Parse.parseParse(line,rules);
+		  Parse p = Parse.parseParse(line, rules);
 		  Parse.pruneParse(p);
 		  if (fixPossesives)
 		  {

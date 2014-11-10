@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 /*
@@ -133,10 +134,10 @@ namespace opennlp.tools.parser
 		{
 		  if (wordsKey == words)
 		  {
-			string[] contexts = (string[]) contextsCache[cacheKey];
-			if (contexts != null)
+			string[] cContexts = (string[]) contextsCache[cacheKey];
+            if (cContexts != null)
 			{
-			  return contexts;
+                return cContexts;
 			}
 		  }
 		  else

@@ -38,9 +38,9 @@ namespace opennlp.tools.parser
 		for (int oi = 0, on = model.getChunkerModel().NumOutcomes; oi < on; oi++)
 		{
 		  string outcome = model.getChunkerModel().getOutcome(oi);
-		  if (outcome.StartsWith(Parser.CONT, StringComparison.Ordinal))
+		  if (outcome.StartsWith(AbstractBottomUpParser.CONT, StringComparison.Ordinal))
 		  {
-			continueStartMap[outcome] = Parser.START + outcome.Substring(Parser.CONT.Length);
+              continueStartMap[outcome] = AbstractBottomUpParser.START + outcome.Substring(AbstractBottomUpParser.CONT.Length);
 		  }
 		}
 	  }
@@ -69,7 +69,7 @@ namespace opennlp.tools.parser
 			  return true;
 			}
 
-			if (lastTag.Equals(Parser.OTHER))
+            if (lastTag.Equals(AbstractBottomUpParser.OTHER))
 			{
 			  return false;
 			}

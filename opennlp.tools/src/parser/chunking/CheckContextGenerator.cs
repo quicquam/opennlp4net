@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 /*
@@ -39,7 +40,7 @@ namespace opennlp.tools.parser.chunking
 	  public virtual string[] getContext(object o)
 	  {
 		object[] @params = (object[]) o;
-		return getContext((Parse[]) @params[0], (string) @params[1], (int?) @params[2], (int?) @params[3]);
+		return getContext((Parse[]) @params[0], (string) @params[1], (int)@params[2], (int) @params[3]);
 	  }
 
 	  /// <summary>

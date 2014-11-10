@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,7 +16,9 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+using j4n.IO.InputStream;
+using j4n.Serialization;
+using j4n.IO.Reader;
 namespace opennlp.tools.parser.chunking
 {
 
@@ -102,11 +103,11 @@ namespace opennlp.tools.parser.chunking
 		  parent.PrevPunctuation = chunks[reduceStart].PreviousPunctuationSet;
 		  parent.NextPunctuation = chunks[reduceEnd].NextPunctuationSet;
 		  //insert nodes after reduction
-		  int ri = reduceStart + 1;
+		  int ri2 = reduceStart + 1;
 		  for (int rci = reduceEnd + 1;rci < chunks.Length;rci++)
 		  {
-			reducedChunks[ri] = chunks[rci];
-			ri++;
+			reducedChunks[ri2] = chunks[rci];
+			ri2++;
 		  }
 		  ci = reduceStart - 1; //ci will be incremented at end of loop
 		}
@@ -189,7 +190,8 @@ namespace opennlp.tools.parser.chunking
 		  Console.Error.WriteLine("Usage ParserEventStream -[tag|chunk|build|check|fun] head_rules [dictionary] < parses");
 		  Environment.Exit(1);
 		}
-		ParserEventTypeEnum etype = null;
+          // was = null not valid C# MJJ 09/11/2014
+		ParserEventTypeEnum etype = ParserEventTypeEnum.ATTACH;
 		bool fun = false;
 		int ai = 0;
 		while (ai < args.Length && args[ai].StartsWith("-", StringComparison.Ordinal))
@@ -225,13 +227,13 @@ namespace opennlp.tools.parser.chunking
 		Dictionary dict = null;
 		if (ai < args.Length)
 		{
-		  dict = new Dictionary(new FileInputStream(args[ai++]),true);
+		  dict = new Dictionary(new FileInputStream(args[ai++]));
 		}
 		if (fun)
 		{
 		  Parse.useFunctionTags(true);
 		}
-		opennlp.model.EventStream es = new ParserEventStream(new ParseSampleStream(new PlainTextByLineStream(new java.io.InputStreamReader(Console.OpenStandardInput))), rules, etype, dict);
+        opennlp.model.EventStream es = new ParserEventStream(new ParseSampleStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()))), rules, etype, dict);
 		while (es.hasNext())
 		{
 		  Console.WriteLine(es.next());

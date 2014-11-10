@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
+using j4n.Serialization;
 
 namespace opennlp.tools.parser
 {
@@ -92,7 +93,7 @@ namespace opennlp.tools.parser
 			{
 			  toks.Add(c.CoveredText);
 			  tags.Add(c.Type);
-			  preds.Add(Parser.OTHER);
+			  preds.Add(AbstractBottomUpParser.OTHER);
 			}
 			else
 			{
@@ -106,12 +107,12 @@ namespace opennlp.tools.parser
 				tags.Add(tok.Type);
 				if (start)
 				{
-				  preds.Add(Parser.START + ctype);
+				  preds.Add(AbstractBottomUpParser.START + ctype);
 				  start = false;
 				}
 				else
 				{
-				  preds.Add(Parser.CONT + ctype);
+                    preds.Add(AbstractBottomUpParser.CONT + ctype);
 				}
 			  }
 			}

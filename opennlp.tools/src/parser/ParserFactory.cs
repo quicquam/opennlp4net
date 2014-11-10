@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+using j4n.Exceptions;
+
 namespace opennlp.tools.parser
 {
 
@@ -38,7 +40,7 @@ namespace opennlp.tools.parser
 		}
 		else
 		{
-		  throw new IllegalStateException("Unexpected ParserType: " + model.ParserType.name());
+		  throw new IllegalStateException("Unexpected ParserType: " + model.ParserType.name);
 		}
 	  }
 

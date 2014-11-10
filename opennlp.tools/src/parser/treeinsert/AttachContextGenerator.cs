@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 /*
@@ -37,7 +38,7 @@ namespace opennlp.tools.parser.treeinsert
 	  public virtual string[] getContext(object o)
 	  {
 		object[] parts = (object[]) o;
-		return getContext((Parse[]) parts[0], (int?) parts[1],(IList) parts[2], (int?) parts[3]);
+		return getContext((Parse[]) parts[0], (int)parts[1], parts[2] as IList<Parse>, (int) parts[3]);
 	  }
 
 	  private bool containsPunct(ICollection<Parse> puncts, string punct)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,10 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
+using j4n.IO.InputStream;
+using j4n.IO.Reader;
+using j4n.Serialization;
 
 
 namespace opennlp.tools.parser.treeinsert
@@ -45,7 +48,7 @@ namespace opennlp.tools.parser.treeinsert
 	  {
 	  }
 
-	  public override void init()
+	  protected internal override void init()
 	  {
 		buildContextGenerator = new BuildContextGenerator();
 		attachContextGenerator = new AttachContextGenerator(punctSet);
@@ -407,7 +410,8 @@ namespace opennlp.tools.parser.treeinsert
 		  Console.Error.WriteLine("Usage ParserEventStream -[tag|chunk|build|attach] [-fun] [-dict dictionary] [-model model] head_rules < parses");
 		  Environment.Exit(1);
 		}
-		ParserEventTypeEnum etype = null;
+          // was = null changes MJJ 09/11/2014
+		ParserEventTypeEnum etype = ParserEventTypeEnum.ATTACH;
 		bool fun = false;
 		int ai = 0;
 		Dictionary dict = null;
@@ -447,7 +451,7 @@ namespace opennlp.tools.parser.treeinsert
 		  else if (args[ai].Equals("-model"))
 		  {
 			ai++;
-			model = (new SuffixSensitiveGISModelReader(new File(args[ai]))).Model;
+			model = (new SuffixSensitiveGISModelReader(new Jfile(args[ai]))).Model;
 		  }
 		  else
 		  {
@@ -461,7 +465,7 @@ namespace opennlp.tools.parser.treeinsert
 		{
 		  Parse.useFunctionTags(true);
 		}
-		opennlp.model.EventStream es = new ParserEventStream(new ParseSampleStream(new PlainTextByLineStream(new java.io.InputStreamReader(Console.OpenStandardInput))), rules, etype, dict);
+		opennlp.model.EventStream es = new ParserEventStream(new ParseSampleStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()))), rules, etype, dict);
 		while (es.hasNext())
 		{
 		  Event e = es.next();

@@ -377,7 +377,7 @@ namespace opennlp.tools.util.model
             }
         }
 
-        protected void serialize(FileOutputStream fileOutputStream)
+        public void serialize(FileOutputStream fileOutputStream)
         {
             throw new NotImplementedException();
         }

@@ -533,6 +533,7 @@ namespace opennlp.tools.stemmer
 			  r("log");
 			  break;
 		  }
+          break;
 		}
 	  }
 
@@ -751,7 +752,7 @@ namespace opennlp.tools.stemmer
 	  /// </summary>
 	  public virtual CharSequence stem(CharSequence word)
 	  {
-		return stem(word.ToString());
+		return new CharSequence(stem(word.ToString()));
 	  }
 
 	  /// <summary>

@@ -16,9 +16,13 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.Exceptions;
 using j4n.Interfaces;
 using j4n.IO.File;
 using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
+using j4n.IO.Reader;
+using j4n.IO.Writer;
 
 
 namespace opennlp.tools.parser
@@ -30,7 +34,7 @@ namespace opennlp.tools.parser
 	using POSModel = opennlp.tools.postag.POSModel;
 	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
 	using opennlp.tools.util.model;
-	using BaseModel = opennlp.tools.util.model.BaseModel;
+	using BaseModel = opennlp.tools.util.model.BaseModel<ParserModel>;
 	using UncloseableInputStream = opennlp.tools.util.model.UncloseableInputStream;
 
 	/// <summary>
@@ -47,14 +51,14 @@ namespace opennlp.tools.parser
 //ORIGINAL LINE: public opennlp.tools.postag.POSModel create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
 		public virtual POSModel create(InputStream @in)
 		{
-		  return new POSModel(new UncloseableInputStream(@in));
+		  return new POSModel(@in);
 		}
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void serialize(opennlp.tools.postag.POSModel artifact, java.io.OutputStream out) throws java.io.IOException
 		public virtual void serialize(POSModel artifact, OutputStream @out)
 		{
-		  artifact.serialize(@out);
+		  artifact.serialize(@out as FileOutputStream);
 		}
 	  }
 
@@ -65,14 +69,14 @@ namespace opennlp.tools.parser
 //ORIGINAL LINE: public opennlp.tools.chunker.ChunkerModel create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
 		public virtual ChunkerModel create(InputStream @in)
 		{
-		  return new ChunkerModel(new UncloseableInputStream(@in));
+		  return new ChunkerModel(@in);
 		}
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void serialize(opennlp.tools.chunker.ChunkerModel artifact, java.io.OutputStream out) throws java.io.IOException
 		public virtual void serialize(ChunkerModel artifact, OutputStream @out)
 		{
-		  artifact.serialize(@out);
+		  artifact.serialize(@out as FileOutputStream);
 		}
 	  }
 
@@ -90,7 +94,7 @@ namespace opennlp.tools.parser
 //ORIGINAL LINE: public void serialize(opennlp.tools.parser.lang.en.HeadRules artifact, java.io.OutputStream out) throws java.io.IOException
 		public virtual void serialize(opennlp.tools.parser.lang.en.HeadRules artifact, OutputStream @out)
 		{
-		  artifact.serialize(new OutputStreamWriter(@out, "UTF-8"));
+		  artifact.serialize(new OutputStreamWriter((FileOutputStream) @out, "UTF-8"));
 		}
 	  }
 
@@ -114,7 +118,7 @@ namespace opennlp.tools.parser
 	  {
 
 
-		setManifestProperty(PARSER_TYPE, modelType.name());
+		setManifestProperty(PARSER_TYPE, modelType.name);
 
 		artifactMap[BUILD_MODEL_ENTRY_NAME] = buildModel;
 

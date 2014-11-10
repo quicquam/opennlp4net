@@ -43,14 +43,20 @@ namespace opennlp.tools.parser
 	  private readonly int ordinalValue;
 	  private readonly InnerEnum innerEnumValue;
 	  private static int nextOrdinal = 0;
+	  public string name;
 
-	  public static ParserType parse(string type)
+	    private ParserType(string chunking, InnerEnum innerEnum)
+	    {
+	        throw new System.NotImplementedException();
+	    }
+
+	    public static ParserType parse(string type)
 	  {
-		if (ParserType.CHUNKING.name().Equals(type))
+		if (ParserType.CHUNKING.name.Equals(type))
 		{
 		  return ParserType.CHUNKING;
 		}
-		else if (ParserType.TREEINSERT.name().Equals(type))
+		else if (ParserType.TREEINSERT.name.Equals(type))
 		{
 		  return ParserType.TREEINSERT;
 		}
