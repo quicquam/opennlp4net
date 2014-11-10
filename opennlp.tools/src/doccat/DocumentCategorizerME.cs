@@ -170,7 +170,7 @@ namespace opennlp.tools.doccat
 
 		 IDictionary<string, string> manifestInfoEntries = new Dictionary<string, string>();
 
-		 AbstractModel model = TrainUtil.train(new DocumentCategorizerEventStream(samples, featureGenerators), mlParams.Settings, manifestInfoEntries);
+		 AbstractModel model = TrainUtil.train(new DocumentCategorizerEventStream(samples, featureGenerators), mlParams.getSettings(), manifestInfoEntries);
 
 		 return new DoccatModel(languageCode, model, manifestInfoEntries);
 	   }

@@ -117,7 +117,6 @@ namespace opennlp.tools.parser
 	  public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel, AbstractModel attachModel, POSModel parserTagger, ChunkerModel chunkerTagger, opennlp.tools.parser.lang.en.HeadRules headRules, ParserType modelType, IDictionary<string, string> manifestInfoEntries) : base(COMPONENT_NAME, languageCode, manifestInfoEntries)
 	  {
 
-
 		setManifestProperty(PARSER_TYPE, modelType.name);
 
 		artifactMap[BUILD_MODEL_ENTRY_NAME] = buildModel;
@@ -152,8 +151,8 @@ namespace opennlp.tools.parser
 		artifactMap[HEAD_RULES_MODEL_ENTRY_NAME] = headRules;
 		checkArtifactMap();
 	  }
-
-	  public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel, AbstractModel attachModel, POSModel parserTagger, ChunkerModel chunkerTagger, opennlp.tools.parser.lang.en.HeadRules headRules, ParserType modelType) : this(languageCode, buildModel, checkModel, attachModel, parserTagger, chunkerTagger, headRules, modelType, null)
+	  
+      public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel, AbstractModel attachModel, POSModel parserTagger, ChunkerModel chunkerTagger, opennlp.tools.parser.lang.en.HeadRules headRules, ParserType modelType) : this(languageCode, buildModel, checkModel, attachModel, parserTagger, chunkerTagger, headRules, modelType, null)
 	  {
 	  }
 
@@ -182,12 +181,11 @@ namespace opennlp.tools.parser
 	  protected internal void createArtifactSerializers(IDictionary<string, ArtifactSerializer<Object>> serializers)
 	  {
 
-		base.createArtifactSerializers(serializers);
+		base.createArtifactSerializers();
 
-		serializers["postagger"] = new POSModelSerializer();
-		serializers["chunker"] = new ChunkerModelSerializer();
-		serializers["headrules"] = new HeadRulesSerializer();
-
+        artifactSerializers.Add("postagger", new POSModelSerializer());
+        artifactSerializers.Add("chunker", new ChunkerModelSerializer());
+        artifactSerializers.Add("headrules", new HeadRulesSerializer());
 	  }
 
 	  public virtual ParserType ParserType

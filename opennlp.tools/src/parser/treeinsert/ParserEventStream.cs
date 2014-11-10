@@ -69,13 +69,13 @@ namespace opennlp.tools.parser.treeinsert
 	  {
 		IDictionary<Parse, int?> parents = new Dictionary<Parse, int?>();
 		Parse parent = node.Parent;
-		int index = indexOf(node,parent);
+		int index = IndexOf(node, parent);
 		parents[parent] = index;
 		while (parent.Type.Equals(node.Type))
 		{
 		  node = parent;
 		  parent = parent.Parent;
-		  index = indexOf(node,parent);
+		  index = IndexOf(node,parent);
 		  parents[parent] = index;
 		}
 		return parents;
@@ -146,7 +146,7 @@ namespace opennlp.tools.parser.treeinsert
 		Parse[] currentChunks = new Parse[chunks.Length];
 		for (int ci = 0;ci < chunks.Length;ci++)
 		{
-		  currentChunks[ci] = (Parse) chunks[ci].clone();
+		  currentChunks[ci] = (Parse) chunks[ci].Clone();
 		  currentChunks[ci].PrevPunctuation = chunks[ci].PreviousPunctuationSet;
 		  currentChunks[ci].NextPunctuation = chunks[ci].NextPunctuationSet;
 		  currentChunks[ci].Label = Parser.COMPLETE;
@@ -396,7 +396,10 @@ namespace opennlp.tools.parser.treeinsert
 			  throw new Exception("No Attachment: " + chunks[ci]);
 			}
 		  }
-		  rightFrontier.AddRange(0,builtNodes);
+		    foreach (var builtNode in builtNodes)
+		    {
+                rightFrontier.Add(builtNode);
+		    }
 		  builtNodes.Clear();
 		}
 	  }

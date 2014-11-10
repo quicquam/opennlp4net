@@ -36,7 +36,7 @@ namespace opennlp.tools.Tests
         {
         }
 
-        private const string ModelPath = "C:\\opennlp-models\\";
+        private const string ModelPath = "E:\\opennlp-models\\";
         private string _modelFilePath;
         private string[] _sent;
         private string[] _pos;

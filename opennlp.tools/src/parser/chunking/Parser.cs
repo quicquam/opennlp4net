@@ -217,7 +217,7 @@ namespace opennlp.tools.parser.chunking
 			  continue; //Cont must match previous start or continue
 			}
 		  }
-		  Parse newParse1 = (Parse) p.clone(); //clone parse
+		  Parse newParse1 = (Parse) p.Clone(); //clone parse
 		  if (createDerivationString)
 		  {
 			  newParse1.Derivation.Append(max).Append("-");
@@ -231,7 +231,7 @@ namespace opennlp.tools.parser.chunking
 		  Parse newParse2 = newParse1;
 		  if (cprobs[completeIndex] > q) //make sure a reduce is likely
 		  {
-			newParse2 = (Parse) newParse1.clone();
+			newParse2 = (Parse) newParse1.clone(null);
 			if (createDerivationString)
 			{
 				newParse2.Derivation.Append(1).Append(".");
@@ -295,7 +295,7 @@ namespace opennlp.tools.parser.chunking
 	  public static void mergeReportIntoManifest(IDictionary<string, string> manifest, IDictionary<string, string> report, string @namespace)
 	  {
 
-		foreach (KeyValuePair<string, string> entry in report.SetOfKeyValuePairs())
+		foreach (KeyValuePair<string, string> entry in report)
 		{
 		  manifest[@namespace + "." + entry.Key] = entry.Value;
 		}
@@ -353,16 +353,16 @@ namespace opennlp.tools.parser.chunking
 	  {
 
 		TrainingParameters @params = new TrainingParameters();
-		@params.Put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+		@params.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
 
-        @params.Put("tagger", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-        @params.Put("tagger", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-        @params.Put("chunker", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-        @params.Put("chunker", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-        @params.Put("check", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-        @params.Put("check", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-        @params.Put("build", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-        @params.Put("build", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put("tagger", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("tagger", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put("chunker", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("chunker", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put("check", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("check", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put("build", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("build", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
 
 		return train(languageCode, parseSamples, rules, @params);
 	  }

@@ -134,7 +134,7 @@ namespace opennlp.tools.parser.treeinsert
 	  /// <returns> The right frontier of the specified parse tree. </returns>
 	  public static IList<Parse> getRightFrontier(Parse root, HashSet<string> punctSet)
 	  {
-		IList<Parse> rf = new LinkedList<Parse>();
+		IList<Parse> rf = new List<Parse>();
 		Parse top;
 		if (root.Type == AbstractBottomUpParser.TOP_NODE || root.Type == AbstractBottomUpParser.INC_NODE)
 		{
@@ -319,7 +319,7 @@ namespace opennlp.tools.parser.treeinsert
 			string tag = buildModel.getOutcome(max);
 			if (!tag.Equals(DONE))
 			{
-			  Parse newParse1 = (Parse) p.clone();
+			  Parse newParse1 = (Parse) p.Clone();
 			  Parse newNode = new Parse(p.Text,advanceNode.Span,tag,bprob,advanceNode.Head);
 			  newParse1.insert(newNode);
 			  newParse1.addProb(Math.Log(bprob));
@@ -358,7 +358,7 @@ namespace opennlp.tools.parser.treeinsert
 				  Complete = newNode;
 				  newParse1.addProb(Math.Log(cprobs[completeIndex]));
 
-				  Parse newParse2 = (Parse) p.clone();
+				  Parse newParse2 = (Parse) p.Clone();
 				  Parse newNode2 = new Parse(p.Text,advanceNode.Span,tag,bprob,advanceNode.Head);
 				  newParse2.insert(newNode2);
 				  newParse2.addProb(Math.Log(bprob));
@@ -380,7 +380,7 @@ namespace opennlp.tools.parser.treeinsert
 		//advance attaches
 		if (doneProb > q)
 		{
-		  Parse newParse1 = (Parse) p.clone(); //clone parse
+		  Parse newParse1 = (Parse) p.Clone(); //clone parse
 		  //mark nodes as built
 		  if (checkComplete)
 		  {
@@ -583,16 +583,16 @@ namespace opennlp.tools.parser.treeinsert
 	  {
 
 		TrainingParameters @params = new TrainingParameters();
-		@params.Put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
 
-		@params.Put("tagger", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-		@params.Put("tagger", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-		@params.Put("chunker", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-		@params.Put("chunker", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-		@params.Put("check", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-		@params.Put("check", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-		@params.Put("build", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-		@params.Put("build", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put("tagger", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("tagger", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put("chunker", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("chunker", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put("check", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("check", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put("build", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+        @params.put("build", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
 
 		return train(languageCode, parseSamples, rules, @params);
 	  }

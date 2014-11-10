@@ -85,12 +85,12 @@ namespace opennlp.tools.parser.treeinsert
 		IList<Parse> rf;
 		if (index == 0)
 		{
-		  rf = Collections.emptyList();
+		  rf = new List<Parse>();
 		}
 		else
 		{
 		  //this isn't a root node so, punctSet won't be used and can be passed as empty.
-		  HashSet<string> emptyPunctSet = Collections.emptySet();
+		  HashSet<string> emptyPunctSet = new HashSet<string>();
 		  rf = Parser.getRightFrontier(constituents[0], emptyPunctSet);
 		}
 		getFrontierNodes(rf,leftNodes);

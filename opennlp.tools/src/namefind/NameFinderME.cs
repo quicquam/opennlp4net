@@ -384,11 +384,11 @@ namespace opennlp.tools.namefind
 
 		 AbstractModel nameFinderModel;
 
-		 if (!TrainUtil.isSequenceTraining(trainParams.Settings))
+		 if (!TrainUtil.isSequenceTraining(trainParams.getSettings()))
 		 {
 		   EventStream eventStream = new NameFinderEventStream(samples, type, new DefaultNameContextGenerator(featureGenerator));
 
-		   nameFinderModel = TrainUtil.train(eventStream, trainParams.Settings, manifestInfoEntries);
+		   nameFinderModel = TrainUtil.train(eventStream, trainParams.getSettings(), manifestInfoEntries);
 		 }
 		 else
 		 {

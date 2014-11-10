@@ -142,7 +142,7 @@ namespace opennlp.tools.parser
 		  {
 			Parse p = pi.Current;
 	//        String punct = punct(p,c1.index);
-			string punctbo = punctbo(p,c1.index <= 0 ? c1.index - 1 : c1.index);
+			string punctbo = string.Format("{0}{1}", p, c1.index <= 0 ? c1.index - 1 : c1.index);
 
 			//punctbo(1);
 			features.Add(punctbo);
@@ -222,7 +222,7 @@ namespace opennlp.tools.parser
 			{
 			  Parse p = pi.Current;
 	//          String punct = punct(p,c1.index);
-			  string punctbo = punctbo(p,c1.index <= 0 ? c1.index - 1 : c1.index);
+              string punctbo = string.Format("{0}{1}", p, c1.index <= 0 ? c1.index - 1 : c1.index);
 			  //punct(-2)
 			  //TODO consider changing
 			  //features.add(punct);
@@ -240,7 +240,7 @@ namespace opennlp.tools.parser
 			{
 			  Parse p = pi.Current;
 	//          String punct = punct(p,c2.index);
-			  string punctbo = punctbo(p,c2.index <= 0 ? c2.index - 1 : c2.index);
+              string punctbo = string.Format("{0}{1}", p, c2.index <= 0 ? c2.index - 1 : c2.index);              
 			  //punct(2)
 			  //TODO consider changing
 			  //features.add(punct);

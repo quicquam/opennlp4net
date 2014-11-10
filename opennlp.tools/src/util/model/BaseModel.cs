@@ -414,9 +414,15 @@ namespace opennlp.tools.util.model
         /// <returns> the value </returns>
         public string getManifestProperty(string key)
         {
-            Properties manifest = (Properties)artifactMap[MANIFEST_ENTRY];
-
+            var manifest = (Properties)artifactMap[MANIFEST_ENTRY];
             return manifest.getProperty(key);
         }
+
+        public void setManifestProperty(string key, string value)
+        {
+            var manifest = (Properties)artifactMap[MANIFEST_ENTRY];
+            manifest.setProperty(key, value);
+        }
+
     }
 }

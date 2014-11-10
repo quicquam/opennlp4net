@@ -20,6 +20,7 @@ using j4n.IO.Reader;
 using j4n.IO.Writer;
 using j4n.Object;
 using opennlp.nonjava.helperclasses;
+using opennlp.tools.nonjava.extensions;
 
 
 namespace opennlp.tools.parser.lang.en

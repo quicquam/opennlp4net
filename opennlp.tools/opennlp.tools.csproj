@@ -93,6 +93,7 @@
     <Compile Include="src\namefind\TokenNameFinderModel.cs" />
     <Compile Include="src\ngram\NGramModel.cs" />
     <Compile Include="src\nonjava\extensions\HashSetExtensionMethods.cs" />
+    <Compile Include="src\nonjava\extensions\StackExtensionMethods.cs" />
     <Compile Include="src\nonjava\helperclasses\RectangularArrays.cs" />
     <Compile Include="src\nonjava\extensions\StringHelperClass.cs" />
     <Compile Include="src\parser\AbstractBottomUpParser.cs" />

@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using System.Linq;
 using j4n.Lang;
 using j4n.Serialization;
@@ -258,7 +259,7 @@ namespace opennlp.tools.tokenize
 
 		EventStream eventStream = new TokSpanEventStream(samples, factory.UseAlphaNumericOptmization, factory.AlphaNumericPattern, factory.ContextGenerator);
 
-		AbstractModel maxentModel = TrainUtil.train(eventStream, mlParams.Settings, manifestInfoEntries);
+		AbstractModel maxentModel = TrainUtil.train(eventStream, mlParams.getSettings(), manifestInfoEntries);
 
 		return new TokenizerModel(maxentModel, manifestInfoEntries, factory);
 	  }
@@ -315,7 +316,7 @@ namespace opennlp.tools.tokenize
 
 		EventStream eventStream = new TokSpanEventStream(samples, useAlphaNumericOptimization, factory.getAlphanumeric(languageCode), factory.createTokenContextGenerator(languageCode, getAbbreviations(abbreviations)));
 
-		AbstractModel maxentModel = TrainUtil.train(eventStream, mlParams.Settings, manifestInfoEntries);
+		AbstractModel maxentModel = TrainUtil.train(eventStream, mlParams.getSettings(), manifestInfoEntries);
 
 		return new TokenizerModel(languageCode, maxentModel, abbreviations, useAlphaNumericOptimization, manifestInfoEntries);
 	  }

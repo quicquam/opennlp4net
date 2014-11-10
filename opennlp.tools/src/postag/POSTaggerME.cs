@@ -326,18 +326,18 @@ namespace opennlp.tools.postag
 
 		AbstractModel posModel;
 
-		if (!TrainUtil.isSequenceTraining(trainParams.Settings))
+		if (!TrainUtil.isSequenceTraining(trainParams.getSettings()))
 		{
 
 		  EventStream es = new POSSampleEventStream(samples, contextGenerator);
 
-		  posModel = TrainUtil.train(es, trainParams.Settings, manifestInfoEntries);
+		  posModel = TrainUtil.train(es, trainParams.getSettings(), manifestInfoEntries);
 		}
 		else
 		{
 		  POSSampleSequenceStream ss = new POSSampleSequenceStream(samples, contextGenerator);
 
-		  posModel = TrainUtil.train(ss, trainParams.Settings, manifestInfoEntries);
+		  posModel = TrainUtil.train(ss, trainParams.getSettings(), manifestInfoEntries);
 		}
 
 		return new POSModel(languageCode, posModel, manifestInfoEntries, posFactory);
@@ -366,9 +366,9 @@ namespace opennlp.tools.postag
 
 		TrainingParameters @params = new TrainingParameters();
 
-		@params.Put(TrainingParameters.ALGORITHM_PARAM, modelType.ToString());
-		@params.Put(TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-		@params.Put(TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
+        @params.put(TrainingParameters.ALGORITHM_PARAM, modelType.ToString());
+        @params.put(TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+        @params.put(TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
 
 		return train(languageCode, samples, @params, tagDictionary, ngramDictionary);
 	  }

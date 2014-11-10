@@ -345,7 +345,7 @@ namespace opennlp.tools.sentdetect
 		// TODO: Fix the EventStream to throw exceptions when training goes wrong
 		EventStream eventStream = new SDEventStream(samples, sdFactory.SDContextGenerator, sdFactory.EndOfSentenceScanner);
 
-		AbstractModel sentModel = TrainUtil.train(eventStream, mlParams.Settings, manifestInfoEntries);
+		AbstractModel sentModel = TrainUtil.train(eventStream, mlParams.getSettings(), manifestInfoEntries);
 
 		return new SentenceModel(languageCode, sentModel, manifestInfoEntries, sdFactory);
 	  }

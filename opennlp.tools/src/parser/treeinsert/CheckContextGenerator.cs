@@ -52,8 +52,8 @@ namespace opennlp.tools.parser.treeinsert
 		string type = parent.Type;
 		checkcons(pstart, "begin", type, features);
 		checkcons(pend, "last", type, features);
-		string production = "p=" + production(parent,false);
-		string punctProduction = "pp=" + production(parent,true);
+		string production = "p=" + string.Format("{0}{1}", parent, false);
+        string punctProduction = "pp=" + string.Format("{0}{1}", parent, true);
 		features.Add(production);
 		features.Add(punctProduction);
 
@@ -69,7 +69,7 @@ namespace opennlp.tools.parser.treeinsert
 		IList<Parse> rf;
 		if (index == 0)
 		{
-		  rf = Collections.emptyList();
+		  rf = new List<Parse>();
 		}
 		else
 		{

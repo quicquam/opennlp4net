@@ -20,7 +20,7 @@ namespace opennlp.tools.Tests
     [TestFixture]
     public class namefinderTests
     {
-        private const string ModelPath = "C:\\opennlp-models\\";
+        private const string ModelPath = "E:\\opennlp-models\\";
         private string _modelFilePath;
         private string _testTextBlock;
         
@@ -28,7 +28,7 @@ namespace opennlp.tools.Tests
         public void Setup()
         {
             _modelFilePath = string.Format("{0}{1}", ModelPath, "en-ner-person.bin");
-            var sr = new StreamReader("C:\\opennlp-models\\test-sentence.txt");
+            var sr = new StreamReader("E:\\opennlp-models\\test-sentence.txt");
             _testTextBlock = sr.ReadToEnd();
         }
 
@@ -48,7 +48,7 @@ namespace opennlp.tools.Tests
                 var nameFinder = new NameFinderME(model);
 
                 //1. convert sentence into tokens
-                var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
+                var modelInToken = new FileInputStream("E:\\opennlp-models\\en-token.bin");
                 TokenizerModel modelToken = new TokenizerModel(modelInToken);
                 Tokenizer tokenizer = new TokenizerME(modelToken);
                 var tokens = tokenizer.tokenize("Why is Jack London so famous?");
@@ -93,7 +93,7 @@ namespace opennlp.tools.Tests
         public void Test2()
         {
             			//1. convert sentence into tokens
-            var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
+            var modelInToken = new FileInputStream("E:\\opennlp-models\\en-token.bin");
 		    	TokenizerModel modelToken = new TokenizerModel(modelInToken);
 
 		    	Tokenizer tokenizer = new TokenizerME(modelToken);
@@ -101,7 +101,7 @@ namespace opennlp.tools.Tests
                var tokens = tokenizer.tokenize("Why is Jack London so famous?");
  
 		    	//2. find names
-                var modelIn = new FileInputStream("C:\\opennlp-models\\en-ner-person.bin");
+                var modelIn = new FileInputStream("E:\\opennlp-models\\en-ner-person.bin");
 		    	TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
                 
                 NameFinderME nameFinder = new NameFinderME(model);

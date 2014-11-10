@@ -180,13 +180,13 @@ namespace opennlp.tools.parser
 	  {
 		if (this.Equals(node))
 		{
-		  return (Parse) this.clone(node);
+		  return (Parse) this.Clone();
 		}
 		else
 		{
-		  Parse c = (Parse) this.clone(node);
+		  Parse c = (Parse) this.Clone();
 		  Parse lc = c.parts[parts.Count - 1];
-		  c.parts[parts.Count - 1] = lc.clone(node);
+		  c.parts[parts.Count - 1] = lc.Clone() as Parse;
 		  return c;
 		}
 	  }
@@ -533,17 +533,12 @@ namespace opennlp.tools.parser
 	  /// <param name="label"> The label to be assigned to the new child. </param>
 	  public virtual void setChild(int index, string label)
 	  {
-		Parse newChild = (Parse)(parts[index]).clone();
+		Parse newChild = (Parse)(parts[index]).Clone();
 		newChild.Label = label;
 		parts[index] = newChild;
 	  }
 
-	    private Parse clone()
-	    {
-	        throw new NotImplementedException();
-	    }
-
-	    public virtual void add(Parse daughter, HeadRules rules)
+      public virtual void add(Parse daughter, HeadRules rules)
 	  {
 		if (daughter.prevPunctSet != null)
 		{
@@ -914,7 +909,7 @@ namespace opennlp.tools.parser
 	    /// <returns> a Parse structure for the specified tree-bank style parse string. </returns>
 	    public static Parse parseParse(string parse, HeadRules rules)
 	  {
-		return parseParse(parse,null);
+		return parseParse(parse, (HeadRules)null);
 	  }
 
 	  /// <summary>

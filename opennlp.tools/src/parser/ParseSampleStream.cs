@@ -39,7 +39,7 @@ namespace opennlp.tools.parser
 
 		if (parse != null)
 		{
-		  return Parse.parseParse(parse);
+		  return Parse.parseParse(parse, (HeadRules)null);
 		}
 		else
 		{

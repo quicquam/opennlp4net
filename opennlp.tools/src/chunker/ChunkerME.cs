@@ -211,7 +211,7 @@ namespace opennlp.tools.chunker
 
 		EventStream es = new ChunkerEventStream(@in, factory.ContextGenerator);
 
-		AbstractModel maxentModel = TrainUtil.train(es, mlParams.Settings, manifestInfoEntries);
+		AbstractModel maxentModel = TrainUtil.train(es, mlParams.getSettings(), manifestInfoEntries);
 
 		return new ChunkerModel(lang, maxentModel, manifestInfoEntries, factory);
 	  }
@@ -228,7 +228,7 @@ namespace opennlp.tools.chunker
 
 		EventStream es = new ChunkerEventStream(@in, contextGenerator);
 
-		AbstractModel maxentModel = TrainUtil.train(es, mlParams.Settings, manifestInfoEntries);
+		AbstractModel maxentModel = TrainUtil.train(es, mlParams.getSettings(), manifestInfoEntries);
 
 		return new ChunkerModel(lang, maxentModel, manifestInfoEntries);
 	  }

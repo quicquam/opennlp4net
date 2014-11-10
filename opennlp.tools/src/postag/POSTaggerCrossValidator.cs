@@ -227,7 +227,7 @@ namespace opennlp.tools.postag
 	  private static TrainingParameters create(ModelType type, int cutoff, int iterations)
 	  {
 		TrainingParameters @params = ModelUtil.createTrainingParameters(iterations, cutoff);
-		@params.Put(TrainingParameters.ALGORITHM_PARAM, type.ToString());
+		@params.put(TrainingParameters.ALGORITHM_PARAM, type.ToString());
 		return @params;
 	  }
 

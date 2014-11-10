@@ -302,7 +302,7 @@ namespace opennlp.tools.parser
 
 		  int derivationRank = 0;
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		  for (IEnumerator<Parse> pi = odh.GetEnumerator(); pi.hasNext() && derivationRank < K; derivationRank++) // forearch derivation
+		  for (IEnumerator<Parse> pi = odh.iterator(); pi.MoveNext() && derivationRank < K; derivationRank++) // forearch derivation
 		  {
 			Parse tp = pi.Current;
 			//TODO: Need to look at this for K-best parsing cases
@@ -448,7 +448,7 @@ namespace opennlp.tools.parser
 		Parse[] newParses = new Parse[cs.Length];
 		for (int si = 0, sl = cs.Length; si < sl; si++)
 		{
-		  newParses[si] = (Parse) p.clone(); //copies top level
+		  newParses[si] = (Parse) p.Clone(); //copies top level
 		  if (createDerivationString)
 		  {
 			  newParses[si].Derivation.Append(si).Append(".");
@@ -540,7 +540,7 @@ namespace opennlp.tools.parser
 		{
 		  string[] tags = ts[i].Outcomes.ToArray();
 		  ts[i].getProbs(probs);
-		  newParses[i] = (Parse) p.clone(); //copies top level
+		  newParses[i] = (Parse) p.Clone(); //copies top level
 		  if (createDerivationString)
 		  {
 			  newParses[i].Derivation.Append(i).Append(".");
@@ -706,7 +706,7 @@ namespace opennlp.tools.parser
 	  {
 
 		TrainingParameters @params = new TrainingParameters();
-		@params.Put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
+		@params.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
 
 		return buildDictionary(data, rules, @params);
 	  }
