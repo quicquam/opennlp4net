@@ -69,7 +69,6 @@
     <Compile Include="src\coref\LinkerMode.cs" />
     <Compile Include="src\coref\mention\AbstractMentionFinder.cs" />
     <Compile Include="src\coref\mention\AbstractParse.cs" />
-    <Compile Include="src\coref\mention\DefaultParse.cs" />
     <Compile Include="src\coref\mention\Dictionary.cs" />
     <Compile Include="src\coref\mention\DictionaryFactory.cs" />
     <Compile Include="src\coref\mention\HeadFinder.cs" />
@@ -81,6 +80,8 @@
     <Compile Include="src\coref\mention\PTBHeadFinder.cs" />
     <Compile Include="src\coref\mention\PTBMentionFinder.cs" />
     <Compile Include="src\coref\mention\ShallowParseMentionFinder.cs" />
+    <Compile Include="src\coref\mention\StubDefaultParse.cs" />
+    <Compile Include="src\coref\mention\WNLDictionary.cs" />
     <Compile Include="src\coref\package-info.cs" />
     <Compile Include="src\coref\resolver\AbstractResolver.cs" />
     <Compile Include="src\coref\resolver\CommonNounResolver.cs" />

@@ -22,8 +22,8 @@ using opennlp.tools.parser;
 namespace opennlp.tools.coref
 {
 
-
-	using DefaultParse = opennlp.tools.coref.mention.DefaultParse;
+    // was opennlp.tools.coref.mention.DefaultParse
+	using DefaultParse = opennlp.tools.coref.mention.StubDefaultParse;
 	using Parse = opennlp.tools.parser.Parse;
 
 	public class CorefSample

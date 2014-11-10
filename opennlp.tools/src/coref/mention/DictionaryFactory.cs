@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 using System.IO;
+using j4n.Exceptions;
 
 namespace opennlp.tools.coref.mention
 {
@@ -41,8 +42,8 @@ namespace opennlp.tools.coref.mention
 			if (dictionary == null)
 			{
 			  try
-			  {
-				dictionary = new JWNLDictionary(System.getProperty("WNSEARCHDIR"));
+              {   // was JWNLDictionary (Java Dictionary), created alternative wordnet Dictionary
+                  dictionary = new WNLDictionary(Environment.GetEnvironmentVariable("WNSEARCHDIR"));
 			  }
 			  catch (IOException e)
 			  {

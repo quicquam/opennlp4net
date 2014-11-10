@@ -23,8 +23,8 @@ using j4n.Serialization;
 namespace opennlp.tools.coref
 {
 
-
-	using DefaultParse = opennlp.tools.coref.mention.DefaultParse;
+    // was opennlp.tools.coref.mention.DefaultParse
+	using DefaultParse = opennlp.tools.coref.mention.StubDefaultParse;
 	using Mention = opennlp.tools.coref.mention.Mention;
 	using MentionContext = opennlp.tools.coref.mention.MentionContext;
 	using MentionFinder = opennlp.tools.coref.mention.MentionFinder;

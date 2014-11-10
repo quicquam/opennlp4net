@@ -47,6 +47,7 @@
     <Compile Include="Exceptions\IllegalStateException.cs" />
     <Compile Include="Exceptions\InstantiationException.cs" />
     <Compile Include="Exceptions\InterruptedException.cs" />
+    <Compile Include="Exceptions\JWNLException.cs" />
     <Compile Include="Exceptions\NoSuchAlgorithmException.cs" />
     <Compile Include="Exceptions\NoSuchElementException.cs" />
     <Compile Include="Exceptions\NumberFormatException.cs" />
