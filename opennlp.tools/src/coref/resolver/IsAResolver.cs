@@ -17,6 +17,7 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using j4n.Lang;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.coref.resolver
 {

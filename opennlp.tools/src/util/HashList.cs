@@ -57,8 +57,11 @@ namespace opennlp.tools.util
 		  o = new ArrayList();
 		  base[key] = o;
 		}
-
-		o.AddRange(values);
+        
+        foreach (var value in values)
+        {
+            o.Add(value);
+        }
 
 		if (o.Count == values.Count)
 		{
@@ -70,7 +73,7 @@ namespace opennlp.tools.util
 		}
 	  }
 
-	  public override IList put(object key, object value)
+	  public IList Put(object key, object value)
 	  {
 		IList o = (IList) this[key];
 
@@ -101,12 +104,12 @@ namespace opennlp.tools.util
 		}
 		else
 		{
-		  bool r = l.Remove(value);
+		  l.Remove(value);
 		  if (l.Count == 0)
 		  {
 		this.Remove(key);
 		  }
-		  return r;
+		  return true;
 		}
 	  }
 	}

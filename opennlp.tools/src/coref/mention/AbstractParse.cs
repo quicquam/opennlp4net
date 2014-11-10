@@ -30,7 +30,13 @@ namespace opennlp.tools.coref.mention
 		public abstract Parse PreviousToken {get;}
 		public abstract opennlp.tools.util.Span Span {get;}
 		public abstract int EntityId {get;}
-		public override abstract string ToString();
+	    
+        public int CompareTo(Parse other)
+	    {
+	        throw new System.NotImplementedException();
+	    }
+
+	    public override abstract string ToString();
 		public abstract bool Token {get;}
 		public abstract bool Sentence {get;}
 		public abstract bool NounPhrase {get;}
@@ -85,7 +91,10 @@ namespace opennlp.tools.coref.mention
 				}
 				if (!cp.Token)
 				{
-				  newParts.AddRange(cp.SyntacticChildren);
+                    foreach (var sc in cp.SyntacticChildren)
+				    {
+				        newParts.Add(sc);
+				    }
 				}
 			  }
 			  parts = newParts;

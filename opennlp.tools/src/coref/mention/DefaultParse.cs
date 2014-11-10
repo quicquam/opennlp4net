@@ -18,6 +18,7 @@ using System.Collections.Generic;
  */
 using System.Linq;
 using opennlp.nonjava.helperclasses;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.coref.mention
 {
@@ -38,7 +39,7 @@ namespace opennlp.tools.coref.mention
 
       private mention.Parse parse;
 	  private int sentenceNumber;
-	  private static HashSet<string> entitySet = new HashSet<string>(Arrays.asList(NAME_TYPES));
+	  private static HashSet<string> entitySet = new HashSet<string>(NAME_TYPES);
 
 	  /// <summary>
 	  /// Initializes the current instance.
@@ -66,7 +67,7 @@ namespace opennlp.tools.coref.mention
 		  get
 		  {
               IList<mention.Parse> names = new List<mention.Parse>();
-              IList<mention.Parse> kids = new LinkedList<mention.Parse>(Arrays.asList(parse.Children));
+              IList<mention.Parse> kids = new List<mention.Parse>(parse.Children);
 			while (kids.Count > 0)
 			{
                 mention.Parse p = kids.Remove(0);
@@ -76,7 +77,7 @@ namespace opennlp.tools.coref.mention
 			  }
 			  else
 			  {
-				kids.AddRange(Arrays.asList(p.Children));
+                  kids.AddRange(p.Children);
 			  }
 			}
 			return createParses(names.ToArray());
@@ -87,7 +88,7 @@ namespace opennlp.tools.coref.mention
 	  {
 		  get
 		  {
-			return createParses(parse.Children);
+			return createParses(parse.Children.ToArray());
 		  }
 	  }
 
@@ -95,14 +96,14 @@ namespace opennlp.tools.coref.mention
 	  {
 		  get
 		  {
-			IList<Parse> kids = new List<Parse>(Arrays.asList(parse.Children));
+            IList<opennlp.tools.coref.mention.Parse> kids = parse.Children;
 			for (int ci = 0; ci < kids.Count; ci++)
 			{
 			  Parse kid = kids[ci];
 			  if (entitySet.Contains(kid.Type))
 			  {
 				kids.RemoveAt(ci);
-				kids.AddRange(ci, Arrays.asList(kid.Children));
+				kids.AddRange(kid.Children);
 				ci--;
 			  }
 			}
@@ -115,7 +116,7 @@ namespace opennlp.tools.coref.mention
 		  get
 		  {
               IList<mention.Parse> tokens = new List<mention.Parse>();
-              IList<mention.Parse> kids = new LinkedList<mention.Parse>(Arrays.asList(parse.Children));
+              IList<mention.Parse> kids = parse.Children;
 			while (kids.Count > 0)
 			{
 			  Parse p = kids.Remove(0);

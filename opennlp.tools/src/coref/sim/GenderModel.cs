@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,11 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
+using j4n.IO.File;
+using j4n.IO.Reader;
+using j4n.IO.Writer;
+using opennlp.tools.nonjava.extensions;
 
 
 namespace opennlp.tools.coref.sim
@@ -96,7 +100,7 @@ namespace opennlp.tools.coref.sim
 		  //if (MaxentResolver.loadAsResource()) {
 		  //  testModel = (new BinaryGISModelReader(new DataInputStream(this.getClass().getResourceAsStream(modelName)))).getModel();
 		  //}
-		  testModel_Renamed = (new SuffixSensitiveGISModelReader(new File(modelName + modelExtension))).Model;
+		  testModel_Renamed = (new SuffixSensitiveGISModelReader(new Jfile(modelName + modelExtension))).Model;
 		  maleIndex = testModel_Renamed.getIndex(GenderEnum.MALE.ToString());
 		  femaleIndex = testModel_Renamed.getIndex(GenderEnum.FEMALE.ToString());
 		  neuterIndex = testModel_Renamed.getIndex(GenderEnum.NEUTER.ToString());
@@ -291,7 +295,7 @@ namespace opennlp.tools.coref.sim
 		GenderModel model = new GenderModel(modelName, false);
 		//Context.wn = new WordNet(System.getProperty("WNHOME"), true);
 		//Context.morphy = new Morphy(Context.wn);
-		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput));
+		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
 		for (string line = @in.readLine(); line != null; line = @in.readLine())
 		{
 		  string[] words = line.Split(" ", true);
@@ -324,7 +328,7 @@ namespace opennlp.tools.coref.sim
 		  }
 		  writer.close();
 		}
-		(new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events), true), new File(modelName + modelExtension))).persist();
+		(new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events), true), new Jfile(modelName + modelExtension))).persist();
 	  }
 
 	  public virtual int FemaleIndex

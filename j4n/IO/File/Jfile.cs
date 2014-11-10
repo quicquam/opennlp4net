@@ -8,6 +8,7 @@ namespace j4n.IO.File
     {
         public SafeFileHandle FileHandle;
         public FileStream FileStream;
+        public static string separator;
 
         public Jfile(string fileName, FileMode filemode = FileMode.Open)
         {

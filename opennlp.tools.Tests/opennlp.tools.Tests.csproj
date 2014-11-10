@@ -42,13 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dumper.cs" />
-    <Compile Include="FullDumper.cs" />
-    <Compile Include="namefinderTests.cs" />
-    <Compile Include="sentdetectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="chunkerTests.cs" />
-    <Compile Include="tokenizeTests.cs" />
+    <Compile Include="src\ChunkerTests.cs" />
+    <Compile Include="src\namefinderTests.cs" />
+    <Compile Include="src\sentdetectTests.cs" />
+    <Compile Include="src\tokenizeTests.cs" />
+    <Compile Include="utils\Dumper.cs" />
+    <Compile Include="utils\FullDumper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -67,6 +67,7 @@
       <Name>opennlp.tools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

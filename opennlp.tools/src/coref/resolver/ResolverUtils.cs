@@ -331,7 +331,10 @@ namespace opennlp.tools.coref.resolver
 		}
 		if (featureSet.Count > 0)
 		{
-		  features.AddRange(featureSet);
+            foreach (var feature in featureSet)
+		    {
+		        features.Add(feature);
+		    }
 		}
 		if (sameHead)
 		{

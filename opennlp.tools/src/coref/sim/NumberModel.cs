@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
+using j4n.IO.File;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.coref.sim
 {
@@ -74,7 +76,7 @@ namespace opennlp.tools.coref.sim
 		  //if (MaxentResolver.loadAsResource()) {
 		  //  testModel = (new PlainTextGISModelReader(new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(modelName))))).getModel();
 		  //}
-		  testModel_Renamed = (new SuffixSensitiveGISModelReader(new File(modelName + modelExtension))).Model;
+		  testModel_Renamed = (new SuffixSensitiveGISModelReader(new Jfile(modelName + modelExtension))).Model;
 		  singularIndex = testModel_Renamed.getIndex(NumberEnum.SINGULAR.ToString());
 		  pluralIndex = testModel_Renamed.getIndex(NumberEnum.PLURAL.ToString());
 		}
@@ -222,7 +224,7 @@ namespace opennlp.tools.coref.sim
 //ORIGINAL LINE: public void trainModel() throws java.io.IOException
 	  public virtual void trainModel()
 	  {
-		(new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events),100,10),new File(modelName + modelExtension))).persist();
+		(new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events),100,10),new Jfile(modelName + modelExtension))).persist();
 	  }
 
 	}

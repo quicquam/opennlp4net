@@ -155,6 +155,7 @@
     <Compile Include="src\namefind\TokenNameFinderModel.cs" />
     <Compile Include="src\ngram\NGramModel.cs" />
     <Compile Include="src\nonjava\extensions\HashSetExtensionMethods.cs" />
+    <Compile Include="src\nonjava\extensions\IListExtensionMethods.cs" />
     <Compile Include="src\nonjava\extensions\StackExtensionMethods.cs" />
     <Compile Include="src\nonjava\helperclasses\RectangularArrays.cs" />
     <Compile Include="src\nonjava\extensions\StringHelperClass.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="src\util\BeamSearchContextGenerator.cs" />
     <Compile Include="src\util\Cache.cs" />
     <Compile Include="src\util\cmdline\PerformanceMonitor.cs" />
+    <Compile Include="src\util\CollectionEventStream.cs" />
     <Compile Include="src\util\CountedSet.cs" />
     <Compile Include="src\util\eval\CrossValidationPartitioner.cs" />
     <Compile Include="src\util\eval\EvaluationMonitor.cs" />
@@ -294,6 +296,7 @@
     <Compile Include="src\util\featuregen\TokenPatternFeatureGenerator.cs" />
     <Compile Include="src\util\featuregen\WindowFeatureGenerator.cs" />
     <Compile Include="src\util\FilterObjectStream.cs" />
+    <Compile Include="src\util\HashList.cs" />
     <Compile Include="src\util\Heap.cs" />
     <Compile Include="src\util\InvalidFormatException.cs" />
     <Compile Include="src\util\ListHeap.cs" />

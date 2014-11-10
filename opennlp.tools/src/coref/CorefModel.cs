@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
+using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
+using j4n.IO.Reader;
 
 
 namespace opennlp.tools.coref
@@ -64,32 +67,32 @@ namespace opennlp.tools.coref
 	  public CorefModel(string languageCode, string project) : base(COMPONENT_NAME, languageCode, null)
 	  {
 
-		artifactMap[MALE_NAMES_DICTIONARY_ENTRY_NAME] = readNames(project + File.separator + "gen.mas");
+		artifactMap[MALE_NAMES_DICTIONARY_ENTRY_NAME] = readNames(project + Jfile.separator + "gen.mas");
 
-		artifactMap[FEMALE_NAMES_DICTIONARY_ENTRY_NAME] = readNames(project + File.separator + "gen.fem");
+        artifactMap[FEMALE_NAMES_DICTIONARY_ENTRY_NAME] = readNames(project + Jfile.separator + "gen.fem");
 
 		// TODO: Create acronyms
 
-		artifactMap[NUMBER_MODEL_ENTRY_NAME] = createModel(project + File.separator + "num.bin.gz");
+        artifactMap[NUMBER_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "num.bin.gz");
 
-		artifactMap[COMMON_NOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + File.separator + "cmodel.bin.gz");
+        artifactMap[COMMON_NOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "cmodel.bin.gz");
 
-		artifactMap[DEFINITE_NOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + File.separator + "defmodel.bin.gz");
+        artifactMap[DEFINITE_NOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "defmodel.bin.gz");
 
 
-		artifactMap[SPEECH_PRONOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + File.separator + "fmodel.bin.gz");
+        artifactMap[SPEECH_PRONOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "fmodel.bin.gz");
 
 		// TODO: IModel
 
-		artifactMap[PLURAL_NOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + File.separator + "plmodel.bin.gz");
+        artifactMap[PLURAL_NOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "plmodel.bin.gz");
 
-		artifactMap[SINGULAR_PRONOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + File.separator + "pmodel.bin.gz");
+        artifactMap[SINGULAR_PRONOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "pmodel.bin.gz");
 
-		artifactMap[PROPER_NOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + File.separator + "pnmodel.bin.gz");
+        artifactMap[PROPER_NOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "pnmodel.bin.gz");
 
-		artifactMap[SIM_MODEL_ENTRY_NAME] = createModel(project + File.separator + "sim.bin.gz");
+        artifactMap[SIM_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "sim.bin.gz");
 
-		artifactMap[PLURAL_PRONOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + File.separator + "tmodel.bin.gz");
+        artifactMap[PLURAL_PRONOUN_RESOLVER_MODEL_ENTRY_NAME] = createModel(project + Jfile.separator + "tmodel.bin.gz");
 
 		checkArtifactMap();
 	  }
@@ -105,7 +108,7 @@ namespace opennlp.tools.coref
 //ORIGINAL LINE: private static opennlp.tools.dictionary.Dictionary readNames(String nameFile) throws java.io.IOException
 	  private static Dictionary readNames(string nameFile)
 	  {
-		Dictionary names = new Dictionary();
+		Dictionary names = new Dictionary(true);
 
 		BufferedReader nameReader = new BufferedReader(new FileReader(nameFile));
 		for (string line = nameReader.readLine(); line != null; line = nameReader.readLine())

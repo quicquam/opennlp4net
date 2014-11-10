@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 
 
 namespace opennlp.tools.coref.mention
@@ -269,7 +269,7 @@ namespace opennlp.tools.coref.mention
 		  Mention e = ei.Current;
 		  if (lastExtent != null && e.Span.Equals(lastExtent.Span))
 		  {
-			ei.remove();
+		      extents.Remove(e);
 		  }
 		  else
 		  {
@@ -471,7 +471,7 @@ namespace opennlp.tools.coref.mention
 	  public virtual Mention[] getMentions(Parse p)
 	  {
 		IList<Parse> nps = p.NounPhrases;
-		nps.Sort();
+		Array.Sort(nps.ToArray());
 		IDictionary<Parse, Parse> headMap = constructHeadMap(nps);
 		//System.err.println("AbstractMentionFinder.getMentions: got " + nps.size()); // + " nps, and " + nes.size() + " named entities");
 		Mention[] mentions = collectMentions(nps, headMap);

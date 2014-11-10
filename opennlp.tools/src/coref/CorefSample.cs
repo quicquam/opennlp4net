@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,8 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Text.RegularExpressions;
+using opennlp.tools.parser;
 
 namespace opennlp.tools.coref
 {
@@ -73,9 +74,9 @@ namespace opennlp.tools.coref
 
 		IList<Parse> parses = new List<Parse>();
 
-		foreach (string line in corefSampleString.Split("\\r?\\n", true))
+        foreach (string line in Regex.Split(corefSampleString, "\\r?\\n", RegexOptions.None)) // was true
 		{
-		  parses.Add(Parse.parseParse(line));
+		  parses.Add(Parse.parseParse(line, (HeadRules)null));
 		}
 
 		return new CorefSample(parses);

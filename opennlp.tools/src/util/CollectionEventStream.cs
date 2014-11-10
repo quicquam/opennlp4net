@@ -37,16 +37,16 @@ namespace opennlp.tools.util
 		ci = c.GetEnumerator();
 	  }
 
-	  public virtual Event next()
+	  public override Event next()
 	  {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		return ci.next();
+		return ci.Current;
 	  }
 
-	  public virtual bool hasNext()
+      public override bool hasNext()
 	  {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		return ci.hasNext();
+		return ci.Current != null;
 	  }
 
 	}

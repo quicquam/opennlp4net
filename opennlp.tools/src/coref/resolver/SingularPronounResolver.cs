@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.Lang;
 
 namespace opennlp.tools.coref.resolver
@@ -57,15 +58,26 @@ namespace opennlp.tools.coref.resolver
 
 	  protected internal override IList<string> getFeatures(MentionContext mention, DiscourseEntity entity)
 	  {
-		IList<string> features = new List<string>();
-		features.AddRange(base.getFeatures(mention, entity));
+		IList<string> features = base.getFeatures(mention, entity).ToList();
 		if (entity != null) //generate pronoun w/ referent features
 		{
 		  MentionContext cec = entity.LastExtent;
 		  //String gen = getPronounGender(pronoun);
-		  features.AddRange(ResolverUtils.getPronounMatchFeatures(mention,entity));
-		  features.AddRange(ResolverUtils.getContextFeatures(cec));
-		  features.AddRange(ResolverUtils.getDistanceFeatures(mention,entity));
+          foreach (var feature in ResolverUtils.getPronounMatchFeatures(mention, entity))
+		  {
+		        features.Add(feature);
+		  }
+
+          foreach (var feature in ResolverUtils.getContextFeatures(cec))
+          {
+              features.Add(feature);
+          }
+
+          foreach (var feature in ResolverUtils.getDistanceFeatures(mention, entity))
+          {
+              features.Add(feature);
+          }
+            
 		  features.Add(ResolverUtils.getMentionCountFeature(entity));
 		  /*
 		  //lexical features
@@ -104,7 +116,7 @@ namespace opennlp.tools.coref.resolver
 		return (features);
 	  }
 
-	  public override bool excluded(MentionContext mention, DiscourseEntity entity)
+      protected internal override bool excluded(MentionContext mention, DiscourseEntity entity)
 	  {
 		if (base.excluded(mention, entity))
 		{

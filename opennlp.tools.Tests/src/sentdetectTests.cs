@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using j4n.IO.InputStream;
 using NUnit.Framework;
 using opennlp.tools.sentdetect;
 
-namespace opennlp.tools.Tests
+namespace opennlp.tools.Tests.src
 {
     [TestFixture]
     public class sentdetectTests
     {
-        private const string ModelPath = "E:\\opennlp-models\\";
+        private const string ModelPath = "C:\\opennlp-models\\";
         private string _modelFilePath;
         private string _testTextBlock;
 
@@ -21,7 +17,7 @@ namespace opennlp.tools.Tests
         public void Setup()
         {
             _modelFilePath = string.Format("{0}{1}", ModelPath, "en-sent.bin");
-            var sr = new StreamReader("E:\\opennlp-models\\test-sentence.txt");
+            var sr = new StreamReader("C:\\opennlp-models\\test-sentence.txt");
             _testTextBlock = sr.ReadToEnd();
         }
 

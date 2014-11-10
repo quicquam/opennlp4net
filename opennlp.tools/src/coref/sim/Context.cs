@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 /*
@@ -79,7 +80,7 @@ namespace opennlp.tools.coref.sim
 		}
 		else
 		{
-		  this.synsets = Collections.emptySet();
+		  this.synsets = new HashSet<string>();
 		}
 	  }
 
@@ -139,15 +140,15 @@ namespace opennlp.tools.coref.sim
 
 	  public static Context parseContext(string word)
 	  {
-		  string[] parts = word.Split("/", true);
+		  string[] parts = word.Split('/'); // was true
 		  if (parts.Length == 2)
 		  {
-			string[] tokens = parts[0].Split(" ", true);
+			string[] tokens = parts[0].Split(' '); //was true
 			return new Context(tokens,tokens[tokens.Length - 1], parts[1], null);
 		  }
 		  else if (parts.Length == 3)
 		  {
-			string[] tokens = parts[0].Split(" ", true);
+			string[] tokens = parts[0].Split(' '); // was true
 			return new Context(tokens,tokens[tokens.Length - 1], parts[1], parts[2]);
 		  }
 		  return null;

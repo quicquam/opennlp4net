@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using j4n.IO.File;
 using j4n.IO.InputStream;
-using j4n.IO.Writer;
 using NUnit.Framework;
 using opennlp.maxent;
 using opennlp.maxent.io;
 using opennlp.tools.namefind;
-using opennlp.tools.sentdetect;
+using opennlp.tools.Tests.utils;
 using opennlp.tools.tokenize;
-using opennlp.tools.util;
 
-namespace opennlp.tools.Tests
+namespace opennlp.tools.Tests.src
 {
     [TestFixture]
     public class namefinderTests
     {
-        private const string ModelPath = "E:\\opennlp-models\\";
+        private const string ModelPath = "C:\\opennlp-models\\";
         private string _modelFilePath;
         private string _testTextBlock;
         
@@ -28,7 +22,7 @@ namespace opennlp.tools.Tests
         public void Setup()
         {
             _modelFilePath = string.Format("{0}{1}", ModelPath, "en-ner-person.bin");
-            var sr = new StreamReader("E:\\opennlp-models\\test-sentence.txt");
+            var sr = new StreamReader("C:\\opennlp-models\\test-sentence.txt");
             _testTextBlock = sr.ReadToEnd();
         }
 
@@ -48,7 +42,7 @@ namespace opennlp.tools.Tests
                 var nameFinder = new NameFinderME(model);
 
                 //1. convert sentence into tokens
-                var modelInToken = new FileInputStream("E:\\opennlp-models\\en-token.bin");
+                var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
                 TokenizerModel modelToken = new TokenizerModel(modelInToken);
                 Tokenizer tokenizer = new TokenizerME(modelToken);
                 var tokens = tokenizer.tokenize("Why is Jack London so famous?");
@@ -93,7 +87,7 @@ namespace opennlp.tools.Tests
         public void Test2()
         {
             			//1. convert sentence into tokens
-            var modelInToken = new FileInputStream("E:\\opennlp-models\\en-token.bin");
+            var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
 		    	TokenizerModel modelToken = new TokenizerModel(modelInToken);
 
 		    	Tokenizer tokenizer = new TokenizerME(modelToken);
@@ -101,7 +95,7 @@ namespace opennlp.tools.Tests
                var tokens = tokenizer.tokenize("Why is Jack London so famous?");
  
 		    	//2. find names
-                var modelIn = new FileInputStream("E:\\opennlp-models\\en-ner-person.bin");
+                var modelIn = new FileInputStream("C:\\opennlp-models\\en-ner-person.bin");
 		    	TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
                 
                 NameFinderME nameFinder = new NameFinderME(model);

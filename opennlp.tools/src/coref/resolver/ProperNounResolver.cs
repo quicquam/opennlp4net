@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,10 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Linq;
+using j4n.IO.Reader;
+using j4n.Object;
 
 namespace opennlp.tools.coref.resolver
 {
@@ -122,23 +125,28 @@ namespace opennlp.tools.coref.resolver
 			return features;
 		  }
 		}
-		return Collections.emptyList();
+		return new List<string>();
 	  }
 
 	  protected internal override IList<string> getFeatures(MentionContext mention, DiscourseEntity entity)
 	  {
 		//System.err.println("ProperNounResolver.getFeatures: "+mention.toText()+" -> "+entity);
-		IList<string> features = new List<string>();
-		features.AddRange(base.getFeatures(mention, entity));
-		if (entity != null)
+		IList<string> features = base.getFeatures(mention, entity).ToList();
+	    if (entity != null)
 		{
-		  features.AddRange(ResolverUtils.getStringMatchFeatures(mention, entity));
-		  features.AddRange(getAcronymFeatures(mention, entity));
+            foreach (var feature in ResolverUtils.getStringMatchFeatures(mention, entity))
+		    {
+		        features.Add(feature);
+		    }
+            foreach (var feature in getAcronymFeatures(mention, entity))
+		    {
+		        features.Add(feature);
+		    }
 		}
 		return features;
 	  }
 
-	  public override bool excluded(MentionContext mention, DiscourseEntity entity)
+      protected internal override bool excluded(MentionContext mention, DiscourseEntity entity)
 	  {
 		if (base.excluded(mention, entity))
 		{

@@ -3,7 +3,7 @@ using j4n.IO.InputStream;
 using NUnit.Framework;
 using opennlp.tools.chunker;
 
-namespace opennlp.tools.Tests
+namespace opennlp.tools.Tests.src
 {
     [TestFixture]
     public class chunkerTests
@@ -36,7 +36,7 @@ namespace opennlp.tools.Tests
         {
         }
 
-        private const string ModelPath = "E:\\opennlp-models\\";
+        private const string ModelPath = "C:\\opennlp-models\\";
         private string _modelFilePath;
         private string[] _sent;
         private string[] _pos;

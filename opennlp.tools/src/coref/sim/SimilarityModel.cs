@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,11 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
+using j4n.IO.File;
+using j4n.IO.Reader;
+using j4n.IO.Writer;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.coref.sim
 {
@@ -73,7 +77,7 @@ namespace opennlp.tools.coref.sim
 		}
 		else
 		{
-		  testModel_Renamed = (new SuffixSensitiveGISModelReader(new File(modelName + modelExtension))).Model;
+		  testModel_Renamed = (new SuffixSensitiveGISModelReader(new Jfile(modelName + modelExtension))).Model;
 		  SAME_INDEX = testModel_Renamed.getIndex(SAME);
 		}
 	  }
@@ -433,7 +437,7 @@ namespace opennlp.tools.coref.sim
 			writer.write(e.ToString() + "\n");
 		  }
 		  writer.close();
-		}(new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events),100,10), new File(modelName + modelExtension))).persist();
+		}(new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events),100,10), new Jfile(modelName + modelExtension))).persist();
 	  }
 
 	  private bool isName(Context np)
@@ -757,7 +761,7 @@ namespace opennlp.tools.coref.sim
 		SimilarityModel model = new SimilarityModel(modelName, false);
 		//Context.wn = new WordNet(System.getProperty("WNHOME"), true);
 		//Context.morphy = new Morphy(Context.wn);
-		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput));
+		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
 		for (string line = @in.readLine(); line != null; line = @in.readLine())
 		{
 		  string[] words = line.Split(" ", true);

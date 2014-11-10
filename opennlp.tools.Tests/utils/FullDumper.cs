@@ -1,11 +1,10 @@
-﻿using System;
+﻿// See the ReadMe.html for additional information 
+using System;
 using System.Collections;
 using System.IO;
 using System.Reflection;
 
-// See the ReadMe.html for additional information 
-
-namespace opennlp.tools.Tests
+namespace opennlp.tools.Tests.utils
 {
     public class FullDumper
     {

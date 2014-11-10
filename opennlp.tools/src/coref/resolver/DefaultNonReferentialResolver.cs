@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,11 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
+using j4n.IO.File;
+using j4n.IO.InputStream;
+using j4n.IO.Writer;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.coref.resolver
 {
@@ -65,7 +69,7 @@ namespace opennlp.tools.coref.resolver
 		  }
 		  else
 		  {
-			model = (new SuffixSensitiveGISModelReader(new File(modelName + modelExtension))).Model;
+			model = (new SuffixSensitiveGISModelReader(new Jfile(modelName + modelExtension))).Model;
 		  }
 		  nonRefIndex = model.getIndex(MaxentResolver.SAME);
 		}
@@ -145,7 +149,7 @@ namespace opennlp.tools.coref.resolver
 			  writer.write(e.ToString() + "\n");
 			}
 			writer.close();
-		  }(new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events),100,10),new File(modelName + modelExtension))).persist();
+		  }(new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events),100,10),new Jfile(modelName + modelExtension))).persist();
 		}
 	  }
 	}
