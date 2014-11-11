@@ -1,4 +1,7 @@
 ﻿using System;
+using j4n.IO.File;
+using j4n.IO.OutputStream;
+using j4n.IO.Reader;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -38,7 +41,7 @@ namespace opennlp.tools.lang.spanish
 //ORIGINAL LINE: public TokenChunker(String modelName) throws java.io.IOException
 	  public TokenChunker(string modelName)
 	  {
-	  nameFinder = new NameFinderME((new SuffixSensitiveGISModelReader(new File(modelName))).Model);
+	  nameFinder = new NameFinderME((new SuffixSensitiveGISModelReader(new Jfile(modelName))).Model);
 	  }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
@@ -51,8 +54,8 @@ namespace opennlp.tools.lang.spanish
 		  Environment.Exit(1);
 		}
 		TokenChunker chunker = new TokenChunker(args[0]);
-		java.io.BufferedReader inReader = new java.io.BufferedReader(new java.io.InputStreamReader(System.in,"ISO-8859-1"));
-		PrintStream @out = new PrintStream(System.out,true,"ISO-8859-1");
+		BufferedReader inReader = new BufferedReader(new InputStreamReader(Console.OpenStandardInput(),"ISO-8859-1"));
+		PrintStream @out = new PrintStream(Console.OpenStandardOutput() ,true,"ISO-8859-1");
 		for (string line = inReader.readLine(); line != null; line = inReader.readLine())
 		{
 		  if (line.Equals(""))
@@ -61,7 +64,7 @@ namespace opennlp.tools.lang.spanish
 		  }
 		  else
 		  {
-			string[] tokens = line.Split(" ");
+			string[] tokens = line.Split(' ');
 			Span[] spans = chunker.nameFinder.find(tokens);
 			string[] outcomes = NameFinderEventStream.generateOutcomes(spans, null, tokens.Length);
 			//System.err.println(java.util.Arrays.asList(chunks));

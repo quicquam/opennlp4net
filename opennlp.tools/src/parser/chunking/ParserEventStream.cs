@@ -233,7 +233,7 @@ namespace opennlp.tools.parser.chunking
 		{
 		  Parse.useFunctionTags(true);
 		}
-        opennlp.model.EventStream es = new ParserEventStream(new ParseSampleStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()))), rules, etype, dict);
+        opennlp.model.EventStream es = new ParserEventStream(new ParseSampleStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput(), "TODO Encoding"))), rules, etype, dict);
 		while (es.hasNext())
 		{
 		  Console.WriteLine(es.next());

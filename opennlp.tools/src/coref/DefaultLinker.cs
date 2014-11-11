@@ -133,7 +133,7 @@ namespace opennlp.tools.coref
 			//String[] names = {"Pronoun", "Proper", "Def-NP", "Is-a", "Plural Pronoun"};
 			//eval = new Evaluation(names);
 		  }
-		  MaxentResolver.SimilarityModel = SimilarityModel.PrepAttachDataUtil.testModel(corefProject + "/sim");
+		  MaxentResolver.SimilarityModel = SimilarityModel.testModel(corefProject + "/sim");
 		}
 		else if (LinkerMode.TRAIN == mode)
 		{

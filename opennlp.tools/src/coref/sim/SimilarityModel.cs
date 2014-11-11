@@ -176,9 +176,9 @@ namespace opennlp.tools.coref.sim
 		HashSet<string> entityNameSet = nameSets[entityKey];
 		IList<Context> entityContexts = (IList<Context>) entities[entityKey];
 		//entities
-		for (IEnumerator<int?> ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
+		for (var ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
 		{
-		  int? key = ei.Current;
+		  var key = ei.Current as int?;
 		  IList<Context> candidateContexts = (IList<Context>) entities[key];
 		  if (key.Equals(entityKey))
 		  {
@@ -240,9 +240,9 @@ namespace opennlp.tools.coref.sim
 	  private IDictionary<int?, HashSet<string>> constructHeadSets(HashList entities)
 	  {
 		IDictionary<int?, HashSet<string>> headSets = new Dictionary<int?, HashSet<string>>();
-		for (IEnumerator<int?> ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
+		for (var ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
 		{
-		  int? key = ei.Current;
+		  var key = ei.Current as int?;
 		  IList<Context> entityContexts = (IList<Context>) entities[key];
 		  headSets[key] = constructHeadSet(entityContexts);
 		}
@@ -280,9 +280,9 @@ namespace opennlp.tools.coref.sim
 	  private IDictionary<int?, HashSet<string>> constructNameSets(HashList entities)
 	  {
 		IDictionary<int?, HashSet<string>> nameSets = new Dictionary<int?, HashSet<string>>();
-		for (IEnumerator<int?> ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
+		for (var ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
 		{
-		  int? key = ei.Current;
+		  var key = ei.Current as int?;
 		  IList<Context> entityContexts = (IList<Context>) entities[key];
 		  nameSets[key] = constructNameSet(entityContexts);
 		}
@@ -358,9 +358,9 @@ namespace opennlp.tools.coref.sim
 			IDictionary<int?, HashSet<string>> headSets = constructHeadSets(entities);
 			IDictionary<int?, HashSet<string>> nameSets = constructNameSets(entities);
     
-			for (IEnumerator<int?> ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
+			for (var ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
 			{
-			  int? key = ei.Current;
+			  var key = ei.Current as int?;
 			  HashSet<string> entityNameSet = nameSets[key];
 			  if (entityNameSet.Count == 0)
 			  {
@@ -761,7 +761,7 @@ namespace opennlp.tools.coref.sim
 		SimilarityModel model = new SimilarityModel(modelName, false);
 		//Context.wn = new WordNet(System.getProperty("WNHOME"), true);
 		//Context.morphy = new Morphy(Context.wn);
-		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
+        BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput(), "TODO Encoding"));
 		for (string line = @in.readLine(); line != null; line = @in.readLine())
 		{
 		  string[] words = line.Split(" ", true);

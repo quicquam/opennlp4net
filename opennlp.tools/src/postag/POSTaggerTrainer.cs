@@ -132,7 +132,7 @@ namespace opennlp.tools.postag
 	  {
 		POSTaggerME tagger = new POSTaggerME(model, (TagDictionary) null);
 
-		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardOutput()));
+        BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardOutput(), "TODO Encoding"));
 
 		for (string line = @in.readLine(); line != null; line = @in.readLine())
 		{

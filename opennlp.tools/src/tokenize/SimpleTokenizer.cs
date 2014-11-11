@@ -117,7 +117,7 @@ namespace opennlp.tools.tokenize
 		  Environment.Exit(1);
 		}
 		opennlp.tools.tokenize.Tokenizer tokenizer = new SimpleTokenizer();
-		BufferedReader inReader = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
+        BufferedReader inReader = new BufferedReader(new InputStreamReader(Console.OpenStandardInput(), "TODO Encoding"));
 		for (string line = inReader.readLine(); line != null; line = inReader.readLine())
 		{
 		  if (line.Equals(""))

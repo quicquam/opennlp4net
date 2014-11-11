@@ -65,7 +65,8 @@ namespace opennlp.tools.coref.resolver
 		{
 		  if (loadAsResource)
 		  {
-			model = (new BinaryGISModelReader(new DataInputStream(this.GetType().getResourceAsStream(modelName)))).Model;
+			throw new NotImplementedException();
+            // model = (new BinaryGISModelReader(new DataInputStream(this.GetType().getResourceAsStream(modelName)))).Model;
 		  }
 		  else
 		  {

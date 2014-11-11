@@ -38,8 +38,8 @@ namespace opennlp.tools.coref.sim
 //ORIGINAL LINE: public MaxentCompatibilityModel(String corefProject) throws java.io.IOException
 	  public MaxentCompatibilityModel(string corefProject)
 	  {
-		genModel = GenderModel.PrepAttachDataUtil.testModel(corefProject + "/gen");
-		numModel = NumberModel.PrepAttachDataUtil.testModel(corefProject + "/num");
+		genModel = GenderModel.testModel(corefProject + "/gen");
+		numModel = NumberModel.testModel(corefProject + "/num");
 	  }
 
 	  public virtual Gender computeGender(Context c)

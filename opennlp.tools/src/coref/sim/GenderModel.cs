@@ -225,9 +225,9 @@ namespace opennlp.tools.coref.sim
 			IList<Context> females = new List<Context>();
 			IList<Context> eunuches = new List<Context>();
 			//coref entities
-			for (IEnumerator<int?> ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
+			for (var ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
 			{
-			  int? key = ei.Current;
+			  var key = ei.Current;
 			  IList<Context> entityContexts = (IList<Context>) entities[key];
 			  GenderEnum gender = getGender(entityContexts);
 			  if (gender != null)
@@ -295,7 +295,7 @@ namespace opennlp.tools.coref.sim
 		GenderModel model = new GenderModel(modelName, false);
 		//Context.wn = new WordNet(System.getProperty("WNHOME"), true);
 		//Context.morphy = new Morphy(Context.wn);
-		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
+        BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput(), "TODO Encoding"));
 		for (string line = @in.readLine(); line != null; line = @in.readLine())
 		{
 		  string[] words = line.Split(" ", true);

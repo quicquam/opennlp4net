@@ -16,7 +16,10 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.InputStream;
 using j4n.IO.Reader;
+using opennlp.tools.nonjava.extensions;
+using opennlp.tools.parser;
 
 namespace opennlp.tools.lang.english
 {
@@ -71,7 +74,7 @@ namespace opennlp.tools.lang.english
 			clearPrevTokenMaps(finders);
 			continue;
 		  }
-		  Parse p = Parse.parseParse(line);
+		  Parse p = Parse.parseParse(line, (HeadRules)null);
 		  Parse[] tagNodes = p.TagNodes;
 		  string[] tokens = new string[tagNodes.Length];
 		  for (int ti = 0;ti < tagNodes.Length;ti++)
@@ -140,7 +143,7 @@ namespace opennlp.tools.lang.english
 			}
 			if (ti > 0 && spans[ti - 1].End < spans[ti].Start)
 			{
-			  output.Append(StringHelperClass.SubstringSpecial(line, spans[ti - 1].End, spans[ti].Start));
+			  output.Append(line.SubstringSpecial(spans[ti - 1].End, spans[ti].Start));
 			}
 			//check for start tags
 			for (int fi = 0, fl = finders.Length; fi < fl; fi++)
@@ -165,7 +168,7 @@ namespace opennlp.tools.lang.english
 		  }
 		  if (tokens.Length != 0)
 		  {
-			if (spans[tokens.Length - 1].End < line.length())
+			if (spans[tokens.Length - 1].End < line.Length)
 			{
 			  output.Append(line.Substring(spans[tokens.Length - 1].End));
 			}
@@ -213,7 +216,7 @@ namespace opennlp.tools.lang.english
 		  names[fi] = modelName.Substring(nameStart, nameEnd - nameStart);
 		}
 		//long t1 = System.currentTimeMillis();
-		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput));
+		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
 		if (parsedInput)
 		{
 		  processParse(finders,names,@in);

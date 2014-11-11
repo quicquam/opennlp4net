@@ -135,6 +135,11 @@
     <Compile Include="src\doccat\DocumentSampleStream.cs" />
     <Compile Include="src\doccat\FeatureGenerator.cs" />
     <Compile Include="src\doccat\NGramFeatureGenerator.cs" />
+    <Compile Include="src\lang\english\package-info.cs" />
+    <Compile Include="src\lang\english\TreebankLinker.cs" />
+    <Compile Include="src\lang\english\TreebankNameFinder.cs" />
+    <Compile Include="src\lang\spanish\package-info.cs" />
+    <Compile Include="src\lang\spanish\TokenChunker.cs" />
     <Compile Include="src\namefind\BioCodec.cs" />
     <Compile Include="src\namefind\DefaultNameContextGenerator.cs" />
     <Compile Include="src\namefind\DictionaryNameFinder.cs" />

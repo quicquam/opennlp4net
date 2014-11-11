@@ -128,7 +128,7 @@ namespace opennlp.tools.coref
 	  {
 		IEnumerator<MentionContext> ei = extents.GetEnumerator();
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		MentionContext ex = ei.next();
+		MentionContext ex = ei.Current;
 		StringBuilder de = new StringBuilder();
 		de.Append("[ ").Append(ex.toText()); //.append("<").append(ex.getHeadText()).append(">");
 		while (ei.MoveNext())

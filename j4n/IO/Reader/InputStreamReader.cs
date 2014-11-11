@@ -24,7 +24,7 @@ namespace j4n.IO.Reader
             throw new System.NotImplementedException();
         }
 
-        public InputStreamReader(Stream bufferedInputStream)
+        public InputStreamReader(Stream bufferedInputStream, string encoding)
         {
             throw new System.NotImplementedException();
         }
