@@ -1,5 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using j4n.IO.Reader;
+using opennlp.tools.nonjava.extensions;
+using opennlp.tools.parser;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -26,7 +31,7 @@ namespace opennlp.tools.lang.english
 	using DiscourseEntity = opennlp.tools.coref.DiscourseEntity;
 	using Linker = opennlp.tools.coref.Linker;
 	using LinkerMode = opennlp.tools.coref.LinkerMode;
-	using DefaultParse = opennlp.tools.coref.mention.DefaultParse;
+	using DefaultParse = opennlp.tools.coref.mention.StubDefaultParse;
 	using Mention = opennlp.tools.coref.mention.Mention;
 	using MentionContext = opennlp.tools.coref.mention.MentionContext;
 	using PTBMentionFinder = opennlp.tools.coref.mention.PTBMentionFinder;
@@ -95,7 +100,7 @@ namespace opennlp.tools.lang.english
 		string dataDir = args[ai++];
 		if (ai == args.Length)
 		{
-		  @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput));
+		  @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput(), "TODO Encoding"));
 		}
 		else
 		{
@@ -118,7 +123,7 @@ namespace opennlp.tools.lang.english
 		  }
 		  else
 		  {
-			Parse p = Parse.parseParse(line);
+			Parse p = Parse.parseParse(line, (HeadRules)null);
 			parses.Add(p);
 			Mention[] extents = treebankLinker.MentionFinder.getMentions(new DefaultParse(p,sentenceNumber));
 			//construct new parses for mentions which don't have constituents.
@@ -135,7 +140,7 @@ namespace opennlp.tools.lang.english
 			  }
 
 			}
-			document.AddRange(Arrays.asList(extents));
+			document.AddRange(extents);
 			sentenceNumber++;
 		  }
 		}

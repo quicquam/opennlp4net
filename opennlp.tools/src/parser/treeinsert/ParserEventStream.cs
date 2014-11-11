@@ -468,7 +468,7 @@ namespace opennlp.tools.parser.treeinsert
 		{
 		  Parse.useFunctionTags(true);
 		}
-		opennlp.model.EventStream es = new ParserEventStream(new ParseSampleStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()))), rules, etype, dict);
+        opennlp.model.EventStream es = new ParserEventStream(new ParseSampleStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput(), "TODO Encoding"))), rules, etype, dict);
 		while (es.hasNext())
 		{
 		  Event e = es.next();

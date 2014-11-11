@@ -116,7 +116,6 @@ namespace opennlp.tools.coref
 		  get
 		  {
 			DiscourseEntity[] des = new DiscourseEntity[entities.Count];
-			entities.toArray(des);
 			return des;
 		  }
 	  }

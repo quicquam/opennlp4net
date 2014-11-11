@@ -1321,7 +1321,7 @@ namespace opennlp.tools.parser
 		}
 
 		HeadRules rules = new opennlp.tools.parser.lang.en.HeadRules(args[ai]);
-		BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput()));
+        BufferedReader @in = new BufferedReader(new InputStreamReader(Console.OpenStandardInput(), "TODO Encoding"));
 
 		for (string line = @in.readLine(); line != null; line = @in.readLine())
 		{

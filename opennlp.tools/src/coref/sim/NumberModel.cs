@@ -156,9 +156,9 @@ namespace opennlp.tools.coref.sim
 			IList<Context> singles = new List<Context>();
 			IList<Context> plurals = new List<Context>();
 			// coref entities
-			for (IEnumerator<int?> ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
+			for (var ei = entities.Keys.GetEnumerator(); ei.MoveNext();)
 			{
-			  int? key = ei.Current;
+			  var key = ei.Current;
 			  IList<Context> entityContexts = (IList<Context>) entities[key];
 			  NumberEnum number = getNumber(entityContexts);
 			  if (number == NumberEnum.SINGULAR)

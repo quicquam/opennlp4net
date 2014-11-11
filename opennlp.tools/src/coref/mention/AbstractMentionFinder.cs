@@ -302,7 +302,7 @@ namespace opennlp.tools.coref.mention
 		  if (!mention.Span.contains(npSpan))
 		  {
 			//System.err.println("clearing "+mention+" for "+np);
-			mi.remove();
+            mentions.Remove(mi.Current); 
 		  }
 		}
 	  }
@@ -360,7 +360,7 @@ namespace opennlp.tools.coref.mention
 			//collectComplexNounPhrases(np,mentions);
 		  }
 		}
-		mentions.Sort();
+		Array.Sort(mentions.ToArray());
 		removeDuplicates(mentions);
 		return mentions.ToArray();
 	  }

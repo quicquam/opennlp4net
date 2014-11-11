@@ -70,7 +70,7 @@ namespace opennlp.tools.coref
 			{
 
 			  Stack<Parse> nodes = new Stack<Parse>();
-			  nodes.Add(p);
+			  nodes.Push(p);
 
 			  while (nodes.Count > 0)
 			  {
@@ -138,7 +138,7 @@ namespace opennlp.tools.coref
 		genTrain.trainModel();
 		numTrain.trainModel();
 
-		MaxentResolver.SimilarityModel = SimilarityModel.PrepAttachDataUtil.testModel(modelDirectory + "/coref" + "/sim");
+		MaxentResolver.SimilarityModel = SimilarityModel.testModel(modelDirectory + "/coref" + "/sim");
 
 		// Done with similarity training
 

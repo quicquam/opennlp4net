@@ -174,7 +174,7 @@ namespace opennlp.tools.namefind
 		  Console.Error.WriteLine("Usage: NameFinderEventStream < training files");
 		  Environment.Exit(1);
 		}
-        EventStream es = new NameFinderEventStream(new NameSampleDataStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()))));
+        EventStream es = new NameFinderEventStream(new NameSampleDataStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput(), "TODO Encoding"))));
 		while (es.hasNext())
 		{
 		  Console.WriteLine(es.next());
