@@ -6,7 +6,7 @@ namespace j4n.IO.OutputStream
 {
     public class DataOutputStream : OutputStream, Closeable
     {
-// ReSharper disable InconsistentNaming
+
 
         public DataOutputStream(OutputStream os)
             : base(os.InnerStream)

@@ -112,8 +112,8 @@ namespace opennlp.tools.util.model
                     if (factory == null)
                     {
                         /* TODO: find a better solution, that would consume less memory */
-                        sbyte[] bytes = toByteArray(zip);
-                        leftoverArtifacts[entry.FileName] = bytes;
+                        //sbyte[] bytes = toByteArray(zip);
+                        //leftoverArtifacts[entry.FileName] = bytes;
                     }
                     else
                     {
@@ -384,7 +384,7 @@ namespace opennlp.tools.util.model
 
         private sbyte[] toByteArray(ZipInputStream stream)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         protected virtual internal Type DefaultFactory

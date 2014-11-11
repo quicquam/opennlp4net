@@ -3,7 +3,7 @@ using j4n.IO.InputStream;
 using NUnit.Framework;
 using opennlp.tools.chunker;
 
-namespace opennlp.tools.Tests.src
+namespace opennlp.tools.Tests
 {
     [TestFixture]
     public class chunkerTests

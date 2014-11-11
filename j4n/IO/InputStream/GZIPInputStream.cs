@@ -1,6 +1,6 @@
 ﻿namespace j4n.IO.InputStream
 {
-// ReSharper disable once InconsistentNaming
+
     public class GZIPInputStream : InputStream
     {
         public GZIPInputStream(BufferedInputStream bufferedInputStream)

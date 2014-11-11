@@ -13,7 +13,7 @@ namespace j4n.Utils
         {
         }
 
-// ReSharper disable once InconsistentNaming
+
         public char format(double d)
         {
             throw new NotImplementedException();

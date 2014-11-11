@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -207,7 +208,7 @@ namespace opennlp.tools.lang.english
 		{
 		  string modelName = args[ai];
 		  finders[fi] = new TreebankNameFinder(new TokenNameFinderModel(new FileInputStream(modelName)));
-		  int nameStart = modelName.LastIndexOf(System.getProperty("file.separator")) + 1;
+          int nameStart = modelName.LastIndexOf(Path.DirectorySeparatorChar) + 1;
 		  int nameEnd = modelName.IndexOf('.', nameStart);
 		  if (nameEnd == -1)
 		  {

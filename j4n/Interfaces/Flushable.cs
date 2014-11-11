@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace j4n.Interfaces
 {
-// ReSharper disable InconsistentNaming
+
     public interface Flushable
     {
         void flush();

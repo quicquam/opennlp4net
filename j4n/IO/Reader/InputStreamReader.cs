@@ -38,5 +38,10 @@ namespace j4n.IO.Reader
         {
             throw new System.NotImplementedException();
         }
+
+        public InputStreamReader(Stream bufferedInputStream)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

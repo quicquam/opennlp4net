@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace j4n.Interfaces
 {
-// ReSharper disable InconsistentNaming
+
     public interface Closeable
     {
         void close();

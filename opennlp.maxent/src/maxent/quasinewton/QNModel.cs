@@ -26,7 +26,7 @@ namespace opennlp.maxent.quasinewton
 	using EvalParameters = opennlp.model.EvalParameters;
 	using UniformPrior = opennlp.model.UniformPrior;
 
-// ReSharper disable once InconsistentNaming
+
 	public class QNModel : AbstractModel
 	{
 	  private const double SMOOTHING_VALUE = 0.1;
