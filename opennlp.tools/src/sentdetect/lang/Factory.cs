@@ -17,78 +17,76 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.sentdetect.lang
 {
+    using SentenceContextGenerator = opennlp.tools.sentdetect.lang.th.SentenceContextGenerator;
 
+    public class Factory
+    {
+        public static readonly char[] ptEosCharacters = new char[]
+        {'.', '?', '!', ';', ':', '(', ')', '«', '»', '\'', '"'};
 
-	using SentenceContextGenerator = opennlp.tools.sentdetect.lang.th.SentenceContextGenerator;
+        public static readonly char[] defaultEosCharacters = new char[] {'.', '!', '?'};
 
-	public class Factory
-	{
+        public static readonly char[] thEosCharacters = new char[] {' ', '\n'};
 
-	  public static readonly char[] ptEosCharacters = new char[] {'.', '?', '!', ';', ':', '(', ')', '«', '»', '\'', '"'};
+        public virtual EndOfSentenceScanner createEndOfSentenceScanner(string languageCode)
+        {
+            if ("th".Equals(languageCode))
+            {
+                return new DefaultEndOfSentenceScanner(new char[] {' ', '\n'});
+            }
+            else if ("pt".Equals(languageCode))
+            {
+                return new DefaultEndOfSentenceScanner(ptEosCharacters);
+            }
 
-	  public static readonly char[] defaultEosCharacters = new char[] {'.', '!', '?'};
+            return new DefaultEndOfSentenceScanner(defaultEosCharacters);
+        }
 
-	  public static readonly char[] thEosCharacters = new char[] {' ','\n'};
+        public virtual EndOfSentenceScanner createEndOfSentenceScanner(char[] customEOSCharacters)
+        {
+            return new DefaultEndOfSentenceScanner(customEOSCharacters);
+        }
 
-	  public virtual EndOfSentenceScanner createEndOfSentenceScanner(string languageCode)
-	  {
-		if ("th".Equals(languageCode))
-		{
-		  return new DefaultEndOfSentenceScanner(new char[]{' ','\n'});
-		}
-		else if ("pt".Equals(languageCode))
-		{
-		  return new DefaultEndOfSentenceScanner(ptEosCharacters);
-		}
+        public virtual SDContextGenerator createSentenceContextGenerator(string languageCode,
+            HashSet<string> abbreviations)
+        {
+            if ("th".Equals(languageCode))
+            {
+                return new SentenceContextGenerator();
+            }
+            else if ("pt".Equals(languageCode))
+            {
+                return new DefaultSDContextGenerator(abbreviations, ptEosCharacters);
+            }
 
-		return new DefaultEndOfSentenceScanner(defaultEosCharacters);
-	  }
+            return new DefaultSDContextGenerator(abbreviations, defaultEosCharacters);
+        }
 
-	  public virtual EndOfSentenceScanner createEndOfSentenceScanner(char[] customEOSCharacters)
-	  {
-		return new DefaultEndOfSentenceScanner(customEOSCharacters);
-	  }
+        public virtual SDContextGenerator createSentenceContextGenerator(HashSet<string> abbreviations,
+            char[] customEOSCharacters)
+        {
+            return new DefaultSDContextGenerator(abbreviations, customEOSCharacters);
+        }
 
-	  public virtual SDContextGenerator createSentenceContextGenerator(string languageCode, HashSet<string> abbreviations)
-	  {
+        public virtual SDContextGenerator createSentenceContextGenerator(string languageCode)
+        {
+            return createSentenceContextGenerator(languageCode, new HashSet<string>());
+        }
 
-		if ("th".Equals(languageCode))
-		{
-		  return new SentenceContextGenerator();
-		}
-		else if ("pt".Equals(languageCode))
-		{
-		  return new DefaultSDContextGenerator(abbreviations, ptEosCharacters);
-		}
+        public virtual char[] getEOSCharacters(string languageCode)
+        {
+            if ("th".Equals(languageCode))
+            {
+                return thEosCharacters;
+            }
+            else if ("pt".Equals(languageCode))
+            {
+                return ptEosCharacters;
+            }
 
-		return new DefaultSDContextGenerator(abbreviations, defaultEosCharacters);
-	  }
-
-	  public virtual SDContextGenerator createSentenceContextGenerator(HashSet<string> abbreviations, char[] customEOSCharacters)
-	  {
-		return new DefaultSDContextGenerator(abbreviations, customEOSCharacters);
-	  }
-
-	  public virtual SDContextGenerator createSentenceContextGenerator(string languageCode)
-	  {
-		return createSentenceContextGenerator(languageCode, new HashSet<string>());
-	  }
-
-	  public virtual char[] getEOSCharacters(string languageCode)
-	  {
-		if ("th".Equals(languageCode))
-		{
-		  return thEosCharacters;
-		}
-		else if ("pt".Equals(languageCode))
-		{
-		  return ptEosCharacters;
-		}
-
-		return defaultEosCharacters;
-	  }
-	}
+            return defaultEosCharacters;
+        }
+    }
 }

@@ -19,65 +19,62 @@ using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.coref.resolver
 {
+    using MentionContext = opennlp.tools.coref.mention.MentionContext;
 
 
-	using MentionContext = opennlp.tools.coref.mention.MentionContext;
-
-
-	/// <summary>
-	/// Resolves coreference between plural nouns.
-	/// </summary>
-	public class PluralNounResolver : MaxentResolver
-	{
-
+    /// <summary>
+    /// Resolves coreference between plural nouns.
+    /// </summary>
+    public class PluralNounResolver : MaxentResolver
+    {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public PluralNounResolver(String projectName, ResolverMode m) throws java.io.IOException
-	  public PluralNounResolver(string projectName, ResolverMode m) : base(projectName,"plmodel", m, 80, true)
-	  {
-		showExclusions = false;
-	  }
+        public PluralNounResolver(string projectName, ResolverMode m) : base(projectName, "plmodel", m, 80, true)
+        {
+            showExclusions = false;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public PluralNounResolver(String projectName, ResolverMode m, NonReferentialResolver nrr) throws java.io.IOException
-	  public PluralNounResolver(string projectName, ResolverMode m, NonReferentialResolver nrr) : base(projectName,"plmodel", m, 80, true,nrr)
-	  {
-		showExclusions = false;
-	  }
+        public PluralNounResolver(string projectName, ResolverMode m, NonReferentialResolver nrr)
+            : base(projectName, "plmodel", m, 80, true, nrr)
+        {
+            showExclusions = false;
+        }
 
 
-	  protected internal override IList<string> getFeatures(MentionContext mention, DiscourseEntity entity)
-	  {
-		IList<string> features = new List<string>();
-		features.AddRange(base.getFeatures(mention, entity));
-		if (entity != null)
-		{
-		  features.AddRange(ResolverUtils.getContextFeatures(mention));
-		  features.AddRange(ResolverUtils.getStringMatchFeatures(mention,entity));
-		}
+        protected internal override IList<string> getFeatures(MentionContext mention, DiscourseEntity entity)
+        {
+            IList<string> features = new List<string>();
+            features.AddRange(base.getFeatures(mention, entity));
+            if (entity != null)
+            {
+                features.AddRange(ResolverUtils.getContextFeatures(mention));
+                features.AddRange(ResolverUtils.getStringMatchFeatures(mention, entity));
+            }
 
-		return features;
-	  }
+            return features;
+        }
 
-	  public override bool canResolve(MentionContext mention)
-	  {
-		string firstTok = mention.FirstTokenText.ToLower();
-		string firstTokTag = mention.FirstToken.SyntacticType;
-		bool rv = mention.HeadTokenTag.Equals("NNS") && !ResolverUtils.definiteArticle(firstTok, firstTokTag);
-		return rv;
-	  }
+        public override bool canResolve(MentionContext mention)
+        {
+            string firstTok = mention.FirstTokenText.ToLower();
+            string firstTokTag = mention.FirstToken.SyntacticType;
+            bool rv = mention.HeadTokenTag.Equals("NNS") && !ResolverUtils.definiteArticle(firstTok, firstTokTag);
+            return rv;
+        }
 
-	  protected internal override bool excluded(MentionContext mention, DiscourseEntity entity)
-	  {
-		if (base.excluded(mention,entity))
-		{
-		  return true;
-		}
-		else
-		{
-		  MentionContext cec = entity.LastExtent;
-		  return (!cec.HeadTokenTag.Equals("NNS") || base.excluded(mention, entity));
-		}
-	  }
-	}
-
+        protected internal override bool excluded(MentionContext mention, DiscourseEntity entity)
+        {
+            if (base.excluded(mention, entity))
+            {
+                return true;
+            }
+            else
+            {
+                MentionContext cec = entity.LastExtent;
+                return (!cec.HeadTokenTag.Equals("NNS") || base.excluded(mention, entity));
+            }
+        }
+    }
 }

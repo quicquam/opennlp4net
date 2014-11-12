@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace j4n.Interfaces
 {
-
     public interface Flushable
     {
         void flush();

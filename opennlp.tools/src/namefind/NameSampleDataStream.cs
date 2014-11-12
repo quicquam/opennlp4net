@@ -19,54 +19,51 @@ using j4n.Serialization;
 
 namespace opennlp.tools.namefind
 {
+    using DataStream = opennlp.maxent.DataStream;
+    using opennlp.tools.util;
+    using opennlp.tools.util;
 
-	using DataStream = opennlp.maxent.DataStream;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
+    /// <summary>
+    /// The <seealso cref="NameSampleDataStream"/> class converts tagged <seealso cref="String"/>s
+    /// provided by a <seealso cref="DataStream"/> to <seealso cref="NameSample"/> objects.
+    /// It uses text that is is one-sentence per line and tokenized
+    /// with names identified by <code>&lt;START&gt;</code> and <code>&lt;END&gt;</code> tags.
+    /// </summary>
+    public class NameSampleDataStream : FilterObjectStream<string, NameSample>
+    {
+        public const string START_TAG_PREFIX = "<START:";
+        public const string START_TAG = "<START>";
+        public const string END_TAG = "<END>";
 
-	/// <summary>
-	/// The <seealso cref="NameSampleDataStream"/> class converts tagged <seealso cref="String"/>s
-	/// provided by a <seealso cref="DataStream"/> to <seealso cref="NameSample"/> objects.
-	/// It uses text that is is one-sentence per line and tokenized
-	/// with names identified by <code>&lt;START&gt;</code> and <code>&lt;END&gt;</code> tags.
-	/// </summary>
-	public class NameSampleDataStream : FilterObjectStream<string, NameSample>
-	{
-
-	  public const string START_TAG_PREFIX = "<START:";
-	  public const string START_TAG = "<START>";
-	  public const string END_TAG = "<END>";
-
-	  public NameSampleDataStream(ObjectStream<string> @in) : base(@in)
-	  {
-	  }
+        public NameSampleDataStream(ObjectStream<string> @in) : base(@in)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public NameSample read() throws java.io.IOException
-	  public override NameSample read()
-	  {
-		  string token = samples.read();
+        public override NameSample read()
+        {
+            string token = samples.read();
 
-		  bool isClearAdaptiveData = false;
+            bool isClearAdaptiveData = false;
 
-		  // An empty line indicates the begin of a new article
-		  // for which the adaptive data in the feature generators
-		  // must be cleared
-		  while (token != null && token.Trim().Length == 0)
-		  {
-			  isClearAdaptiveData = true;
-			  token = samples.read();
-		  }
+            // An empty line indicates the begin of a new article
+            // for which the adaptive data in the feature generators
+            // must be cleared
+            while (token != null && token.Trim().Length == 0)
+            {
+                isClearAdaptiveData = true;
+                token = samples.read();
+            }
 
-		  if (token != null)
-		  {
-			return NameSample.parse(token, isClearAdaptiveData);
-		  }
-		  else
-		  {
-			return null;
-		  }
-	  }
-	}
-
+            if (token != null)
+            {
+                return NameSample.parse(token, isClearAdaptiveData);
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
 }

@@ -18,27 +18,24 @@
 
 namespace opennlp.tools.util.featuregen
 {
-
-	/// <summary>
-	/// The <seealso cref="FeatureGeneratorResourceProvider"/> provides access to the resources
-	/// provided in the model. Inside the model resources are identified by a
-	/// name.
-	/// <para>
-	/// <b>Note:</b><br>
-	/// This class is not be intended to be implemented by users.<br>
-	/// All implementing classes must be thread safe.
-	/// </para>
-	/// </summary>
-	public interface FeatureGeneratorResourceProvider
-	{
-
-	  /// <summary>
-	  /// Retrieves the resource object for the given name/identifier.
-	  /// </summary>
-	  /// <param name="resourceIdentifier"> the identifier which names the resource.
-	  /// </param>
-	  /// <returns> the resource object </returns>
-	  object getResource(string resourceIdentifier);
-	}
-
+    /// <summary>
+    /// The <seealso cref="FeatureGeneratorResourceProvider"/> provides access to the resources
+    /// provided in the model. Inside the model resources are identified by a
+    /// name.
+    /// <para>
+    /// <b>Note:</b><br>
+    /// This class is not be intended to be implemented by users.<br>
+    /// All implementing classes must be thread safe.
+    /// </para>
+    /// </summary>
+    public interface FeatureGeneratorResourceProvider
+    {
+        /// <summary>
+        /// Retrieves the resource object for the given name/identifier.
+        /// </summary>
+        /// <param name="resourceIdentifier"> the identifier which names the resource.
+        /// </param>
+        /// <returns> the resource object </returns>
+        object getResource(string resourceIdentifier);
+    }
 }

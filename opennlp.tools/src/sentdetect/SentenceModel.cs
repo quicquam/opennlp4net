@@ -23,189 +23,187 @@ using j4n.IO.OutputStream;
 
 namespace opennlp.tools.sentdetect
 {
-
-
-	using AbstractModel = opennlp.model.AbstractModel;
-	using GenericModelReader = opennlp.model.GenericModelReader;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
+    using AbstractModel = opennlp.model.AbstractModel;
+    using GenericModelReader = opennlp.model.GenericModelReader;
+    using Dictionary = opennlp.tools.dictionary.Dictionary;
+    using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
     using BaseModel = opennlp.tools.util.model.BaseModel<SentenceModel>;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
+    using ModelUtil = opennlp.tools.util.model.ModelUtil;
 
-	/// <summary>
-	/// The <seealso cref="SentenceModel"/> is the model used
-	/// by a learnable <seealso cref="SentenceDetector"/>.
-	/// </summary>
-	/// <seealso cref= SentenceDetectorME </seealso>
+    /// <summary>
+    /// The <seealso cref="SentenceModel"/> is the model used
+    /// by a learnable <seealso cref="SentenceDetector"/>.
+    /// </summary>
+    /// <seealso cref= SentenceDetectorME </seealso>
     public class SentenceModel : BaseModel
-	{
+    {
+        private const string COMPONENT_NAME = "SentenceDetectorME";
 
-	  private const string COMPONENT_NAME = "SentenceDetectorME";
+        private const string MAXENT_MODEL_ENTRY_NAME = "sent.model";
 
-	  private const string MAXENT_MODEL_ENTRY_NAME = "sent.model";
+        public SentenceModel(string languageCode, AbstractModel sentModel,
+            IDictionary<string, string> manifestInfoEntries, SentenceDetectorFactory sdFactory)
+            : base(COMPONENT_NAME, languageCode, manifestInfoEntries, sdFactory)
+        {
+            artifactMap[MAXENT_MODEL_ENTRY_NAME] = sentModel;
+            checkArtifactMap();
+        }
 
-	  public SentenceModel(string languageCode, AbstractModel sentModel, IDictionary<string, string> manifestInfoEntries, SentenceDetectorFactory sdFactory)
-          : base(COMPONENT_NAME, languageCode, manifestInfoEntries, sdFactory)
-	  {
-		artifactMap[MAXENT_MODEL_ENTRY_NAME] = sentModel;
-		checkArtifactMap();
-	  }
+        /// <summary>
+        /// TODO: was added in 1.5.3 -> remove </summary>
+        /// @deprecated Use
+        ///             <seealso cref="#SentenceModel(String, AbstractModel, Map, SentenceDetectorFactory)"/>
+        ///             instead and pass in a <seealso cref="SentenceDetectorFactory"/> 
+        public SentenceModel(string languageCode, AbstractModel sentModel, bool useTokenEnd, Dictionary abbreviations,
+            char[] eosCharacters, IDictionary<string, string> manifestInfoEntries)
+            : this(
+                languageCode, sentModel, manifestInfoEntries,
+                new SentenceDetectorFactory(languageCode, useTokenEnd, abbreviations, eosCharacters))
+        {
+        }
 
-	  /// <summary>
-	  /// TODO: was added in 1.5.3 -> remove </summary>
-	  /// @deprecated Use
-	  ///             <seealso cref="#SentenceModel(String, AbstractModel, Map, SentenceDetectorFactory)"/>
-	  ///             instead and pass in a <seealso cref="SentenceDetectorFactory"/> 
-	  public SentenceModel(string languageCode, AbstractModel sentModel, bool useTokenEnd, Dictionary abbreviations, char[] eosCharacters, IDictionary<string, string> manifestInfoEntries) : this(languageCode, sentModel, manifestInfoEntries, new SentenceDetectorFactory(languageCode, useTokenEnd, abbreviations, eosCharacters))
-	  {
-	  }
+        /// <summary>
+        /// TODO: was added in 1.5.3 -> remove
+        /// </summary>
+        /// @deprecated Use
+        ///             <seealso cref="#SentenceModel(String, AbstractModel, Map, SentenceDetectorFactory)"/>
+        ///             instead and pass in a <seealso cref="SentenceDetectorFactory"/> 
+        public SentenceModel(string languageCode, AbstractModel sentModel, bool useTokenEnd, Dictionary abbreviations,
+            char[] eosCharacters) : this(languageCode, sentModel, useTokenEnd, abbreviations, eosCharacters, null)
+        {
+        }
 
-	  /// <summary>
-	  /// TODO: was added in 1.5.3 -> remove
-	  /// </summary>
-	  /// @deprecated Use
-	  ///             <seealso cref="#SentenceModel(String, AbstractModel, Map, SentenceDetectorFactory)"/>
-	  ///             instead and pass in a <seealso cref="SentenceDetectorFactory"/> 
-	  public SentenceModel(string languageCode, AbstractModel sentModel, bool useTokenEnd, Dictionary abbreviations, char[] eosCharacters) : this(languageCode, sentModel, useTokenEnd, abbreviations, eosCharacters, null)
-	  {
-	  }
+        public SentenceModel(string languageCode, AbstractModel sentModel, bool useTokenEnd, Dictionary abbreviations,
+            IDictionary<string, string> manifestInfoEntries)
+            : this(languageCode, sentModel, useTokenEnd, abbreviations, null, manifestInfoEntries)
+        {
+        }
 
-	  public SentenceModel(string languageCode, AbstractModel sentModel, bool useTokenEnd, Dictionary abbreviations, IDictionary<string, string> manifestInfoEntries) : this(languageCode, sentModel, useTokenEnd, abbreviations, null, manifestInfoEntries)
-	  {
-	  }
-
-	  public SentenceModel(string languageCode, AbstractModel sentModel, bool useTokenEnd, Dictionary abbreviations) : this(languageCode, sentModel, useTokenEnd, abbreviations, null, null)
-	  {
-	  }
+        public SentenceModel(string languageCode, AbstractModel sentModel, bool useTokenEnd, Dictionary abbreviations)
+            : this(languageCode, sentModel, useTokenEnd, abbreviations, null, null)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public SentenceModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
-	  public SentenceModel(InputStream @in) : base(COMPONENT_NAME, @in)
-	  {
-	  }
+        public SentenceModel(InputStream @in) : base(COMPONENT_NAME, @in)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public SentenceModel(java.io.File modelFile) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
-	  public SentenceModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
-	  {
-	  }
+        public SentenceModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public SentenceModel(java.net.URL modelURL) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
-	  public SentenceModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
-	  {
-	  }
+        public SentenceModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: @Override protected void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
-	  protected internal override void validateArtifactMap()
-	  {
-		base.validateArtifactMap();
+        protected internal override void validateArtifactMap()
+        {
+            base.validateArtifactMap();
 
-		if (!(artifactMap[MAXENT_MODEL_ENTRY_NAME] is AbstractModel))
-		{
-		  throw new InvalidFormatException("Unable to find " + MAXENT_MODEL_ENTRY_NAME + " maxent model!");
-		}
+            if (!(artifactMap[MAXENT_MODEL_ENTRY_NAME] is AbstractModel))
+            {
+                throw new InvalidFormatException("Unable to find " + MAXENT_MODEL_ENTRY_NAME + " maxent model!");
+            }
 
-		if (!ModelUtil.validateOutcomes(MaxentModel, SentenceDetectorME.SPLIT, SentenceDetectorME.NO_SPLIT))
-		{
-		  throw new InvalidFormatException("The maxent model is not compatible " + "with the sentence detector!");
-		}
-	  }
+            if (!ModelUtil.validateOutcomes(MaxentModel, SentenceDetectorME.SPLIT, SentenceDetectorME.NO_SPLIT))
+            {
+                throw new InvalidFormatException("The maxent model is not compatible " + "with the sentence detector!");
+            }
+        }
 
-	  public virtual SentenceDetectorFactory Factory
-	  {
-		  get
-		  {
-			return (SentenceDetectorFactory) this.toolFactory;
-		  }
-	  }
+        public virtual SentenceDetectorFactory Factory
+        {
+            get { return (SentenceDetectorFactory) this.toolFactory; }
+        }
 
-	  protected internal override Type DefaultFactory
-	  {
-		  get
-		  {
-			return typeof(SentenceDetectorFactory);
-		  }
-	  }
+        protected internal override Type DefaultFactory
+        {
+            get { return typeof (SentenceDetectorFactory); }
+        }
 
-	  public virtual AbstractModel MaxentModel
-	  {
-		  get
-		  {
-			return (AbstractModel) artifactMap[MAXENT_MODEL_ENTRY_NAME];
-		  }
-	  }
+        public virtual AbstractModel MaxentModel
+        {
+            get { return (AbstractModel) artifactMap[MAXENT_MODEL_ENTRY_NAME]; }
+        }
 
-	  public virtual Dictionary Abbreviations
-	  {
-		  get
-		  {
-			if (Factory != null)
-			{
-			  return Factory.AbbreviationDictionary;
-			}
-			return null;
-		  }
-	  }
+        public virtual Dictionary Abbreviations
+        {
+            get
+            {
+                if (Factory != null)
+                {
+                    return Factory.AbbreviationDictionary;
+                }
+                return null;
+            }
+        }
 
-	  public virtual bool useTokenEnd()
-	  {
-		if (Factory != null)
-		{
-		  return Factory.UseTokenEnd;
-		}
-		return true;
-	  }
+        public virtual bool useTokenEnd()
+        {
+            if (Factory != null)
+            {
+                return Factory.UseTokenEnd;
+            }
+            return true;
+        }
 
-	  public virtual char[] EosCharacters
-	  {
-		  get
-		  {
-			if (Factory != null)
-			{
-			  return Factory.EOSCharacters;
-			}
-			return null;
-		  }
-	  }
+        public virtual char[] EosCharacters
+        {
+            get
+            {
+                if (Factory != null)
+                {
+                    return Factory.EOSCharacters;
+                }
+                return null;
+            }
+        }
 
-	    public string Language { get; set; }
+        public string Language { get; set; }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static void main(String[] args) throws java.io.FileNotFoundException, java.io.IOException, opennlp.tools.util.InvalidFormatException
-	  public static void Main(string[] args)
-	  {
-		if (args.Length < 3)
-		{
-		  Console.Error.WriteLine("SentenceModel [-abbreviationsDictionary] [-useTokenEnd] languageCode packageName modelName");
-		  Environment.Exit(1);
-		}
+        public static void Main(string[] args)
+        {
+            if (args.Length < 3)
+            {
+                Console.Error.WriteLine(
+                    "SentenceModel [-abbreviationsDictionary] [-useTokenEnd] languageCode packageName modelName");
+                Environment.Exit(1);
+            }
 
-		int ai = 0;
+            int ai = 0;
 
-		Dictionary abbreviations = null;
-		if ("-abbreviationsDictionary".Equals(args[ai]))
-		{
-		  ai++;
-		  abbreviations = new Dictionary(new FileInputStream(args[ai++]));
-		}
+            Dictionary abbreviations = null;
+            if ("-abbreviationsDictionary".Equals(args[ai]))
+            {
+                ai++;
+                abbreviations = new Dictionary(new FileInputStream(args[ai++]));
+            }
 
-		bool useTokenEnd = false;
-		if ("-useTokenEnd".Equals(args[ai]))
-		{
-		  useTokenEnd = true;
-		  ai++;
-		}
+            bool useTokenEnd = false;
+            if ("-useTokenEnd".Equals(args[ai]))
+            {
+                useTokenEnd = true;
+                ai++;
+            }
 
-		string languageCode = args[ai++];
-		string packageName = args[ai++];
-		string modelName = args[ai];
+            string languageCode = args[ai++];
+            string packageName = args[ai++];
+            string modelName = args[ai];
 
-		AbstractModel model = (new GenericModelReader(new Jfile(modelName))).Model;
-		SentenceModel packageModel = new SentenceModel(languageCode, model, useTokenEnd, abbreviations, (char[]) null);
-	    packageModel.serialize(new FileOutputStream(packageName));
-	  }
-	}
-
+            AbstractModel model = (new GenericModelReader(new Jfile(modelName))).Model;
+            SentenceModel packageModel = new SentenceModel(languageCode, model, useTokenEnd, abbreviations,
+                (char[]) null);
+            packageModel.serialize(new FileOutputStream(packageName));
+        }
+    }
 }

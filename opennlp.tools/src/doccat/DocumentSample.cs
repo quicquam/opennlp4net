@@ -22,92 +22,82 @@ using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.doccat
 {
+    using WhitespaceTokenizer = opennlp.tools.tokenize.WhitespaceTokenizer;
 
+    /// <summary>
+    /// Class which holds a classified document and its category.
+    /// </summary>
+    public class DocumentSample
+    {
+        private readonly string category;
+        private readonly IList<string> text;
 
-	using WhitespaceTokenizer = opennlp.tools.tokenize.WhitespaceTokenizer;
+        public DocumentSample(string category, string text)
+            : this(category, WhitespaceTokenizer.INSTANCE.tokenize(text))
+        {
+        }
 
-	/// <summary>
-	/// Class which holds a classified document and its category.
-	/// </summary>
-	public class DocumentSample
-	{
+        public DocumentSample(string category, string[] text)
+        {
+            if (category == null)
+            {
+                throw new System.ArgumentException("category must not be null");
+            }
+            if (text == null)
+            {
+                throw new System.ArgumentException("text must not be null");
+            }
 
-	  private readonly string category;
-	  private readonly IList<string> text;
+            this.category = category;
+            this.text = text.ToList();
+        }
 
-	  public DocumentSample(string category, string text) : this(category, WhitespaceTokenizer.INSTANCE.tokenize(text))
-	  {
-	  }
+        public virtual string Category
+        {
+            get { return category; }
+        }
 
-	  public DocumentSample(string category, string[] text)
-	  {
-		if (category == null)
-		{
-		  throw new System.ArgumentException("category must not be null");
-		}
-		if (text == null)
-		{
-		  throw new System.ArgumentException("text must not be null");
-		}
+        public virtual string[] Text
+        {
+            get { return text.ToArray(); }
+        }
 
-		this.category = category;
-	    this.text = text.ToList();
-	  }
+        public override string ToString()
+        {
+            StringBuilder sampleString = new StringBuilder();
 
-	  public virtual string Category
-	  {
-		  get
-		  {
-			return category;
-		  }
-	  }
+            sampleString.Append(category).Append('\t');
 
-	  public virtual string[] Text
-	  {
-		  get
-		  {
-			return text.ToArray();
-		  }
-	  }
+            foreach (string s in text)
+            {
+                sampleString.Append(s).Append(' ');
+            }
 
-	  public override string ToString()
-	  {
+            if (sampleString.Length > 0)
+            {
+                // remove last space
+                sampleString.Length = sampleString.Length - 1;
+            }
 
-		StringBuilder sampleString = new StringBuilder();
+            return sampleString.ToString();
+        }
 
-		sampleString.Append(category).Append('\t');
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            else if (obj is DocumentSample)
+            {
+                DocumentSample a = (DocumentSample) obj;
 
-		foreach (string s in text)
-		{
-		  sampleString.Append(s).Append(' ');
-		}
-
-		if (sampleString.Length > 0)
-		{
-		  // remove last space
-		  sampleString.Length = sampleString.Length - 1;
-		}
-
-		return sampleString.ToString();
-	  }
-
-	  public override bool Equals(object obj)
-	  {
-		if (this == obj)
-		{
-		  return true;
-		}
-		else if (obj is DocumentSample)
-		{
-		  DocumentSample a = (DocumentSample) obj;
-
-		  return Category.Equals(a.Category) && Equals(Text, a.Text);
-		}
-		else
-		{
-		  return false;
-		}
-	  }
-	}
-
+                return Category.Equals(a.Category) && Equals(Text, a.Text);
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }

@@ -4,7 +4,6 @@ namespace j4n.IO.Reader
 {
     public class BufferedReader : Reader
     {
-        
         public BufferedReader(Reader inputStreamReader) : base(inputStreamReader)
         {
             throw new NotImplementedException();

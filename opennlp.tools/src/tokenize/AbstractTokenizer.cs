@@ -17,17 +17,15 @@
 
 namespace opennlp.tools.tokenize
 {
-
-	using Span = opennlp.tools.util.Span;
+    using Span = opennlp.tools.util.Span;
 
     public abstract class AbstractTokenizer : Tokenizer
-	{
-		public abstract Span[] tokenizePos(string s);
+    {
+        public abstract Span[] tokenizePos(string s);
 
-	  public virtual string[] tokenize(string s)
-	  {
-		return Span.spansToStrings(tokenizePos(s), s);
-	  }
-	}
-
+        public virtual string[] tokenize(string s)
+        {
+            return Span.spansToStrings(tokenizePos(s), s);
+        }
+    }
 }

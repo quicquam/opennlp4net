@@ -22,64 +22,60 @@ using System.Text;
 
 namespace opennlp.model
 {
+    /// <summary>
+    /// A maxent predicate representation which we can use to sort based on the
+    /// outcomes. This allows us to make the mapping of features to their parameters
+    /// much more compact.
+    /// </summary>
+    public class ComparablePredicate : IComparable<ComparablePredicate>
+    {
+        public string name;
+        public int[] outcomes;
+        public double[] @params;
 
-	/// <summary>
-	/// A maxent predicate representation which we can use to sort based on the
-	/// outcomes. This allows us to make the mapping of features to their parameters
-	/// much more compact.
-	/// </summary>
-	public class ComparablePredicate : IComparable<ComparablePredicate>
-	{
-	  public string name;
-	  public int[] outcomes;
-	  public double[] @params;
+        public ComparablePredicate(string n, int[] ocs, double[] ps)
+        {
+            name = n;
+            outcomes = ocs;
+            @params = ps;
+        }
 
-	  public ComparablePredicate(string n, int[] ocs, double[] ps)
-	  {
-		name = n;
-		outcomes = ocs;
-		@params = ps;
-	  }
+        public virtual int CompareTo(ComparablePredicate cp)
+        {
+            int smallerLength = (outcomes.Length > cp.outcomes.Length ? cp.outcomes.Length : outcomes.Length);
 
-	  public virtual int CompareTo(ComparablePredicate cp)
-	  {
-		int smallerLength = (outcomes.Length > cp.outcomes.Length? cp.outcomes.Length : outcomes.Length);
+            for (int i = 0; i < smallerLength; i++)
+            {
+                if (outcomes[i] < cp.outcomes[i])
+                {
+                    return -1;
+                }
+                else if (outcomes[i] > cp.outcomes[i])
+                {
+                    return 1;
+                }
+            }
 
-		for (int i = 0; i < smallerLength; i++)
-		{
-		  if (outcomes[i] < cp.outcomes[i])
-		  {
-			  return -1;
-		  }
-		  else if (outcomes[i] > cp.outcomes[i])
-		  {
-			  return 1;
-		  }
-		}
+            if (outcomes.Length < cp.outcomes.Length)
+            {
+                return -1;
+            }
+            else if (outcomes.Length > cp.outcomes.Length)
+            {
+                return 1;
+            }
 
-		if (outcomes.Length < cp.outcomes.Length)
-		{
-			return -1;
-		}
-		else if (outcomes.Length > cp.outcomes.Length)
-		{
-			return 1;
-		}
+            return 0;
+        }
 
-		return 0;
-	  }
-
-	  public override string ToString()
-	  {
-		StringBuilder s = new StringBuilder();
-		foreach (int outcome in outcomes)
-		{
-		  s.Append(" ").Append(outcome);
-		}
-		return s.ToString();
-	  }
-
-	}
-
-
+        public override string ToString()
+        {
+            StringBuilder s = new StringBuilder();
+            foreach (int outcome in outcomes)
+            {
+                s.Append(" ").Append(outcome);
+            }
+            return s.ToString();
+        }
+    }
 }

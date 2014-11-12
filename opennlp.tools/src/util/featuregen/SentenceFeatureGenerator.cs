@@ -19,36 +19,31 @@
 
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// This feature generator creates sentence begin and end features.
+    /// </summary>
+    public class SentenceFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private readonly bool isGenerateFirstWordFeature;
+        private readonly bool isGenerateLastWordFeature;
 
-	/// <summary>
-	/// This feature generator creates sentence begin and end features.
-	/// </summary>
-	public class SentenceFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public SentenceFeatureGenerator(bool isGenerateFirstWordFeature, bool isGenerateLastWordFeature)
+        {
+            this.isGenerateFirstWordFeature = isGenerateFirstWordFeature;
+            this.isGenerateLastWordFeature = isGenerateLastWordFeature;
+        }
 
-	  private readonly bool isGenerateFirstWordFeature;
-	  private readonly bool isGenerateLastWordFeature;
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
+        {
+            if (isGenerateFirstWordFeature && index == 0)
+            {
+                features.Add("S=begin");
+            }
 
-	  public SentenceFeatureGenerator(bool isGenerateFirstWordFeature, bool isGenerateLastWordFeature)
-	  {
-		this.isGenerateFirstWordFeature = isGenerateFirstWordFeature;
-		this.isGenerateLastWordFeature = isGenerateLastWordFeature;
-	  }
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
-	  {
-
-		if (isGenerateFirstWordFeature && index == 0)
-		{
-		  features.Add("S=begin");
-		}
-
-		if (isGenerateLastWordFeature && tokens.Length == index + 1)
-		{
-		  features.Add("S=end");
-		}
-	  }
-
-	}
-
+            if (isGenerateLastWordFeature && tokens.Length == index + 1)
+            {
+                features.Add("S=end");
+            }
+        }
+    }
 }

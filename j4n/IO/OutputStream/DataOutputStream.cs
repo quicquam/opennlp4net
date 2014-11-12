@@ -6,18 +6,14 @@ namespace j4n.IO.OutputStream
 {
     public class DataOutputStream : OutputStream, Closeable
     {
-
-
         public DataOutputStream(OutputStream os)
             : base(os.InnerStream)
         {
-            
         }
 
-        public DataOutputStream() 
+        public DataOutputStream()
             : base(new FileStream("outputstream.out", FileMode.Create))
         {
-            
         }
 
         public void writeUTF(string s)

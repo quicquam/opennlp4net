@@ -19,48 +19,43 @@
 
 namespace opennlp.tools.util.featuregen
 {
+    using NGramModel = opennlp.tools.ngram.NGramModel;
 
-	using NGramModel = opennlp.tools.ngram.NGramModel;
+    /// <summary>
+    /// The <seealso cref="CharacterNgramFeatureGenerator"/> uses character ngrams to
+    /// generate features about each token.
+    /// The minimum and maximum length can be specified.
+    /// </summary>
+    public class CharacterNgramFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private readonly int minLength;
+        private readonly int maxLength;
 
-	/// <summary>
-	/// The <seealso cref="CharacterNgramFeatureGenerator"/> uses character ngrams to
-	/// generate features about each token.
-	/// The minimum and maximum length can be specified.
-	/// </summary>
-	public class CharacterNgramFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public CharacterNgramFeatureGenerator(int minLength, int maxLength)
+        {
+            this.minLength = minLength;
+            this.maxLength = maxLength;
+        }
 
-	  private readonly int minLength;
-	  private readonly int maxLength;
+        /// <summary>
+        /// Initializes the current instance with min 2 length and max 5 length of ngrams.
+        /// </summary>
+        public CharacterNgramFeatureGenerator() : this(2, 5)
+        {
+        }
 
-	  public CharacterNgramFeatureGenerator(int minLength, int maxLength)
-	  {
-		this.minLength = minLength;
-		this.maxLength = maxLength;
-	  }
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
+        {
+            NGramModel model = new NGramModel();
+            model.add(tokens[index], minLength, maxLength);
 
-	  /// <summary>
-	  /// Initializes the current instance with min 2 length and max 5 length of ngrams.
-	  /// </summary>
-	  public CharacterNgramFeatureGenerator() : this(2, 5)
-	  {
-	  }
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
-	  {
-
-		NGramModel model = new NGramModel();
-		model.add(tokens[index], minLength, maxLength);
-
-		foreach (StringList tokenList in model)
-		{
-
-		  if (tokenList.size() > 0)
-		  {
-			features.Add("ng=" + tokenList.getToken(0).ToLower());
-		  }
-		}
-	  }
-	}
-
+            foreach (StringList tokenList in model)
+            {
+                if (tokenList.size() > 0)
+                {
+                    features.Add("ng=" + tokenList.getToken(0).ToLower());
+                }
+            }
+        }
+    }
 }

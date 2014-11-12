@@ -23,652 +23,646 @@ using opennlp.nonjava.helperclasses;
 
 namespace opennlp.maxent
 {
+    using DataIndexer = opennlp.model.DataIndexer;
+    using EvalParameters = opennlp.model.EvalParameters;
+    using EventStream = opennlp.model.EventStream;
+    using MutableContext = opennlp.model.MutableContext;
+    using OnePassDataIndexer = opennlp.model.OnePassDataIndexer;
+    using Prior = opennlp.model.Prior;
+    using UniformPrior = opennlp.model.UniformPrior;
 
 
-	using DataIndexer = opennlp.model.DataIndexer;
-	using EvalParameters = opennlp.model.EvalParameters;
-	using EventStream = opennlp.model.EventStream;
-	using MutableContext = opennlp.model.MutableContext;
-	using OnePassDataIndexer = opennlp.model.OnePassDataIndexer;
-	using Prior = opennlp.model.Prior;
-	using UniformPrior = opennlp.model.UniformPrior;
+    /// <summary>
+    /// An implementation of Generalized Iterative Scaling.  The reference paper
+    /// for this implementation was Adwait Ratnaparkhi's tech report at the
+    /// University of Pennsylvania's Institute for Research in Cognitive Science,
+    /// and is available at <a href ="ftp://ftp.cis.upenn.edu/pub/ircs/tr/97-08.ps.Z"><code>ftp://ftp.cis.upenn.edu/pub/ircs/tr/97-08.ps.Z</code></a>. 
+    /// 
+    /// The slack parameter used in the above implementation has been removed by default
+    /// from the computation and a method for updating with Gaussian smoothing has been
+    /// added per Investigating GIS and Smoothing for Maximum Entropy Taggers, Clark and Curran (2002).  
+    /// <a href="http://acl.ldc.upenn.edu/E/E03/E03-1071.pdf"><code>http://acl.ldc.upenn.edu/E/E03/E03-1071.pdf</code></a>
+    /// The slack parameter can be used by setting <code>useSlackParameter</code> to true.
+    /// Gaussian smoothing can be used by setting <code>useGaussianSmoothing</code> to true. 
+    /// 
+    /// A prior can be used to train models which converge to the distribution which minimizes the
+    /// relative entropy between the distribution specified by the empirical constraints of the training
+    /// data and the specified prior.  By default, the uniform distribution is used as the prior.
+    /// </summary>
+    public class GISTrainer
+    {
+        /// <summary>
+        /// Specifies whether unseen context/outcome pairs should be estimated as occur very infrequently.
+        /// </summary>
+        private bool useSimpleSmoothing = false;
 
+        /// <summary>
+        /// Specified whether parameter updates should prefer a distribution of parameters which
+        /// is gaussian.
+        /// </summary>
+        private bool useGaussianSmoothing = false;
 
-	/// <summary>
-	/// An implementation of Generalized Iterative Scaling.  The reference paper
-	/// for this implementation was Adwait Ratnaparkhi's tech report at the
-	/// University of Pennsylvania's Institute for Research in Cognitive Science,
-	/// and is available at <a href ="ftp://ftp.cis.upenn.edu/pub/ircs/tr/97-08.ps.Z"><code>ftp://ftp.cis.upenn.edu/pub/ircs/tr/97-08.ps.Z</code></a>. 
-	/// 
-	/// The slack parameter used in the above implementation has been removed by default
-	/// from the computation and a method for updating with Gaussian smoothing has been
-	/// added per Investigating GIS and Smoothing for Maximum Entropy Taggers, Clark and Curran (2002).  
-	/// <a href="http://acl.ldc.upenn.edu/E/E03/E03-1071.pdf"><code>http://acl.ldc.upenn.edu/E/E03/E03-1071.pdf</code></a>
-	/// The slack parameter can be used by setting <code>useSlackParameter</code> to true.
-	/// Gaussian smoothing can be used by setting <code>useGaussianSmoothing</code> to true. 
-	/// 
-	/// A prior can be used to train models which converge to the distribution which minimizes the
-	/// relative entropy between the distribution specified by the empirical constraints of the training
-	/// data and the specified prior.  By default, the uniform distribution is used as the prior.
-	/// </summary>
-	public class GISTrainer
-	{
+        private double sigma = 2.0;
 
-	  /// <summary>
-	  /// Specifies whether unseen context/outcome pairs should be estimated as occur very infrequently.
-	  /// </summary>
-	  private bool useSimpleSmoothing = false;
+        // If we are using smoothing, this is used as the "number" of
+        // times we want the trainer to imagine that it saw a feature that it
+        // actually didn't see.  Defaulted to 0.1.
+        private double _smoothingObservation = 0.1;
 
-	  /// <summary>
-	  /// Specified whether parameter updates should prefer a distribution of parameters which
-	  /// is gaussian.
-	  /// </summary>
-	  private bool useGaussianSmoothing = false;
+        private readonly bool printMessages;
 
-	  private double sigma = 2.0;
+        /// <summary>
+        /// Number of unique events which occured in the event set. 
+        /// </summary>
+        private int numUniqueEvents;
 
-	  // If we are using smoothing, this is used as the "number" of
-	  // times we want the trainer to imagine that it saw a feature that it
-	  // actually didn't see.  Defaulted to 0.1.
-	  private double _smoothingObservation = 0.1;
+        /// <summary>
+        /// Number of predicates. 
+        /// </summary>
+        private int numPreds;
 
-	  private readonly bool printMessages;
+        /// <summary>
+        /// Number of outcomes. 
+        /// </summary>
+        private int numOutcomes;
 
-	  /// <summary>
-	  /// Number of unique events which occured in the event set. 
-	  /// </summary>
-	  private int numUniqueEvents;
+        /// <summary>
+        /// Records the array of predicates seen in each event.
+        /// </summary>
+        private int[][] contexts;
 
-	  /// <summary>
-	  /// Number of predicates. 
-	  /// </summary>
-	  private int numPreds;
+        /// <summary>
+        /// The value associated with each context. If null then context values are assumes to be 1.
+        /// </summary>
+        private float[][] values;
 
-	  /// <summary>
-	  /// Number of outcomes. 
-	  /// </summary>
-	  private int numOutcomes;
+        /// <summary>
+        /// List of outcomes for each event i, in context[i].
+        /// </summary>
+        private int[] outcomeList;
 
-	  /// <summary>
-	  /// Records the array of predicates seen in each event.
-	  /// </summary>
-	  private int[][] contexts;
+        /// <summary>
+        /// Records the num of times an event has been seen for each event i, in context[i].
+        /// </summary>
+        private int[] numTimesEventsSeen;
 
-	  /// <summary>
-	  /// The value associated with each context. If null then context values are assumes to be 1.
-	  /// </summary>
-	  private float[][] values;
+        /// <summary>
+        /// The number of times a predicate occured in the training data.
+        /// </summary>
+        private int[] predicateCounts;
 
-	  /// <summary>
-	  /// List of outcomes for each event i, in context[i].
-	  /// </summary>
-	  private int[] outcomeList;
+        private int cutoff;
 
-	  /// <summary>
-	  /// Records the num of times an event has been seen for each event i, in context[i].
-	  /// </summary>
-	  private int[] numTimesEventsSeen;
+        /// <summary>
+        /// Stores the String names of the outcomes. The GIS only tracks outcomes as
+        /// ints, and so this array is needed to save the model to disk and thereby
+        /// allow users to know what the outcome was in human understandable terms.
+        /// </summary>
+        private string[] outcomeLabels;
 
-	  /// <summary>
-	  /// The number of times a predicate occured in the training data.
-	  /// </summary>
-	  private int[] predicateCounts;
+        /// <summary>
+        /// Stores the String names of the predicates. The GIS only tracks predicates
+        /// as ints, and so this array is needed to save the model to disk and thereby
+        /// allow users to know what the outcome was in human understandable terms.
+        /// </summary>
+        private string[] predLabels;
 
-	  private int cutoff;
+        /// <summary>
+        /// Stores the observed expected values of the features based on training data.
+        /// </summary>
+        private MutableContext[] observedExpects;
 
-	  /// <summary>
-	  /// Stores the String names of the outcomes. The GIS only tracks outcomes as
-	  /// ints, and so this array is needed to save the model to disk and thereby
-	  /// allow users to know what the outcome was in human understandable terms.
-	  /// </summary>
-	  private string[] outcomeLabels;
+        /// <summary>
+        /// Stores the estimated parameter value of each predicate during iteration
+        /// </summary>
+        private MutableContext[] @params;
 
-	  /// <summary>
-	  /// Stores the String names of the predicates. The GIS only tracks predicates
-	  /// as ints, and so this array is needed to save the model to disk and thereby
-	  /// allow users to know what the outcome was in human understandable terms.
-	  /// </summary>
-	  private string[] predLabels;
+        /// <summary>
+        /// Stores the expected values of the features based on the current models 
+        /// </summary>
+        private MutableContext[][] modelExpects;
 
-	  /// <summary>
-	  /// Stores the observed expected values of the features based on training data.
-	  /// </summary>
-	  private MutableContext[] observedExpects;
+        /// <summary>
+        /// This is the prior distribution that the model uses for training.
+        /// </summary>
+        private Prior prior;
 
-	  /// <summary>
-	  /// Stores the estimated parameter value of each predicate during iteration
-	  /// </summary>
-	  private MutableContext[] @params;
+        private const double LLThreshold = 0.0001;
 
-	  /// <summary>
-	  /// Stores the expected values of the features based on the current models 
-	  /// </summary>
-	  private MutableContext[][] modelExpects;
+        /// <summary>
+        /// Initial probability for all outcomes.
+        /// </summary>
+        private EvalParameters evalParams;
 
-	  /// <summary>
-	  /// This is the prior distribution that the model uses for training.
-	  /// </summary>
-	  private Prior prior;
+        /// <summary>
+        /// Creates a new <code>GISTrainer</code> instance which does not print
+        /// progress messages about training to STDOUT.
+        /// 
+        /// </summary>
+        internal GISTrainer()
+        {
+            printMessages = false;
+        }
 
-	  private const double LLThreshold = 0.0001;
+        /// <summary>
+        /// Creates a new <code>GISTrainer</code> instance.
+        /// </summary>
+        /// <param name="printMessages"> sends progress messages about training to
+        ///                      STDOUT when true; trains silently otherwise. </param>
+        public GISTrainer(bool printMessages)
+        {
+            this.printMessages = printMessages;
+        }
 
-	  /// <summary>
-	  /// Initial probability for all outcomes.
-	  /// </summary>
-	  private EvalParameters evalParams;
+        /// <summary>
+        /// Sets whether this trainer will use smoothing while training the model.
+        /// This can improve model accuracy, though training will potentially take
+        /// longer and use more memory.  Model size will also be larger.
+        /// </summary>
+        /// <param name="smooth"> true if smoothing is desired, false if not </param>
+        public virtual bool Smoothing
+        {
+            set { useSimpleSmoothing = value; }
+        }
 
-	  /// <summary>
-	  /// Creates a new <code>GISTrainer</code> instance which does not print
-	  /// progress messages about training to STDOUT.
-	  /// 
-	  /// </summary>
-	  internal GISTrainer()
-	  {
-		printMessages = false;
-	  }
+        /// <summary>
+        /// Sets whether this trainer will use smoothing while training the model.
+        /// This can improve model accuracy, though training will potentially take
+        /// longer and use more memory.  Model size will also be larger.
+        /// </summary>
+        /// <param name="timesSeen"> the "number" of times we want the trainer to imagine
+        ///                  it saw a feature that it actually didn't see </param>
+        public virtual double SmoothingObservation
+        {
+            set { _smoothingObservation = value; }
+        }
 
-	  /// <summary>
-	  /// Creates a new <code>GISTrainer</code> instance.
-	  /// </summary>
-	  /// <param name="printMessages"> sends progress messages about training to
-	  ///                      STDOUT when true; trains silently otherwise. </param>
-	  public GISTrainer(bool printMessages)
-	  {
-		this.printMessages = printMessages;
-	  }
+        /// <summary>
+        /// Sets whether this trainer will use smoothing while training the model.
+        /// This can improve model accuracy, though training will potentially take
+        /// longer and use more memory.  Model size will also be larger.
+        /// 
+        /// </summary>
+        public virtual double GaussianSigma
+        {
+            set
+            {
+                useGaussianSmoothing = true;
+                sigma = value;
+            }
+        }
 
-	  /// <summary>
-	  /// Sets whether this trainer will use smoothing while training the model.
-	  /// This can improve model accuracy, though training will potentially take
-	  /// longer and use more memory.  Model size will also be larger.
-	  /// </summary>
-	  /// <param name="smooth"> true if smoothing is desired, false if not </param>
-	  public virtual bool Smoothing
-	  {
-		  set
-		  {
-			useSimpleSmoothing = value;
-		  }
-	  }
-
-	  /// <summary>
-	  /// Sets whether this trainer will use smoothing while training the model.
-	  /// This can improve model accuracy, though training will potentially take
-	  /// longer and use more memory.  Model size will also be larger.
-	  /// </summary>
-	  /// <param name="timesSeen"> the "number" of times we want the trainer to imagine
-	  ///                  it saw a feature that it actually didn't see </param>
-	  public virtual double SmoothingObservation
-	  {
-		  set
-		  {
-			_smoothingObservation = value;
-		  }
-	  }
-
-	  /// <summary>
-	  /// Sets whether this trainer will use smoothing while training the model.
-	  /// This can improve model accuracy, though training will potentially take
-	  /// longer and use more memory.  Model size will also be larger.
-	  /// 
-	  /// </summary>
-	  public virtual double GaussianSigma
-	  {
-		  set
-		  {
-			useGaussianSmoothing = true;
-			sigma = value;
-		  }
-	  }
-
-	  /// <summary>
-	  /// Trains a GIS model on the event in the specified event stream, using the specified number
-	  /// of iterations and the specified count cutoff. </summary>
-	  /// <param name="eventStream"> A stream of all events. </param>
-	  /// <param name="iterations"> The number of iterations to use for GIS. </param>
-	  /// <param name="cutoff"> The number of times a feature must occur to be included. </param>
-	  /// <returns> A GIS model trained with specified  </returns>
+        /// <summary>
+        /// Trains a GIS model on the event in the specified event stream, using the specified number
+        /// of iterations and the specified count cutoff. </summary>
+        /// <param name="eventStream"> A stream of all events. </param>
+        /// <param name="iterations"> The number of iterations to use for GIS. </param>
+        /// <param name="cutoff"> The number of times a feature must occur to be included. </param>
+        /// <returns> A GIS model trained with specified  </returns>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public GISModel trainModel(opennlp.model.EventStream eventStream, int iterations, int cutoff) throws java.io.IOException
-	  public virtual GISModel trainModel(EventStream eventStream, int iterations, int cutoff)
-	  {
-		return trainModel(iterations, new OnePassDataIndexer(eventStream,cutoff),cutoff);
-	  }
+        public virtual GISModel trainModel(EventStream eventStream, int iterations, int cutoff)
+        {
+            return trainModel(iterations, new OnePassDataIndexer(eventStream, cutoff), cutoff);
+        }
 
-	  /// <summary>
-	  /// Train a model using the GIS algorithm.
-	  /// </summary>
-	  /// <param name="iterations">  The number of GIS iterations to perform. </param>
-	  /// <param name="di"> The data indexer used to compress events in memory. </param>
-	  /// <returns> The newly trained model, which can be used immediately or saved
-	  ///         to disk using an opennlp.maxent.io.GISModelWriter object. </returns>
-	  public virtual GISModel trainModel(int iterations, DataIndexer di, int cutoff)
-	  {
-		return trainModel(iterations,di,new UniformPrior(),cutoff,1);
-	  }
+        /// <summary>
+        /// Train a model using the GIS algorithm.
+        /// </summary>
+        /// <param name="iterations">  The number of GIS iterations to perform. </param>
+        /// <param name="di"> The data indexer used to compress events in memory. </param>
+        /// <returns> The newly trained model, which can be used immediately or saved
+        ///         to disk using an opennlp.maxent.io.GISModelWriter object. </returns>
+        public virtual GISModel trainModel(int iterations, DataIndexer di, int cutoff)
+        {
+            return trainModel(iterations, di, new UniformPrior(), cutoff, 1);
+        }
 
-	  /// <summary>
-	  /// Train a model using the GIS algorithm.
-	  /// </summary>
-	  /// <param name="iterations">  The number of GIS iterations to perform. </param>
-	  /// <param name="di"> The data indexer used to compress events in memory. </param>
-	  /// <param name="modelPrior"> The prior distribution used to train this model. </param>
-	  /// <returns> The newly trained model, which can be used immediately or saved
-	  ///         to disk using an opennlp.maxent.io.GISModelWriter object. </returns>
-	  public virtual GISModel trainModel(int iterations, DataIndexer di, Prior modelPrior, int cutoff, int threads)
-	  {
+        /// <summary>
+        /// Train a model using the GIS algorithm.
+        /// </summary>
+        /// <param name="iterations">  The number of GIS iterations to perform. </param>
+        /// <param name="di"> The data indexer used to compress events in memory. </param>
+        /// <param name="modelPrior"> The prior distribution used to train this model. </param>
+        /// <returns> The newly trained model, which can be used immediately or saved
+        ///         to disk using an opennlp.maxent.io.GISModelWriter object. </returns>
+        public virtual GISModel trainModel(int iterations, DataIndexer di, Prior modelPrior, int cutoff, int threads)
+        {
+            if (threads <= 0)
+            {
+                throw new System.ArgumentException("threads must be at least one or greater but is " + threads + "!");
+            }
 
-		if (threads <= 0)
-		{
-		  throw new System.ArgumentException("threads must be at least one or greater but is " + threads + "!");
-		}
+            modelExpects = new MutableContext[threads][];
 
-		modelExpects = new MutableContext[threads][];
+            /// <summary>
+            ///************ Incorporate all of the needed info ***************** </summary>
+            display("Incorporating indexed data for training...  \n");
+            contexts = di.Contexts;
+            values = di.Values;
+            this.cutoff = cutoff;
+            predicateCounts = di.PredCounts;
+            numTimesEventsSeen = di.NumTimesEventsSeen;
+            numUniqueEvents = contexts.Length;
+            this.prior = modelPrior;
+            //printTable(contexts);
 
-		/// <summary>
-		///************ Incorporate all of the needed info ***************** </summary>
-		display("Incorporating indexed data for training...  \n");
-		contexts = di.Contexts;
-		values = di.Values;
-		this.cutoff = cutoff;
-		predicateCounts = di.PredCounts;
-		numTimesEventsSeen = di.NumTimesEventsSeen;
-		numUniqueEvents = contexts.Length;
-		this.prior = modelPrior;
-		//printTable(contexts);
+            // determine the correction constant and its inverse
+            double correctionConstant = 0;
+            for (int ci = 0; ci < contexts.Length; ci++)
+            {
+                if (values == null || values[ci] == null)
+                {
+                    if (contexts[ci].Length > correctionConstant)
+                    {
+                        correctionConstant = contexts[ci].Length;
+                    }
+                }
+                else
+                {
+                    float cl = values[ci][0];
+                    for (int vi = 1; vi < values[ci].Length; vi++)
+                    {
+                        cl += values[ci][vi];
+                    }
 
-		// determine the correction constant and its inverse
-		double correctionConstant = 0;
-		for (int ci = 0; ci < contexts.Length; ci++)
-		{
-		  if (values == null || values[ci] == null)
-		  {
-			if (contexts[ci].Length > correctionConstant)
-			{
-			  correctionConstant = contexts[ci].Length;
-			}
-		  }
-		  else
-		  {
-			float cl = values[ci][0];
-			for (int vi = 1;vi < values[ci].Length;vi++)
-			{
-			  cl += values[ci][vi];
-			}
+                    if (cl > correctionConstant)
+                    {
+                        correctionConstant = cl;
+                    }
+                }
+            }
+            display("done.\n");
 
-			if (cl > correctionConstant)
-			{
-			  correctionConstant = cl;
-			}
-		  }
-		}
-		display("done.\n");
+            outcomeLabels = di.OutcomeLabels;
+            outcomeList = di.OutcomeList;
+            numOutcomes = outcomeLabels.Length;
 
-		outcomeLabels = di.OutcomeLabels;
-		outcomeList = di.OutcomeList;
-		numOutcomes = outcomeLabels.Length;
+            predLabels = di.PredLabels;
+            prior.setLabels(outcomeLabels, predLabels);
+            numPreds = predLabels.Length;
 
-		predLabels = di.PredLabels;
-		prior.setLabels(outcomeLabels,predLabels);
-		numPreds = predLabels.Length;
+            display("\tNumber of Event Tokens: " + numUniqueEvents + "\n");
+            display("\t    Number of Outcomes: " + numOutcomes + "\n");
+            display("\t  Number of Predicates: " + numPreds + "\n");
 
-		display("\tNumber of Event Tokens: " + numUniqueEvents + "\n");
-		display("\t    Number of Outcomes: " + numOutcomes + "\n");
-		display("\t  Number of Predicates: " + numPreds + "\n");
-
-		// set up feature arrays
+            // set up feature arrays
 //JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
 //ORIGINAL LINE: float[][] predCount = new float[numPreds][numOutcomes];
-		float[][] predCount = RectangularArrays.ReturnRectangularFloatArray(numPreds, numOutcomes);
-		for (int ti = 0; ti < numUniqueEvents; ti++)
-		{
-		  for (int j = 0; j < contexts[ti].Length; j++)
-		  {
-			if (values != null && values[ti] != null)
-			{
-			  predCount[contexts[ti][j]][outcomeList[ti]] += numTimesEventsSeen[ti] * values[ti][j];
-			}
-			else
-			{
-			  predCount[contexts[ti][j]][outcomeList[ti]] += numTimesEventsSeen[ti];
-			}
-		  }
-		}
+            float[][] predCount = RectangularArrays.ReturnRectangularFloatArray(numPreds, numOutcomes);
+            for (int ti = 0; ti < numUniqueEvents; ti++)
+            {
+                for (int j = 0; j < contexts[ti].Length; j++)
+                {
+                    if (values != null && values[ti] != null)
+                    {
+                        predCount[contexts[ti][j]][outcomeList[ti]] += numTimesEventsSeen[ti]*values[ti][j];
+                    }
+                    else
+                    {
+                        predCount[contexts[ti][j]][outcomeList[ti]] += numTimesEventsSeen[ti];
+                    }
+                }
+            }
 
-		//printTable(predCount);
-		di = null; // don't need it anymore
+            //printTable(predCount);
+            di = null; // don't need it anymore
 
-		// A fake "observation" to cover features which are not detected in
-		// the data.  The default is to assume that we observed "1/10th" of a
-		// feature during training.
+            // A fake "observation" to cover features which are not detected in
+            // the data.  The default is to assume that we observed "1/10th" of a
+            // feature during training.
 //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
 //ORIGINAL LINE: final double smoothingObservation = _smoothingObservation;
-		double smoothingObservation = _smoothingObservation;
+            double smoothingObservation = _smoothingObservation;
 
-		// Get the observed expectations of the features. Strictly speaking,
-		// we should divide the counts by the number of Tokens, but because of
-		// the way the model's expectations are approximated in the
-		// implementation, this is cancelled out when we compute the next
-		// iteration of a parameter, making the extra divisions wasteful.
-		@params = new MutableContext[numPreds];
-		for (int i = 0; i < modelExpects.Length; i++)
-		{
-		  modelExpects[i] = new MutableContext[numPreds];
-		}
-		observedExpects = new MutableContext[numPreds];
+            // Get the observed expectations of the features. Strictly speaking,
+            // we should divide the counts by the number of Tokens, but because of
+            // the way the model's expectations are approximated in the
+            // implementation, this is cancelled out when we compute the next
+            // iteration of a parameter, making the extra divisions wasteful.
+            @params = new MutableContext[numPreds];
+            for (int i = 0; i < modelExpects.Length; i++)
+            {
+                modelExpects[i] = new MutableContext[numPreds];
+            }
+            observedExpects = new MutableContext[numPreds];
 
-		// The model does need the correction constant and the correction feature. The correction constant
-		// is only needed during training, and the correction feature is not necessary.
-		// For compatibility reasons the model contains form now on a correction constant of 1, 
-		// and a correction param 0.
-		evalParams = new EvalParameters(@params,0,1,numOutcomes);
-		int[] activeOutcomes = new int[numOutcomes];
-		int[] outcomePattern;
-		int[] allOutcomesPattern = new int[numOutcomes];
-		for (int oi = 0; oi < numOutcomes; oi++)
-		{
-		  allOutcomesPattern[oi] = oi;
-		}
-		int numActiveOutcomes = 0;
-		for (int pi = 0; pi < numPreds; pi++)
-		{
-		  numActiveOutcomes = 0;
-		  if (useSimpleSmoothing)
-		  {
-			numActiveOutcomes = numOutcomes;
-			outcomePattern = allOutcomesPattern;
-		  }
-		  else //determine active outcomes
-		  {
-			for (int oi = 0; oi < numOutcomes; oi++)
-			{
-			  if (predCount[pi][oi] > 0 && predicateCounts[pi] >= cutoff)
-			  {
-				activeOutcomes[numActiveOutcomes] = oi;
-				numActiveOutcomes++;
-			  }
-			}
-			if (numActiveOutcomes == numOutcomes)
-			{
-			  outcomePattern = allOutcomesPattern;
-			}
-			else
-			{
-			  outcomePattern = new int[numActiveOutcomes];
-			  for (int aoi = 0;aoi < numActiveOutcomes;aoi++)
-			  {
-				outcomePattern[aoi] = activeOutcomes[aoi];
-			  }
-			}
-		  }
-		  @params[pi] = new MutableContext(outcomePattern,new double[numActiveOutcomes]);
-		  for (int i = 0; i < modelExpects.Length; i++)
-		  {
-			modelExpects[i][pi] = new MutableContext(outcomePattern,new double[numActiveOutcomes]);
-		  }
-		  observedExpects[pi] = new MutableContext(outcomePattern,new double[numActiveOutcomes]);
-		  for (int aoi = 0;aoi < numActiveOutcomes;aoi++)
-		  {
-			int oi = outcomePattern[aoi];
-			@params[pi].setParameter(aoi, 0.0);
-			foreach (MutableContext[] modelExpect in modelExpects)
-			{
-			  modelExpect[pi].setParameter(aoi, 0.0);
-			}
-			if (predCount[pi][oi] > 0)
-			{
-				observedExpects[pi].setParameter(aoi, predCount[pi][oi]);
-			}
-			else if (useSimpleSmoothing)
-			{
-			  observedExpects[pi].setParameter(aoi,smoothingObservation);
-			}
-		  }
-		}
+            // The model does need the correction constant and the correction feature. The correction constant
+            // is only needed during training, and the correction feature is not necessary.
+            // For compatibility reasons the model contains form now on a correction constant of 1, 
+            // and a correction param 0.
+            evalParams = new EvalParameters(@params, 0, 1, numOutcomes);
+            int[] activeOutcomes = new int[numOutcomes];
+            int[] outcomePattern;
+            int[] allOutcomesPattern = new int[numOutcomes];
+            for (int oi = 0; oi < numOutcomes; oi++)
+            {
+                allOutcomesPattern[oi] = oi;
+            }
+            int numActiveOutcomes = 0;
+            for (int pi = 0; pi < numPreds; pi++)
+            {
+                numActiveOutcomes = 0;
+                if (useSimpleSmoothing)
+                {
+                    numActiveOutcomes = numOutcomes;
+                    outcomePattern = allOutcomesPattern;
+                }
+                else //determine active outcomes
+                {
+                    for (int oi = 0; oi < numOutcomes; oi++)
+                    {
+                        if (predCount[pi][oi] > 0 && predicateCounts[pi] >= cutoff)
+                        {
+                            activeOutcomes[numActiveOutcomes] = oi;
+                            numActiveOutcomes++;
+                        }
+                    }
+                    if (numActiveOutcomes == numOutcomes)
+                    {
+                        outcomePattern = allOutcomesPattern;
+                    }
+                    else
+                    {
+                        outcomePattern = new int[numActiveOutcomes];
+                        for (int aoi = 0; aoi < numActiveOutcomes; aoi++)
+                        {
+                            outcomePattern[aoi] = activeOutcomes[aoi];
+                        }
+                    }
+                }
+                @params[pi] = new MutableContext(outcomePattern, new double[numActiveOutcomes]);
+                for (int i = 0; i < modelExpects.Length; i++)
+                {
+                    modelExpects[i][pi] = new MutableContext(outcomePattern, new double[numActiveOutcomes]);
+                }
+                observedExpects[pi] = new MutableContext(outcomePattern, new double[numActiveOutcomes]);
+                for (int aoi = 0; aoi < numActiveOutcomes; aoi++)
+                {
+                    int oi = outcomePattern[aoi];
+                    @params[pi].setParameter(aoi, 0.0);
+                    foreach (MutableContext[] modelExpect in modelExpects)
+                    {
+                        modelExpect[pi].setParameter(aoi, 0.0);
+                    }
+                    if (predCount[pi][oi] > 0)
+                    {
+                        observedExpects[pi].setParameter(aoi, predCount[pi][oi]);
+                    }
+                    else if (useSimpleSmoothing)
+                    {
+                        observedExpects[pi].setParameter(aoi, smoothingObservation);
+                    }
+                }
+            }
 
-		predCount = null; // don't need it anymore
+            predCount = null; // don't need it anymore
 
-		display("...done.\n");
+            display("...done.\n");
 
-		/// <summary>
-		///*************** Find the parameters *********************** </summary>
-		if (threads == 1)
-		{
-		  display("Computing model parameters ...\n");
-		}
-		else
-		{
-		  display("Computing model parameters in " + threads + " threads...\n");
-		}
+            /// <summary>
+            ///*************** Find the parameters *********************** </summary>
+            if (threads == 1)
+            {
+                display("Computing model parameters ...\n");
+            }
+            else
+            {
+                display("Computing model parameters in " + threads + " threads...\n");
+            }
 
-		findParameters(iterations, correctionConstant);
+            findParameters(iterations, correctionConstant);
 
-		/// <summary>
-		///************* Create and return the model ***************** </summary>
-		// To be compatible with old models the correction constant is always 1
-		return new GISModel(@params, predLabels, outcomeLabels, 1, evalParams.CorrectionParam);
+            /// <summary>
+            ///************* Create and return the model ***************** </summary>
+            // To be compatible with old models the correction constant is always 1
+            return new GISModel(@params, predLabels, outcomeLabels, 1, evalParams.CorrectionParam);
+        }
 
-	  }
+        /* Estimate and return the model parameters. */
 
-	  /* Estimate and return the model parameters. */
-	  private void findParameters(int iterations, double correctionConstant)
-	  {
-		double prevLL = 0.0;
-		double currLL = 0.0;
-		display("Performing " + iterations + " iterations.\n");
-		for (int i = 1; i <= iterations; i++)
-		{
-		  if (i < 10)
-		  {
-			display("  " + i + ":  ");
-		  }
-		  else if (i < 100)
-		  {
-			display(" " + i + ":  ");
-		  }
-		  else
-		  {
-			display(i + ":  ");
-		  }
-		  currLL = nextIteration(correctionConstant);
-		  if (i > 1)
-		  {
-			if (prevLL > currLL)
-			{
-			  Console.Error.WriteLine("Model Diverging: loglikelihood decreased");
-			  break;
-			}
-			if (currLL - prevLL < LLThreshold)
-			{
-			  break;
-			}
-		  }
-		  prevLL = currLL;
-		}
+        private void findParameters(int iterations, double correctionConstant)
+        {
+            double prevLL = 0.0;
+            double currLL = 0.0;
+            display("Performing " + iterations + " iterations.\n");
+            for (int i = 1; i <= iterations; i++)
+            {
+                if (i < 10)
+                {
+                    display("  " + i + ":  ");
+                }
+                else if (i < 100)
+                {
+                    display(" " + i + ":  ");
+                }
+                else
+                {
+                    display(i + ":  ");
+                }
+                currLL = nextIteration(correctionConstant);
+                if (i > 1)
+                {
+                    if (prevLL > currLL)
+                    {
+                        Console.Error.WriteLine("Model Diverging: loglikelihood decreased");
+                        break;
+                    }
+                    if (currLL - prevLL < LLThreshold)
+                    {
+                        break;
+                    }
+                }
+                prevLL = currLL;
+            }
 
-		// kill a bunch of these big objects now that we don't need them
-		observedExpects = null;
-		modelExpects = null;
-		numTimesEventsSeen = null;
-		contexts = null;
-	  }
+            // kill a bunch of these big objects now that we don't need them
+            observedExpects = null;
+            modelExpects = null;
+            numTimesEventsSeen = null;
+            contexts = null;
+        }
 
-	  //modeled on implementation in  Zhang Le's maxent kit
-	  private double gaussianUpdate(int predicate, int oid, int n, double correctionConstant)
-	  {
-		double param = @params[predicate].Parameters[oid];
-		double x0 = 0.0;
-		double modelValue = modelExpects[0][predicate].Parameters[oid];
-		double observedValue = observedExpects[predicate].Parameters[oid];
-		for (int i = 0; i < 50; i++)
-		{
-		  double tmp = modelValue * Math.Exp(correctionConstant * x0);
-		  double f = tmp + (param + x0) / sigma - observedValue;
-		  double fp = tmp * correctionConstant + 1 / sigma;
-		  if (fp == 0)
-		  {
-			break;
-		  }
-		  double x = x0 - f / fp;
-		  if (Math.Abs(x - x0) < 0.000001)
-		  {
-			x0 = x;
-			break;
-		  }
-		  x0 = x;
-		}
-		return x0;
-	  }
+        //modeled on implementation in  Zhang Le's maxent kit
+        private double gaussianUpdate(int predicate, int oid, int n, double correctionConstant)
+        {
+            double param = @params[predicate].Parameters[oid];
+            double x0 = 0.0;
+            double modelValue = modelExpects[0][predicate].Parameters[oid];
+            double observedValue = observedExpects[predicate].Parameters[oid];
+            for (int i = 0; i < 50; i++)
+            {
+                double tmp = modelValue*Math.Exp(correctionConstant*x0);
+                double f = tmp + (param + x0)/sigma - observedValue;
+                double fp = tmp*correctionConstant + 1/sigma;
+                if (fp == 0)
+                {
+                    break;
+                }
+                double x = x0 - f/fp;
+                if (Math.Abs(x - x0) < 0.000001)
+                {
+                    x0 = x;
+                    break;
+                }
+                x0 = x;
+            }
+            return x0;
+        }
 
-	  private class ModelExpactationComputeTask : Callable<ModelExpactationComputeTask>
-	  {
-		  private readonly GISTrainer outerInstance;
+        private class ModelExpactationComputeTask : Callable<ModelExpactationComputeTask>
+        {
+            private readonly GISTrainer outerInstance;
 
 
-		internal readonly int startIndex;
-		internal readonly int length;
+            internal readonly int startIndex;
+            internal readonly int length;
 
-		internal double loglikelihood = 0;
+            internal double loglikelihood = 0;
 
-		internal int numEvents = 0;
-		internal int numCorrect = 0;
+            internal int numEvents = 0;
+            internal int numCorrect = 0;
 
-		internal readonly int threadIndex;
+            internal readonly int threadIndex;
 
-		// startIndex to compute, number of events to compute
-		internal ModelExpactationComputeTask(GISTrainer outerInstance, int threadIndex, int startIndex, int length)
-		{
-			this.outerInstance = outerInstance;
-		  this.startIndex = startIndex;
-		  this.length = length;
-		  this.threadIndex = threadIndex;
-		}
+            // startIndex to compute, number of events to compute
+            internal ModelExpactationComputeTask(GISTrainer outerInstance, int threadIndex, int startIndex, int length)
+            {
+                this.outerInstance = outerInstance;
+                this.startIndex = startIndex;
+                this.length = length;
+                this.threadIndex = threadIndex;
+            }
 
-		public virtual ModelExpactationComputeTask call()
-		{
-
+            public virtual ModelExpactationComputeTask call()
+            {
 //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
 //ORIGINAL LINE: final double[] modelDistribution = new double[numOutcomes];
-		  double[] modelDistribution = new double[outerInstance.numOutcomes];
+                double[] modelDistribution = new double[outerInstance.numOutcomes];
 
 
-		  for (int ei = startIndex; ei < startIndex + length; ei++)
-		  {
+                for (int ei = startIndex; ei < startIndex + length; ei++)
+                {
+                    // TODO: check interruption status here, if interrupted set a poisoned flag and return
 
-			// TODO: check interruption status here, if interrupted set a poisoned flag and return
+                    if (outerInstance.values != null)
+                    {
+                        outerInstance.prior.logPrior(modelDistribution, outerInstance.contexts[ei],
+                            outerInstance.values[ei]);
+                        GISModel.eval(outerInstance.contexts[ei], outerInstance.values[ei], modelDistribution,
+                            outerInstance.evalParams);
+                    }
+                    else
+                    {
+                        outerInstance.prior.logPrior(modelDistribution, outerInstance.contexts[ei]);
+                        GISModel.eval(outerInstance.contexts[ei], modelDistribution, outerInstance.evalParams);
+                    }
+                    for (int j = 0; j < outerInstance.contexts[ei].Length; j++)
+                    {
+                        int pi = outerInstance.contexts[ei][j];
+                        if (outerInstance.predicateCounts[pi] >= outerInstance.cutoff)
+                        {
+                            int[] activeOutcomes = outerInstance.modelExpects[threadIndex][pi].Outcomes;
+                            for (int aoi = 0; aoi < activeOutcomes.Length; aoi++)
+                            {
+                                int oi = activeOutcomes[aoi];
 
-			if (outerInstance.values != null)
-			{
-			  outerInstance.prior.logPrior(modelDistribution, outerInstance.contexts[ei], outerInstance.values[ei]);
-			  GISModel.eval(outerInstance.contexts[ei], outerInstance.values[ei], modelDistribution, outerInstance.evalParams);
-			}
-			else
-			{
-			  outerInstance.prior.logPrior(modelDistribution,outerInstance.contexts[ei]);
-			  GISModel.eval(outerInstance.contexts[ei], modelDistribution, outerInstance.evalParams);
-			}
-			for (int j = 0; j < outerInstance.contexts[ei].Length; j++)
-			{
-			  int pi = outerInstance.contexts[ei][j];
-			  if (outerInstance.predicateCounts[pi] >= outerInstance.cutoff)
-			  {
-				int[] activeOutcomes = outerInstance.modelExpects[threadIndex][pi].Outcomes;
-				for (int aoi = 0;aoi < activeOutcomes.Length;aoi++)
-				{
-				  int oi = activeOutcomes[aoi];
+                                // numTimesEventsSeen must also be thread safe
+                                if (outerInstance.values != null && outerInstance.values[ei] != null)
+                                {
+                                    outerInstance.modelExpects[threadIndex][pi].updateParameter(aoi,
+                                        modelDistribution[oi]*outerInstance.values[ei][j]*
+                                        outerInstance.numTimesEventsSeen[ei]);
+                                }
+                                else
+                                {
+                                    outerInstance.modelExpects[threadIndex][pi].updateParameter(aoi,
+                                        modelDistribution[oi]*outerInstance.numTimesEventsSeen[ei]);
+                                }
+                            }
+                        }
+                    }
 
-				  // numTimesEventsSeen must also be thread safe
-				  if (outerInstance.values != null && outerInstance.values[ei] != null)
-				  {
-					outerInstance.modelExpects[threadIndex][pi].updateParameter(aoi,modelDistribution[oi] * outerInstance.values[ei][j] * outerInstance.numTimesEventsSeen[ei]);
-				  }
-				  else
-				  {
-					outerInstance.modelExpects[threadIndex][pi].updateParameter(aoi,modelDistribution[oi] * outerInstance.numTimesEventsSeen[ei]);
-				  }
-				}
-			  }
-			}
+                    loglikelihood += Math.Log(modelDistribution[outerInstance.outcomeList[ei]])*
+                                     outerInstance.numTimesEventsSeen[ei];
 
-			loglikelihood += Math.Log(modelDistribution[outerInstance.outcomeList[ei]]) * outerInstance.numTimesEventsSeen[ei];
+                    numEvents += outerInstance.numTimesEventsSeen[ei];
+                    if (outerInstance.printMessages)
+                    {
+                        int max = 0;
+                        for (int oi = 1; oi < outerInstance.numOutcomes; oi++)
+                        {
+                            if (modelDistribution[oi] > modelDistribution[max])
+                            {
+                                max = oi;
+                            }
+                        }
+                        if (max == outerInstance.outcomeList[ei])
+                        {
+                            numCorrect += outerInstance.numTimesEventsSeen[ei];
+                        }
+                    }
+                }
 
-			numEvents += outerInstance.numTimesEventsSeen[ei];
-			if (outerInstance.printMessages)
-			{
-			  int max = 0;
-			  for (int oi = 1; oi < outerInstance.numOutcomes; oi++)
-			  {
-				if (modelDistribution[oi] > modelDistribution[max])
-				{
-				  max = oi;
-				}
-			  }
-			  if (max == outerInstance.outcomeList[ei])
-			  {
-				numCorrect += outerInstance.numTimesEventsSeen[ei];
-			  }
-			}
+                return this;
+            }
 
-		  }
+            internal virtual int NumEvents
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        return numEvents;
+                    }
+                }
+            }
 
-		  return this;
-		}
+            internal virtual int NumCorrect
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        return numCorrect;
+                    }
+                }
+            }
 
-		internal virtual int NumEvents
-		{
-			get
-			{
-				lock (this)
-				{
-				  return numEvents;
-				}
-			}
-		}
+            internal virtual double Loglikelihood
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        return loglikelihood;
+                    }
+                }
+            }
+        }
 
-		internal virtual int NumCorrect
-		{
-			get
-			{
-				lock (this)
-				{
-				  return numCorrect;
-				}
-			}
-		}
+        /* Compute one iteration of GIS and retutn log-likelihood.*/
 
-		internal virtual double Loglikelihood
-		{
-			get
-			{
-				lock (this)
-				{
-				  return loglikelihood;
-				}
-			}
-		}
-	  }
+        private double nextIteration(double correctionConstant)
+        {
+            // compute contribution of p(a|b_i) for each feature and the new
+            // correction parameter
+            double loglikelihood = 0.0;
+            int numEvents = 0;
+            int numCorrect = 0;
 
-	  /* Compute one iteration of GIS and retutn log-likelihood.*/
-	  private double nextIteration(double correctionConstant)
-	  {
-		// compute contribution of p(a|b_i) for each feature and the new
-		// correction parameter
-		double loglikelihood = 0.0;
-		int numEvents = 0;
-		int numCorrect = 0;
-
-		int numberOfThreads = modelExpects.Length;
+            int numberOfThreads = modelExpects.Length;
 
 //TODO JAVA specific code 
 //		ExecutorService executor = Executors.newFixedThreadPool(numberOfThreads);
 
-		int taskSize = numUniqueEvents / numberOfThreads;
+            int taskSize = numUniqueEvents/numberOfThreads;
 
-		int leftOver = numUniqueEvents % numberOfThreads;
+            int leftOver = numUniqueEvents%numberOfThreads;
 
 //JAVA TO C# CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
 //ORIGINAL LINE: java.util.List<java.util.concurrent.Future<?>> futures = new java.util.ArrayList<java.util.concurrent.Future<?>>();
-		/*
+            /*
         IList<Future<?>> futures = new List<Future<?>>();
 
 		for (int i = 0; i < numberOfThreads; i++)
@@ -767,16 +761,15 @@ namespace opennlp.maxent
 
 		display(". loglikelihood=" + loglikelihood + "\t" + ((double) numCorrect / numEvents) + "\n");
 */
-		return loglikelihood;
-	  }
+            return loglikelihood;
+        }
 
-	  private void display(string s)
-	  {
-		if (printMessages)
-		{
-		  Console.Write(s);
-		}
-	  }
-	}
-
+        private void display(string s)
+        {
+            if (printMessages)
+            {
+                Console.Write(s);
+            }
+        }
+    }
 }

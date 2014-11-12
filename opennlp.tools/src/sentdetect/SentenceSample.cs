@@ -21,111 +21,98 @@ using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.sentdetect
 {
+    using Detokenizer = opennlp.tools.tokenize.Detokenizer;
+    using Span = opennlp.tools.util.Span;
 
+    /// <summary>
+    /// A <seealso cref="SentenceSample"/> contains a document with
+    /// begin indexes of the individual sentences.
+    /// </summary>
+    public class SentenceSample
+    {
+        private readonly string document;
 
-	using Detokenizer = opennlp.tools.tokenize.Detokenizer;
-	using Span = opennlp.tools.util.Span;
+        private readonly IList<Span> sentences;
 
-	/// <summary>
-	/// A <seealso cref="SentenceSample"/> contains a document with
-	/// begin indexes of the individual sentences.
-	/// </summary>
-	public class SentenceSample
-	{
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="document"> </param>
+        /// <param name="sentences"> </param>
+        public SentenceSample(string document, params Span[] sentences)
+        {
+            this.document = document;
+            this.sentences = new List<Span>(sentences.AsEnumerable());
+        }
 
-	  private readonly string document;
+        public SentenceSample(Detokenizer detokenizer, string[][] sentences)
+        {
+            IList<Span> spans = new List<Span>(sentences.Length);
 
-	  private readonly IList<Span> sentences;
+            StringBuilder documentBuilder = new StringBuilder();
 
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="document"> </param>
-	  /// <param name="sentences"> </param>
-	  public SentenceSample(string document, params Span[] sentences)
-	  {
-		this.document = document;
-		this.sentences = new List<Span>(sentences.AsEnumerable());
-	  }
+            foreach (var sentenceTokens in sentences)
+            {
+                string sampleSentence = detokenizer.detokenize(sentenceTokens, null);
 
-	  public SentenceSample(Detokenizer detokenizer, string[][] sentences)
-	  {
+                int beginIndex = documentBuilder.Length;
+                documentBuilder.Append(sampleSentence);
 
-		IList<Span> spans = new List<Span>(sentences.Length);
+                spans.Add(new Span(beginIndex, documentBuilder.Length));
+            }
 
-		StringBuilder documentBuilder = new StringBuilder();
+            document = documentBuilder.ToString();
+            this.sentences = spans;
+        }
 
-		foreach (var sentenceTokens in sentences)
-		{
+        /// <summary>
+        /// Retrieves the document.
+        /// </summary>
+        /// <returns> the document </returns>
+        public virtual string Document
+        {
+            get { return document; }
+        }
 
-		  string sampleSentence = detokenizer.detokenize(sentenceTokens, null);
+        /// <summary>
+        /// Retrieves the sentences.
+        /// </summary>
+        /// <returns> the begin indexes of the sentences
+        /// in the document. </returns>
+        public virtual Span[] Sentences
+        {
+            get { return sentences.ToArray(); }
+        }
 
-		  int beginIndex = documentBuilder.Length;
-		  documentBuilder.Append(sampleSentence);
+        public override string ToString()
+        {
+            StringBuilder documentBuilder = new StringBuilder();
 
-		  spans.Add(new Span(beginIndex, documentBuilder.Length));
-		}
+            foreach (Span sentSpan in sentences)
+            {
+                documentBuilder.Append(sentSpan.getCoveredText(document));
+                documentBuilder.Append("\n");
+            }
 
-		document = documentBuilder.ToString();
-		this.sentences = spans;
-	  }
+            return documentBuilder.ToString();
+        }
 
-	  /// <summary>
-	  /// Retrieves the document.
-	  /// </summary>
-	  /// <returns> the document </returns>
-	  public virtual string Document
-	  {
-		  get
-		  {
-			return document;
-		  }
-	  }
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            else if (obj is SentenceSample)
+            {
+                SentenceSample a = (SentenceSample) obj;
 
-	  /// <summary>
-	  /// Retrieves the sentences.
-	  /// </summary>
-	  /// <returns> the begin indexes of the sentences
-	  /// in the document. </returns>
-	  public virtual Span[] Sentences
-	  {
-		  get
-		  {
-			return sentences.ToArray();
-		  }
-	  }
-
-	  public override string ToString()
-	  {
-
-		StringBuilder documentBuilder = new StringBuilder();
-
-		foreach (Span sentSpan in sentences)
-		{
-		  documentBuilder.Append(sentSpan.getCoveredText(document));
-		  documentBuilder.Append("\n");
-		}
-
-		return documentBuilder.ToString();
-	  }
-
-	  public override bool Equals(object obj)
-	  {
-		if (this == obj)
-		{
-		  return true;
-		}
-		else if (obj is SentenceSample)
-		{
-		  SentenceSample a = (SentenceSample) obj;
-
-		  return Document.Equals(a.Document) && Arrays.Equals(Sentences, a.Sentences);
-		}
-		else
-		{
-		  return false;
-		}
-	  }
-	}
-
+                return Document.Equals(a.Document) && Arrays.Equals(Sentences, a.Sentences);
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }

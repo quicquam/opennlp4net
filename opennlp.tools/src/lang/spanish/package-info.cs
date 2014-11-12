@@ -18,6 +18,7 @@
 /// <summary>
 /// Package related to the processing of Spanish data.
 /// </summary>
+
 namespace opennlp.tools.lang.spanish
 {
 }

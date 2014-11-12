@@ -19,33 +19,29 @@ using j4n.Serialization;
 
 namespace opennlp.tools.parser
 {
+    using opennlp.tools.util;
+    using opennlp.tools.util;
 
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	public class ParseSampleStream : FilterObjectStream<string, Parse>
-	{
-
-	  public ParseSampleStream(ObjectStream<string> @in) : base(@in)
-	  {
-	  }
+    public class ParseSampleStream : FilterObjectStream<string, Parse>
+    {
+        public ParseSampleStream(ObjectStream<string> @in) : base(@in)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public Parse read() throws java.io.IOException
-	  public override Parse read()
-	  {
+        public override Parse read()
+        {
+            string parse = samples.read();
 
-		string parse = samples.read();
-
-		if (parse != null)
-		{
-		  return Parse.parseParse(parse, (HeadRules)null);
-		}
-		else
-		{
-		  return null;
-		}
-	  }
-	}
-
+            if (parse != null)
+            {
+                return Parse.parseParse(parse, (HeadRules) null);
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
 }

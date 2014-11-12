@@ -1,6 +1,5 @@
 ﻿namespace j4n.IO.InputStream
 {
-
     public class GZIPInputStream : InputStream
     {
         public GZIPInputStream(BufferedInputStream bufferedInputStream)

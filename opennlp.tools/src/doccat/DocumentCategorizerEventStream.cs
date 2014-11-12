@@ -21,49 +21,47 @@ using j4n.Serialization;
 
 namespace opennlp.tools.doccat
 {
+    using Event = opennlp.model.Event;
+    using opennlp.tools.util;
+    using opennlp.tools.util;
 
-	using Event = opennlp.model.Event;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
+    /// <summary>
+    /// Iterator-like class for modeling document classification events.
+    /// </summary>
+    public class DocumentCategorizerEventStream : AbstractEventStream<DocumentSample>
+    {
+        private DocumentCategorizerContextGenerator mContextGenerator;
 
-	/// <summary>
-	/// Iterator-like class for modeling document classification events.
-	/// </summary>
-	public class DocumentCategorizerEventStream : AbstractEventStream<DocumentSample>
-	{
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="data"> <seealso cref="ObjectStream"/> of <seealso cref="DocumentSample"/>s
+        /// </param>
+        /// <param name="featureGenerators"> </param>
+        public DocumentCategorizerEventStream(ObjectStream<DocumentSample> data,
+            params FeatureGenerator[] featureGenerators) : base(data)
+        {
+            mContextGenerator = new DocumentCategorizerContextGenerator(featureGenerators);
+        }
 
-	  private DocumentCategorizerContextGenerator mContextGenerator;
-
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="data"> <seealso cref="ObjectStream"/> of <seealso cref="DocumentSample"/>s
-	  /// </param>
-	  /// <param name="featureGenerators"> </param>
-	  public DocumentCategorizerEventStream(ObjectStream<DocumentSample> data, params FeatureGenerator[] featureGenerators) : base(data)
-	  {
-
-		mContextGenerator = new DocumentCategorizerContextGenerator(featureGenerators);
-	  }
-
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="samples"> <seealso cref="ObjectStream"/> of <seealso cref="DocumentSample"/>s </param>
-	  public DocumentCategorizerEventStream(ObjectStream<DocumentSample> samples) : base(samples)
-	  {
-
-		mContextGenerator = new DocumentCategorizerContextGenerator(new BagOfWordsFeatureGenerator());
-	  }
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="samples"> <seealso cref="ObjectStream"/> of <seealso cref="DocumentSample"/>s </param>
+        public DocumentCategorizerEventStream(ObjectStream<DocumentSample> samples) : base(samples)
+        {
+            mContextGenerator = new DocumentCategorizerContextGenerator(new BagOfWordsFeatureGenerator());
+        }
 
 //JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
 //ORIGINAL LINE: @Override protected java.util.Iterator<opennlp.model.Event> createEvents(final DocumentSample sample)
-	  protected internal override IEnumerator<Event> createEvents(DocumentSample sample)
-	  {
-          // commented out MJJ 07/11/2014
-          throw new NotImplementedException();
-		 // return new IteratorAnonymousInnerClassHelper(this, sample);
-	  }
+        protected internal override IEnumerator<Event> createEvents(DocumentSample sample)
+        {
+            // commented out MJJ 07/11/2014
+            throw new NotImplementedException();
+            // return new IteratorAnonymousInnerClassHelper(this, sample);
+        }
+
 /*
 	  private class IteratorAnonymousInnerClassHelper : IEnumerator<Event>
 	  {
@@ -99,6 +97,5 @@ namespace opennlp.tools.doccat
 			throw new System.NotSupportedException();
 		  }
 	  }*/
-	}
-        
+    }
 }

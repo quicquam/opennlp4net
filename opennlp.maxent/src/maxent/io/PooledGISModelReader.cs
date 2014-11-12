@@ -18,46 +18,41 @@
  */
 
 using System.IO;
-
 using j4n.IO.File;
 
 namespace opennlp.maxent.io
 {
-
-
-	/// <summary>
-	/// This class works exactly like the SuffisSensitiveGISModelReader except that it 
-	/// attempts to pool all context strings.  This is useful when loading models which
-	/// share many context strings.
-	/// 
-	/// </summary>
-	public class PooledGISModelReader : SuffixSensitiveGISModelReader
-	{
-
-	  /// <summary>
-	  /// A reader for GIS models which inspects the filename and invokes the
-	  /// appropriate GISModelReader depending on the filename's suffixes.
-	  /// 
-	  /// <para>The following assumption are made about suffixes:
-	  ///    <li>.gz  --> the file is gzipped (must be the last suffix)
-	  ///    <li>.txt --> the file is plain text
-	  ///    <li>.bin --> the file is binary
-	  /// </para>
-	  /// </summary>
-	  /// <param name="f"> </param>
-	  /// <exception cref="IOException"> </exception>
+    /// <summary>
+    /// This class works exactly like the SuffisSensitiveGISModelReader except that it 
+    /// attempts to pool all context strings.  This is useful when loading models which
+    /// share many context strings.
+    /// 
+    /// </summary>
+    public class PooledGISModelReader : SuffixSensitiveGISModelReader
+    {
+        /// <summary>
+        /// A reader for GIS models which inspects the filename and invokes the
+        /// appropriate GISModelReader depending on the filename's suffixes.
+        /// 
+        /// <para>The following assumption are made about suffixes:
+        ///    <li>.gz  --> the file is gzipped (must be the last suffix)
+        ///    <li>.txt --> the file is plain text
+        ///    <li>.bin --> the file is binary
+        /// </para>
+        /// </summary>
+        /// <param name="f"> </param>
+        /// <exception cref="IOException"> </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public PooledGISModelReader(java.io.File f) throws java.io.IOException
-	  public PooledGISModelReader(Jfile f) : base(f)
-	  {
-	  }
+        public PooledGISModelReader(Jfile f) : base(f)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public String readUTF() throws java.io.IOException
-	  public override string readUTF()
-	  {
-		return base.readUTF();
-	  }
-	}
-
+        public override string readUTF()
+        {
+            return base.readUTF();
+        }
+    }
 }

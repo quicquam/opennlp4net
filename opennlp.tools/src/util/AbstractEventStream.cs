@@ -20,8 +20,6 @@ using j4n.Serialization;
 
 namespace opennlp.tools.util
 {
-
-
     using Event = opennlp.model.Event;
     using EventStream = opennlp.model.EventStream;
 
@@ -32,7 +30,6 @@ namespace opennlp.tools.util
     /// </summary>
     public abstract class AbstractEventStream<T> : opennlp.model.AbstractEventStream
     {
-
         private ObjectStream<T> samples;
 
         private IEnumerator<Event> events = System.Linq.Enumerable.Empty<Event>().GetEnumerator();
@@ -64,7 +61,6 @@ namespace opennlp.tools.util
         //ORIGINAL LINE: public final boolean hasNext() throws java.io.IOException
         public override bool hasNext()
         {
-
             //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
             if (events.MoveNext())
             {
@@ -90,5 +86,4 @@ namespace opennlp.tools.util
             return events.Current;
         }
     }
-
 }

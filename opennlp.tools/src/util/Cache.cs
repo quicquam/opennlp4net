@@ -21,8 +21,6 @@ using opennlp.tools.dictionary;
 
 namespace opennlp.tools.util
 {
-
-
     /// <summary>
     /// Provides fixed size, pre-allocated, least recently used replacement cache.
     /// </summary>
@@ -30,25 +28,30 @@ namespace opennlp.tools.util
     //ORIGINAL LINE: @SuppressWarnings("unchecked") public class Cache implements java.util.Map
     public class Cache
     {
-
         /// <summary>
         /// The element in the linked list which was most recently used. * </summary>
         private DoubleLinkedListElement first;
+
         /// <summary>
         /// The element in the linked list which was least recently used. * </summary>
         private DoubleLinkedListElement last;
+
         /// <summary>
         /// Temporary holder of the key of the least-recently-used element. </summary>
         private object lastKey;
+
         /// <summary>
         /// Temporary value used in swap. </summary>
         private ObjectWrapper temp;
+
         /// <summary>
         /// Holds the object wrappers which the keys are mapped to. </summary>
         private ObjectWrapper[] wrappers;
+
         /// <summary>
         /// Map which stores the keys and values of the cache. </summary>
         private IDictionary map;
+
         /// <summary>
         /// The size of the cache. </summary>
         private int size_Renamed;
@@ -104,7 +107,7 @@ namespace opennlp.tools.util
 
         public virtual object put(object key, object value)
         {
-            ObjectWrapper o = (ObjectWrapper)map[key];
+            ObjectWrapper o = (ObjectWrapper) map[key];
             if (o != null)
             {
                 /*
@@ -157,7 +160,7 @@ namespace opennlp.tools.util
             last.next = null;
 
             // remove old value from cache
-            temp = (ObjectWrapper)map[lastKey];
+            temp = (ObjectWrapper) map[lastKey];
             map.Remove(lastKey);
             //update wrapper
             temp.@object = value;
@@ -169,7 +172,7 @@ namespace opennlp.tools.util
 
         public virtual object get(object key)
         {
-            ObjectWrapper o = (ObjectWrapper)map[key];
+            ObjectWrapper o = (ObjectWrapper) map[key];
             if (o != null)
             {
                 // Move it to the front
@@ -223,10 +226,7 @@ namespace opennlp.tools.util
 
         public virtual bool Empty
         {
-            get
-            {
-                return map.Count == 0;
-            }
+            get { return map.Count == 0; }
         }
 
         public virtual HashSet<Object> keySet()
@@ -254,10 +254,7 @@ namespace opennlp.tools.util
 
         public virtual int Count
         {
-            get
-            {
-                return map.Count;
-            }
+            get { return map.Count; }
         }
 
         public object SyncRoot { get; private set; }
@@ -267,10 +264,7 @@ namespace opennlp.tools.util
 
         public virtual ICollection Values
         {
-            get
-            {
-                return map.Values;
-            }
+            get { return map.Values; }
         }
 
         public bool IsReadOnly { get; private set; }
@@ -285,7 +279,6 @@ namespace opennlp.tools.util
 
     internal class ObjectWrapper
     {
-
         public object @object;
         public DoubleLinkedListElement listItem;
 
@@ -297,28 +290,15 @@ namespace opennlp.tools.util
 
         public virtual object Object
         {
-            get
-            {
-                return @object;
-            }
-            set
-            {
-                @object = value;
-            }
+            get { return @object; }
+            set { @object = value; }
         }
 
         public virtual DoubleLinkedListElement ListItem
         {
-            get
-            {
-                return listItem;
-            }
-            set
-            {
-                listItem = value;
-            }
+            get { return listItem; }
+            set { listItem = value; }
         }
-
 
 
         public virtual bool eqauls(object o)
@@ -329,7 +309,6 @@ namespace opennlp.tools.util
 
     internal class DoubleLinkedListElement
     {
-
         public DoubleLinkedListElement prev;
         public DoubleLinkedListElement next;
         public object @object;
@@ -354,7 +333,6 @@ namespace opennlp.tools.util
 
     internal class DoubleLinkedList
     {
-
         internal DoubleLinkedListElement first;
         internal DoubleLinkedListElement last;
         internal DoubleLinkedListElement current;
@@ -428,10 +406,7 @@ namespace opennlp.tools.util
 
         public virtual DoubleLinkedListElement Current
         {
-            get
-            {
-                return current;
-            }
+            get { return current; }
         }
 
         public virtual DoubleLinkedListElement next()
@@ -470,5 +445,4 @@ namespace opennlp.tools.util
             return s;
         }
     }
-
 }

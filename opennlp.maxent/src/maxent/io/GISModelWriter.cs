@@ -23,160 +23,154 @@ using opennlp.nonjava.helperclasses;
 
 namespace opennlp.maxent.io
 {
+    using AbstractModel = opennlp.model.AbstractModel;
+    using AbstractModelWriter = opennlp.model.AbstractModelWriter;
+    using ComparablePredicate = opennlp.model.ComparablePredicate;
+    using Context = opennlp.model.Context;
+    using opennlp.model;
+
+    /// <summary>
+    /// Abstract parent class for GISModel writers.  It provides the persist method
+    /// which takes care of the structure of a stored document, and requires an
+    /// extending class to define precisely how the data should be stored.
+    /// </summary>
+    public abstract class GISModelWriter : AbstractModelWriter
+    {
+        protected internal Context[] PARAMS;
+        protected internal string[] OUTCOME_LABELS;
+        protected internal int CORRECTION_CONSTANT;
+        protected internal double CORRECTION_PARAM;
+        protected internal string[] PRED_LABELS;
+
+        public GISModelWriter(AbstractModel model)
+        {
+            object[] data = model.DataStructures;
+
+            PARAMS = (Context[]) data[0];
+            IndexHashTable<string> pmap = (IndexHashTable<string>) data[1];
+            OUTCOME_LABELS = (string[]) data[2];
+            CORRECTION_CONSTANT = (int) data[3];
+            CORRECTION_PARAM = (double) data[4];
+
+            PRED_LABELS = new string[pmap.size()];
+            pmap.toArray(PRED_LABELS);
+        }
 
 
-	using AbstractModel = opennlp.model.AbstractModel;
-	using AbstractModelWriter = opennlp.model.AbstractModelWriter;
-	using ComparablePredicate = opennlp.model.ComparablePredicate;
-	using Context = opennlp.model.Context;
-	using opennlp.model;
-
-	/// <summary>
-	/// Abstract parent class for GISModel writers.  It provides the persist method
-	/// which takes care of the structure of a stored document, and requires an
-	/// extending class to define precisely how the data should be stored.
-	/// </summary>
-	public abstract class GISModelWriter : AbstractModelWriter
-	{
-	  protected internal Context[] PARAMS;
-	  protected internal string[] OUTCOME_LABELS;
-	  protected internal int CORRECTION_CONSTANT;
-	  protected internal double CORRECTION_PARAM;
-	  protected internal string[] PRED_LABELS;
-
-	  public GISModelWriter(AbstractModel model)
-	  {
-
-		object[] data = model.DataStructures;
-
-		PARAMS = (Context[]) data[0];
-		IndexHashTable<string> pmap = (IndexHashTable<string>) data[1];
-		OUTCOME_LABELS = (string[]) data[2];
-		CORRECTION_CONSTANT = (int) data[3];
-		CORRECTION_PARAM = (double) data[4];
-
-		PRED_LABELS = new string[pmap.size()];
-		pmap.toArray(PRED_LABELS);
-	  }
-
-
-	  /// <summary>
-	  /// Writes the model to disk, using the <code>writeX()</code> methods provided
-	  /// by extending classes.
-	  /// 
-	  /// <para>
-	  /// If you wish to create a GISModelWriter which uses a different structure, it
-	  /// will be necessary to override the persist method in addition to
-	  /// implementing the <code>writeX()</code> methods.
-	  /// </para>
-	  /// </summary>
+        /// <summary>
+        /// Writes the model to disk, using the <code>writeX()</code> methods provided
+        /// by extending classes.
+        /// 
+        /// <para>
+        /// If you wish to create a GISModelWriter which uses a different structure, it
+        /// will be necessary to override the persist method in addition to
+        /// implementing the <code>writeX()</code> methods.
+        /// </para>
+        /// </summary>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void persist() throws java.io.IOException
-	  public override void persist()
-	  {
+        public override void persist()
+        {
+            // the type of model (GIS)
+            writeUTF("GIS");
 
-		// the type of model (GIS)
-		writeUTF("GIS");
+            // the value of the correction constant
+            writeInt(CORRECTION_CONSTANT);
 
-		// the value of the correction constant
-		writeInt(CORRECTION_CONSTANT);
+            // the value of the correction constant
+            writeDouble(CORRECTION_PARAM);
 
-		// the value of the correction constant
-		writeDouble(CORRECTION_PARAM);
+            // the mapping from outcomes to their integer indexes
+            writeInt(OUTCOME_LABELS.Length);
 
-		// the mapping from outcomes to their integer indexes
-		writeInt(OUTCOME_LABELS.Length);
+            for (int i = 0; i < OUTCOME_LABELS.Length; i++)
+            {
+                writeUTF(OUTCOME_LABELS[i]);
+            }
 
-		for (int i = 0; i < OUTCOME_LABELS.Length; i++)
-		{
-		  writeUTF(OUTCOME_LABELS[i]);
-		}
+            // the mapping from predicates to the outcomes they contributed to.
+            // The sorting is done so that we actually can write this out more
+            // compactly than as the entire list.
+            ComparablePredicate[] sorted = sortValues();
+            IList<IList<ComparablePredicate>> compressed = compressOutcomes(sorted);
 
-		// the mapping from predicates to the outcomes they contributed to.
-		// The sorting is done so that we actually can write this out more
-		// compactly than as the entire list.
-		ComparablePredicate[] sorted = sortValues();
-		IList<IList<ComparablePredicate>> compressed = compressOutcomes(sorted);
+            writeInt(compressed.Count);
 
-		writeInt(compressed.Count);
+            for (int i = 0; i < compressed.Count; i++)
+            {
+                IList a = compressed[i] as IList;
+                writeUTF(a.Count + a[0].ToString());
+            }
 
-		for (int i = 0; i < compressed.Count; i++)
-		{
-		  IList a = compressed[i] as IList;
-		  writeUTF(a.Count + a[0].ToString());
-		}
+            // the mapping from predicate names to their integer indexes
+            writeInt(PARAMS.Length);
 
-		// the mapping from predicate names to their integer indexes
-		writeInt(PARAMS.Length);
+            for (int i = 0; i < sorted.Length; i++)
+            {
+                writeUTF(sorted[i].name);
+            }
 
-		for (int i = 0; i < sorted.Length; i++)
-		{
-		  writeUTF(sorted[i].name);
-		}
+            // write out the parameters
+            for (int i = 0; i < sorted.Length; i++)
+            {
+                for (int j = 0; j < sorted[i].@params.Length; j++)
+                {
+                    writeDouble(sorted[i].@params[j]);
+                }
+            }
 
-		// write out the parameters
-		for (int i = 0; i < sorted.Length; i++)
-		{
-		  for (int j = 0; j < sorted[i].@params.Length; j++)
-		  {
-			writeDouble(sorted[i].@params[j]);
-		  }
-		}
+            close();
+        }
 
-		close();
-	  }
+        protected internal virtual ComparablePredicate[] sortValues()
+        {
+            ComparablePredicate[] sortPreds = new ComparablePredicate[PARAMS.Length];
 
-	  protected internal virtual ComparablePredicate[] sortValues()
-	  {
+            int numParams = 0;
+            for (int pid = 0; pid < PARAMS.Length; pid++)
+            {
+                int[] predkeys = PARAMS[pid].Outcomes;
+                // Array.Sort(predkeys);
+                int numActive = predkeys.Length;
+                int[] activeOutcomes = predkeys;
+                double[] activeParams = PARAMS[pid].Parameters;
 
-		ComparablePredicate[] sortPreds = new ComparablePredicate[PARAMS.Length];
-
-		int numParams = 0;
-		for (int pid = 0; pid < PARAMS.Length; pid++)
-		{
-		  int[] predkeys = PARAMS[pid].Outcomes;
-		  // Array.Sort(predkeys);
-		  int numActive = predkeys.Length;
-		  int[] activeOutcomes = predkeys;
-		  double[] activeParams = PARAMS[pid].Parameters;
-
-		  numParams += numActive;
-		  /*
+                numParams += numActive;
+                /*
 		   * double[] activeParams = new double[numActive];
 		   * 
 		   * int id = 0; for (int i=0; i < predkeys.length; i++) { int oid =
 		   * predkeys[i]; activeOutcomes[id] = oid; activeParams[id] =
 		   * PARAMS[pid].getParams(oid); id++; }
 		   */
-		  sortPreds[pid] = new ComparablePredicate(PRED_LABELS[pid], activeOutcomes, activeParams);
-		}
+                sortPreds[pid] = new ComparablePredicate(PRED_LABELS[pid], activeOutcomes, activeParams);
+            }
 
-		Array.Sort(sortPreds);
-		return sortPreds;
-	  }
+            Array.Sort(sortPreds);
+            return sortPreds;
+        }
 
-	  protected internal virtual IList<IList<ComparablePredicate>> compressOutcomes(ComparablePredicate[] sorted)
-	  {
-		ComparablePredicate cp = sorted[0];
-		IList<IList<ComparablePredicate>> outcomePatterns = new List<IList<ComparablePredicate>>();
-		IList<ComparablePredicate> newGroup = new List<ComparablePredicate>();
-		for (int i = 0; i < sorted.Length; i++)
-		{
-		  if (cp.CompareTo(sorted[i]) == 0)
-		  {
-			newGroup.Add(sorted[i]);
-		  }
-		  else
-		  {
-			cp = sorted[i];
-			outcomePatterns.Add(newGroup);
-			newGroup = new List<ComparablePredicate>();
-			newGroup.Add(sorted[i]);
-		  }
-		}
-		outcomePatterns.Add(newGroup);
-		return outcomePatterns;
-	  }
-	}
-
+        protected internal virtual IList<IList<ComparablePredicate>> compressOutcomes(ComparablePredicate[] sorted)
+        {
+            ComparablePredicate cp = sorted[0];
+            IList<IList<ComparablePredicate>> outcomePatterns = new List<IList<ComparablePredicate>>();
+            IList<ComparablePredicate> newGroup = new List<ComparablePredicate>();
+            for (int i = 0; i < sorted.Length; i++)
+            {
+                if (cp.CompareTo(sorted[i]) == 0)
+                {
+                    newGroup.Add(sorted[i]);
+                }
+                else
+                {
+                    cp = sorted[i];
+                    outcomePatterns.Add(newGroup);
+                    newGroup = new List<ComparablePredicate>();
+                    newGroup.Add(sorted[i]);
+                }
+            }
+            outcomePatterns.Add(newGroup);
+            return outcomePatterns;
+        }
+    }
 }

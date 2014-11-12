@@ -22,39 +22,34 @@ using j4n.IO.InputStream;
 
 namespace opennlp.model
 {
+    public class ObjectDataReader : DataReader
+    {
+        protected internal ObjectInputStream ois;
 
-
-	public class ObjectDataReader : DataReader
-	{
-
-	  protected internal ObjectInputStream ois;
-
-	  public ObjectDataReader(ObjectInputStream ois)
-	  {
-		this.ois = ois;
-	  }
+        public ObjectDataReader(ObjectInputStream ois)
+        {
+            this.ois = ois;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public double readDouble() throws java.io.IOException
-	  public virtual double readDouble()
-	  {
-		return ois.readDouble();
-	  }
+        public virtual double readDouble()
+        {
+            return ois.readDouble();
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public int readInt() throws java.io.IOException
-	  public virtual int readInt()
-	  {
-		return ois.readInt();
-	  }
+        public virtual int readInt()
+        {
+            return ois.readInt();
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public String readUTF() throws java.io.IOException
-	  public virtual string readUTF()
-	  {
-		return ois.readUTF();
-	  }
-
-	}
-
+        public virtual string readUTF()
+        {
+            return ois.readUTF();
+        }
+    }
 }

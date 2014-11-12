@@ -21,138 +21,135 @@ using j4n.Exceptions;
 
 namespace opennlp.maxent
 {
+    using MaxentModel = opennlp.model.MaxentModel;
 
-	using MaxentModel = opennlp.model.MaxentModel;
+    /// <summary>
+    /// A object which can be used to ensure that a Maxent application can swap the
+    /// model currently in use with a new one in a thread-safe manner without
+    /// stopping the servicing of requests. Use this if your maxent application is
+    /// a heavy-weight one or you have only one particular MaxentModel to use with
+    /// your application. If your application class is lightweight and you will be
+    /// creating multiple instances of it with different underlying models, consider
+    /// using a DomainToModelMap object to ensure thread-safe model swapping.
+    /// 
+    /// <para>For example, in your application, create a ModelReplacementManager as
+    /// follows:
+    /// 
+    ///     <pre>
+    ///     private final ModelReplacementManager replacementManager =
+    ///	  new ModelReplacementManager(
+    ///	      new ModelSetter() {
+    ///		  public void setModel(MaxentModel m) {
+    ///		      model = m;
+    ///		  }
+    ///	      }
+    ///	  );
+    ///     </pre>
+    /// 
+    /// where "model" would be the actual variable name of the model used by your
+    /// application which you wish to be able to swap (you might have other models
+    /// which need their own ModelReplacementManager).
+    /// 
+    /// </para>
+    /// <para>You'll also need a method to swap the model which calls the manager's
+    /// replaceModel(MaxentModel m) method, e.g.,
+    /// 
+    ///     <pre>
+    ///     public void replaceModel (MaxentModel newmod) {
+    ///	  replacementManager.replaceModel(newmod);
+    ///    }
+    ///     </pre>
+    /// 
+    /// Then, in the code that uses the model, you need to inform the
+    /// ModelReplacementManager when a thread is beginning to use the model and when
+    /// it no longer needs to be sure that the same model is being used.  For
+    /// example, it is quite common to evaluate a particular context, get back a
+    /// double[] which has the normalized probabilities of each of the outcomes given
+    /// that context, and then request the name of a particular outcome.  The model
+    /// cannot be swapped during that time since the mapping from outcome labels to
+    /// unique will (probably) be different between the different models.  So, do as
+    /// follows:
+    /// 
+    ///     <pre>
+    ///	  replacementManager.startUsingModel();
+    ///	    // some code which evaluates the context, e.g.,
+    ///	    double[] probs = model.eval(someContext);
+    ///	    // some code which returns a particular outcome
+    ///	    if (model.getBestOutcome(probs).equals("T") ...
+    ///	  replacementManager.finishUsingModel();
+    ///     </pre>
+    /// 
+    /// The manager will then make sure that all requests which are currently being
+    /// serviced are completed before the new model is swapped in.  New requests
+    /// which are made while the models are being swapped are forced to wait for the
+    /// swap to finish.  These requests will then be serviced by the new model.
+    /// </para>
+    /// </summary>
+    public class ModelReplacementManager
+    {
+        private ModelSetter setter;
 
-	/// <summary>
-	/// A object which can be used to ensure that a Maxent application can swap the
-	/// model currently in use with a new one in a thread-safe manner without
-	/// stopping the servicing of requests. Use this if your maxent application is
-	/// a heavy-weight one or you have only one particular MaxentModel to use with
-	/// your application. If your application class is lightweight and you will be
-	/// creating multiple instances of it with different underlying models, consider
-	/// using a DomainToModelMap object to ensure thread-safe model swapping.
-	/// 
-	/// <para>For example, in your application, create a ModelReplacementManager as
-	/// follows:
-	/// 
-	///     <pre>
-	///     private final ModelReplacementManager replacementManager =
-	///	  new ModelReplacementManager(
-	///	      new ModelSetter() {
-	///		  public void setModel(MaxentModel m) {
-	///		      model = m;
-	///		  }
-	///	      }
-	///	  );
-	///     </pre>
-	/// 
-	/// where "model" would be the actual variable name of the model used by your
-	/// application which you wish to be able to swap (you might have other models
-	/// which need their own ModelReplacementManager).
-	/// 
-	/// </para>
-	/// <para>You'll also need a method to swap the model which calls the manager's
-	/// replaceModel(MaxentModel m) method, e.g.,
-	/// 
-	///     <pre>
-	///     public void replaceModel (MaxentModel newmod) {
-	///	  replacementManager.replaceModel(newmod);
-	///    }
-	///     </pre>
-	/// 
-	/// Then, in the code that uses the model, you need to inform the
-	/// ModelReplacementManager when a thread is beginning to use the model and when
-	/// it no longer needs to be sure that the same model is being used.  For
-	/// example, it is quite common to evaluate a particular context, get back a
-	/// double[] which has the normalized probabilities of each of the outcomes given
-	/// that context, and then request the name of a particular outcome.  The model
-	/// cannot be swapped during that time since the mapping from outcome labels to
-	/// unique will (probably) be different between the different models.  So, do as
-	/// follows:
-	/// 
-	///     <pre>
-	///	  replacementManager.startUsingModel();
-	///	    // some code which evaluates the context, e.g.,
-	///	    double[] probs = model.eval(someContext);
-	///	    // some code which returns a particular outcome
-	///	    if (model.getBestOutcome(probs).equals("T") ...
-	///	  replacementManager.finishUsingModel();
-	///     </pre>
-	/// 
-	/// The manager will then make sure that all requests which are currently being
-	/// serviced are completed before the new model is swapped in.  New requests
-	/// which are made while the models are being swapped are forced to wait for the
-	/// swap to finish.  These requests will then be serviced by the new model.
-	/// </para>
-	/// </summary>
-	public class ModelReplacementManager
-	{
-	  private ModelSetter setter;
+        private int users = 0;
+        private bool replacementCanProceed = true;
+        private Thread replacementThread = null;
 
-	  private int users = 0;
-	  private bool replacementCanProceed = true;
-	  private Thread replacementThread = null;
+        public ModelReplacementManager(ModelSetter ms)
+        {
+            setter = ms;
+        }
 
-	  public ModelReplacementManager(ModelSetter ms)
-	  {
-		setter = ms;
-	  }
+        /// <summary>
+        /// Inform the manager that a thread is using the model. If a replacement is
+        /// underway, the thread is forced to join the replacement thread and thus wait
+        /// until it is finished to begin using the model.
+        /// </summary>
+        public virtual void startUsingModel()
+        {
+            if (replacementThread != null)
+            {
+                try
+                {
+                    replacementThread.Join();
+                }
+                catch (InterruptedException)
+                {
+                }
+            }
+            replacementCanProceed = false;
+            users++;
+        }
 
-	  /// <summary>
-	  /// Inform the manager that a thread is using the model. If a replacement is
-	  /// underway, the thread is forced to join the replacement thread and thus wait
-	  /// until it is finished to begin using the model.
-	  /// </summary>
-	  public virtual void startUsingModel()
-	  {
-		if (replacementThread != null)
-		{
-		  try
-		  {
-			replacementThread.Join();
-		  }
-		  catch (InterruptedException)
-		  {
-		  }
-		}
-		replacementCanProceed = false;
-		users++;
-	  }
+        /// <summary>
+        /// Inform the manager that a thread is done using the model, and thus is not
+        /// dependending on it being unchanged.
+        /// </summary>
+        public virtual void finishUsingModel()
+        {
+            users--;
+            if (users <= 0)
+            {
+                replacementCanProceed = true;
+            }
+        }
 
-	  /// <summary>
-	  /// Inform the manager that a thread is done using the model, and thus is not
-	  /// dependending on it being unchanged.
-	  /// </summary>
-	  public virtual void finishUsingModel()
-	  {
-		users--;
-		if (users <= 0)
-		{
-		  replacementCanProceed = true;
-		}
-	  }
-
-	  /// <summary>
-	  /// Replace the old model with a new one, forcing the replacement to wait until
-	  /// all threads using the old model have finished using it.
-	  /// </summary>
-	  /// <param name="model">
-	  ///          The new model which is being swapped in. </param>
-	  public virtual void replaceModel(MaxentModel model)
-	  {
-		  lock (this)
-		  {
-			replacementThread = Thread.CurrentThread;
-			while (!replacementCanProceed)
-			{
-			  Thread.Yield();
-			}
-			setter.setModel(model);
-			replacementThread = null;
-		  }
-	  }
-
-	}
-
+        /// <summary>
+        /// Replace the old model with a new one, forcing the replacement to wait until
+        /// all threads using the old model have finished using it.
+        /// </summary>
+        /// <param name="model">
+        ///          The new model which is being swapped in. </param>
+        public virtual void replaceModel(MaxentModel model)
+        {
+            lock (this)
+            {
+                replacementThread = Thread.CurrentThread;
+                while (!replacementCanProceed)
+                {
+                    Thread.Yield();
+                }
+                setter.setModel(model);
+                replacementThread = null;
+            }
+        }
+    }
 }

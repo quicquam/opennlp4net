@@ -4,7 +4,6 @@ namespace j4n.IO.OutputStream
 {
     public class ObjectOutputStream
     {
-        
         public void writeDouble(double d)
         {
             throw new NotImplementedException();

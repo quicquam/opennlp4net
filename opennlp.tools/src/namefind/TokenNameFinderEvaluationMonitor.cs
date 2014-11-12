@@ -17,12 +17,9 @@
 
 namespace opennlp.tools.namefind
 {
+    using opennlp.tools.util.eval;
 
-	using opennlp.tools.util.eval;
-
-	public interface TokenNameFinderEvaluationMonitor : EvaluationMonitor<NameSample>
-	{
-
-	}
-
+    public interface TokenNameFinderEvaluationMonitor : EvaluationMonitor<NameSample>
+    {
+    }
 }

@@ -23,31 +23,28 @@ using j4n.Utils;
 
 namespace opennlp.tools.util.model
 {
-
-
-	internal class PropertiesSerializer : ArtifactSerializer<Properties>
-	{
-
+    internal class PropertiesSerializer : ArtifactSerializer<Properties>
+    {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public java.util.Properties create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public Properties create(InputStream @in)
-	  {
-		Properties properties = new Properties();
-		properties.load(@in);
+        {
+            Properties properties = new Properties();
+            properties.load(@in);
 
-		return properties;
-	  }
+            return properties;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void serialize(java.util.Properties properties, java.io.OutputStream out) throws java.io.IOException
-	  public void serialize(Properties properties, OutputStream @out)
-	  {
-		properties.store(@out, "");
-	  }
+        public void serialize(Properties properties, OutputStream @out)
+        {
+            properties.store(@out, "");
+        }
 
-	  internal static void register(IDictionary<string, ArtifactSerializer<Properties>> factories)
-	  {
-		factories["properties"] = new PropertiesSerializer();
-	  }
-	}
+        internal static void register(IDictionary<string, ArtifactSerializer<Properties>> factories)
+        {
+            factories["properties"] = new PropertiesSerializer();
+        }
+    }
 }

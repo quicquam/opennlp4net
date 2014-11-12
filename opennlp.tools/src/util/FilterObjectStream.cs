@@ -19,7 +19,6 @@ using j4n.Serialization;
 
 namespace opennlp.tools.util
 {
-
     /// <summary>
     /// Abstract base class for filtering <seealso cref="ObjectStream"/>s.
     /// <para>
@@ -65,5 +64,4 @@ namespace opennlp.tools.util
             samples.close();
         }
     }
-
 }

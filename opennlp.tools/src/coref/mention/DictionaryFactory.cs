@@ -20,43 +20,41 @@ using j4n.Exceptions;
 
 namespace opennlp.tools.coref.mention
 {
+    //using JWNLException = net.didion.jwnl.JWNLException;
 
-	//using JWNLException = net.didion.jwnl.JWNLException;
+    /// <summary>
+    /// Factory class used to get an instance of a dictionary object. </summary>
+    /// <seealso cref= opennlp.tools.coref.mention.Dictionary
+    ///  </seealso>
+    public class DictionaryFactory
+    {
+        private static Dictionary dictionary;
 
-	/// <summary>
-	/// Factory class used to get an instance of a dictionary object. </summary>
-	/// <seealso cref= opennlp.tools.coref.mention.Dictionary
-	///  </seealso>
-	public class DictionaryFactory
-	{
-
-	  private static Dictionary dictionary;
-
-	  /// <summary>
-	  /// Returns the default implementation of the Dictionary interface. </summary>
-	  /// <returns> the default implementation of the Dictionary interface. </returns>
-	  public static Dictionary Dictionary
-	  {
-		  get
-		  {
-			if (dictionary == null)
-			{
-			  try
-              {   // was JWNLDictionary (Java Dictionary), created alternative wordnet Dictionary
-                  dictionary = new WNLDictionary(Environment.GetEnvironmentVariable("WNSEARCHDIR"));
-			  }
-			  catch (IOException e)
-			  {
-				Console.Error.WriteLine(e);
-			  }
-			  catch (JWNLException e)
-			  {
-				Console.Error.WriteLine(e);
-			  }
-			}
-			return dictionary;
-		  }
-	  }
-	}
-
+        /// <summary>
+        /// Returns the default implementation of the Dictionary interface. </summary>
+        /// <returns> the default implementation of the Dictionary interface. </returns>
+        public static Dictionary Dictionary
+        {
+            get
+            {
+                if (dictionary == null)
+                {
+                    try
+                    {
+                        // was JWNLDictionary (Java Dictionary), created alternative wordnet Dictionary
+                        dictionary = new WNLDictionary(Environment.GetEnvironmentVariable("WNSEARCHDIR"));
+                    }
+                    catch (IOException e)
+                    {
+                        Console.Error.WriteLine(e);
+                    }
+                    catch (JWNLException e)
+                    {
+                        Console.Error.WriteLine(e);
+                    }
+                }
+                return dictionary;
+            }
+        }
+    }
 }

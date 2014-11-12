@@ -17,12 +17,9 @@
 
 namespace opennlp.tools.postag
 {
+    using opennlp.tools.util.eval;
 
-	using opennlp.tools.util.eval;
-
-	public interface POSTaggerEvaluationMonitor : EvaluationMonitor<POSSample>
-	{
-
-	}
-
+    public interface POSTaggerEvaluationMonitor : EvaluationMonitor<POSSample>
+    {
+    }
 }

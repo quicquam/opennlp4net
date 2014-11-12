@@ -20,92 +20,87 @@ using j4n.Serialization;
 
 namespace opennlp.tools.chunker
 {
+    using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
+    using opennlp.tools.util;
+    using TrainingParameters = opennlp.tools.util.TrainingParameters;
+    using opennlp.tools.util.eval;
+    using FMeasure = opennlp.tools.util.eval.FMeasure;
+    using ModelUtil = opennlp.tools.util.model.ModelUtil;
 
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using opennlp.tools.util;
-	using TrainingParameters = opennlp.tools.util.TrainingParameters;
-	using opennlp.tools.util.eval;
-	using FMeasure = opennlp.tools.util.eval.FMeasure;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
+    public class ChunkerCrossValidator
+    {
+        private readonly string languageCode;
+        private readonly TrainingParameters @params;
 
-	public class ChunkerCrossValidator
-	{
+        private FMeasure fmeasure = new FMeasure();
+        private ChunkerEvaluationMonitor[] listeners;
+        private ChunkerFactory chunkerFactory;
 
-	  private readonly string languageCode;
-	  private readonly TrainingParameters @params;
+        /// @deprecated Use
+        ///             <seealso cref="#ChunkerCrossValidator(String, TrainingParameters, ChunkerFactory, ChunkerEvaluationMonitor...)"/>
+        ///             instead. 
+        [Obsolete("Use")]
+        public ChunkerCrossValidator(string languageCode, int cutoff, int iterations)
+        {
+            this.languageCode = languageCode;
 
-	  private FMeasure fmeasure = new FMeasure();
-	  private ChunkerEvaluationMonitor[] listeners;
-	  private ChunkerFactory chunkerFactory;
+            @params = ModelUtil.createTrainingParameters(iterations, cutoff);
+            listeners = null;
+        }
 
-	  /// @deprecated Use
-	  ///             <seealso cref="#ChunkerCrossValidator(String, TrainingParameters, ChunkerFactory, ChunkerEvaluationMonitor...)"/>
-	  ///             instead. 
-	  [Obsolete("Use")]
-	  public ChunkerCrossValidator(string languageCode, int cutoff, int iterations)
-	  {
+        /// @deprecated Use <seealso cref="#ChunkerCrossValidator(String, TrainingParameters, ChunkerFactory, ChunkerEvaluationMonitor...)"/> instead.  
+        public ChunkerCrossValidator(string languageCode, TrainingParameters @params,
+            params ChunkerEvaluationMonitor[] listeners)
+        {
+            this.languageCode = languageCode;
+            this.@params = @params;
+            this.listeners = listeners;
+        }
 
-		this.languageCode = languageCode;
+        public ChunkerCrossValidator(string languageCode, TrainingParameters @params, ChunkerFactory factory,
+            params ChunkerEvaluationMonitor[] listeners)
+        {
+            this.chunkerFactory = factory;
+            this.languageCode = languageCode;
+            this.@params = @params;
+            this.listeners = listeners;
+        }
 
-		@params = ModelUtil.createTrainingParameters(iterations, cutoff);
-		listeners = null;
-	  }
-
-	  /// @deprecated Use <seealso cref="#ChunkerCrossValidator(String, TrainingParameters, ChunkerFactory, ChunkerEvaluationMonitor...)"/> instead.  
-	  public ChunkerCrossValidator(string languageCode, TrainingParameters @params, params ChunkerEvaluationMonitor[] listeners)
-	  {
-
-		this.languageCode = languageCode;
-		this.@params = @params;
-		this.listeners = listeners;
-	  }
-
-	  public ChunkerCrossValidator(string languageCode, TrainingParameters @params, ChunkerFactory factory, params ChunkerEvaluationMonitor[] listeners)
-	  {
-		this.chunkerFactory = factory;
-		this.languageCode = languageCode;
-		this.@params = @params;
-		this.listeners = listeners;
-	  }
-
-	  /// <summary>
-	  /// Starts the evaluation.
-	  /// </summary>
-	  /// <param name="samples">
-	  ///          the data to train and test </param>
-	  /// <param name="nFolds">
-	  ///          number of folds
-	  /// </param>
-	  /// <exception cref="IOException"> </exception>
+        /// <summary>
+        /// Starts the evaluation.
+        /// </summary>
+        /// <param name="samples">
+        ///          the data to train and test </param>
+        /// <param name="nFolds">
+        ///          number of folds
+        /// </param>
+        /// <exception cref="IOException"> </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void evaluate(opennlp.tools.util.ObjectStream<ChunkSample> samples, int nFolds) throws java.io.IOException, opennlp.tools.util.InvalidFormatException, java.io.IOException
-	  public virtual void evaluate(ObjectStream<ChunkSample> samples, int nFolds)
-	  {
-		CrossValidationPartitioner<ChunkSample> partitioner = new CrossValidationPartitioner<ChunkSample>(samples, nFolds);
+        public virtual void evaluate(ObjectStream<ChunkSample> samples, int nFolds)
+        {
+            CrossValidationPartitioner<ChunkSample> partitioner = new CrossValidationPartitioner<ChunkSample>(samples,
+                nFolds);
 
-		while (partitioner.hasNext())
-		{
+            while (partitioner.hasNext())
+            {
+                CrossValidationPartitioner<ChunkSample>.TrainingSampleStream trainingSampleStream = partitioner.next();
 
-            CrossValidationPartitioner<ChunkSample>.TrainingSampleStream trainingSampleStream = partitioner.next();
+                ChunkerModel model = ChunkerME.train(languageCode, trainingSampleStream, @params, chunkerFactory);
 
-		  ChunkerModel model = ChunkerME.train(languageCode, trainingSampleStream, @params, chunkerFactory);
+                // do testing
+                ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model, ChunkerME.DEFAULT_BEAM_SIZE),
+                    listeners);
 
-		  // do testing
-		  ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model, ChunkerME.DEFAULT_BEAM_SIZE), listeners);
+                evaluator.evaluate(trainingSampleStream.TestSampleStream);
 
-		  evaluator.evaluate(trainingSampleStream.TestSampleStream);
+                fmeasure.mergeInto(evaluator.FMeasure);
+            }
+        }
 
-		  fmeasure.mergeInto(evaluator.FMeasure);
-		}
-	  }
-
-	  public virtual FMeasure FMeasure
-	  {
-		  get
-		  {
-			return fmeasure;
-		  }
-	  }
-	}
-
+        public virtual FMeasure FMeasure
+        {
+            get { return fmeasure; }
+        }
+    }
 }

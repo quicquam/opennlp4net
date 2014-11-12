@@ -17,38 +17,32 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.util
 {
+    using Event = opennlp.model.Event;
 
+    /// <summary>
+    /// Creates an event stream out of a collection of events.
+    /// </summary>
+    public class CollectionEventStream : opennlp.model.AbstractEventStream
+    {
+        private IEnumerator<Event> ci;
 
-	using Event = opennlp.model.Event;
+        public CollectionEventStream(ICollection<Event> c)
+        {
+            ci = c.GetEnumerator();
+        }
 
-	/// <summary>
-	/// Creates an event stream out of a collection of events.
-	/// </summary>
-	public class CollectionEventStream : opennlp.model.AbstractEventStream
-	{
-
-	  private IEnumerator<Event> ci;
-
-	  public CollectionEventStream(ICollection<Event> c)
-	  {
-		ci = c.GetEnumerator();
-	  }
-
-	  public override Event next()
-	  {
+        public override Event next()
+        {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		return ci.Current;
-	  }
+            return ci.Current;
+        }
 
-      public override bool hasNext()
-	  {
+        public override bool hasNext()
+        {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		return ci.Current != null;
-	  }
-
-	}
-
+            return ci.Current != null;
+        }
+    }
 }

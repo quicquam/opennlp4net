@@ -21,65 +21,64 @@ using j4n.Lang;
 
 namespace opennlp.tools.coref.resolver
 {
+    using MentionContext = opennlp.tools.coref.mention.MentionContext;
 
+    /// <summary>
+    /// This class resolver singular pronouns such as "he", "she", "it" and their various forms.
+    /// </summary>
+    public class SingularPronounResolver : MaxentResolver
+    {
+        internal int mode;
 
-	using MentionContext = opennlp.tools.coref.mention.MentionContext;
-
-	/// <summary>
-	/// This class resolver singular pronouns such as "he", "she", "it" and their various forms.
-	/// </summary>
-	public class SingularPronounResolver : MaxentResolver
-	{
-
-	  internal int mode;
-
-	  internal Pattern PronounPattern;
+        internal Pattern PronounPattern;
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public SingularPronounResolver(String projectName, ResolverMode m) throws java.io.IOException
-	  public SingularPronounResolver(string projectName, ResolverMode m) : base(projectName, "pmodel", m, 30)
-	  {
-		this.numSentencesBack = 2;
-	  }
+        public SingularPronounResolver(string projectName, ResolverMode m) : base(projectName, "pmodel", m, 30)
+        {
+            this.numSentencesBack = 2;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public SingularPronounResolver(String projectName, ResolverMode m, NonReferentialResolver nonReferentialResolver) throws java.io.IOException
-	  public SingularPronounResolver(string projectName, ResolverMode m, NonReferentialResolver nonReferentialResolver) : base(projectName, "pmodel", m, 30,nonReferentialResolver)
-	  {
-		this.numSentencesBack = 2;
-	  }
+        public SingularPronounResolver(string projectName, ResolverMode m, NonReferentialResolver nonReferentialResolver)
+            : base(projectName, "pmodel", m, 30, nonReferentialResolver)
+        {
+            this.numSentencesBack = 2;
+        }
 
-	  public override bool canResolve(MentionContext mention)
-	  {
-		//System.err.println("MaxentSingularPronounResolver.canResolve: ec= ("+mention.id+") "+ mention.toText());
-		string tag = mention.HeadTokenTag;
-		return (tag != null && tag.StartsWith("PRP", StringComparison.Ordinal) && ResolverUtils.singularThirdPersonPronounPattern.matcher(mention.HeadTokenText).matches());
-	  }
+        public override bool canResolve(MentionContext mention)
+        {
+            //System.err.println("MaxentSingularPronounResolver.canResolve: ec= ("+mention.id+") "+ mention.toText());
+            string tag = mention.HeadTokenTag;
+            return (tag != null && tag.StartsWith("PRP", StringComparison.Ordinal) &&
+                    ResolverUtils.singularThirdPersonPronounPattern.matcher(mention.HeadTokenText).matches());
+        }
 
-	  protected internal override IList<string> getFeatures(MentionContext mention, DiscourseEntity entity)
-	  {
-		IList<string> features = base.getFeatures(mention, entity).ToList();
-		if (entity != null) //generate pronoun w/ referent features
-		{
-		  MentionContext cec = entity.LastExtent;
-		  //String gen = getPronounGender(pronoun);
-          foreach (var feature in ResolverUtils.getPronounMatchFeatures(mention, entity))
-		  {
-		        features.Add(feature);
-		  }
+        protected internal override IList<string> getFeatures(MentionContext mention, DiscourseEntity entity)
+        {
+            IList<string> features = base.getFeatures(mention, entity).ToList();
+            if (entity != null) //generate pronoun w/ referent features
+            {
+                MentionContext cec = entity.LastExtent;
+                //String gen = getPronounGender(pronoun);
+                foreach (var feature in ResolverUtils.getPronounMatchFeatures(mention, entity))
+                {
+                    features.Add(feature);
+                }
 
-          foreach (var feature in ResolverUtils.getContextFeatures(cec))
-          {
-              features.Add(feature);
-          }
+                foreach (var feature in ResolverUtils.getContextFeatures(cec))
+                {
+                    features.Add(feature);
+                }
 
-          foreach (var feature in ResolverUtils.getDistanceFeatures(mention, entity))
-          {
-              features.Add(feature);
-          }
-            
-		  features.Add(ResolverUtils.getMentionCountFeature(entity));
-		  /*
+                foreach (var feature in ResolverUtils.getDistanceFeatures(mention, entity))
+                {
+                    features.Add(feature);
+                }
+
+                features.Add(ResolverUtils.getMentionCountFeature(entity));
+                /*
 		  //lexical features
 		  Set featureSet = new HashSet();
 		  for (Iterator ei = entity.getExtents(); ei.hasNext();) {
@@ -112,44 +111,44 @@ namespace opennlp.tools.coref.resolver
 		    features.add(f);
 		  }
 		  */
-		}
-		return (features);
-	  }
+            }
+            return (features);
+        }
 
-      protected internal override bool excluded(MentionContext mention, DiscourseEntity entity)
-	  {
-		if (base.excluded(mention, entity))
-		{
-		  return (true);
-		}
-		string mentionGender = null;
+        protected internal override bool excluded(MentionContext mention, DiscourseEntity entity)
+        {
+            if (base.excluded(mention, entity))
+            {
+                return (true);
+            }
+            string mentionGender = null;
 
-		for (IEnumerator<MentionContext> ei = entity.Mentions; ei.MoveNext();)
-		{
-		  MentionContext entityMention = ei.Current;
-		  string tag = entityMention.HeadTokenTag;
-		  if (tag != null && tag.StartsWith("PRP", StringComparison.Ordinal) && ResolverUtils.singularThirdPersonPronounPattern.matcher(mention.HeadTokenText).matches())
-		  {
-			if (mentionGender == null) //lazy initialization
-			{
-			  mentionGender = ResolverUtils.getPronounGender(mention.HeadTokenText);
-			}
-			string entityGender = ResolverUtils.getPronounGender(entityMention.HeadTokenText);
-			if (!entityGender.Equals("u") && !mentionGender.Equals(entityGender))
-			{
-			  return (true);
-			}
-		  }
-		}
-		return (false);
-	  }
+            for (IEnumerator<MentionContext> ei = entity.Mentions; ei.MoveNext();)
+            {
+                MentionContext entityMention = ei.Current;
+                string tag = entityMention.HeadTokenTag;
+                if (tag != null && tag.StartsWith("PRP", StringComparison.Ordinal) &&
+                    ResolverUtils.singularThirdPersonPronounPattern.matcher(mention.HeadTokenText).matches())
+                {
+                    if (mentionGender == null) //lazy initialization
+                    {
+                        mentionGender = ResolverUtils.getPronounGender(mention.HeadTokenText);
+                    }
+                    string entityGender = ResolverUtils.getPronounGender(entityMention.HeadTokenText);
+                    if (!entityGender.Equals("u") && !mentionGender.Equals(entityGender))
+                    {
+                        return (true);
+                    }
+                }
+            }
+            return (false);
+        }
 
-	  protected internal override bool outOfRange(MentionContext mention, DiscourseEntity entity)
-	  {
-		MentionContext cec = entity.LastExtent;
-		//System.err.println("MaxentSingularPronounresolve.outOfRange: ["+entity.getLastExtent().toText()+" ("+entity.getId()+")] ["+mention.toText()+" ("+mention.getId()+")] entity.sentenceNumber=("+entity.getLastExtent().getSentenceNumber()+")-mention.sentenceNumber=("+mention.getSentenceNumber()+") > "+numSentencesBack);
-		return (mention.SentenceNumber - cec.SentenceNumber > numSentencesBack);
-	  }
-	}
-
+        protected internal override bool outOfRange(MentionContext mention, DiscourseEntity entity)
+        {
+            MentionContext cec = entity.LastExtent;
+            //System.err.println("MaxentSingularPronounresolve.outOfRange: ["+entity.getLastExtent().toText()+" ("+entity.getId()+")] ["+mention.toText()+" ("+mention.getId()+")] entity.sentenceNumber=("+entity.getLastExtent().getSentenceNumber()+")-mention.sentenceNumber=("+mention.getSentenceNumber()+") > "+numSentencesBack);
+            return (mention.SentenceNumber - cec.SentenceNumber > numSentencesBack);
+        }
+    }
 }

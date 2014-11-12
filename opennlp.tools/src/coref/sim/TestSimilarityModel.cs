@@ -17,14 +17,11 @@
 
 namespace opennlp.tools.coref.sim
 {
-
-
-	/// <summary>
-	/// Interface for testing a similarity model.
-	/// </summary>
-	public interface TestSimilarityModel
-	{
-	  double compatible(Context np1, Context np2);
-	}
-
+    /// <summary>
+    /// Interface for testing a similarity model.
+    /// </summary>
+    public interface TestSimilarityModel
+    {
+        double compatible(Context np1, Context np2);
+    }
 }

@@ -22,7 +22,6 @@ namespace opennlp.tools.util.model
 
             if (expectedOutcomes.Length == model.NumOutcomes)
             {
-
                 var expectedOutcomesSet = expectedOutcomes.ToList();
 
                 for (int i = 0; i < model.NumOutcomes; i++)

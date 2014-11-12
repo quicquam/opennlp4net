@@ -17,45 +17,45 @@
 
 namespace opennlp.tools.coref
 {
+    using PTBMentionFinder = opennlp.tools.coref.mention.PTBMentionFinder;
 
-	using PTBMentionFinder = opennlp.tools.coref.mention.PTBMentionFinder;
-
-	/// <summary>
-	/// This class perform coreference for treebank style parses.
-	/// <para>
-	/// It will only perform coreference over constituents defined in the trees and
-	/// will not generate new constituents for pre-nominal entities or sub-entities in
-	/// simple coordinated noun phrases.
-	/// </para>
-	/// <para>
-	/// This linker requires that named-entity information also be provided.
-	/// </para>
-	/// </summary>
-	public class TreebankLinker : DefaultLinker
-	{
-
+    /// <summary>
+    /// This class perform coreference for treebank style parses.
+    /// <para>
+    /// It will only perform coreference over constituents defined in the trees and
+    /// will not generate new constituents for pre-nominal entities or sub-entities in
+    /// simple coordinated noun phrases.
+    /// </para>
+    /// <para>
+    /// This linker requires that named-entity information also be provided.
+    /// </para>
+    /// </summary>
+    public class TreebankLinker : DefaultLinker
+    {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public TreebankLinker(String project, LinkerMode mode) throws java.io.IOException
-	  public TreebankLinker(string project, LinkerMode mode) : base(project,mode)
-	  {
-	  }
+        public TreebankLinker(string project, LinkerMode mode) : base(project, mode)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public TreebankLinker(String project, LinkerMode mode, boolean useDiscourseModel) throws java.io.IOException
-	  public TreebankLinker(string project, LinkerMode mode, bool useDiscourseModel) : base(project,mode,useDiscourseModel)
-	  {
-	  }
+        public TreebankLinker(string project, LinkerMode mode, bool useDiscourseModel)
+            : base(project, mode, useDiscourseModel)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public TreebankLinker(String project, LinkerMode mode, boolean useDiscourseModel, double fixedNonReferentialProbability) throws java.io.IOException
-	  public TreebankLinker(string project, LinkerMode mode, bool useDiscourseModel, double fixedNonReferentialProbability) : base(project,mode,useDiscourseModel,fixedNonReferentialProbability)
-	  {
-	  }
+        public TreebankLinker(string project, LinkerMode mode, bool useDiscourseModel,
+            double fixedNonReferentialProbability)
+            : base(project, mode, useDiscourseModel, fixedNonReferentialProbability)
+        {
+        }
 
-	  protected internal override void initMentionFinder()
-	  {
-		mentionFinder = PTBMentionFinder.getInstance(headFinder);
-	  }
-	}
-
+        protected internal override void initMentionFinder()
+        {
+            mentionFinder = PTBMentionFinder.getInstance(headFinder);
+        }
+    }
 }

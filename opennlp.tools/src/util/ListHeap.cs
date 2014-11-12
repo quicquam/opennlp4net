@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -21,8 +20,6 @@ using j4n.Interfaces;
 
 namespace opennlp.tools.util
 {
-
-
     /// <summary>
     /// This class implements the heap interface using a <seealso cref="java.util.List"/> as the underlying
     /// data structure.  This heap allows values which are equals to be inserted.  The heap will
@@ -250,7 +247,5 @@ namespace opennlp.tools.util
 	   }
 	   Console.WriteLine(); */
         }
-        
     }
-
 }

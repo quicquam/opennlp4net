@@ -17,39 +17,35 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// Generates a feature which contains the token itself.
+    /// </summary>
+    public class TokenFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private const string WORD_PREFIX = "w";
+        private bool lowercase;
 
-	/// <summary>
-	/// Generates a feature which contains the token itself.
-	/// </summary>
-	public class TokenFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public TokenFeatureGenerator(bool lowercase)
+        {
+            this.lowercase = lowercase;
+        }
 
-	  private const string WORD_PREFIX = "w";
-	  private bool lowercase;
+        public TokenFeatureGenerator() : this(true)
+        {
+        }
 
-	  public TokenFeatureGenerator(bool lowercase)
-	  {
-		this.lowercase = lowercase;
-	  }
-
-	  public TokenFeatureGenerator() : this(true)
-	  {
-	  }
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
-	  {
-		if (lowercase)
-		{
-		  features.Add(WORD_PREFIX + "=" + tokens[index].ToLower());
-		}
-		else
-		{
-		  features.Add(WORD_PREFIX + "=" + tokens[index]);
-		}
-	  }
-	}
-
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
+        {
+            if (lowercase)
+            {
+                features.Add(WORD_PREFIX + "=" + tokens[index].ToLower());
+            }
+            else
+            {
+                features.Add(WORD_PREFIX + "=" + tokens[index]);
+            }
+        }
+    }
 }

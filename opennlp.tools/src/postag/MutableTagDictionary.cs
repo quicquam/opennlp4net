@@ -17,36 +17,32 @@
 
 namespace opennlp.tools.postag
 {
+    /// <summary>
+    /// Interface that allows <seealso cref="TagDictionary"/> entries to be added and removed.
+    /// This can be used to induce the dictionary from training data.
+    /// </summary>
+    public interface MutableTagDictionary : TagDictionary
+    {
+        /// <summary>
+        /// Associates the specified tags with the specified word. If the dictionary
+        /// previously contained keys for the word, the old tags are replaced by the
+        /// specified tags.
+        /// </summary>
+        /// <param name="word">
+        ///          word with which the specified tags is to be associated </param>
+        /// <param name="tags">
+        ///          tags to be associated with the specified word
+        /// </param>
+        /// <returns> the previous tags associated with the word, or null if there was no
+        ///         mapping for word. </returns>
+        string[] put(string word, params string[] tags);
 
-	/// <summary>
-	/// Interface that allows <seealso cref="TagDictionary"/> entries to be added and removed.
-	/// This can be used to induce the dictionary from training data.
-	/// </summary>
-	public interface MutableTagDictionary : TagDictionary
-	{
-
-	  /// <summary>
-	  /// Associates the specified tags with the specified word. If the dictionary
-	  /// previously contained keys for the word, the old tags are replaced by the
-	  /// specified tags.
-	  /// </summary>
-	  /// <param name="word">
-	  ///          word with which the specified tags is to be associated </param>
-	  /// <param name="tags">
-	  ///          tags to be associated with the specified word
-	  /// </param>
-	  /// <returns> the previous tags associated with the word, or null if there was no
-	  ///         mapping for word. </returns>
-	  string[] put(string word, params string[] tags);
-
-	  /// <summary>
-	  /// Whether if the dictionary is case sensitive or not
-	  /// </summary>
-	  /// <returns> true if the dictionary is case sensitive </returns>
-	  // TODO: move to TagDictionary, can't do it now because of backward
-	  // compatibility.
-	  bool CaseSensitive {get;}
-
-	}
-
+        /// <summary>
+        /// Whether if the dictionary is case sensitive or not
+        /// </summary>
+        /// <returns> true if the dictionary is case sensitive </returns>
+        // TODO: move to TagDictionary, can't do it now because of backward
+        // compatibility.
+        bool CaseSensitive { get; }
+    }
 }

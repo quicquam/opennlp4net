@@ -18,26 +18,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 namespace opennlp.maxent
 {
+    public class DoubleStringPair : IComparable<DoubleStringPair>
+    {
+        public readonly string stringValue;
+        public readonly double doubleValue;
 
-	public class DoubleStringPair : IComparable<DoubleStringPair>
-	{
+        public DoubleStringPair(double d, string s)
+        {
+            doubleValue = d;
+            stringValue = s;
+        }
 
-		public readonly string stringValue;
-		public readonly double doubleValue;
-
-		public DoubleStringPair(double d, string s)
-		{
-		  doubleValue = d;
-		  stringValue = s;
-		}
-
-		public virtual int CompareTo(DoubleStringPair p)
-		{
-		  return doubleValue.CompareTo(p.doubleValue);
-		}
-
-	}
-
+        public virtual int CompareTo(DoubleStringPair p)
+        {
+            return doubleValue.CompareTo(p.doubleValue);
+        }
+    }
 }

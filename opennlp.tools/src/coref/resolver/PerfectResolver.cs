@@ -17,33 +17,30 @@
 
 namespace opennlp.tools.coref.resolver
 {
+    using MentionContext = opennlp.tools.coref.mention.MentionContext;
 
-	using MentionContext = opennlp.tools.coref.mention.MentionContext;
+    /// <summary>
+    /// Resolver used in training to update the discourse model based on the coreference annotation.
+    /// </summary>
+    public class PerfectResolver : AbstractResolver
+    {
+        public PerfectResolver() : base(0)
+        {
+        }
 
-	/// <summary>
-	/// Resolver used in training to update the discourse model based on the coreference annotation.
-	/// </summary>
-	public class PerfectResolver : AbstractResolver
-	{
+        public override bool canResolve(MentionContext ec)
+        {
+            return true;
+        }
 
-	  public PerfectResolver() : base(0)
-	  {
-	  }
+        protected internal override bool outOfRange(MentionContext ec, DiscourseEntity de)
+        {
+            return false;
+        }
 
-	  public override bool canResolve(MentionContext ec)
-	  {
-		return true;
-	  }
-
-	  protected internal override bool outOfRange(MentionContext ec, DiscourseEntity de)
-	  {
-		return false;
-	  }
-
-	  public override DiscourseEntity resolve(MentionContext ec, DiscourseModel dm)
-	  {
-		return null;
-	  }
-	}
-
+        public override DiscourseEntity resolve(MentionContext ec, DiscourseModel dm)
+        {
+            return null;
+        }
+    }
 }

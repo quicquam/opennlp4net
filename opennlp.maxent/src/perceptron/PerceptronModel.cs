@@ -18,7 +18,6 @@ using System.Collections.Generic;
  * specific language governing permissions and limitations
  * under the License.
  */
-
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
@@ -27,141 +26,141 @@ using opennlp.nonjava.helperclasses;
 
 namespace opennlp.perceptron
 {
+    using AbstractModel = opennlp.model.AbstractModel;
+    using Context = opennlp.model.Context;
+    using EvalParameters = opennlp.model.EvalParameters;
+    using opennlp.model;
 
+    public class PerceptronModel : AbstractModel
+    {
+        public PerceptronModel(Context[] @params, string[] predLabels, IndexHashTable<string> pmap,
+            string[] outcomeNames) : base(@params, predLabels, pmap, outcomeNames)
+        {
+            modelType = ModelTypeEnum.Perceptron;
+        }
 
-	using AbstractModel = opennlp.model.AbstractModel;
-	using Context = opennlp.model.Context;
-	using EvalParameters = opennlp.model.EvalParameters;
-	using opennlp.model;
+        /// @deprecated use the constructor with the <seealso cref="IndexHashTable"/> instead! 
+        [Obsolete("use the constructor with the <seealso cref=\"opennlp.model.IndexHashTable\"/> instead!")]
+        public PerceptronModel(Context[] @params, string[] predLabels, IDictionary<string, int?> pmap,
+            string[] outcomeNames) : base(@params, predLabels, outcomeNames)
+        {
+            modelType = ModelTypeEnum.Perceptron;
+        }
 
-	public class PerceptronModel : AbstractModel
-	{
+        public PerceptronModel(Context[] @params, string[] predLabels, string[] outcomeNames)
+            : base(@params, predLabels, outcomeNames)
+        {
+            modelType = ModelTypeEnum.Perceptron;
+        }
 
-	  public PerceptronModel(Context[] @params, string[] predLabels, IndexHashTable<string> pmap, string[] outcomeNames) : base(@params,predLabels,pmap,outcomeNames)
-	  {
-		modelType = ModelTypeEnum.Perceptron;
-	  }
+        public override double[] eval(string[] context)
+        {
+            return eval(context, new double[evalParams.NumOutcomes]);
+        }
 
-	  /// @deprecated use the constructor with the <seealso cref="IndexHashTable"/> instead! 
-	  [Obsolete("use the constructor with the <seealso cref=\"opennlp.model.IndexHashTable\"/> instead!")]
-	  public PerceptronModel(Context[] @params, string[] predLabels, IDictionary<string, int?> pmap, string[] outcomeNames) : base(@params,predLabels,outcomeNames)
-	  {
-          modelType = ModelTypeEnum.Perceptron;
-	  }
+        public override double[] eval(string[] context, float[] values)
+        {
+            return eval(context, values, new double[evalParams.NumOutcomes]);
+        }
 
-	  public PerceptronModel(Context[] @params, string[] predLabels, string[] outcomeNames) : base(@params,predLabels,outcomeNames)
-	  {
-          modelType = ModelTypeEnum.Perceptron;
-	  }
+        public override double[] eval(string[] context, double[] probs)
+        {
+            return eval(context, null, probs);
+        }
 
-	  public override double[] eval(string[] context)
-	  {
-		return eval(context,new double[evalParams.NumOutcomes]);
-	  }
+        public virtual double[] eval(string[] context, float[] values, double[] outsums)
+        {
+            int[] scontexts = new int[context.Length];
+            Arrays.Fill(outsums, 0);
+            for (int i = 0; i < context.Length; i++)
+            {
+                int? ci = pmap.get(context[i]);
+                scontexts[i] = ci.HasValue ? - 1 : ci.GetValueOrDefault();
+            }
+            return eval(scontexts, values, outsums, evalParams, true);
+        }
 
-	  public override double[] eval(string[] context, float[] values)
-	  {
-		return eval(context,values,new double[evalParams.NumOutcomes]);
-	  }
+        public static double[] eval(int[] context, double[] prior, EvalParameters model)
+        {
+            return eval(context, null, prior, model, true);
+        }
 
-	  public override double[] eval(string[] context, double[] probs)
-	  {
-		return eval(context,null,probs);
-	  }
+        public static double[] eval(int[] context, float[] values, double[] prior, EvalParameters model, bool normalize)
+        {
+            Context[] @params = model.Params;
+            double[] activeParameters;
+            int[] activeOutcomes;
+            double value = 1;
+            for (int ci = 0; ci < context.Length; ci++)
+            {
+                if (context[ci] >= 0)
+                {
+                    Context predParams = @params[context[ci]];
+                    activeOutcomes = predParams.Outcomes;
+                    activeParameters = predParams.Parameters;
+                    if (values != null)
+                    {
+                        value = values[ci];
+                    }
+                    for (int ai = 0; ai < activeOutcomes.Length; ai++)
+                    {
+                        int oid = activeOutcomes[ai];
+                        prior[oid] += activeParameters[ai]*value;
+                    }
+                }
+            }
+            if (normalize)
+            {
+                int numOutcomes = model.NumOutcomes;
 
-	  public virtual double[] eval(string[] context, float[] values, double[] outsums)
-	  {
-		int[] scontexts = new int[context.Length];
-		Arrays.Fill(outsums, 0);
-		for (int i = 0; i < context.Length; i++)
-		{
-		  int? ci = pmap.get(context[i]);
-		  scontexts[i] = ci.HasValue ? - 1 : ci.GetValueOrDefault();
-		}
-		return eval(scontexts,values,outsums,evalParams,true);
-	  }
+                double maxPrior = 1;
 
-	  public static double[] eval(int[] context, double[] prior, EvalParameters model)
-	  {
-		return eval(context,null,prior,model,true);
-	  }
+                for (int oid = 0; oid < numOutcomes; oid++)
+                {
+                    if (maxPrior < Math.Abs(prior[oid]))
+                    {
+                        maxPrior = Math.Abs(prior[oid]);
+                    }
+                }
 
-	  public static double[] eval(int[] context, float[] values, double[] prior, EvalParameters model, bool normalize)
-	  {
-		Context[] @params = model.Params;
-		double[] activeParameters;
-		int[] activeOutcomes;
-		double value = 1;
-		for (int ci = 0; ci < context.Length; ci++)
-		{
-		  if (context[ci] >= 0)
-		  {
-			Context predParams = @params[context[ci]];
-			activeOutcomes = predParams.Outcomes;
-			activeParameters = predParams.Parameters;
-			if (values != null)
-			{
-			  value = values[ci];
-			}
-			for (int ai = 0; ai < activeOutcomes.Length; ai++)
-			{
-			  int oid = activeOutcomes[ai];
-			  prior[oid] += activeParameters[ai] * value;
-			}
-		  }
-		}
-		if (normalize)
-		{
-		  int numOutcomes = model.NumOutcomes;
+                double normal = 0.0;
+                for (int oid = 0; oid < numOutcomes; oid++)
+                {
+                    prior[oid] = Math.Exp(prior[oid]/maxPrior);
+                    normal += prior[oid];
+                }
 
-		  double maxPrior = 1;
-
-		  for (int oid = 0; oid < numOutcomes; oid++)
-		  {
-			if (maxPrior < Math.Abs(prior[oid]))
-			{
-			  maxPrior = Math.Abs(prior[oid]);
-			}
-		  }
-
-		  double normal = 0.0;
-		  for (int oid = 0; oid < numOutcomes; oid++)
-		  {
-			prior[oid] = Math.Exp(prior[oid] / maxPrior);
-			normal += prior[oid];
-		  }
-
-		  for (int oid = 0; oid < numOutcomes; oid++)
-		  {
-			prior[oid] /= normal;
-		  }
-		}
-		return prior;
-	  }
+                for (int oid = 0; oid < numOutcomes; oid++)
+                {
+                    prior[oid] /= normal;
+                }
+            }
+            return prior;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
-	  public static void Main(string[] args)
-	  {
-		if (args.Length == 0)
-		{
-		  Console.Error.WriteLine("Usage: PerceptronModel modelname < contexts");
-		  Environment.Exit(1);
-		}
-		AbstractModel m = (new PerceptronModelReader(new Jfile(args[0]))).Model;
-        BufferedReader @in = new BufferedReader(new InputStreamReader(new InputStream(Console.OpenStandardInput())));  // TODO get from stdin
-		DecimalFormat df = new DecimalFormat(".###");
-		for (string line = @in.readLine(); line != null; line = @in.readLine())
-		{
-		  string[] context = line.Split(" ", true);
-		  double[] dist = m.eval(context);
-		  for (int oi = 0;oi < dist.Length;oi++)
-		  {
-			Console.Write("[" + m.getOutcome(oi) + " " + df.format(dist[oi]) + "] ");
-		  }
-		  Console.WriteLine();
-		}
-	  }
-	}
-
+        public static void Main(string[] args)
+        {
+            if (args.Length == 0)
+            {
+                Console.Error.WriteLine("Usage: PerceptronModel modelname < contexts");
+                Environment.Exit(1);
+            }
+            AbstractModel m = (new PerceptronModelReader(new Jfile(args[0]))).Model;
+            BufferedReader @in = new BufferedReader(new InputStreamReader(new InputStream(Console.OpenStandardInput())));
+                // TODO get from stdin
+            DecimalFormat df = new DecimalFormat(".###");
+            for (string line = @in.readLine(); line != null; line = @in.readLine())
+            {
+                string[] context = line.Split(" ", true);
+                double[] dist = m.eval(context);
+                for (int oi = 0; oi < dist.Length; oi++)
+                {
+                    Console.Write("[" + m.getOutcome(oi) + " " + df.format(dist[oi]) + "] ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
 }

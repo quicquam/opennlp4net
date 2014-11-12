@@ -21,24 +21,21 @@ using j4n.IO.InputStream;
 
 namespace opennlp.maxent.io
 {
+    using BinaryFileDataReader = opennlp.model.BinaryFileDataReader;
 
-	using BinaryFileDataReader = opennlp.model.BinaryFileDataReader;
-
-	/// <summary>
-	/// A reader for GIS models stored in binary format.
-	/// </summary>
-	public class BinaryGISModelReader : GISModelReader
-	{
-
-	  /// <summary>
-	  /// Constructor which directly instantiates the DataInputStream containing the
-	  /// model contents.
-	  /// </summary>
-	  /// <param name="dis">
-	  ///          The DataInputStream containing the model information. </param>
-	  public BinaryGISModelReader(DataInputStream dis) : base(new BinaryFileDataReader(dis))
-	  {
-	  }
-	}
-
+    /// <summary>
+    /// A reader for GIS models stored in binary format.
+    /// </summary>
+    public class BinaryGISModelReader : GISModelReader
+    {
+        /// <summary>
+        /// Constructor which directly instantiates the DataInputStream containing the
+        /// model contents.
+        /// </summary>
+        /// <param name="dis">
+        ///          The DataInputStream containing the model information. </param>
+        public BinaryGISModelReader(DataInputStream dis) : base(new BinaryFileDataReader(dis))
+        {
+        }
+    }
 }

@@ -19,63 +19,59 @@ using j4n.Serialization;
 
 namespace opennlp.tools.sentdetect
 {
+    using opennlp.tools.util;
 
-	using opennlp.tools.util;
+    /// <summary>
+    /// Stream to to clean up empty lines for empty line separated document streams.<br>
+    /// 
+    /// - Skips empty line at training data start<br>
+    /// - Transforms multiple empty lines in a row into one <br>
+    /// - Replaces white space lines with empty lines <br>
+    /// - TODO: Terminates last document with empty line if it is missing<br>
+    /// <br>
+    /// This stream should be used by the components that mark empty lines to mark document boundaries.
+    /// <para>
+    /// <b>Note:</b>
+    /// This class is not thread safe. <br>
+    /// Do not use this class, internal use only!
+    /// </para>
+    /// </summary>
+    public class EmptyLinePreprocessorStream : FilterObjectStream<string, string>
+    {
+        private bool lastLineWasEmpty = true;
 
-	/// <summary>
-	/// Stream to to clean up empty lines for empty line separated document streams.<br>
-	/// 
-	/// - Skips empty line at training data start<br>
-	/// - Transforms multiple empty lines in a row into one <br>
-	/// - Replaces white space lines with empty lines <br>
-	/// - TODO: Terminates last document with empty line if it is missing<br>
-	/// <br>
-	/// This stream should be used by the components that mark empty lines to mark document boundaries.
-	/// <para>
-	/// <b>Note:</b>
-	/// This class is not thread safe. <br>
-	/// Do not use this class, internal use only!
-	/// </para>
-	/// </summary>
-	public class EmptyLinePreprocessorStream : FilterObjectStream<string, string>
-	{
+        public EmptyLinePreprocessorStream(ObjectStream<string> @in) : base(@in)
+        {
+        }
 
-	  private bool lastLineWasEmpty = true;
-
-	  public EmptyLinePreprocessorStream(ObjectStream<string> @in) : base(@in)
-	  {
-	  }
-
-	  private static bool isLineEmpty(string line)
-	  {
-		return line.Trim().Length == 0;
-	  }
+        private static bool isLineEmpty(string line)
+        {
+            return line.Trim().Length == 0;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public String read() throws java.io.IOException
-	  public override string read()
-	  {
+        public override string read()
+        {
+            string line = samples.read();
 
-		string line = samples.read();
+            if (lastLineWasEmpty)
+            {
+                lastLineWasEmpty = false;
 
-		if (lastLineWasEmpty)
-		{
-		  lastLineWasEmpty = false;
+                while (line != null && isLineEmpty(line))
+                {
+                    line = samples.read();
+                }
+            }
 
-		  while (line != null && isLineEmpty(line))
-		  {
-			line = samples.read();
-		  }
-		}
+            if (line != null && isLineEmpty(line))
+            {
+                lastLineWasEmpty = true;
+                line = "";
+            }
 
-		if (line != null && isLineEmpty(line))
-		{
-		  lastLineWasEmpty = true;
-		  line = "";
-		}
-
-		return line;
-	  }
-	}
-
+            return line;
+        }
+    }
 }

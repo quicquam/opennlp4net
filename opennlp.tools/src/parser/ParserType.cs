@@ -19,84 +19,82 @@
 
 namespace opennlp.tools.parser
 {
+    public sealed class ParserType
+    {
+        public static readonly ParserType CHUNKING = new ParserType("CHUNKING", InnerEnum.CHUNKING);
+        public static readonly ParserType TREEINSERT = new ParserType("TREEINSERT", InnerEnum.TREEINSERT);
 
-	public sealed class ParserType
-	{
-	  public static readonly ParserType CHUNKING = new ParserType("CHUNKING", InnerEnum.CHUNKING);
-	  public static readonly ParserType TREEINSERT = new ParserType("TREEINSERT", InnerEnum.TREEINSERT);
+        private static readonly IList<ParserType> valueList = new List<ParserType>();
 
-	  private static readonly IList<ParserType> valueList = new List<ParserType>();
+        static ParserType()
+        {
+            valueList.Add(CHUNKING);
+            valueList.Add(TREEINSERT);
+        }
 
-	  static ParserType()
-	  {
-		  valueList.Add(CHUNKING);
-		  valueList.Add(TREEINSERT);
-	  }
+        public enum InnerEnum
+        {
+            CHUNKING,
+            TREEINSERT
+        }
 
-	  public enum InnerEnum
-	  {
-		  CHUNKING,
-		  TREEINSERT
-	  }
+        private readonly string nameValue;
+        private readonly int ordinalValue;
+        private readonly InnerEnum innerEnumValue;
+        private static int nextOrdinal = 0;
+        public string name;
 
-	  private readonly string nameValue;
-	  private readonly int ordinalValue;
-	  private readonly InnerEnum innerEnumValue;
-	  private static int nextOrdinal = 0;
-	  public string name;
+        private ParserType(string chunking, InnerEnum innerEnum)
+        {
+            throw new System.NotImplementedException();
+        }
 
-	    private ParserType(string chunking, InnerEnum innerEnum)
-	    {
-	        throw new System.NotImplementedException();
-	    }
+        public static ParserType parse(string type)
+        {
+            if (ParserType.CHUNKING.name.Equals(type))
+            {
+                return ParserType.CHUNKING;
+            }
+            else if (ParserType.TREEINSERT.name.Equals(type))
+            {
+                return ParserType.TREEINSERT;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-	    public static ParserType parse(string type)
-	  {
-		if (ParserType.CHUNKING.name.Equals(type))
-		{
-		  return ParserType.CHUNKING;
-		}
-		else if (ParserType.TREEINSERT.name.Equals(type))
-		{
-		  return ParserType.TREEINSERT;
-		}
-		else
-		{
-		  return null;
-		}
-	  }
+        public static IList<ParserType> values()
+        {
+            return valueList;
+        }
 
-		public static IList<ParserType> values()
-		{
-			return valueList;
-		}
+        public InnerEnum InnerEnumValue()
+        {
+            return innerEnumValue;
+        }
 
-		public InnerEnum InnerEnumValue()
-		{
-			return innerEnumValue;
-		}
+        public int ordinal()
+        {
+            return ordinalValue;
+        }
 
-		public int ordinal()
-		{
-			return ordinalValue;
-		}
+        public override string ToString()
+        {
+            return nameValue;
+        }
 
-		public override string ToString()
-		{
-			return nameValue;
-		}
-
-		public static ParserType valueOf(string name)
-		{
-			foreach (ParserType enumInstance in ParserType.values())
-			{
-				if (enumInstance.nameValue == name)
-				{
-					return enumInstance;
-				}
-			}
-			throw new System.ArgumentException(name);
-		}
-	}
-
+        public static ParserType valueOf(string name)
+        {
+            foreach (ParserType enumInstance in ParserType.values())
+            {
+                if (enumInstance.nameValue == name)
+                {
+                    return enumInstance;
+                }
+            }
+            throw new System.ArgumentException(name);
+        }
+    }
 }

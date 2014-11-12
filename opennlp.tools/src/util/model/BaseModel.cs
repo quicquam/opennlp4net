@@ -15,9 +15,9 @@ namespace opennlp.tools.util.model
 {
     public class BaseModel<T> : ArtifactProvider
     {
-		private static int MODEL_BUFFER_SIZE_LIMIT = Int32.MaxValue;
+        private static int MODEL_BUFFER_SIZE_LIMIT = Int32.MaxValue;
 
-		protected internal const string MANIFEST_ENTRY = "manifest.properties";
+        protected internal const string MANIFEST_ENTRY = "manifest.properties";
         protected internal const string FACTORY_NAME = "factory";
 
         private const string MANIFEST_VERSION_PROPERTY = "Manifest-Version";
@@ -58,7 +58,8 @@ namespace opennlp.tools.util.model
             this.componentName = componentName;
         }
 
-        protected BaseModel(string componentName, string languageCode, IDictionary<string, string> manifestInfoEntries, BaseToolFactory factory)
+        protected BaseModel(string componentName, string languageCode, IDictionary<string, string> manifestInfoEntries,
+            BaseToolFactory factory)
         {
             throw new NotImplementedException();
         }
@@ -66,7 +67,6 @@ namespace opennlp.tools.util.model
         protected BaseModel(string componentName, InputStream @in)
             : this(componentName, true)
         {
-
             if (@in == null)
             {
                 throw new System.ArgumentException("in must not be null!");
@@ -105,7 +105,6 @@ namespace opennlp.tools.util.model
                 ZipEntry entry;
                 while ((entry = zip.GetNextEntry()) != null)
                 {
-
                     string extension = getEntryExtension(entry.FileName);
                     var factory = artifactSerializers.GetValueObject(extension);
 
@@ -196,7 +195,7 @@ namespace opennlp.tools.util.model
 
         public static IDictionary<string, ArtifactSerializer<Object>> staticCreateBaseArtifactSerializers()
         {
-           throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         protected void createBaseArtifactSerializers()
@@ -207,10 +206,10 @@ namespace opennlp.tools.util.model
 
         public virtual void createArtifactSerializers()
         {
-            if(artifactSerializers == null)
+            if (artifactSerializers == null)
                 artifactSerializers = new ArtifactSerializers();
 
-            if(!artifactSerializers.Contains("model"))
+            if (!artifactSerializers.Contains("model"))
                 artifactSerializers.Add<ArtifactSerializer<AbstractModel>>("model", new GenericModelSerializer());
 
             if (!artifactSerializers.Contains("dictionary"))
@@ -218,7 +217,6 @@ namespace opennlp.tools.util.model
 
             if (!artifactSerializers.Contains("properties"))
                 artifactSerializers.Add<ArtifactSerializer<Properties>>("properties", new PropertiesSerializer());
-
         }
 
         private void loadArtifactSerializers()
@@ -235,7 +233,6 @@ namespace opennlp.tools.util.model
             ZipEntry entry;
             while ((entry = zip.GetNextEntry()) != null)
             {
-
                 // Note: The manifest.properties file will be read here again,
                 // there should be no need to prevent that.
 
@@ -265,7 +262,6 @@ namespace opennlp.tools.util.model
             }
 
             finishedLoadingArtifacts = true;
-
         }
 
         protected internal virtual void validateArtifactMap()
@@ -300,38 +296,41 @@ namespace opennlp.tools.util.model
                         Version.currentVersion().getMinor() != version.getMinor())
                     {
                         //this check allows for the use of models one minor release behind current minor release
-                        if (Version.currentVersion().getMajor() == version.getMajor() && (Version.currentVersion().getMinor() - 1) != version.getMinor())
+                        if (Version.currentVersion().getMajor() == version.getMajor() &&
+                            (Version.currentVersion().getMinor() - 1) != version.getMinor())
                         {
                             throw new InvalidFormatException("Model version " + version + " is not supported by this ("
-                                + Version.currentVersion() + ") version of OpenNLP!");
+                                                             + Version.currentVersion() + ") version of OpenNLP!");
                         }
                     }
 
                     // Reject loading a snapshot model with a non-snapshot version
                     if (!Version.currentVersion().isSnapshot() && version.isSnapshot())
                     {
-                        throw new InvalidFormatException("Model version " + version + " is a snapshot - snapshot models are not " +
-                              "supported by this non-snapshot version (" + Version.currentVersion() + ") of OpenNLP!");
+                        throw new InvalidFormatException("Model version " + version +
+                                                         " is a snapshot - snapshot models are not " +
+                                                         "supported by this non-snapshot version (" +
+                                                         Version.currentVersion() + ") of OpenNLP!");
                     }
                 }
             }
             else
             {
                 throw new InvalidFormatException("Missing " + VERSION_PROPERTY + " property in " +
-                      MANIFEST_ENTRY + "!");
+                                                 MANIFEST_ENTRY + "!");
             }
 
             if (getManifestProperty(COMPONENT_NAME_PROPERTY) == null)
                 throw new InvalidFormatException("Missing " + COMPONENT_NAME_PROPERTY + " property in " +
-                      MANIFEST_ENTRY + "!");
+                                                 MANIFEST_ENTRY + "!");
 
             if (!getManifestProperty(COMPONENT_NAME_PROPERTY).Equals(componentName))
                 throw new InvalidFormatException("The " + componentName + " cannot load a model for the " +
-                    getManifestProperty(COMPONENT_NAME_PROPERTY) + "!");
+                                                 getManifestProperty(COMPONENT_NAME_PROPERTY) + "!");
 
             if (getManifestProperty(LANGUAGE_PROPERTY) == null)
                 throw new InvalidFormatException("Missing " + LANGUAGE_PROPERTY + " property in " +
-                      MANIFEST_ENTRY + "!");
+                                                 MANIFEST_ENTRY + "!");
 
             // Validate the factory. We try to load it using the ExtensionLoader. It
             // will return the factory, null or raise an exception
@@ -344,14 +343,14 @@ namespace opennlp.tools.util.model
                     {
                         throw new InvalidFormatException(
                             "Could not load an user extension specified by the model: "
-                                + factoryName);
+                            + factoryName);
                     }
                 }
                 catch (Exception e)
                 {
                     throw new InvalidFormatException(
                         "Could not load an user extension specified by the model: "
-                            + factoryName, e);
+                        + factoryName, e);
                 }
             }
 
@@ -387,12 +386,9 @@ namespace opennlp.tools.util.model
             return null;
         }
 
-        protected virtual internal Type DefaultFactory
+        protected internal virtual Type DefaultFactory
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
 
         public T getArtifact<T>(string key)
@@ -400,7 +396,7 @@ namespace opennlp.tools.util.model
             if (artifactMap.ContainsKey(key))
             {
                 var artifact = artifactMap[key];
-                return (T)artifact;
+                return (T) artifact;
             }
             return default(T);
         }
@@ -414,15 +410,14 @@ namespace opennlp.tools.util.model
         /// <returns> the value </returns>
         public string getManifestProperty(string key)
         {
-            var manifest = (Properties)artifactMap[MANIFEST_ENTRY];
+            var manifest = (Properties) artifactMap[MANIFEST_ENTRY];
             return manifest.getProperty(key);
         }
 
         public void setManifestProperty(string key, string value)
         {
-            var manifest = (Properties)artifactMap[MANIFEST_ENTRY];
+            var manifest = (Properties) artifactMap[MANIFEST_ENTRY];
             manifest.setProperty(key, value);
         }
-
     }
 }

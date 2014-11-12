@@ -16,15 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 namespace opennlp.maxent.quasinewton
 {
-
-	/// <summary>
-	/// interface for a function that can be differentiated once.
-	/// </summary>
-	public interface DifferentiableFunction : Function
-	{
-	  double[] gradientAt(double[] x);
-	}
-
+    /// <summary>
+    /// interface for a function that can be differentiated once.
+    /// </summary>
+    public interface DifferentiableFunction : Function
+    {
+        double[] gradientAt(double[] x);
+    }
 }

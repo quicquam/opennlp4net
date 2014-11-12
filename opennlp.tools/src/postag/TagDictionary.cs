@@ -18,21 +18,18 @@
 
 namespace opennlp.tools.postag
 {
-
-	/// <summary>
-	/// Interface to determine which tags are valid for a particular word
-	/// based on a tag dictionary.
-	/// </summary>
-	public interface TagDictionary
-	{
-
-	  /// <summary>
-	  /// Returns a list of valid tags for the specified word.
-	  /// </summary>
-	  /// <param name="word"> The word. </param>
-	  /// <returns> A list of valid tags for the specified word or null if no information
-	  /// is available for that word. </returns>
-	  string[] getTags(string word);
-	}
-
+    /// <summary>
+    /// Interface to determine which tags are valid for a particular word
+    /// based on a tag dictionary.
+    /// </summary>
+    public interface TagDictionary
+    {
+        /// <summary>
+        /// Returns a list of valid tags for the specified word.
+        /// </summary>
+        /// <param name="word"> The word. </param>
+        /// <returns> A list of valid tags for the specified word or null if no information
+        /// is available for that word. </returns>
+        string[] getTags(string word);
+    }
 }

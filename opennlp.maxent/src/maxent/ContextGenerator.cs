@@ -19,18 +19,14 @@
 
 namespace opennlp.maxent
 {
-
-	/// <summary>
-	/// Generate contexts for maxent decisions.
-	/// </summary>
-	public interface ContextGenerator
-	{
-
-	  /// <summary>
-	  /// Builds up the list of contextual predicates given an Object.
-	  /// </summary>
-	  string[] getContext(object o);
-
-	}
-
+    /// <summary>
+    /// Generate contexts for maxent decisions.
+    /// </summary>
+    public interface ContextGenerator
+    {
+        /// <summary>
+        /// Builds up the list of contextual predicates given an Object.
+        /// </summary>
+        string[] getContext(object o);
+    }
 }

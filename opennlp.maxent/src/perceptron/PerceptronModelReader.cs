@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -22,74 +21,71 @@ using j4n.IO.File;
 
 namespace opennlp.perceptron
 {
+    using AbstractModel = opennlp.model.AbstractModel;
+    using AbstractModelReader = opennlp.model.AbstractModelReader;
+    using Context = opennlp.model.Context;
+    using DataReader = opennlp.model.DataReader;
 
-
-	using AbstractModel = opennlp.model.AbstractModel;
-	using AbstractModelReader = opennlp.model.AbstractModelReader;
-	using Context = opennlp.model.Context;
-	using DataReader = opennlp.model.DataReader;
-
-	/// <summary>
-	/// Abstract parent class for readers of Perceptron.
-	/// 
-	/// </summary>
-	public class PerceptronModelReader : AbstractModelReader
-	{
-
+    /// <summary>
+    /// Abstract parent class for readers of Perceptron.
+    /// 
+    /// </summary>
+    public class PerceptronModelReader : AbstractModelReader
+    {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public PerceptronModelReader(java.io.File file) throws java.io.IOException
-		public PerceptronModelReader(Jfile file) : base(file)
-		{
-		}
+        public PerceptronModelReader(Jfile file) : base(file)
+        {
+        }
 
-		public PerceptronModelReader(DataReader dataReader) : base(dataReader)
-		{
-		}
+        public PerceptronModelReader(DataReader dataReader) : base(dataReader)
+        {
+        }
 
-		/// <summary>
-		/// Retrieve a model from disk. It assumes that models are saved in the
-		/// following sequence:
-		/// 
-		/// <br>Perceptron (model type identifier)
-		/// <br>1. # of parameters (int)
-		/// <br>2. # of outcomes (int)
-		/// <br>  * list of outcome names (String)
-		/// <br>3. # of different types of outcome patterns (int)
-		/// <br>   * list of (int int[])
-		/// <br>   [# of predicates for which outcome pattern is true] [outcome pattern]
-		/// <br>4. # of predicates (int)
-		/// <br>   * list of predicate names (String)
-		/// 
-		/// <para>If you are creating a reader for a format which won't work with this
-		/// (perhaps a database or xml file), override this method and ignore the
-		/// other methods provided in this abstract class.
-		/// 
-		/// </para>
-		/// </summary>
-		/// <returns> The PerceptronModel stored in the format and location specified to
-		///         this PerceptronModelReader (usually via its the constructor). </returns>
+        /// <summary>
+        /// Retrieve a model from disk. It assumes that models are saved in the
+        /// following sequence:
+        /// 
+        /// <br>Perceptron (model type identifier)
+        /// <br>1. # of parameters (int)
+        /// <br>2. # of outcomes (int)
+        /// <br>  * list of outcome names (String)
+        /// <br>3. # of different types of outcome patterns (int)
+        /// <br>   * list of (int int[])
+        /// <br>   [# of predicates for which outcome pattern is true] [outcome pattern]
+        /// <br>4. # of predicates (int)
+        /// <br>   * list of predicate names (String)
+        /// 
+        /// <para>If you are creating a reader for a format which won't work with this
+        /// (perhaps a database or xml file), override this method and ignore the
+        /// other methods provided in this abstract class.
+        /// 
+        /// </para>
+        /// </summary>
+        /// <returns> The PerceptronModel stored in the format and location specified to
+        ///         this PerceptronModelReader (usually via its the constructor). </returns>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public opennlp.model.AbstractModel constructModel() throws java.io.IOException
-		public override AbstractModel constructModel()
-		{
-		  string[] outcomeLabels = GetOutcomes();
-		  int[][] outcomePatterns = GetOutcomePatterns();
-		  string[] predLabels = GetPredicates();
-		  Context[] @params = GetParameters(outcomePatterns);
+        public override AbstractModel constructModel()
+        {
+            string[] outcomeLabels = GetOutcomes();
+            int[][] outcomePatterns = GetOutcomePatterns();
+            string[] predLabels = GetPredicates();
+            Context[] @params = GetParameters(outcomePatterns);
 
-		  return new PerceptronModel(@params, predLabels, outcomeLabels);
-		}
+            return new PerceptronModel(@params, predLabels, outcomeLabels);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void checkModelType() throws java.io.IOException
-		public override void checkModelType()
-		{
-		  string modelType = readUTF();
-		  if (!modelType.Equals("Perceptron"))
-		  {
-			  Console.WriteLine("Error: attempting to load a " + modelType + " model as a Perceptron model." + " You should expect problems.");
-		  }
-		}
-	}
-
+        public override void checkModelType()
+        {
+            string modelType = readUTF();
+            if (!modelType.Equals("Perceptron"))
+            {
+                Console.WriteLine("Error: attempting to load a " + modelType + " model as a Perceptron model." +
+                                  " You should expect problems.");
+            }
+        }
+    }
 }

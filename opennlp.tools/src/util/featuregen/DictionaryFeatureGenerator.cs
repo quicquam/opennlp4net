@@ -17,51 +17,44 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.util.featuregen
 {
+    using Dictionary = opennlp.tools.dictionary.Dictionary;
+    using DictionaryNameFinder = opennlp.tools.namefind.DictionaryNameFinder;
 
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using DictionaryNameFinder = opennlp.tools.namefind.DictionaryNameFinder;
+    /// <summary>
+    /// The <seealso cref="DictionaryFeatureGenerator"/> uses the <seealso cref="DictionaryNameFinder"/>
+    /// to generated features for detected names based on the <seealso cref="InSpanGenerator"/>.
+    /// </summary>
+    /// <seealso cref= Dictionary </seealso>
+    /// <seealso cref= DictionaryNameFinder </seealso>
+    /// <seealso cref= InSpanGenerator </seealso>
+    public class DictionaryFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private InSpanGenerator isg;
 
-	/// <summary>
-	/// The <seealso cref="DictionaryFeatureGenerator"/> uses the <seealso cref="DictionaryNameFinder"/>
-	/// to generated features for detected names based on the <seealso cref="InSpanGenerator"/>.
-	/// </summary>
-	/// <seealso cref= Dictionary </seealso>
-	/// <seealso cref= DictionaryNameFinder </seealso>
-	/// <seealso cref= InSpanGenerator </seealso>
-	public class DictionaryFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public DictionaryFeatureGenerator(Dictionary dict) : this("", dict)
+        {
+        }
 
-	  private InSpanGenerator isg;
+        public DictionaryFeatureGenerator(string prefix, Dictionary dict)
+        {
+            setDictionary(prefix, dict);
+        }
 
-	  public DictionaryFeatureGenerator(Dictionary dict) : this("",dict)
-	  {
-	  }
-	  public DictionaryFeatureGenerator(string prefix, Dictionary dict)
-	  {
-		setDictionary(prefix,dict);
-	  }
+        public virtual Dictionary Dictionary
+        {
+            set { setDictionary("", value); }
+        }
 
-	  public virtual Dictionary Dictionary
-	  {
-		  set
-		  {
-			setDictionary("",value);
-		  }
-	  }
+        public virtual void setDictionary(string name, Dictionary dict)
+        {
+            isg = new InSpanGenerator(name, new DictionaryNameFinder(dict));
+        }
 
-	  public virtual void setDictionary(string name, Dictionary dict)
-	  {
-		isg = new InSpanGenerator(name, new DictionaryNameFinder(dict));
-	  }
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
-	  {
-		isg.createFeatures(features, tokens, index, previousOutcomes);
-	  }
-
-	}
-
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
+        {
+            isg.createFeatures(features, tokens, index, previousOutcomes);
+        }
+    }
 }

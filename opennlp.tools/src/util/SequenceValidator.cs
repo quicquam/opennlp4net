@@ -17,22 +17,19 @@
 
 namespace opennlp.tools.util
 {
-
-	public interface SequenceValidator<T>
-	{
-
-	  /// <summary>
-	  /// Determines whether a particular continuation of a sequence is valid.
-	  /// This is used to restrict invalid sequences such as those used in start/continue tag-based chunking
-	  /// or could be used to implement tag dictionary restrictions.
-	  /// </summary>
-	  /// <param name="i"> The index in the input sequence for which the new outcome is being proposed. </param>
-	  /// <param name="inputSequence"> The input sequence. </param>
-	  /// <param name="outcomesSequence"> The outcomes so far in this sequence. </param>
-	  /// <param name="outcome"> The next proposed outcome for the outcomes sequence.
-	  /// </param>
-	  /// <returns> true is the sequence would still be valid with the new outcome, false otherwise. </returns>
-	  bool validSequence(int i, T[] inputSequence, string[] outcomesSequence, string outcome);
-	}
-
+    public interface SequenceValidator<T>
+    {
+        /// <summary>
+        /// Determines whether a particular continuation of a sequence is valid.
+        /// This is used to restrict invalid sequences such as those used in start/continue tag-based chunking
+        /// or could be used to implement tag dictionary restrictions.
+        /// </summary>
+        /// <param name="i"> The index in the input sequence for which the new outcome is being proposed. </param>
+        /// <param name="inputSequence"> The input sequence. </param>
+        /// <param name="outcomesSequence"> The outcomes so far in this sequence. </param>
+        /// <param name="outcome"> The next proposed outcome for the outcomes sequence.
+        /// </param>
+        /// <returns> true is the sequence would still be valid with the new outcome, false otherwise. </returns>
+        bool validSequence(int i, T[] inputSequence, string[] outcomesSequence, string outcome);
+    }
 }

@@ -17,20 +17,17 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.parser
 {
-
-	/// <summary>
-	/// Interface for labeling nodes which contain traces so that these traces can be predicted
-	/// by the parser.
-	/// </summary>
-	public interface GapLabeler
-	{
-	  /// <summary>
-	  /// Labels the constituents found in the stack with gap labels if appropriate. </summary>
-	  /// <param name="stack"> The stack of un-completed constituents. </param>
-	  void labelGaps(Stack<Constituent> stack);
-	}
-
+    /// <summary>
+    /// Interface for labeling nodes which contain traces so that these traces can be predicted
+    /// by the parser.
+    /// </summary>
+    public interface GapLabeler
+    {
+        /// <summary>
+        /// Labels the constituents found in the stack with gap labels if appropriate. </summary>
+        /// <param name="stack"> The stack of un-completed constituents. </param>
+        void labelGaps(Stack<Constituent> stack);
+    }
 }

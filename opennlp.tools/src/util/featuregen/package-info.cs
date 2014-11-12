@@ -18,6 +18,7 @@
 /// <summary>
 /// This package contains classes for generating sequence features.
 /// </summary>
+
 namespace opennlp.tools.util.featuregen
 {
 }

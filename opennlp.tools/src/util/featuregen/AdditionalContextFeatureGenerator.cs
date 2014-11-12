@@ -19,42 +19,33 @@
 
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// The <seealso cref="AdditionalContextFeatureGenerator"/> generates the context from the passed
+    /// in additional context.
+    /// </summary>
+    public class AdditionalContextFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private string[][] additionalContext;
 
+        //  public AdditionalContextFeatureGenerator() {
+        //  }
 
-	/// <summary>
-	/// The <seealso cref="AdditionalContextFeatureGenerator"/> generates the context from the passed
-	/// in additional context.
-	/// </summary>
-	public class AdditionalContextFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
+        {
+            if (additionalContext != null && additionalContext.Length != 0)
+            {
+                string[] context = additionalContext[index];
 
-	  private string[][] additionalContext;
+                foreach (string s in context)
+                {
+                    features.Add("ne=" + s);
+                }
+            }
+        }
 
-	//  public AdditionalContextFeatureGenerator() {
-	//  }
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
-	  {
-
-		if (additionalContext != null && additionalContext.Length != 0)
-		{
-
-		  string[] context = additionalContext[index];
-
-		  foreach (string s in context)
-		  {
-			features.Add("ne=" + s);
-		  }
-		}
-	  }
-
-	  public virtual string[][] CurrentContext
-	  {
-		  set
-		  {
-			additionalContext = value;
-		  }
-	  }
-	}
-
+        public virtual string[][] CurrentContext
+        {
+            set { additionalContext = value; }
+        }
+    }
 }

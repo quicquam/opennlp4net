@@ -20,61 +20,57 @@ using j4n.Serialization;
 
 namespace opennlp.tools.doccat
 {
+    using WhitespaceTokenizer = opennlp.tools.tokenize.WhitespaceTokenizer;
+    using opennlp.tools.util;
+    using opennlp.tools.util;
 
-	using WhitespaceTokenizer = opennlp.tools.tokenize.WhitespaceTokenizer;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	/// <summary>
-	/// This class reads in string encoded training samples, parses them and outputs <seealso cref="DocumentSample"/> objects.
-	/// <para>
-	/// Format:<br>
-	/// Each line contains one sample document.<br>
-	/// The category is the first string in the line followed by a tab and whitespace separated document tokens.<br>
-	/// Sample line: category-string tab-char whitespace-separated-tokens line-break-char(s)<br>
-	/// </para>
-	/// </summary>
-	public class DocumentSampleStream : FilterObjectStream<string, DocumentSample>
-	{
-
-	  public DocumentSampleStream(ObjectStream<string> samples) : base(samples)
-	  {
-	  }
+    /// <summary>
+    /// This class reads in string encoded training samples, parses them and outputs <seealso cref="DocumentSample"/> objects.
+    /// <para>
+    /// Format:<br>
+    /// Each line contains one sample document.<br>
+    /// The category is the first string in the line followed by a tab and whitespace separated document tokens.<br>
+    /// Sample line: category-string tab-char whitespace-separated-tokens line-break-char(s)<br>
+    /// </para>
+    /// </summary>
+    public class DocumentSampleStream : FilterObjectStream<string, DocumentSample>
+    {
+        public DocumentSampleStream(ObjectStream<string> samples) : base(samples)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public DocumentSample read() throws java.io.IOException
-	  public override DocumentSample read()
-	  {
-		string sampleString = samples.read();
+        public override DocumentSample read()
+        {
+            string sampleString = samples.read();
 
-		if (sampleString != null)
-		{
+            if (sampleString != null)
+            {
+                // Whitespace tokenize entire string
+                string[] tokens = WhitespaceTokenizer.INSTANCE.tokenize(sampleString);
 
-		  // Whitespace tokenize entire string
-		  string[] tokens = WhitespaceTokenizer.INSTANCE.tokenize(sampleString);
+                DocumentSample sample;
 
-		  DocumentSample sample;
+                if (tokens.Length > 1)
+                {
+                    string category = tokens[0];
+                    string[] docTokens = new string[tokens.Length - 1];
+                    Array.Copy(tokens, 1, docTokens, 0, tokens.Length - 1);
 
-		  if (tokens.Length > 1)
-		  {
-			string category = tokens[0];
-			string[] docTokens = new string[tokens.Length - 1];
-			Array.Copy(tokens, 1, docTokens, 0, tokens.Length - 1);
+                    sample = new DocumentSample(category, docTokens);
+                }
+                else
+                {
+                    throw new IOException("Empty lines, or lines with only a category string are not allowed!");
+                }
 
-			sample = new DocumentSample(category, docTokens);
-		  }
-		  else
-		  {
-			throw new IOException("Empty lines, or lines with only a category string are not allowed!");
-		  }
-
-		  return sample;
-		}
-		else
-		{
-		  return null;
-		}
-	  }
-	}
-
+                return sample;
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
 }

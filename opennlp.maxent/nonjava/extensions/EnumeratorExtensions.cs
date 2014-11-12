@@ -4,7 +4,7 @@ using opennlp.model;
 
 namespace opennlp.nonjava.extensions
 {
-    static class EnumeratorExtensions
+    internal static class EnumeratorExtensions
     {
         public static bool hasNext(this IEnumerator<Sequence<Event>> sequence)
         {

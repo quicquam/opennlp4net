@@ -15,7 +15,7 @@ namespace j4n.Object
             var pow = chars.Any() ? chars.Count() - 1 : 0;
             foreach (var c in chars)
             {
-                hash += (int)IntPower(c * 31, (short)pow--);
+                hash += (int) IntPower(c*31, (short) pow--);
             }
             return hash;
         }
@@ -30,8 +30,8 @@ namespace j4n.Object
 
             long tmp = x;
             while (--n > 0)
-                tmp = tmp * tmp *
-                     (((power <<= 1) < 0) ? x : 1);
+                tmp = tmp*tmp*
+                      (((power <<= 1) < 0) ? x : 1);
             return tmp;
         }
 
@@ -43,10 +43,9 @@ namespace j4n.Object
 
             for (var i = 0; i < len; i++)
             {
-                h = 31 * h + chars[off++];
+                h = 31*h + chars[off++];
             }
             return h;
         }
     }
 }
-

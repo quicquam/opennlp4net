@@ -18,6 +18,7 @@
 /// <summary>
 /// Package related to part-of-speech tagging.
 /// </summary>
+
 namespace opennlp.tools.postag
 {
 }

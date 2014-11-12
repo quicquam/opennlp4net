@@ -22,90 +22,85 @@ using j4n.Lang;
 
 namespace opennlp.tools.namefind
 {
+    using Span = opennlp.tools.util.Span;
 
+    /// <summary>
+    /// Name finder based on a series of regular expressions.
+    /// </summary>
+    public sealed class RegexNameFinder : TokenNameFinder
+    {
+        private readonly Pattern[] mPatterns;
+        private readonly string sType;
 
-	using Span = opennlp.tools.util.Span;
+        public RegexNameFinder(Pattern[] patterns, string type)
+        {
+            if (patterns == null || patterns.Length == 0)
+            {
+                throw new System.ArgumentException("patterns must not be null or empty!");
+            }
 
-	/// <summary>
-	/// Name finder based on a series of regular expressions.
-	/// </summary>
-	public sealed class RegexNameFinder : TokenNameFinder
-	{
+            mPatterns = patterns;
+            sType = type;
+        }
 
-	  private readonly Pattern[] mPatterns;
-	  private readonly string sType;
+        public RegexNameFinder(Pattern[] patterns)
+        {
+            if (patterns == null || patterns.Length == 0)
+            {
+                throw new System.ArgumentException("patterns must not be null or empty!");
+            }
 
-	  public RegexNameFinder(Pattern[] patterns, string type)
-	  {
-		if (patterns == null || patterns.Length == 0)
-		{
-		  throw new System.ArgumentException("patterns must not be null or empty!");
-		}
+            mPatterns = patterns;
+            sType = null;
+        }
 
-		mPatterns = patterns;
-		sType = type;
-	  }
+        public Span[] find(string[] tokens)
+        {
+            IDictionary<int?, int?> sentencePosTokenMap = new Dictionary<int?, int?>();
 
-	  public RegexNameFinder(Pattern[] patterns)
-	  {
-		if (patterns == null || patterns.Length == 0)
-		{
-		  throw new System.ArgumentException("patterns must not be null or empty!");
-		}
+            StringBuilder sentenceString = new StringBuilder(tokens.Length*10);
 
-		mPatterns = patterns;
-		sType = null;
-	  }
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                int startIndex = sentenceString.Length;
+                sentencePosTokenMap[startIndex] = i;
 
-	  public Span[] find(string[] tokens)
-	  {
-		IDictionary<int?, int?> sentencePosTokenMap = new Dictionary<int?, int?>();
+                sentenceString.Append(tokens[i]);
 
-		StringBuilder sentenceString = new StringBuilder(tokens.Length * 10);
+                int endIndex = sentenceString.Length;
+                sentencePosTokenMap[endIndex] = i + 1;
 
-		for (int i = 0; i < tokens.Length; i++)
-		{
+                if (i < tokens.Length - 1)
+                {
+                    sentenceString.Append(' ');
+                }
+            }
 
-		  int startIndex = sentenceString.Length;
-		  sentencePosTokenMap[startIndex] = i;
+            ICollection<Span> annotations = new LinkedList<Span>();
 
-		  sentenceString.Append(tokens[i]);
+            foreach (Pattern mPattern in mPatterns)
+            {
+                Matcher matcher = mPattern.matcher(sentenceString);
 
-		  int endIndex = sentenceString.Length;
-		  sentencePosTokenMap[endIndex] = i + 1;
+                while (matcher.find())
+                {
+                    int? tokenStartIndex = sentencePosTokenMap[matcher.start()];
+                    int? tokenEndIndex = sentencePosTokenMap[matcher.end()];
 
-		  if (i < tokens.Length - 1)
-		  {
-			sentenceString.Append(' ');
-		  }
-		}
+                    if (tokenStartIndex != null && tokenEndIndex != null)
+                    {
+                        Span annotation = new Span(tokenStartIndex.Value, tokenEndIndex.Value, sType);
+                        annotations.Add(annotation);
+                    }
+                }
+            }
 
-		ICollection<Span> annotations = new LinkedList<Span>();
+            return annotations.ToArray();
+        }
 
-		foreach (Pattern mPattern in mPatterns)
-		{
-		  Matcher matcher = mPattern.matcher(sentenceString);
-
-		  while (matcher.find())
-		  {
-			int? tokenStartIndex = sentencePosTokenMap[matcher.start()];
-			int? tokenEndIndex = sentencePosTokenMap[matcher.end()];
-
-			if (tokenStartIndex != null && tokenEndIndex != null)
-			{
-			  Span annotation = new Span(tokenStartIndex.Value, tokenEndIndex.Value, sType);
-			  annotations.Add(annotation);
-			}
-		  }
-		}
-
-		return annotations.ToArray();
-	  }
-
-	  public void clearAdaptiveData()
-	  {
-		// nothing to clear
-	  }
-	}
-
+        public void clearAdaptiveData()
+        {
+            // nothing to clear
+        }
+    }
 }

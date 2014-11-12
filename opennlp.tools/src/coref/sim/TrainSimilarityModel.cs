@@ -17,22 +17,21 @@
 
 namespace opennlp.tools.coref.sim
 {
-
-	/// <summary>
-	/// Interface for training a similarity, gender, or number model.
-	/// </summary>
-	public interface TrainSimilarityModel
-	{
+    /// <summary>
+    /// Interface for training a similarity, gender, or number model.
+    /// </summary>
+    public interface TrainSimilarityModel
+    {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void trainModel() throws java.io.IOException;
-	  void trainModel();
-	  /// <summary>
-	  /// Creates simialrity training pairs based on the specified extents.
-	  /// Extents are considered compatible is they are in the same coreference chain,
-	  /// have the same named-entity tag, or share a common head word.  Incompatible extents are chosen at random
-	  /// from the set of extents which don't meet this criteria. </summary>
-	  /// <param name="extents"> </param>
-	  Context[] Extents {set;}
-	}
+        void trainModel();
 
+        /// <summary>
+        /// Creates simialrity training pairs based on the specified extents.
+        /// Extents are considered compatible is they are in the same coreference chain,
+        /// have the same named-entity tag, or share a common head word.  Incompatible extents are chosen at random
+        /// from the set of extents which don't meet this criteria. </summary>
+        /// <param name="extents"> </param>
+        Context[] Extents { set; }
+    }
 }

@@ -17,12 +17,9 @@
 
 namespace opennlp.tools.chunker
 {
+    using opennlp.tools.util.eval;
 
-	using opennlp.tools.util.eval;
-
-	public interface ChunkerEvaluationMonitor : EvaluationMonitor<ChunkSample>
-	{
-
-	}
-
+    public interface ChunkerEvaluationMonitor : EvaluationMonitor<ChunkSample>
+    {
+    }
 }

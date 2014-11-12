@@ -14,7 +14,6 @@ namespace j4n.IO.Writer
         public FileWriter(string filename)
             : base(System.IO.File.Open(filename, FileMode.Create))
         {
-            
         }
     }
 }

@@ -17,37 +17,28 @@
 
 namespace opennlp.tools.coref.sim
 {
+    /// <summary>
+    /// Class which models the gender of an entity and the confidence of that association.
+    /// </summary>
+    public class Gender
+    {
+        private GenderEnum type;
+        private double confidence;
 
-	/// <summary>
-	/// Class which models the gender of an entity and the confidence of that association.
-	/// </summary>
-	public class Gender
-	{
+        public Gender(GenderEnum type, double confidence)
+        {
+            this.type = type;
+            this.confidence = confidence;
+        }
 
-	  private GenderEnum type;
-	  private double confidence;
+        public virtual GenderEnum Type
+        {
+            get { return type; }
+        }
 
-	  public Gender(GenderEnum type, double confidence)
-	  {
-		this.type = type;
-		this.confidence = confidence;
-	  }
-
-	  public virtual GenderEnum Type
-	  {
-		  get
-		  {
-			return type;
-		  }
-	  }
-
-	  public virtual double Confidence
-	  {
-		  get
-		  {
-			return confidence;
-		  }
-	  }
-	}
-
+        public virtual double Confidence
+        {
+            get { return confidence; }
+        }
+    }
 }

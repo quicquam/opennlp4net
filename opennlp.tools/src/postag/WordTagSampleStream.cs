@@ -23,80 +23,74 @@ using j4n.Serialization;
 
 namespace opennlp.tools.postag
 {
+    using opennlp.tools.util;
+    using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
+    using opennlp.tools.util;
+    using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
 
+    /// <summary>
+    /// A stream filter which reads a sentence per line which contains
+    /// words and tags in word_tag format and outputs a <seealso cref="POSSample"/> objects.
+    /// </summary>
+    public class WordTagSampleStream : FilterObjectStream<string, POSSample>
+    {
+        private static Logger logger = Logger.getLogger(typeof (WordTagSampleStream).Name);
 
-	using opennlp.tools.util;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	/// <summary>
-	/// A stream filter which reads a sentence per line which contains
-	/// words and tags in word_tag format and outputs a <seealso cref="POSSample"/> objects.
-	/// </summary>
-	public class WordTagSampleStream : FilterObjectStream<string, POSSample>
-	{
-
-	  private static Logger logger = Logger.getLogger(typeof(WordTagSampleStream).Name);
-
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="sentences"> reader with sentences </param>
-	  /// <exception cref="IOException"> IOException </exception>
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="sentences"> reader with sentences </param>
+        /// <exception cref="IOException"> IOException </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public WordTagSampleStream(java.io.Reader sentences) throws java.io.IOException
-	  public WordTagSampleStream(Reader sentences) : base(new PlainTextByLineStream(sentences))
-	  {
-	  }
+        public WordTagSampleStream(Reader sentences) : base(new PlainTextByLineStream(sentences))
+        {
+        }
 
-	  public WordTagSampleStream(ObjectStream<string> sentences) : base(sentences)
-	  {
-	  }
+        public WordTagSampleStream(ObjectStream<string> sentences) : base(sentences)
+        {
+        }
 
-	  /// <summary>
-	  /// Parses the next sentence and return the next
-	  /// <seealso cref="POSSample"/> object.
-	  /// 
-	  /// If an error occurs an empty <seealso cref="POSSample"/> object is returned
-	  /// and an warning message is logged. Usually it does not matter if one
-	  /// of many sentences is ignored.
-	  /// 
-	  /// TODO: An exception in error case should be thrown.
-	  /// </summary>
+        /// <summary>
+        /// Parses the next sentence and return the next
+        /// <seealso cref="POSSample"/> object.
+        /// 
+        /// If an error occurs an empty <seealso cref="POSSample"/> object is returned
+        /// and an warning message is logged. Usually it does not matter if one
+        /// of many sentences is ignored.
+        /// 
+        /// TODO: An exception in error case should be thrown.
+        /// </summary>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public POSSample read() throws java.io.IOException
-	  public override POSSample read()
-	  {
+        public override POSSample read()
+        {
+            string sentence = samples.read();
 
-		string sentence = samples.read();
+            if (sentence != null)
+            {
+                POSSample sample;
+                try
+                {
+                    sample = POSSample.parse(sentence);
+                }
+                catch (InvalidFormatException)
+                {
+                    if (logger.isLoggable(Logger.Level.WARNING))
+                    {
+                        logger.warning("Error during parsing, ignoring sentence: " + sentence);
+                    }
 
-		if (sentence != null)
-		{
-		  POSSample sample;
-		  try
-		  {
-			sample = POSSample.parse(sentence);
-		  }
-		  catch (InvalidFormatException)
-		  {
+                    sample = new POSSample(new string[] {}, new string[] {});
+                }
 
-			if (logger.isLoggable(Logger.Level.WARNING))
-			{
-			  logger.warning("Error during parsing, ignoring sentence: " + sentence);
-			}
-
-			sample = new POSSample(new string[]{}, new string[]{});
-		  }
-
-		  return sample;
-		}
-		else
-		{
-		  // sentences stream is exhausted
-		  return null;
-		}
-	  }
-	}
-
+                return sample;
+            }
+            else
+            {
+                // sentences stream is exhausted
+                return null;
+            }
+        }
+    }
 }

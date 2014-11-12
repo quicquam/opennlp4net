@@ -18,53 +18,39 @@
 
 namespace opennlp.tools.parser
 {
+    using Span = opennlp.tools.util.Span;
 
-	using Span = opennlp.tools.util.Span;
+    /// <summary>
+    /// Class used to hold constituents when reading parses.
+    /// </summary>
+    public class Constituent
+    {
+        private string label;
+        private Span span;
 
-	/// <summary>
-	/// Class used to hold constituents when reading parses.
-	/// </summary>
-	public class Constituent
-	{
-
-	  private string label;
-	  private Span span;
-
-	  public Constituent(string label, Span span)
-	  {
-		this.label = label;
-		this.span = span;
-	  }
+        public Constituent(string label, Span span)
+        {
+            this.label = label;
+            this.span = span;
+        }
 
 
-	  /// <summary>
-	  /// Returns the label of the constituent. </summary>
-	  /// <returns> the label of the constituent. </returns>
-	  public virtual string Label
-	  {
-		  get
-		  {
-			return label;
-		  }
-		  set
-		  {
-			this.label = value;
-		  }
-	  }
+        /// <summary>
+        /// Returns the label of the constituent. </summary>
+        /// <returns> the label of the constituent. </returns>
+        public virtual string Label
+        {
+            get { return label; }
+            set { this.label = value; }
+        }
 
 
-
-
-	  /// <summary>
-	  /// Returns the span of the constituent. </summary>
-	  /// <returns> the span of the constituent. </returns>
-	  public virtual Span Span
-	  {
-		  get
-		  {
-			return span;
-		  }
-	  }
-	}
-
+        /// <summary>
+        /// Returns the span of the constituent. </summary>
+        /// <returns> the span of the constituent. </returns>
+        public virtual Span Span
+        {
+            get { return span; }
+        }
+    }
 }

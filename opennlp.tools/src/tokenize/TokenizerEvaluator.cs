@@ -18,61 +18,55 @@
 
 namespace opennlp.tools.tokenize
 {
+    using Span = opennlp.tools.util.Span;
+    using opennlp.tools.util.eval;
+    using FMeasure = opennlp.tools.util.eval.FMeasure;
 
-	using Span = opennlp.tools.util.Span;
-	using opennlp.tools.util.eval;
-	using FMeasure = opennlp.tools.util.eval.FMeasure;
+    /// <summary>
+    /// The <seealso cref="TokenizerEvaluator"/> measures the performance of
+    /// the given <seealso cref="Tokenizer"/> with the provided reference
+    /// <seealso cref="TokenSample"/>s.
+    /// </summary>
+    /// <seealso cref= Evaluator </seealso>
+    /// <seealso cref= Tokenizer </seealso>
+    /// <seealso cref= TokenSample </seealso>
+    public class TokenizerEvaluator : Evaluator<TokenSample>
+    {
+        private FMeasure fmeasure = new FMeasure();
 
-	/// <summary>
-	/// The <seealso cref="TokenizerEvaluator"/> measures the performance of
-	/// the given <seealso cref="Tokenizer"/> with the provided reference
-	/// <seealso cref="TokenSample"/>s.
-	/// </summary>
-	/// <seealso cref= Evaluator </seealso>
-	/// <seealso cref= Tokenizer </seealso>
-	/// <seealso cref= TokenSample </seealso>
-	public class TokenizerEvaluator : Evaluator<TokenSample>
-	{
+        /// <summary>
+        /// The <seealso cref="Tokenizer"/> used to create the
+        /// predicted tokens.
+        /// </summary>
+        private Tokenizer tokenizer;
 
-	  private FMeasure fmeasure = new FMeasure();
+        /// <summary>
+        /// Initializes the current instance with the
+        /// given <seealso cref="Tokenizer"/>.
+        /// </summary>
+        /// <param name="tokenizer"> the <seealso cref="Tokenizer"/> to evaluate. </param>
+        /// <param name="listeners"> evaluation sample listeners </param>
+        public TokenizerEvaluator(Tokenizer tokenizer, params TokenizerEvaluationMonitor[] listeners) : base(listeners)
+        {
+            this.tokenizer = tokenizer;
+        }
 
-	  /// <summary>
-	  /// The <seealso cref="Tokenizer"/> used to create the
-	  /// predicted tokens.
-	  /// </summary>
-	  private Tokenizer tokenizer;
+        protected internal override TokenSample processSample(TokenSample reference)
+        {
+            Span[] predictions = tokenizer.tokenizePos(reference.Text);
+            fmeasure.updateScores(reference.TokenSpans, predictions);
 
-	  /// <summary>
-	  /// Initializes the current instance with the
-	  /// given <seealso cref="Tokenizer"/>.
-	  /// </summary>
-	  /// <param name="tokenizer"> the <seealso cref="Tokenizer"/> to evaluate. </param>
-	  /// <param name="listeners"> evaluation sample listeners </param>
-	  public TokenizerEvaluator(Tokenizer tokenizer, params TokenizerEvaluationMonitor[] listeners) : base(listeners)
-	  {
-		this.tokenizer = tokenizer;
-	  }
+            return new TokenSample(reference.Text, predictions);
+        }
 
-	  protected internal override TokenSample processSample(TokenSample reference)
-	  {
-		Span[] predictions = tokenizer.tokenizePos(reference.Text);
-		fmeasure.updateScores(reference.TokenSpans, predictions);
+        public virtual FMeasure FMeasure
+        {
+            get { return fmeasure; }
+        }
 
-		return new TokenSample(reference.Text, predictions);
-	  }
-
-	  public virtual FMeasure FMeasure
-	  {
-		  get
-		  {
-			return fmeasure;
-		  }
-	  }
-
-	    public void evaluate(object testSampleStream)
-	    {
-	        throw new System.NotImplementedException();
-	    }
-	}
-
+        public void evaluate(object testSampleStream)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

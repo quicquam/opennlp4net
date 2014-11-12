@@ -21,65 +21,60 @@ using j4n.Utils;
 
 namespace opennlp.tools.sentdetect
 {
+    using Event = opennlp.model.Event;
+    using opennlp.tools.util;
+    using Span = opennlp.tools.util.Span;
 
+    public class SDEventStream : AbstractEventStream<SentenceSample>
+    {
+        private SDContextGenerator cg;
+        private EndOfSentenceScanner scanner;
 
-	using Event = opennlp.model.Event;
-	using opennlp.tools.util;
-	using Span = opennlp.tools.util.Span;
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="samples"> </param>
+        public SDEventStream(ObjectStream<SentenceSample> samples, SDContextGenerator cg, EndOfSentenceScanner scanner)
+            : base(samples)
+        {
+            this.cg = cg;
+            this.scanner = scanner;
+        }
 
-	public class SDEventStream : AbstractEventStream<SentenceSample>
-	{
+        protected internal override IEnumerator<Event> createEvents(SentenceSample sample)
+        {
+            ICollection<Event> events = new List<Event>();
 
-	  private SDContextGenerator cg;
-	  private EndOfSentenceScanner scanner;
+            foreach (Span sentenceSpan in sample.Sentences)
+            {
+                string sentenceString = sentenceSpan.getCoveredText(sample.Document);
 
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="samples"> </param>
-	  public SDEventStream(ObjectStream<SentenceSample> samples, SDContextGenerator cg, EndOfSentenceScanner scanner) : base(samples)
-	  {
+                IEnumerator<int?> it = scanner.getPositions(sentenceString).GetEnumerator();
+                while (it.MoveNext())
+                {
+                    int candidate = it.Current.GetValueOrDefault();
+                    var type = SentenceDetectorME.NO_SPLIT;
+                    if (!it.MoveNext())
+                    {
+                        type = SentenceDetectorME.SPLIT;
+                    }
 
-		this.cg = cg;
-		this.scanner = scanner;
-	  }
+                    events.Add(new Event(type,
+                        cg.getContext(new CharSequence(sample.Document), sentenceSpan.Start + candidate)));
+                }
+            }
 
-	  protected internal override IEnumerator<Event> createEvents(SentenceSample sample)
-	  {
+            return events.GetEnumerator();
+        }
 
-		ICollection<Event> events = new List<Event>();
+        public override bool hasNext()
+        {
+            throw new System.NotImplementedException();
+        }
 
-		foreach (Span sentenceSpan in sample.Sentences)
-		{
-		  string sentenceString = sentenceSpan.getCoveredText(sample.Document);
-
-          IEnumerator<int?> it = scanner.getPositions(sentenceString).GetEnumerator();
-		  while (it.MoveNext())
-		  {
-
-			int candidate = it.Current.GetValueOrDefault();
-			var type = SentenceDetectorME.NO_SPLIT;
-     		if (!it.MoveNext())
-			{
-			  type = SentenceDetectorME.SPLIT;
-			}
-
-			events.Add(new Event(type, cg.getContext(new CharSequence(sample.Document), sentenceSpan.Start + candidate)));
-		  }
-		}
-
-		return events.GetEnumerator();
-	  }
-
-	    public override bool hasNext()
-	    {
-	        throw new System.NotImplementedException();
-	    }
-
-	    public override Event next()
-	    {
-	        throw new System.NotImplementedException();
-	    }
-	}
-
+        public override Event next()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

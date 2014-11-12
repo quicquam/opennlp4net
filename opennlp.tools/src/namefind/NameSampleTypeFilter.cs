@@ -21,57 +21,51 @@ using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.namefind
 {
+    using opennlp.tools.util;
+    using opennlp.tools.util;
+    using Span = opennlp.tools.util.Span;
 
+    /// <summary>
+    /// A stream which removes Name Samples which do not have a certain type.
+    /// </summary>
+    public class NameSampleTypeFilter : FilterObjectStream<NameSample, NameSample>
+    {
+        private readonly HashSet<string> types;
 
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-	using Span = opennlp.tools.util.Span;
+        public NameSampleTypeFilter(string[] types, ObjectStream<NameSample> samples) : base(samples)
+        {
+            this.types = new HashSet<string>(types);
+        }
 
-	/// <summary>
-	/// A stream which removes Name Samples which do not have a certain type.
-	/// </summary>
-	public class NameSampleTypeFilter : FilterObjectStream<NameSample, NameSample>
-	{
-
-	  private readonly HashSet<string> types;
-
-	  public NameSampleTypeFilter(string[] types, ObjectStream<NameSample> samples) : base(samples)
-	  {
-		this.types = new HashSet<string>(types);
-	  }
-
-	  public NameSampleTypeFilter(HashSet<string> types, ObjectStream<NameSample> samples) : base(samples)
-	  {
-		this.types = new HashSet<string>(types);
-	  }
+        public NameSampleTypeFilter(HashSet<string> types, ObjectStream<NameSample> samples) : base(samples)
+        {
+            this.types = new HashSet<string>(types);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public NameSample read() throws java.io.IOException
-	  public override NameSample read()
-	  {
+        public override NameSample read()
+        {
+            NameSample sample = samples.read();
 
-		NameSample sample = samples.read();
+            if (sample != null)
+            {
+                IList<Span> filteredNames = new List<Span>();
 
-		if (sample != null)
-		{
+                foreach (Span name in sample.Names)
+                {
+                    if (types.Contains(name.Type))
+                    {
+                        filteredNames.Add(name);
+                    }
+                }
 
-		  IList<Span> filteredNames = new List<Span>();
-
-		  foreach (Span name in sample.Names)
-		  {
-			if (types.Contains(name.Type))
-			{
-			  filteredNames.Add(name);
-			}
-		  }
-
-		  return new NameSample(sample.Sentence, filteredNames.ToArray(), sample.ClearAdaptiveDataSet);
-		}
-		else
-		{
-		  return null;
-		}
-	  }
-	}
-
+                return new NameSample(sample.Sentence, filteredNames.ToArray(), sample.ClearAdaptiveDataSet);
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
 }

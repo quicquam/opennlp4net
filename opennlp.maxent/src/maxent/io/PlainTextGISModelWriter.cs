@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -24,81 +23,77 @@ using j4n.IO.Writer;
 
 namespace opennlp.maxent.io
 {
+    using AbstractModel = opennlp.model.AbstractModel;
 
+    /// <summary>
+    /// Model writer that saves models in plain text format.
+    /// </summary>
+    public class PlainTextGISModelWriter : GISModelWriter
+    {
+        internal BufferedWriter output;
 
-	using AbstractModel = opennlp.model.AbstractModel;
-
-	/// <summary>
-	/// Model writer that saves models in plain text format.
-	/// </summary>
-	public class PlainTextGISModelWriter : GISModelWriter
-	{
-	  internal BufferedWriter output;
-
-	  /// <summary>
-	  /// Constructor which takes a GISModel and a File and prepares itself to
-	  /// write the model to that file. Detects whether the file is gzipped or not
-	  /// based on whether the suffix contains ".gz".
-	  /// </summary>
-	  /// <param name="model"> The GISModel which is to be persisted. </param>
-	  /// <param name="f"> The File in which the model is to be persisted. </param>
+        /// <summary>
+        /// Constructor which takes a GISModel and a File and prepares itself to
+        /// write the model to that file. Detects whether the file is gzipped or not
+        /// based on whether the suffix contains ".gz".
+        /// </summary>
+        /// <param name="model"> The GISModel which is to be persisted. </param>
+        /// <param name="f"> The File in which the model is to be persisted. </param>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public PlainTextGISModelWriter(opennlp.model.AbstractModel model, java.io.File f) throws java.io.IOException, java.io.FileNotFoundException
-	  public PlainTextGISModelWriter(AbstractModel model, Jfile f) : base(model)
-	  {
+        public PlainTextGISModelWriter(AbstractModel model, Jfile f) : base(model)
+        {
+            if (f.Name.EndsWith(".gz", StringComparison.Ordinal))
+            {
+                output = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(f))));
+            }
+            else
+            {
+                output = new BufferedWriter(new FileWriter(f));
+            }
+        }
 
-		if (f.Name.EndsWith(".gz", StringComparison.Ordinal))
-		{
-		  output = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(f))));
-		}
-		else
-		{
-		  output = new BufferedWriter(new FileWriter(f));
-		}
-	  }
-
-	  /// <summary>
-	  /// Constructor which takes a GISModel and a BufferedWriter and prepares
-	  /// itself to write the model to that writer.
-	  /// </summary>
-	  /// <param name="model"> The GISModel which is to be persisted. </param>
-	  /// <param name="bw"> The BufferedWriter which will be used to persist the model. </param>
-	  public PlainTextGISModelWriter(AbstractModel model, BufferedWriter bw) : base(model)
-	  {
-		output = bw;
-	  }
+        /// <summary>
+        /// Constructor which takes a GISModel and a BufferedWriter and prepares
+        /// itself to write the model to that writer.
+        /// </summary>
+        /// <param name="model"> The GISModel which is to be persisted. </param>
+        /// <param name="bw"> The BufferedWriter which will be used to persist the model. </param>
+        public PlainTextGISModelWriter(AbstractModel model, BufferedWriter bw) : base(model)
+        {
+            output = bw;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeUTF(String s) throws java.io.IOException
-	  public override void writeUTF(string s)
-	  {
-		output.write(s);
-		output.newLine();
-	  }
+        public override void writeUTF(string s)
+        {
+            output.write(s);
+            output.newLine();
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeInt(int i) throws java.io.IOException
-	  public override void writeInt(int i)
-	  {
-		output.write(Convert.ToString(i));
-		output.newLine();
-	  }
+        public override void writeInt(int i)
+        {
+            output.write(Convert.ToString(i));
+            output.newLine();
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeDouble(double d) throws java.io.IOException
-	  public override void writeDouble(double d)
-	  {
-		output.write(Convert.ToString(d));
-		output.newLine();
-	  }
+        public override void writeDouble(double d)
+        {
+            output.write(Convert.ToString(d));
+            output.newLine();
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void close() throws java.io.IOException
-	  public override void close()
-	  {
-		output.flush();
-		output.close();
-	  }
-	}
-
+        public override void close()
+        {
+            output.flush();
+            output.close();
+        }
+    }
 }

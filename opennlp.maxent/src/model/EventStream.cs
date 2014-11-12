@@ -19,32 +19,28 @@
 
 namespace opennlp.model
 {
-
-	/// <summary>
-	/// A object which can deliver a stream of training events for the GIS procedure
-	/// (or others such as IIS if and when they are implemented). EventStreams don't
-	/// need to use opennlp.maxent.DataStreams, but doing so would provide greater
-	/// flexibility for producing events from data stored in different formats.
-	/// </summary>
-	public interface EventStream
-	{
-
-	  /// <summary>
-	  /// Returns the next Event object held in this EventStream.
-	  /// </summary>
-	  /// <returns> the Event object which is next in this EventStream </returns>
+    /// <summary>
+    /// A object which can deliver a stream of training events for the GIS procedure
+    /// (or others such as IIS if and when they are implemented). EventStreams don't
+    /// need to use opennlp.maxent.DataStreams, but doing so would provide greater
+    /// flexibility for producing events from data stored in different formats.
+    /// </summary>
+    public interface EventStream
+    {
+        /// <summary>
+        /// Returns the next Event object held in this EventStream.
+        /// </summary>
+        /// <returns> the Event object which is next in this EventStream </returns>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public Event next() throws java.io.IOException;
-	  Event next();
+        Event next();
 
-	  /// <summary>
-	  /// Test whether there are any Events remaining in this EventStream.
-	  /// </summary>
-	  /// <returns> true if this EventStream has more Events </returns>
+        /// <summary>
+        /// Test whether there are any Events remaining in this EventStream.
+        /// </summary>
+        /// <returns> true if this EventStream has more Events </returns>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public boolean hasNext() throws java.io.IOException;
-	  bool hasNext();
-
-	}
-
+        bool hasNext();
+    }
 }

@@ -19,47 +19,44 @@
 
 namespace opennlp.maxent
 {
+    using MaxentModel = opennlp.model.MaxentModel;
 
-	using MaxentModel = opennlp.model.MaxentModel;
+    /// <summary>
+    /// A object to facilitate the resetting of a MaxentModel variable to a
+    /// new value (model).  In general this will be used anonymously, for example, as
+    /// follows: 
+    /// <para>
+    ///     <pre>
+    ///     private final ModelReplacementManager replacementManager =
+    ///	  new ModelReplacementManager(
+    ///	      new ModelSetter() {
+    ///		  public void setModel(MaxentModel m) {
+    ///		      model = m;
+    ///		  }
+    ///	      }
+    ///	  );
+    ///     </pre>
+    /// </para>
+    /// <para>
+    /// where "model" would be the actual variable name of the model used by your
+    /// application which you wish to be able to swap (you might have other models
+    /// which need their own ModelSetters).
+    /// 
+    /// </para>
+    /// <para>
+    /// Basically, this is just a clean way of giving a ModelReplacementManager
+    /// access to a private variable holding the model.  Nothing complex here.
+    /// </para>
+    /// </summary>
+    public interface ModelSetter
+    {
+        /// <summary>
+        /// Assign a new MaxentModel value to a MaxentModel variable.
+        /// </summary>
+        /// <param name="m">
+        ///          The new model. </param>
+        MaxentModel Model { set; }
 
-	/// <summary>
-	/// A object to facilitate the resetting of a MaxentModel variable to a
-	/// new value (model).  In general this will be used anonymously, for example, as
-	/// follows: 
-	/// <para>
-	///     <pre>
-	///     private final ModelReplacementManager replacementManager =
-	///	  new ModelReplacementManager(
-	///	      new ModelSetter() {
-	///		  public void setModel(MaxentModel m) {
-	///		      model = m;
-	///		  }
-	///	      }
-	///	  );
-	///     </pre>
-	/// </para>
-	/// <para>
-	/// where "model" would be the actual variable name of the model used by your
-	/// application which you wish to be able to swap (you might have other models
-	/// which need their own ModelSetters).
-	/// 
-	/// </para>
-	/// <para>
-	/// Basically, this is just a clean way of giving a ModelReplacementManager
-	/// access to a private variable holding the model.  Nothing complex here.
-	/// </para>
-	/// </summary>
-	public interface ModelSetter
-	{
-
-	  /// <summary>
-	  /// Assign a new MaxentModel value to a MaxentModel variable.
-	  /// </summary>
-	  /// <param name="m">
-	  ///          The new model. </param>
-	  MaxentModel Model {set;}
-
-	    void setModel(MaxentModel model);
-	}
-
+        void setModel(MaxentModel model);
+    }
 }

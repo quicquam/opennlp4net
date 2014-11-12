@@ -19,50 +19,46 @@
 
 namespace opennlp.tools.chunker
 {
+    using opennlp.tools.util;
 
-	using opennlp.tools.util;
+    public class DefaultChunkerSequenceValidator : SequenceValidator<string>
+    {
+        private bool validOutcome(string outcome, string prevOutcome)
+        {
+            if (outcome.StartsWith("I-", StringComparison.Ordinal))
+            {
+                if (prevOutcome == null)
+                {
+                    return (false);
+                }
+                else
+                {
+                    if (prevOutcome.Equals("O"))
+                    {
+                        return (false);
+                    }
+                    if (!prevOutcome.Substring(2).Equals(outcome.Substring(2)))
+                    {
+                        return (false);
+                    }
+                }
+            }
+            return true;
+        }
 
-	public class DefaultChunkerSequenceValidator : SequenceValidator<string>
-	{
+        protected internal virtual bool validOutcome(string outcome, string[] sequence)
+        {
+            string prevOutcome = null;
+            if (sequence.Length > 0)
+            {
+                prevOutcome = sequence[sequence.Length - 1];
+            }
+            return validOutcome(outcome, prevOutcome);
+        }
 
-	  private bool validOutcome(string outcome, string prevOutcome)
-	  {
-		if (outcome.StartsWith("I-", StringComparison.Ordinal))
-		{
-		  if (prevOutcome == null)
-		  {
-			return (false);
-		  }
-		  else
-		  {
-			if (prevOutcome.Equals("O"))
-			{
-			  return (false);
-			}
-			if (!prevOutcome.Substring(2).Equals(outcome.Substring(2)))
-			{
-			  return (false);
-			}
-		  }
-		}
-		return true;
-	  }
-
-	  protected internal virtual bool validOutcome(string outcome, string[] sequence)
-	  {
-		string prevOutcome = null;
-		if (sequence.Length > 0)
-		{
-		  prevOutcome = sequence[sequence.Length - 1];
-		}
-		return validOutcome(outcome,prevOutcome);
-	  }
-
-	  public virtual bool validSequence(int i, string[] sequence, string[] s, string outcome)
-	  {
-		return validOutcome(outcome, s);
-	  }
-
-	}
-
+        public virtual bool validSequence(int i, string[] sequence, string[] s, string outcome)
+        {
+            return validOutcome(outcome, s);
+        }
+    }
 }

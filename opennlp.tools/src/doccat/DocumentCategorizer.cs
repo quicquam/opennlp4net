@@ -18,31 +18,27 @@
 
 namespace opennlp.tools.doccat
 {
+    /// <summary>
+    /// Interface for classes which categorize documents.
+    /// </summary>
+    public interface DocumentCategorizer
+    {
+        /// <summary>
+        /// Categorizes the given text.
+        /// </summary>
+        /// <param name="text"> </param>
+        double[] categorize(string[] text);
 
-	/// <summary>
-	/// Interface for classes which categorize documents.
-	/// </summary>
-	public interface DocumentCategorizer
-	{
+        string getBestCategory(double[] outcome);
 
-	  /// <summary>
-	  /// Categorizes the given text.
-	  /// </summary>
-	  /// <param name="text"> </param>
-	  double[] categorize(string[] text);
+        int getIndex(string category);
 
-	  string getBestCategory(double[] outcome);
+        string getCategory(int index);
 
-	  int getIndex(string category);
+        int NumberOfCategories { get; }
 
-	  string getCategory(int index);
+        double[] categorize(string documentText);
 
-	  int NumberOfCategories {get;}
-
-	  double[] categorize(string documentText);
-
-	  string getAllResults(double[] results);
-	}
-
-
+        string getAllResults(double[] results);
+    }
 }

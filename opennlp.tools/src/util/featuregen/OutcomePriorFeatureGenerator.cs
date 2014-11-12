@@ -17,22 +17,18 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// The definition feature maps the underlying distribution of outcomes.
+    /// </summary>
+    public class OutcomePriorFeatureGenerator : FeatureGeneratorAdapter
+    {
+        public const string OUTCOME_PRIOR_FEATURE = "def";
 
-	/// <summary>
-	/// The definition feature maps the underlying distribution of outcomes.
-	/// </summary>
-	public class OutcomePriorFeatureGenerator : FeatureGeneratorAdapter
-	{
-
-	  public const string OUTCOME_PRIOR_FEATURE = "def";
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
-	  {
-		features.Add(OUTCOME_PRIOR_FEATURE);
-	  }
-	}
-
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
+        {
+            features.Add(OUTCOME_PRIOR_FEATURE);
+        }
+    }
 }

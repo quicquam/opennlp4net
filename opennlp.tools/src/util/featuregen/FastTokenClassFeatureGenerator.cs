@@ -20,122 +20,114 @@ using j4n.Lang;
 
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// Generates features for different for the class of the token.
+    /// </summary>
+    /// @deprecated Use <seealso cref="TokenClassFeatureGenerator"/> instead! 
+    [Obsolete("Use <seealso cref=\"TokenClassFeatureGenerator\"/> instead!")]
+    public class FastTokenClassFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private const string TOKEN_CLASS_PREFIX = "wc";
+        private const string TOKEN_AND_CLASS_PREFIX = "w&c";
+
+        private static Pattern capPeriod;
+
+        static FastTokenClassFeatureGenerator()
+        {
+            capPeriod = Pattern.compile("^[A-Z]\\.$");
+        }
+
+        private bool generateWordAndClassFeature;
 
 
+        public FastTokenClassFeatureGenerator() : this(false)
+        {
+        }
+
+        public FastTokenClassFeatureGenerator(bool genearteWordAndClassFeature)
+        {
+            this.generateWordAndClassFeature = genearteWordAndClassFeature;
+        }
 
 
-	/// <summary>
-	/// Generates features for different for the class of the token.
-	/// </summary>
-	/// @deprecated Use <seealso cref="TokenClassFeatureGenerator"/> instead! 
-	[Obsolete("Use <seealso cref=\"TokenClassFeatureGenerator\"/> instead!")]
-	public class FastTokenClassFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public static string tokenFeature(string token)
+        {
+            StringPattern pattern = StringPattern.recognize(token);
 
-	  private const string TOKEN_CLASS_PREFIX = "wc";
-	  private const string TOKEN_AND_CLASS_PREFIX = "w&c";
+            string feat;
+            if (pattern.AllLowerCaseLetter)
+            {
+                feat = "lc";
+            }
+            else if (pattern.digits() == 2)
+            {
+                feat = "2d";
+            }
+            else if (pattern.digits() == 4)
+            {
+                feat = "4d";
+            }
+            else if (pattern.containsDigit())
+            {
+                if (pattern.containsLetters())
+                {
+                    feat = "an";
+                }
+                else if (pattern.containsHyphen())
+                {
+                    feat = "dd";
+                }
+                else if (pattern.containsSlash())
+                {
+                    feat = "ds";
+                }
+                else if (pattern.containsComma())
+                {
+                    feat = "dc";
+                }
+                else if (pattern.containsPeriod())
+                {
+                    feat = "dp";
+                }
+                else
+                {
+                    feat = "num";
+                }
+            }
+            else if (pattern.AllCapitalLetter && token.Length == 1)
+            {
+                feat = "sc";
+            }
+            else if (pattern.AllCapitalLetter)
+            {
+                feat = "ac";
+            }
+            else if (capPeriod.matcher(token).find())
+            {
+                feat = "cp";
+            }
+            else if (pattern.InitialCapitalLetter)
+            {
+                feat = "ic";
+            }
+            else
+            {
+                feat = "other";
+            }
 
-	  private static Pattern capPeriod;
-
-	  static FastTokenClassFeatureGenerator()
-	  {
-		capPeriod = Pattern.compile("^[A-Z]\\.$");
-	  }
-
-	  private bool generateWordAndClassFeature;
-
-
-
-	  public FastTokenClassFeatureGenerator() : this(false)
-	  {
-	  }
-
-	  public FastTokenClassFeatureGenerator(bool genearteWordAndClassFeature)
-	  {
-		this.generateWordAndClassFeature = genearteWordAndClassFeature;
-	  }
-
-
-	  public static string tokenFeature(string token)
-	  {
-
-		StringPattern pattern = StringPattern.recognize(token);
-
-		string feat;
-		if (pattern.AllLowerCaseLetter)
-		{
-		  feat = "lc";
-		}
-		else if (pattern.digits() == 2)
-		{
-		  feat = "2d";
-		}
-		else if (pattern.digits() == 4)
-		{
-		  feat = "4d";
-		}
-		else if (pattern.containsDigit())
-		{
-		  if (pattern.containsLetters())
-		  {
-			feat = "an";
-		  }
-		  else if (pattern.containsHyphen())
-		  {
-			feat = "dd";
-		  }
-		  else if (pattern.containsSlash())
-		  {
-			feat = "ds";
-		  }
-		  else if (pattern.containsComma())
-		  {
-			feat = "dc";
-		  }
-		  else if (pattern.containsPeriod())
-		  {
-			feat = "dp";
-		  }
-		  else
-		  {
-			feat = "num";
-		  }
-		}
-		else if (pattern.AllCapitalLetter && token.Length == 1)
-		{
-		  feat = "sc";
-		}
-		else if (pattern.AllCapitalLetter)
-		{
-		  feat = "ac";
-		}
-		else if (capPeriod.matcher(token).find())
-		{
-		  feat = "cp";
-		}
-		else if (pattern.InitialCapitalLetter)
-		{
-		  feat = "ic";
-		}
-		else
-		{
-		  feat = "other";
-		}
-
-		return (feat);
-	  }
+            return (feat);
+        }
 
 
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
-	  {
-		string wordClass = tokenFeature(tokens[index]);
-		features.Add(TOKEN_CLASS_PREFIX + "=" + wordClass);
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
+        {
+            string wordClass = tokenFeature(tokens[index]);
+            features.Add(TOKEN_CLASS_PREFIX + "=" + wordClass);
 
-		if (generateWordAndClassFeature)
-		{
-		  features.Add(TOKEN_AND_CLASS_PREFIX + "=" + tokens[index].ToLower() + "," + wordClass);
-		}
-	  }
-	}
-
+            if (generateWordAndClassFeature)
+            {
+                features.Add(TOKEN_AND_CLASS_PREFIX + "=" + tokens[index].ToLower() + "," + wordClass);
+            }
+        }
+    }
 }

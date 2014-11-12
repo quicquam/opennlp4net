@@ -19,49 +19,45 @@
 
 namespace opennlp.tools.namefind
 {
+    using opennlp.tools.util;
 
-	using opennlp.tools.util;
+    public class NameFinderSequenceValidator : SequenceValidator<string>
+    {
+        public virtual bool validSequence(int i, string[] inputSequence, string[] outcomesSequence, string outcome)
+        {
+            // outcome is formatted like "cont" or "sometype-cont", so we
+            // can check if it ends with "cont".
+            if (outcome.EndsWith(NameFinderME.CONTINUE, StringComparison.Ordinal))
+            {
+                int li = outcomesSequence.Length - 1;
 
-	public class NameFinderSequenceValidator : SequenceValidator<string>
-	{
-
-	  public virtual bool validSequence(int i, string[] inputSequence, string[] outcomesSequence, string outcome)
-	  {
-
-		// outcome is formatted like "cont" or "sometype-cont", so we
-		// can check if it ends with "cont".
-		if (outcome.EndsWith(NameFinderME.CONTINUE, StringComparison.Ordinal))
-		{
-
-		  int li = outcomesSequence.Length - 1;
-
-		  if (li == -1)
-		  {
-			return false;
-		  }
-		  else if (outcomesSequence[li].EndsWith(NameFinderME.OTHER, StringComparison.Ordinal))
-		  {
-			return false;
-		  }
-		  else if (outcomesSequence[li].EndsWith(NameFinderME.CONTINUE, StringComparison.Ordinal))
-		  {
-			// if it is continue, we have to check if previous match was of the same type 
-			string previousNameType = NameFinderME.extractNameType(outcomesSequence[li]);
-			string nameType = NameFinderME.extractNameType(outcome);
-			if (previousNameType != null || nameType != null)
-			{
-			  if (nameType != null)
-			  {
-				if (nameType.Equals(previousNameType))
-				{
-				  return true;
-				}
-			  }
-			  return false; // outcomes types are not equal
-			}
-		  }
-		}
-		return true;
-	  }
-	}
+                if (li == -1)
+                {
+                    return false;
+                }
+                else if (outcomesSequence[li].EndsWith(NameFinderME.OTHER, StringComparison.Ordinal))
+                {
+                    return false;
+                }
+                else if (outcomesSequence[li].EndsWith(NameFinderME.CONTINUE, StringComparison.Ordinal))
+                {
+                    // if it is continue, we have to check if previous match was of the same type 
+                    string previousNameType = NameFinderME.extractNameType(outcomesSequence[li]);
+                    string nameType = NameFinderME.extractNameType(outcome);
+                    if (previousNameType != null || nameType != null)
+                    {
+                        if (nameType != null)
+                        {
+                            if (nameType.Equals(previousNameType))
+                            {
+                                return true;
+                            }
+                        }
+                        return false; // outcomes types are not equal
+                    }
+                }
+            }
+            return true;
+        }
+    }
 }

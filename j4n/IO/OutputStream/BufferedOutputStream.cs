@@ -11,7 +11,6 @@ namespace j4n.IO.OutputStream
         public BufferedOutputStream(FileOutputStream fileOutputStream, int ioBufferSize)
             : base(fileOutputStream.InnerStream)
         {
-
         }
     }
 }

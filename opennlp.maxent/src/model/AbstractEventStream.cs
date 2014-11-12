@@ -19,21 +19,18 @@
 
 namespace opennlp.model
 {
+    public abstract class AbstractEventStream : EventStream
+    {
+        public abstract bool hasNext();
+        public abstract Event next();
 
-	public abstract class AbstractEventStream : EventStream
-	{
-		public abstract bool hasNext();
-		public abstract Event next();
+        public AbstractEventStream() : base()
+        {
+        }
 
-	  public AbstractEventStream() : base()
-	  {
-	  }
-
-	  public virtual void remove()
-	  {
-		throw new System.NotSupportedException();
-	  }
-
-	}
-
+        public virtual void remove()
+        {
+            throw new System.NotSupportedException();
+        }
+    }
 }

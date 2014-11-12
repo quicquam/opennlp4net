@@ -17,7 +17,7 @@ namespace opennlp.tools.Tests.src
         private const string ModelPath = "C:\\opennlp-models\\";
         private string _modelFilePath;
         private string _testTextBlock;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -57,7 +57,9 @@ namespace opennlp.tools.Tests.src
                 for (int i = 0; i < nameSpans.Length; i++)
                 {
                     var s = string.Format("Span: " + nameSpans[i].ToString());
-                    var c = string.Format("Covered text is: " + tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].End - 1]);
+                    var c =
+                        string.Format("Covered text is: " + tokens[nameSpans[i].Start] + " " +
+                                      tokens[nameSpans[i].End - 1]);
                     var p = string.Format("Probability is: " + spanProbs[i]);
                 }
                 Assert.AreEqual(1, nameSpans.Count());
@@ -86,39 +88,40 @@ namespace opennlp.tools.Tests.src
         [Test]
         public void Test2()
         {
-            			//1. convert sentence into tokens
+            //1. convert sentence into tokens
             var modelInToken = new FileInputStream("C:\\opennlp-models\\en-token.bin");
-		    	TokenizerModel modelToken = new TokenizerModel(modelInToken);
+            TokenizerModel modelToken = new TokenizerModel(modelInToken);
 
-		    	Tokenizer tokenizer = new TokenizerME(modelToken);
+            Tokenizer tokenizer = new TokenizerME(modelToken);
 
-               var tokens = tokenizer.tokenize("Why is Jack London so famous?");
- 
-		    	//2. find names
-                var modelIn = new FileInputStream("C:\\opennlp-models\\en-ner-person.bin");
-		    	TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
-                
-                NameFinderME nameFinder = new NameFinderME(model);
+            var tokens = tokenizer.tokenize("Why is Jack London so famous?");
 
-		    	var nameSpans = nameFinder.find(tokens);
-                
-                var nameGis = model.NameFinderModel as GISModel;
-                if (nameGis != null)
-                {
-                    var modelWriter = new PlainTextGISModelWriter(nameGis, new Jfile("nameGis.txt", FileMode.Create));
-                    modelWriter.persist();
-                }	
+            //2. find names
+            var modelIn = new FileInputStream("C:\\opennlp-models\\en-ner-person.bin");
+            TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
 
-		    	//find probabilities for names
-		    	double[] spanProbs = nameFinder.probs(nameSpans);
-		    	
-		    	//3. print names
-		    	for( int i = 0; i<nameSpans.Length; i++) {
-		    		var s = string.Format("Span: "+nameSpans[i].ToString());
-		    		var c = string.Format("Covered text is: "+tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].End-1]);
-		    		var p = string.Format("Probability is: "+spanProbs[i]);
-		    	}		    	
+            NameFinderME nameFinder = new NameFinderME(model);
 
+            var nameSpans = nameFinder.find(tokens);
+
+            var nameGis = model.NameFinderModel as GISModel;
+            if (nameGis != null)
+            {
+                var modelWriter = new PlainTextGISModelWriter(nameGis, new Jfile("nameGis.txt", FileMode.Create));
+                modelWriter.persist();
+            }
+
+            //find probabilities for names
+            double[] spanProbs = nameFinder.probs(nameSpans);
+
+            //3. print names
+            for (int i = 0; i < nameSpans.Length; i++)
+            {
+                var s = string.Format("Span: " + nameSpans[i].ToString());
+                var c =
+                    string.Format("Covered text is: " + tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].End - 1]);
+                var p = string.Format("Probability is: " + spanProbs[i]);
+            }
         }
 
         private void DumpObject(object value, string name, string fileName)

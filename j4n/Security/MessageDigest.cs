@@ -8,7 +8,6 @@ namespace j4n.Security
 {
     public class MessageDigest
     {
-
         public string update(sbyte[] buffer)
         {
             throw new NotImplementedException();

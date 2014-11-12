@@ -18,21 +18,17 @@
 
 namespace opennlp.tools.parser
 {
+    /// <summary>
+    /// Enumerated type of event types for the parser.
+    /// </summary>
+    public enum ParserEventTypeEnum
+    {
+        BUILD,
+        CHECK,
 
-	/// <summary>
-	/// Enumerated type of event types for the parser.
-	/// </summary>
-	public enum ParserEventTypeEnum
-	{
+        [System.Obsolete] CHUNK,
+        [System.Obsolete] TAG,
 
-	  BUILD,
-	  CHECK,
-
-	  [System.Obsolete]
-	  CHUNK,
-	  [System.Obsolete]
-	  TAG,
-
-	  ATTACH
-	}
+        ATTACH
+    }
 }

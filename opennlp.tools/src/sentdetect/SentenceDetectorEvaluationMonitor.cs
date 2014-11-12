@@ -17,12 +17,9 @@
 
 namespace opennlp.tools.sentdetect
 {
+    using opennlp.tools.util.eval;
 
-	using opennlp.tools.util.eval;
-
-	public interface SentenceDetectorEvaluationMonitor : EvaluationMonitor<SentenceSample>
-	{
-
-	}
-
+    public interface SentenceDetectorEvaluationMonitor : EvaluationMonitor<SentenceSample>
+    {
+    }
 }

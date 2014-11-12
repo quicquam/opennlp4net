@@ -11,7 +11,7 @@ namespace j4n.IO.OutputStream
         {
             InnerStream = os.InnerStream;
         }
-        
+
         public OutputStream(Stream stream)
         {
             InnerStream = stream;

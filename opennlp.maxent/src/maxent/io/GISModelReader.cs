@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -28,7 +27,6 @@ namespace opennlp.maxent.io
     /// </summary>
     public class GISModelReader : AbstractModelReader
     {
-
         //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
         //ORIGINAL LINE: public GISModelReader(java.io.File file) throws java.io.IOException
         public GISModelReader(Jfile file)
@@ -84,7 +82,8 @@ namespace opennlp.maxent.io
             string modelType = readUTF();
             if (!modelType.Equals("GIS"))
             {
-                Console.WriteLine("Error: attempting to load a " + modelType + " model as a GIS model." + " You should expect problems.");
+                Console.WriteLine("Error: attempting to load a " + modelType + " model as a GIS model." +
+                                  " You should expect problems.");
             }
         }
 
@@ -98,5 +97,4 @@ namespace opennlp.maxent.io
             return readDouble();
         }
     }
-
 }

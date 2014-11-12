@@ -21,191 +21,188 @@ using j4n.Utils;
 
 namespace opennlp.model
 {
+    public abstract class AbstractModel : MaxentModel
+    {
+        public abstract double[] eval(string[] context, float[] values);
+        public abstract double[] eval(string[] context, double[] probs);
+        public abstract double[] eval(string[] context);
 
-	public abstract class AbstractModel : MaxentModel
-	{
-		public abstract double[] eval(string[] context, float[] values);
-		public abstract double[] eval(string[] context, double[] probs);
-		public abstract double[] eval(string[] context);
+        /// <summary>
+        /// Mapping between predicates/contexts and an integer representing them. </summary>
+        protected internal IndexHashTable<string> pmap;
 
-	  /// <summary>
-	  /// Mapping between predicates/contexts and an integer representing them. </summary>
-	  protected internal IndexHashTable<string> pmap;
-	  /// <summary>
-	  /// The names of the outcomes. </summary>
-	  protected internal string[] outcomeNames;
-	  /// <summary>
-	  /// Parameters for the model. </summary>
-	  protected internal EvalParameters evalParams;
-	  /// <summary>
-	  /// Prior distribution for this model. </summary>
-	  protected internal Prior prior;
+        /// <summary>
+        /// The names of the outcomes. </summary>
+        protected internal string[] outcomeNames;
 
-	  public enum ModelTypeEnum
-	  {
-		  Maxent,
-		  Perceptron,
-		  MaxentQn
-	  }
+        /// <summary>
+        /// Parameters for the model. </summary>
+        protected internal EvalParameters evalParams;
 
-	  /// <summary>
-	  /// The type of the model. </summary>
-	  protected internal ModelTypeEnum modelType;
+        /// <summary>
+        /// Prior distribution for this model. </summary>
+        protected internal Prior prior;
 
-	  public AbstractModel(Context[] @params, string[] predLabels, IndexHashTable<string> pmap, string[] outcomeNames)
-	  {
-		this.pmap = pmap;
-		this.outcomeNames = outcomeNames;
-		this.evalParams = new EvalParameters(@params,outcomeNames.Length);
-	  }
+        public enum ModelTypeEnum
+        {
+            Maxent,
+            Perceptron,
+            MaxentQn
+        }
 
-	  public AbstractModel(Context[] @params, string[] predLabels, string[] outcomeNames)
-	  {
-		init(predLabels,outcomeNames);
-		this.evalParams = new EvalParameters(@params,outcomeNames.Length);
-	  }
+        /// <summary>
+        /// The type of the model. </summary>
+        protected internal ModelTypeEnum modelType;
 
-	  public AbstractModel(Context[] @params, string[] predLabels, string[] outcomeNames, int correctionConstant, double correctionParam)
-	  {
-		init(predLabels,outcomeNames);
-		this.evalParams = new EvalParameters(@params,correctionParam,correctionConstant,outcomeNames.Length);
-	  }
+        public AbstractModel(Context[] @params, string[] predLabels, IndexHashTable<string> pmap, string[] outcomeNames)
+        {
+            this.pmap = pmap;
+            this.outcomeNames = outcomeNames;
+            this.evalParams = new EvalParameters(@params, outcomeNames.Length);
+        }
 
-	  private void init(string[] predLabels, string[] outcomeNames)
-	  {
-		this.pmap = new IndexHashTable<string>(predLabels, 0.7d);
-		this.outcomeNames = outcomeNames;
-	  }
+        public AbstractModel(Context[] @params, string[] predLabels, string[] outcomeNames)
+        {
+            init(predLabels, outcomeNames);
+            this.evalParams = new EvalParameters(@params, outcomeNames.Length);
+        }
+
+        public AbstractModel(Context[] @params, string[] predLabels, string[] outcomeNames, int correctionConstant,
+            double correctionParam)
+        {
+            init(predLabels, outcomeNames);
+            this.evalParams = new EvalParameters(@params, correctionParam, correctionConstant, outcomeNames.Length);
+        }
+
+        private void init(string[] predLabels, string[] outcomeNames)
+        {
+            this.pmap = new IndexHashTable<string>(predLabels, 0.7d);
+            this.outcomeNames = outcomeNames;
+        }
 
 
-	  /// <summary>
-	  /// Return the name of the outcome corresponding to the highest likelihood
-	  /// in the parameter ocs.
-	  /// </summary>
-	  /// <param name="ocs"> A double[] as returned by the eval(String[] context)
-	  ///            method. </param>
-	  /// <returns>    The name of the most likely outcome. </returns>
-	  public string getBestOutcome(double[] ocs)
-	  {
-		  int best = 0;
-		  for (int i = 1; i < ocs.Length; i++)
-		  {
-			  if (ocs[i] > ocs[best])
-			  {
-				  best = i;
-			  }
-		  }
-		  return outcomeNames[best];
-	  }
+        /// <summary>
+        /// Return the name of the outcome corresponding to the highest likelihood
+        /// in the parameter ocs.
+        /// </summary>
+        /// <param name="ocs"> A double[] as returned by the eval(String[] context)
+        ///            method. </param>
+        /// <returns>    The name of the most likely outcome. </returns>
+        public string getBestOutcome(double[] ocs)
+        {
+            int best = 0;
+            for (int i = 1; i < ocs.Length; i++)
+            {
+                if (ocs[i] > ocs[best])
+                {
+                    best = i;
+                }
+            }
+            return outcomeNames[best];
+        }
 
-	  public ModelTypeEnum ModelType
-	  {
-		  get
-		  {
-			return modelType;
-		  }
-	  }
+        public ModelTypeEnum ModelType
+        {
+            get { return modelType; }
+        }
 
-	  /// <summary>
-	  /// Return a string matching all the outcome names with all the
-	  /// probabilities produced by the <code>eval(String[] context)</code>
-	  /// method.
-	  /// </summary>
-	  /// <param name="ocs"> A <code>double[]</code> as returned by the
-	  ///            <code>eval(String[] context)</code>
-	  ///            method. </param>
-	  /// <returns>    String containing outcome names paired with the normalized
-	  ///            probability (contained in the <code>double[] ocs</code>)
-	  ///            for each one. </returns>
-	  public string getAllOutcomes(double[] ocs)
-	  {
-		  if (ocs.Length != outcomeNames.Length)
-		  {
-			  return "The double array sent as a parameter to GISModel.getAllOutcomes() must not have been produced by this model.";
-		  }
-		  else
-		  {
-			DecimalFormat df = new DecimalFormat("0.0000");
-			StringBuilder sb = new StringBuilder(ocs.Length * 2);
-			sb.Append(outcomeNames[0]).Append("[").Append(df.format(ocs[0])).Append("]");
-			for (int i = 1; i < ocs.Length; i++)
-			{
-			  sb.Append("  ").Append(outcomeNames[i]).Append("[").Append(df.format(ocs[i])).Append("]");
-			}
-			return sb.ToString();
-		  }
-	  }
+        /// <summary>
+        /// Return a string matching all the outcome names with all the
+        /// probabilities produced by the <code>eval(String[] context)</code>
+        /// method.
+        /// </summary>
+        /// <param name="ocs"> A <code>double[]</code> as returned by the
+        ///            <code>eval(String[] context)</code>
+        ///            method. </param>
+        /// <returns>    String containing outcome names paired with the normalized
+        ///            probability (contained in the <code>double[] ocs</code>)
+        ///            for each one. </returns>
+        public string getAllOutcomes(double[] ocs)
+        {
+            if (ocs.Length != outcomeNames.Length)
+            {
+                return
+                    "The double array sent as a parameter to GISModel.getAllOutcomes() must not have been produced by this model.";
+            }
+            else
+            {
+                DecimalFormat df = new DecimalFormat("0.0000");
+                StringBuilder sb = new StringBuilder(ocs.Length*2);
+                sb.Append(outcomeNames[0]).Append("[").Append(df.format(ocs[0])).Append("]");
+                for (int i = 1; i < ocs.Length; i++)
+                {
+                    sb.Append("  ").Append(outcomeNames[i]).Append("[").Append(df.format(ocs[i])).Append("]");
+                }
+                return sb.ToString();
+            }
+        }
 
-	  /// <summary>
-	  /// Return the name of an outcome corresponding to an int id.
-	  /// </summary>
-	  /// <param name="i"> An outcome id. </param>
-	  /// <returns>  The name of the outcome associated with that id. </returns>
-	  public string getOutcome(int i)
-	  {
-		  return outcomeNames[i];
-	  }
+        /// <summary>
+        /// Return the name of an outcome corresponding to an int id.
+        /// </summary>
+        /// <param name="i"> An outcome id. </param>
+        /// <returns>  The name of the outcome associated with that id. </returns>
+        public string getOutcome(int i)
+        {
+            return outcomeNames[i];
+        }
 
-	  /// <summary>
-	  /// Gets the index associated with the String name of the given outcome.
-	  /// </summary>
-	  /// <param name="outcome"> the String name of the outcome for which the
-	  ///          index is desired </param>
-	  /// <returns> the index if the given outcome label exists for this
-	  /// model, -1 if it does not.
-	  ///  </returns>
-	  public virtual int getIndex(string outcome)
-	  {
-		  for (int i = 0; i < outcomeNames.Length; i++)
-		  {
-			  if (outcomeNames[i].Equals(outcome))
-			  {
-				  return i;
-			  }
-		  }
-		  return -1;
-	  }
+        /// <summary>
+        /// Gets the index associated with the String name of the given outcome.
+        /// </summary>
+        /// <param name="outcome"> the String name of the outcome for which the
+        ///          index is desired </param>
+        /// <returns> the index if the given outcome label exists for this
+        /// model, -1 if it does not.
+        ///  </returns>
+        public virtual int getIndex(string outcome)
+        {
+            for (int i = 0; i < outcomeNames.Length; i++)
+            {
+                if (outcomeNames[i].Equals(outcome))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
 
-	  public virtual int NumOutcomes
-	  {
-		  get
-		  {
-			return (evalParams.NumOutcomes);
-		  }
-	  }
+        public virtual int NumOutcomes
+        {
+            get { return (evalParams.NumOutcomes); }
+        }
 
-	  /// <summary>
-	  /// Provides the fundamental data structures which encode the maxent model
-	  /// information.  This method will usually only be needed by
-	  /// GISModelWriters.  The following values are held in the Object array
-	  /// which is returned by this method:
-	  /// 
-	  /// <li>index 0: opennlp.maxent.Context[] containing the model
-	  ///            parameters  
-	  /// <li>index 1: java.util.Map containing the mapping of model predicates
-	  ///            to unique integers
-	  /// <li>index 2: java.lang.String[] containing the names of the outcomes,
-	  ///            stored in the index of the array which represents their
-	  /// 	          unique ids in the model.
-	  /// <li>index 3: java.lang.Integer containing the value of the models
-	  ///            correction constant
-	  /// <li>index 4: java.lang.Double containing the value of the models
-	  ///            correction parameter
-	  /// </summary>
-	  /// <returns> An Object[] with the values as described above. </returns>
-	  public object[] DataStructures
-	  {
-		  get
-		  {
-			  object[] data = new object[5];
-			  data[0] = evalParams.Params;
-			  data[1] = pmap;
-			  data[2] = outcomeNames;
-			  data[3] = (int) evalParams.CorrectionConstant;
-			  data[4] = evalParams.CorrectionParam;
-			  return data;
-		  }
-	  }
-	}
-
+        /// <summary>
+        /// Provides the fundamental data structures which encode the maxent model
+        /// information.  This method will usually only be needed by
+        /// GISModelWriters.  The following values are held in the Object array
+        /// which is returned by this method:
+        /// 
+        /// <li>index 0: opennlp.maxent.Context[] containing the model
+        ///            parameters  
+        /// <li>index 1: java.util.Map containing the mapping of model predicates
+        ///            to unique integers
+        /// <li>index 2: java.lang.String[] containing the names of the outcomes,
+        ///            stored in the index of the array which represents their
+        /// 	          unique ids in the model.
+        /// <li>index 3: java.lang.Integer containing the value of the models
+        ///            correction constant
+        /// <li>index 4: java.lang.Double containing the value of the models
+        ///            correction parameter
+        /// </summary>
+        /// <returns> An Object[] with the values as described above. </returns>
+        public object[] DataStructures
+        {
+            get
+            {
+                object[] data = new object[5];
+                data[0] = evalParams.Params;
+                data[1] = pmap;
+                data[2] = outcomeNames;
+                data[3] = (int) evalParams.CorrectionConstant;
+                data[4] = evalParams.CorrectionParam;
+                return data;
+            }
+        }
+    }
 }

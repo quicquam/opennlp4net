@@ -10,17 +10,14 @@ namespace j4n.Exceptions
     {
         public IllegalStateException(string message, Exception e)
         {
-            
         }
 
         public IllegalStateException(Exception e)
         {
-            
         }
 
         public IllegalStateException(string message)
         {
-            
         }
     }
 }

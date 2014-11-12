@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -26,11 +25,11 @@ namespace opennlp.model
 {
     public abstract class AbstractModelReader
     {
-
         /// <summary>
         /// The number of predicates contained in the model.
         /// </summary>
         protected internal int NUM_PREDS;
+
         protected internal DataReader dataReader;
 
         protected AbstractModelReader(Jfile f)
@@ -115,7 +114,6 @@ namespace opennlp.model
             }
             catch (Exception ex)
             {
-                
                 throw ex;
             }
         }
@@ -140,7 +138,6 @@ namespace opennlp.model
             }
             catch (Exception ex)
             {
-                
                 throw ex;
             }
         }
@@ -159,7 +156,6 @@ namespace opennlp.model
             }
             catch (Exception ex)
             {
-                
                 throw ex;
             }
         }
@@ -172,7 +168,6 @@ namespace opennlp.model
         /// index of each outcomes which make up this pattern in indicies 1-n. </param>
         /// <returns> An array of context objects. </returns>
         /// <exception cref="java.io.IOException"> when the model file does not match the outcome patterns or can not be read. </exception>
-
         protected Context[] GetParameters(int[][] outcomePatterns)
         {
             Context[] @params = new Context[NUM_PREDS];
@@ -200,6 +195,5 @@ namespace opennlp.model
             }
             return @params;
         }
-
     }
 }

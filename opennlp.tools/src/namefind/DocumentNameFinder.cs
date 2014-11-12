@@ -17,28 +17,24 @@
 
 namespace opennlp.tools.namefind
 {
+    using Span = opennlp.tools.util.Span;
 
-	using Span = opennlp.tools.util.Span;
-
-	/// <summary>
-	/// Name finding interface which processes an entire document allowing the name finder to use context
-	/// from the entire document.
-	/// 
-	/// <strong>EXPERIMENTAL</strong>. 
-	/// This interface has been added as part of a work in progress and might change without notice.
-	/// </summary>
-	public interface DocumentNameFinder
-	{
-
-	  /// <summary>
-	  /// Returns tokens span for the specified document of sentences and their tokens.
-	  /// Span start and end indices are relative to the sentence they are in.
-	  /// For example, a span identifying a name consisting of the first and second word of the second sentence would
-	  /// be 0..2 and be referenced as spans[1][0]. </summary>
-	  /// <param name="document"> An array of tokens for each sentence of a document. </param>
-	  /// <returns> The token spans for each sentence of the specified document. </returns>
-	  Span[][] find(string[][] document);
-
-	}
-
+    /// <summary>
+    /// Name finding interface which processes an entire document allowing the name finder to use context
+    /// from the entire document.
+    /// 
+    /// <strong>EXPERIMENTAL</strong>. 
+    /// This interface has been added as part of a work in progress and might change without notice.
+    /// </summary>
+    public interface DocumentNameFinder
+    {
+        /// <summary>
+        /// Returns tokens span for the specified document of sentences and their tokens.
+        /// Span start and end indices are relative to the sentence they are in.
+        /// For example, a span identifying a name consisting of the first and second word of the second sentence would
+        /// be 0..2 and be referenced as spans[1][0]. </summary>
+        /// <param name="document"> An array of tokens for each sentence of a document. </param>
+        /// <returns> The token spans for each sentence of the specified document. </returns>
+        Span[][] find(string[][] document);
+    }
 }

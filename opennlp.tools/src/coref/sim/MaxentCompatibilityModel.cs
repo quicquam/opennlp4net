@@ -19,75 +19,74 @@
 
 namespace opennlp.tools.coref.sim
 {
+    /// <summary>
+    /// Model of mention compatibiltiy using a maxent model.
+    /// </summary>
+    public class MaxentCompatibilityModel
+    {
+        private readonly double minGenderProb = 0.66;
+        private readonly double minNumberProb = 0.66;
 
-	/// <summary>
-	/// Model of mention compatibiltiy using a maxent model.
-	/// </summary>
-	public class MaxentCompatibilityModel
-	{
+        private static TestGenderModel genModel;
+        private static TestNumberModel numModel;
 
-	  private readonly double minGenderProb = 0.66;
-	  private readonly double minNumberProb = 0.66;
-
-	  private static TestGenderModel genModel;
-	  private static TestNumberModel numModel;
-
-	  private bool debugOn = false;
+        private bool debugOn = false;
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public MaxentCompatibilityModel(String corefProject) throws java.io.IOException
-	  public MaxentCompatibilityModel(string corefProject)
-	  {
-		genModel = GenderModel.testModel(corefProject + "/gen");
-		numModel = NumberModel.testModel(corefProject + "/num");
-	  }
+        public MaxentCompatibilityModel(string corefProject)
+        {
+            genModel = GenderModel.testModel(corefProject + "/gen");
+            numModel = NumberModel.testModel(corefProject + "/num");
+        }
 
-	  public virtual Gender computeGender(Context c)
-	  {
-		Gender gender;
-		double[] gdist = genModel.genderDistribution(c);
-		if (debugOn)
-		{
-		  Console.Error.WriteLine("MaxentCompatibilityModel.computeGender: " + c.ToString() + " m=" + gdist[genModel.MaleIndex] + " f=" + gdist[genModel.FemaleIndex] + " n=" + gdist[genModel.NeuterIndex]);
-		}
-		if (genModel.MaleIndex >= 0 && gdist[genModel.MaleIndex] > minGenderProb)
-		{
-		  gender = new Gender(GenderEnum.MALE,gdist[genModel.MaleIndex]);
-		}
-		else if (genModel.FemaleIndex >= 0 && gdist[genModel.FemaleIndex] > minGenderProb)
-		{
-		  gender = new Gender(GenderEnum.FEMALE,gdist[genModel.FemaleIndex]);
-		}
-		else if (genModel.NeuterIndex >= 0 && gdist[genModel.NeuterIndex] > minGenderProb)
-		{
-		  gender = new Gender(GenderEnum.NEUTER,gdist[genModel.NeuterIndex]);
-		}
-		else
-		{
-		  gender = new Gender(GenderEnum.UNKNOWN,minGenderProb);
-		}
-		return gender;
-	  }
+        public virtual Gender computeGender(Context c)
+        {
+            Gender gender;
+            double[] gdist = genModel.genderDistribution(c);
+            if (debugOn)
+            {
+                Console.Error.WriteLine("MaxentCompatibilityModel.computeGender: " + c.ToString() + " m=" +
+                                        gdist[genModel.MaleIndex] + " f=" + gdist[genModel.FemaleIndex] + " n=" +
+                                        gdist[genModel.NeuterIndex]);
+            }
+            if (genModel.MaleIndex >= 0 && gdist[genModel.MaleIndex] > minGenderProb)
+            {
+                gender = new Gender(GenderEnum.MALE, gdist[genModel.MaleIndex]);
+            }
+            else if (genModel.FemaleIndex >= 0 && gdist[genModel.FemaleIndex] > minGenderProb)
+            {
+                gender = new Gender(GenderEnum.FEMALE, gdist[genModel.FemaleIndex]);
+            }
+            else if (genModel.NeuterIndex >= 0 && gdist[genModel.NeuterIndex] > minGenderProb)
+            {
+                gender = new Gender(GenderEnum.NEUTER, gdist[genModel.NeuterIndex]);
+            }
+            else
+            {
+                gender = new Gender(GenderEnum.UNKNOWN, minGenderProb);
+            }
+            return gender;
+        }
 
-	  public virtual Number computeNumber(Context c)
-	  {
-		double[] dist = numModel.numberDist(c);
-		Number number;
-		//System.err.println("MaxentCompatibiltyResolver.computeNumber: "+c+" sing="+dist[numModel.getSingularIndex()]+" plural="+dist[numModel.getPluralIndex()]);
-		if (dist[numModel.SingularIndex] > minNumberProb)
-		{
-		  number = new Number(NumberEnum.SINGULAR,dist[numModel.SingularIndex]);
-		}
-		else if (dist[numModel.PluralIndex] > minNumberProb)
-		{
-		  number = new Number(NumberEnum.PLURAL,dist[numModel.PluralIndex]);
-		}
-		else
-		{
-		  number = new Number(NumberEnum.UNKNOWN,minNumberProb);
-		}
-		return number;
-	  }
-	}
-
+        public virtual Number computeNumber(Context c)
+        {
+            double[] dist = numModel.numberDist(c);
+            Number number;
+            //System.err.println("MaxentCompatibiltyResolver.computeNumber: "+c+" sing="+dist[numModel.getSingularIndex()]+" plural="+dist[numModel.getPluralIndex()]);
+            if (dist[numModel.SingularIndex] > minNumberProb)
+            {
+                number = new Number(NumberEnum.SINGULAR, dist[numModel.SingularIndex]);
+            }
+            else if (dist[numModel.PluralIndex] > minNumberProb)
+            {
+                number = new Number(NumberEnum.PLURAL, dist[numModel.PluralIndex]);
+            }
+            else
+            {
+                number = new Number(NumberEnum.UNKNOWN, minNumberProb);
+            }
+            return number;
+        }
+    }
 }

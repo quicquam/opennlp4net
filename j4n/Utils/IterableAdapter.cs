@@ -53,7 +53,7 @@ namespace j4n.Utils
             return next;
         }
 
-        void CheckNext()
+        private void CheckNext()
         {
             if (!fetchedNext)
             {

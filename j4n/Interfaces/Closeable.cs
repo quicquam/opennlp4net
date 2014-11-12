@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace j4n.Interfaces
 {
-
     public interface Closeable
     {
         void close();

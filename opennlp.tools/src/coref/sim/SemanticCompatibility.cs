@@ -17,37 +17,28 @@
 
 namespace opennlp.tools.coref.sim
 {
+    /// <summary>
+    /// Class which models the semantic compatibility of an enity and the confidence of that association.
+    /// </summary>
+    public class SemanticCompatibility
+    {
+        private SemanticEnum type;
+        private double confidence;
 
-	/// <summary>
-	/// Class which models the semantic compatibility of an enity and the confidence of that association.
-	/// </summary>
-	public class SemanticCompatibility
-	{
+        public SemanticCompatibility(SemanticEnum type, double confidence)
+        {
+            this.type = type;
+            this.confidence = confidence;
+        }
 
-	  private SemanticEnum type;
-	  private double confidence;
+        public virtual SemanticEnum Type
+        {
+            get { return type; }
+        }
 
-	  public SemanticCompatibility(SemanticEnum type, double confidence)
-	  {
-		this.type = type;
-		this.confidence = confidence;
-	  }
-
-	  public virtual SemanticEnum Type
-	  {
-		  get
-		  {
-			return type;
-		  }
-	  }
-
-	  public virtual double Confidence
-	  {
-		  get
-		  {
-			return confidence;
-		  }
-	  }
-	}
-
+        public virtual double Confidence
+        {
+            get { return confidence; }
+        }
+    }
 }

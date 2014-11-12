@@ -23,10 +23,8 @@ using j4n.Utils;
 
 namespace opennlp.tools.util
 {
-
     public class TrainingParameters
     {
-
         public static string ALGORITHM_PARAM = "Algorithm";
 
         public static string ITERATIONS_PARAM = "Iterations";
@@ -40,7 +38,6 @@ namespace opennlp.tools.util
 
         public TrainingParameters(InputStream @in)
         {
-
             Properties properties = new Properties();
             properties.load(@in);
             /* TODO load properties
@@ -55,6 +52,7 @@ namespace opennlp.tools.util
          * 
          * @return the name or null if not set.
          */
+
         public String algorithm(String name)
         {
             string outVal;
@@ -66,6 +64,7 @@ namespace opennlp.tools.util
          * 
          * @return the name or null if not set.
          */
+
         public String algorithm()
         {
             string outVal;
@@ -79,9 +78,9 @@ namespace opennlp.tools.util
          * 
          * @return a parameter map which can be passed to the train and validate methods.
          */
+
         public Dictionary<String, String> getSettings(string nameSpace)
         {
-
             var trainingParams = new Dictionary<String, String>();
             foreach (KeyValuePair<string, string> entry in parameters)
             {
@@ -103,7 +102,6 @@ namespace opennlp.tools.util
                         trainingParams.Add(key, entry.Value);
                     }
                 }
-
             }
 
             return trainingParams;
@@ -114,6 +112,7 @@ namespace opennlp.tools.util
          * 
          * @return the settings map
          */
+
         public Dictionary<String, String> getSettings()
         {
             return getSettings(null);
@@ -122,7 +121,6 @@ namespace opennlp.tools.util
         // reduces the params to contain only the params in the name space
         public TrainingParameters getParameters(String nameSpace)
         {
-
             var parameters = new TrainingParameters();
 
             foreach (var entry in getSettings(nameSpace))
@@ -135,7 +133,6 @@ namespace opennlp.tools.util
 
         public void put(String nameSpace, String key, String value)
         {
-
             if (nameSpace == null)
             {
                 parameters.Add(key, value);

@@ -18,31 +18,28 @@
 
 namespace opennlp.tools.coref
 {
+    /// <summary>
+    /// Enumeration of modes in which a linker can run.
+    /// </summary>
+    public enum LinkerMode
+    {
+        /// <summary>
+        /// Testing mode, used to identify coreference relationships in un-annotated text.
+        /// </summary>
+        TEST,
 
-	/// <summary>
-	/// Enumeration of modes in which a linker can run.
-	/// </summary>
-	public enum LinkerMode
-	{
+        /// <summary>
+        /// Training mode, used to learn coreference relationships in annotated text.
+        /// </summary>
+        TRAIN,
 
-	  /// <summary>
-	  /// Testing mode, used to identify coreference relationships in un-annotated text.
-	  /// </summary>
-	  TEST,
+        /// <summary>
+        /// Evaluation mode, used to evaluate identifed coreference relationships based on annotated text. </summary>
+        EVAL,
 
-	  /// <summary>
-	  /// Training mode, used to learn coreference relationships in annotated text.
-	  /// </summary>
-	  TRAIN,
-
-	  /// <summary>
-	  /// Evaluation mode, used to evaluate identifed coreference relationships based on annotated text. </summary>
-	  EVAL,
-
-	  /// <summary>
-	  /// Training mode, used to learn coreference relationships in annotated text.
-	  /// </summary>
-	  SIM
-	}
-
+        /// <summary>
+        /// Training mode, used to learn coreference relationships in annotated text.
+        /// </summary>
+        SIM
+    }
 }

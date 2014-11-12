@@ -21,63 +21,58 @@ using j4n.Serialization;
 
 namespace opennlp.tools.chunker
 {
+    using opennlp.tools.util;
+    using opennlp.tools.util;
 
-
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	/// <summary>
-	/// Parses the conll 2000 shared task shallow parser training data.
-	/// <para>
-	/// Data format is specified on the conll page:<br>
-	/// <a hraf="http://www.cnts.ua.ac.be/conll2000/chunking/">
-	/// http://www.cnts.ua.ac.be/conll2000/chunking/</a>
-	/// </para>
-	/// </summary>
-	public class ChunkSampleStream : FilterObjectStream<string, ChunkSample>
-	{
-
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="samples"> a plain text line stream </param>
-	  public ChunkSampleStream(ObjectStream<string> samples) : base(samples)
-	  {
-	  }
+    /// <summary>
+    /// Parses the conll 2000 shared task shallow parser training data.
+    /// <para>
+    /// Data format is specified on the conll page:<br>
+    /// <a hraf="http://www.cnts.ua.ac.be/conll2000/chunking/">
+    /// http://www.cnts.ua.ac.be/conll2000/chunking/</a>
+    /// </para>
+    /// </summary>
+    public class ChunkSampleStream : FilterObjectStream<string, ChunkSample>
+    {
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="samples"> a plain text line stream </param>
+        public ChunkSampleStream(ObjectStream<string> samples) : base(samples)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public ChunkSample read() throws java.io.IOException
-	  public override ChunkSample read()
-	  {
+        public override ChunkSample read()
+        {
+            IList<string> toks = new List<string>();
+            IList<string> tags = new List<string>();
+            IList<string> preds = new List<string>();
 
-		IList<string> toks = new List<string>();
-		IList<string> tags = new List<string>();
-		IList<string> preds = new List<string>();
+            for (string line = samples.read(); line != null && !line.Equals(""); line = samples.read())
+            {
+                string[] parts = line.Split(' ');
+                if (parts.Length != 3)
+                {
+                    Console.Error.WriteLine("Skipping corrupt line: " + line);
+                }
+                else
+                {
+                    toks.Add(parts[0]);
+                    tags.Add(parts[1]);
+                    preds.Add(parts[2]);
+                }
+            }
 
-		for (string line = samples.read(); line != null && !line.Equals(""); line = samples.read())
-		{
-		  string[] parts = line.Split(' ');
-		  if (parts.Length != 3)
-		  {
-			Console.Error.WriteLine("Skipping corrupt line: " + line);
-		  }
-		  else
-		  {
-			toks.Add(parts[0]);
-			tags.Add(parts[1]);
-			preds.Add(parts[2]);
-		  }
-		}
-
-		if (toks.Count > 0)
-		{
-		  return new ChunkSample(toks.ToArray(), tags.ToArray(), preds.ToArray());
-		}
-		else
-		{
-		  return null;
-		}
-	  }
-	}
-
+            if (toks.Count > 0)
+            {
+                return new ChunkSample(toks.ToArray(), tags.ToArray(), preds.ToArray());
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
 }

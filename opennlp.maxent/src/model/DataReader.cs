@@ -19,21 +19,18 @@
 
 namespace opennlp.model
 {
-
-	public interface DataReader
-	{
-
+    public interface DataReader
+    {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public double readDouble() throws java.io.IOException;
-	  double readDouble();
+        double readDouble();
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public int readInt() throws java.io.IOException;
-	  int readInt();
+        int readInt();
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public String readUTF() throws java.io.IOException;
-	  string readUTF();
-	}
-
+        string readUTF();
+    }
 }

@@ -16,7 +16,7 @@ namespace j4n.Lang
         {
             _input = input;
         }
-        
+
         public Matcher(Pattern pattern, string input)
         {
             _pattern = pattern;

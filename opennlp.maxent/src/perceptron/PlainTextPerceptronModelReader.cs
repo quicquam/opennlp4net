@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -17,38 +16,35 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 using j4n.IO.File;
 using j4n.IO.Reader;
 
 namespace opennlp.perceptron
 {
+    using PlainTextFileDataReader = opennlp.model.PlainTextFileDataReader;
 
+    public class PlainTextPerceptronModelReader : PerceptronModelReader
+    {
+        /// <summary>
+        /// Constructor which directly instantiates the BufferedReader containing
+        /// the model contents.
+        /// </summary>
+        /// <param name="br"> The BufferedReader containing the model information. </param>
+        public PlainTextPerceptronModelReader(BufferedReader br) : base(new PlainTextFileDataReader(br))
+        {
+        }
 
-	using PlainTextFileDataReader = opennlp.model.PlainTextFileDataReader;
-
-	public class PlainTextPerceptronModelReader : PerceptronModelReader
-	{
-
-	  /// <summary>
-	  /// Constructor which directly instantiates the BufferedReader containing
-	  /// the model contents.
-	  /// </summary>
-	  /// <param name="br"> The BufferedReader containing the model information. </param>
-	  public PlainTextPerceptronModelReader(BufferedReader br) : base(new PlainTextFileDataReader(br))
-	  {
-	  }
-
-	  /// <summary>
-	  /// Constructor which takes a File and creates a reader for it. Detects
-	  /// whether the file is gzipped or not based on whether the suffix contains
-	  /// ".gz".
-	  /// </summary>
-	  /// <param name="f"> The File in which the model is stored. </param>
+        /// <summary>
+        /// Constructor which takes a File and creates a reader for it. Detects
+        /// whether the file is gzipped or not based on whether the suffix contains
+        /// ".gz".
+        /// </summary>
+        /// <param name="f"> The File in which the model is stored. </param>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public PlainTextPerceptronModelReader(java.io.File f) throws java.io.IOException
-	  public PlainTextPerceptronModelReader(Jfile f) : base(f)
-	  {
-	  }
-	}
-
+        public PlainTextPerceptronModelReader(Jfile f) : base(f)
+        {
+        }
+    }
 }

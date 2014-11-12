@@ -20,30 +20,27 @@ using System.Collections.Generic;
 
 namespace opennlp.tools.util.featuregen
 {
+    public class PrefixFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private const int PREFIX_LENGTH = 4;
 
-	public class PrefixFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public static string[] getPrefixes(string lex)
+        {
+            string[] prefs = new string[PREFIX_LENGTH];
+            for (int li = 0, ll = PREFIX_LENGTH; li < ll; li++)
+            {
+                prefs[li] = lex.Substring(0, Math.Min(li + 1, lex.Length));
+            }
+            return prefs;
+        }
 
-	  private const int PREFIX_LENGTH = 4;
-
-	  public static string[] getPrefixes(string lex)
-	  {
-		string[] prefs = new string[PREFIX_LENGTH];
-		for (int li = 0, ll = PREFIX_LENGTH; li < ll; li++)
-		{
-		  prefs[li] = lex.Substring(0, Math.Min(li + 1, lex.Length));
-		}
-		return prefs;
-	  }
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
-	  {
-		string[] prefs = PrefixFeatureGenerator.getPrefixes(tokens[index]);
-		foreach (string pref in prefs)
-		{
-		  features.Add("pre=" + pref);
-		}
-	  }
-	}
-
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
+        {
+            string[] prefs = PrefixFeatureGenerator.getPrefixes(tokens[index]);
+            foreach (string pref in prefs)
+            {
+                features.Add("pre=" + pref);
+            }
+        }
+    }
 }

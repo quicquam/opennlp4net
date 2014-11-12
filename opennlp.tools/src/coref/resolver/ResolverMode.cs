@@ -17,14 +17,12 @@
 
 namespace opennlp.tools.coref.resolver
 {
-
-	/// <summary>
-	/// Enumerated type specifying the modes if a resolver.
-	/// </summary>
-	public enum ResolverMode
-	{
-	  TEST,
-	  TRAIN
-	}
-
+    /// <summary>
+    /// Enumerated type specifying the modes if a resolver.
+    /// </summary>
+    public enum ResolverMode
+    {
+        TEST,
+        TRAIN
+    }
 }

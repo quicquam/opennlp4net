@@ -23,241 +23,227 @@ using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.tokenize
 {
+    using Span = opennlp.tools.util.Span;
 
+    /// <summary>
+    /// A <seealso cref="TokenSample"/> is text with token spans.
+    /// </summary>
+    public class TokenSample
+    {
+        public const string DEFAULT_SEPARATOR_CHARS = "<SPLIT>";
 
-	using Span = opennlp.tools.util.Span;
+        private readonly string separatorChars = DEFAULT_SEPARATOR_CHARS;
 
-	/// <summary>
-	/// A <seealso cref="TokenSample"/> is text with token spans.
-	/// </summary>
-	public class TokenSample
-	{
+        private readonly string text;
 
-	  public const string DEFAULT_SEPARATOR_CHARS = "<SPLIT>";
+        private readonly IList<Span> tokenSpans;
 
-	  private readonly string separatorChars = DEFAULT_SEPARATOR_CHARS;
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="text"> the text which contains the tokens. </param>
+        /// <param name="tokenSpans"> the spans which mark the begin and end of the tokens. </param>
+        public TokenSample(string text, Span[] tokenSpans)
+        {
+            if (text == null)
+            {
+                throw new System.ArgumentException("text must not be null!");
+            }
 
-	  private readonly string text;
+            if (tokenSpans == null)
+            {
+                throw new System.ArgumentException("tokenSpans must not be null! ");
+            }
 
-	  private readonly IList<Span> tokenSpans;
+            this.text = text;
+            this.tokenSpans = new List<Span>(tokenSpans.ToList());
 
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="text"> the text which contains the tokens. </param>
-	  /// <param name="tokenSpans"> the spans which mark the begin and end of the tokens. </param>
-	  public TokenSample(string text, Span[] tokenSpans)
-	  {
+            foreach (Span tokenSpan in tokenSpans)
+            {
+                if (tokenSpan.Start < 0 || tokenSpan.Start > text.Length || tokenSpan.End > text.Length ||
+                    tokenSpan.End < 0)
+                {
+                    throw new System.ArgumentException("Span " + tokenSpan.ToString() +
+                                                       " is out of bounds, text length: " + text.Length + "!");
+                }
+            }
+        }
 
-		if (text == null)
-		{
-		  throw new System.ArgumentException("text must not be null!");
-		}
+        public TokenSample(Detokenizer detokenizer, string[] tokens)
+        {
+            StringBuilder sentence = new StringBuilder();
 
-		if (tokenSpans == null)
-		{
-		  throw new System.ArgumentException("tokenSpans must not be null! ");
-		}
+            Detokenizer_DetokenizationOperation[] operations = detokenizer.detokenize(tokens);
 
-		this.text = text;
-		this.tokenSpans = new List<Span>(tokenSpans.ToList());
+            IList<Span> mergedTokenSpans = new List<Span>();
 
-		foreach (Span tokenSpan in tokenSpans)
-		{
-		  if (tokenSpan.Start < 0 || tokenSpan.Start > text.Length || tokenSpan.End > text.Length || tokenSpan.End < 0)
-		  {
-			throw new System.ArgumentException("Span " + tokenSpan.ToString() + " is out of bounds, text length: " + text.Length + "!");
-		  }
-		}
-	  }
+            for (int i = 0; i < operations.Length; i++)
+            {
+                bool isSeparateFromPreviousToken = i > 0 && !isMergeToRight(operations[i - 1]) &&
+                                                   !isMergeToLeft(operations[i]);
 
-	  public TokenSample(Detokenizer detokenizer, string[] tokens)
-	  {
+                if (isSeparateFromPreviousToken)
+                {
+                    sentence.Append(' ');
+                }
 
-		StringBuilder sentence = new StringBuilder();
+                int beginIndex = sentence.Length;
+                sentence.Append(tokens[i]);
+                mergedTokenSpans.Add(new Span(beginIndex, sentence.Length));
+            }
 
-		Detokenizer_DetokenizationOperation[] operations = detokenizer.detokenize(tokens);
+            text = sentence.ToString();
+            tokenSpans = mergedTokenSpans;
+        }
 
-		IList<Span> mergedTokenSpans = new List<Span>();
+        private bool isMergeToRight(Detokenizer_DetokenizationOperation operation)
+        {
+            return Detokenizer_DetokenizationOperation.MERGE_TO_RIGHT.Equals(operation) ||
+                   Detokenizer_DetokenizationOperation.MERGE_BOTH.Equals(operation);
+        }
 
-		for (int i = 0; i < operations.Length; i++)
-		{
+        private bool isMergeToLeft(Detokenizer_DetokenizationOperation operation)
+        {
+            return Detokenizer_DetokenizationOperation.MERGE_TO_LEFT.Equals(operation) ||
+                   Detokenizer_DetokenizationOperation.MERGE_BOTH.Equals(operation);
+        }
 
-		  bool isSeparateFromPreviousToken = i > 0 && !isMergeToRight(operations[i - 1]) && !isMergeToLeft(operations[i]);
+        /// <summary>
+        /// Retrieves the text.
+        /// </summary>
+        public virtual string Text
+        {
+            get { return text; }
+        }
 
-		  if (isSeparateFromPreviousToken)
-		  {
-			sentence.Append(' ');
-		  }
+        /// <summary>
+        /// Retrieves the token spans.
+        /// </summary>
+        public virtual Span[] TokenSpans
+        {
+            get { return tokenSpans.ToArray(); }
+        }
 
-		  int beginIndex = sentence.Length;
-		  sentence.Append(tokens[i]);
-		  mergedTokenSpans.Add(new Span(beginIndex, sentence.Length));
-		}
+        public override string ToString()
+        {
+            StringBuilder sentence = new StringBuilder();
 
-		text = sentence.ToString();
-		tokenSpans = mergedTokenSpans;
-	  }
+            int lastEndIndex = -1;
+            foreach (Span token in tokenSpans)
+            {
+                if (lastEndIndex != -1)
+                {
+                    // If there are no chars between last token
+                    // and this token insert the separator chars
+                    // otherwise insert a space
 
-	  private bool isMergeToRight(Detokenizer_DetokenizationOperation operation)
-	  {
-		return Detokenizer_DetokenizationOperation.MERGE_TO_RIGHT.Equals(operation) || Detokenizer_DetokenizationOperation.MERGE_BOTH.Equals(operation);
-	  }
+                    string separator = "";
+                    if (lastEndIndex == token.Start)
+                    {
+                        separator = separatorChars;
+                    }
+                    else
+                    {
+                        separator = " ";
+                    }
 
-	  private bool isMergeToLeft(Detokenizer_DetokenizationOperation operation)
-	  {
-		return Detokenizer_DetokenizationOperation.MERGE_TO_LEFT.Equals(operation) || Detokenizer_DetokenizationOperation.MERGE_BOTH.Equals(operation);
-	  }
+                    sentence.Append(separator);
+                }
 
-	  /// <summary>
-	  /// Retrieves the text.
-	  /// </summary>
-	  public virtual string Text
-	  {
-		  get
-		  {
-			return text;
-		  }
-	  }
+                sentence.Append(token.getCoveredText(text));
 
-	  /// <summary>
-	  /// Retrieves the token spans.
-	  /// </summary>
-	  public virtual Span[] TokenSpans
-	  {
-		  get
-		  {
-			return tokenSpans.ToArray();
-		  }
-	  }
+                lastEndIndex = token.End;
+            }
 
-	  public override string ToString()
-	  {
+            return sentence.ToString();
+        }
 
-		StringBuilder sentence = new StringBuilder();
+        private static void addToken(StringBuilder sample, IList<Span> tokenSpans, string token, bool isNextMerged)
+        {
+            int tokenSpanStart = sample.Length;
+            sample.Append(token);
+            int tokenSpanEnd = sample.Length;
 
-		int lastEndIndex = -1;
-		foreach (Span token in tokenSpans)
-		{
+            tokenSpans.Add(new Span(tokenSpanStart, tokenSpanEnd));
 
-		  if (lastEndIndex != -1)
-		  {
+            if (!isNextMerged)
+            {
+                sample.Append(" ");
+            }
+        }
 
-			// If there are no chars between last token
-			// and this token insert the separator chars
-			// otherwise insert a space
+        public static TokenSample parse(string sampleString, string separatorChars)
+        {
+            if (sampleString == null)
+            {
+                throw new System.ArgumentException("sampleString must not be null!");
+            }
+            if (separatorChars == null)
+            {
+                throw new System.ArgumentException("separatorChars must not be null!");
+            }
 
-			string separator = "";
-			if (lastEndIndex == token.Start)
-			{
-			  separator = separatorChars;
-			}
-			else
-			{
-			  separator = " ";
-			}
+            Span[] whitespaceTokenSpans = WhitespaceTokenizer.INSTANCE.tokenizePos(sampleString);
 
-			sentence.Append(separator);
-		  }
+            // Pre-allocate 20% for newly created tokens
+            IList<Span> realTokenSpans = new List<Span>((int) (whitespaceTokenSpans.Length*1.2d));
 
-		  sentence.Append(token.getCoveredText(text));
+            StringBuilder untaggedSampleString = new StringBuilder();
 
-		  lastEndIndex = token.End;
-		}
+            foreach (Span whiteSpaceTokenSpan in whitespaceTokenSpans)
+            {
+                string whitespaceToken = whiteSpaceTokenSpan.getCoveredText(sampleString).ToString();
 
-		return sentence.ToString();
-	  }
+                bool wasTokenReplaced = false;
 
-	  private static void addToken(StringBuilder sample, IList<Span> tokenSpans, string token, bool isNextMerged)
-	  {
+                int tokStart = 0;
+                int tokEnd = -1;
+                while ((tokEnd = whitespaceToken.IndexOf(separatorChars, tokStart, StringComparison.Ordinal)) > -1)
+                {
+                    string token = whitespaceToken.Substring(tokStart, tokEnd - tokStart);
 
-		int tokenSpanStart = sample.Length;
-		sample.Append(token);
-		int tokenSpanEnd = sample.Length;
+                    addToken(untaggedSampleString, realTokenSpans, token, true);
 
-		tokenSpans.Add(new Span(tokenSpanStart, tokenSpanEnd));
+                    tokStart = tokEnd + separatorChars.Length;
+                    wasTokenReplaced = true;
+                }
 
-		if (!isNextMerged)
-		{
-			sample.Append(" ");
-		}
-	  }
+                if (wasTokenReplaced)
+                {
+                    // If the token contains the split chars at least once
+                    // a span for the last token must still be added
+                    string token = whitespaceToken.Substring(tokStart);
 
-	  public static TokenSample parse(string sampleString, string separatorChars)
-	  {
+                    addToken(untaggedSampleString, realTokenSpans, token, false);
+                }
+                else
+                {
+                    // If it does not contain the split chars at lest once
+                    // just copy the original token span
 
-		if (sampleString == null)
-		{
-			throw new System.ArgumentException("sampleString must not be null!");
-		}
-		if (separatorChars == null)
-		{
-			throw new System.ArgumentException("separatorChars must not be null!");
-		}
+                    addToken(untaggedSampleString, realTokenSpans, whitespaceToken, false);
+                }
+            }
 
-		Span[] whitespaceTokenSpans = WhitespaceTokenizer.INSTANCE.tokenizePos(sampleString);
+            return new TokenSample(untaggedSampleString.ToString(), realTokenSpans.ToArray());
+        }
 
-		// Pre-allocate 20% for newly created tokens
-		IList<Span> realTokenSpans = new List<Span>((int)(whitespaceTokenSpans.Length * 1.2d));
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            else if (obj is TokenSample)
+            {
+                TokenSample a = (TokenSample) obj;
 
-		StringBuilder untaggedSampleString = new StringBuilder();
-
-		foreach (Span whiteSpaceTokenSpan in whitespaceTokenSpans)
-		{
-		  string whitespaceToken = whiteSpaceTokenSpan.getCoveredText(sampleString).ToString();
-
-		  bool wasTokenReplaced = false;
-
-		  int tokStart = 0;
-		  int tokEnd = -1;
-		  while ((tokEnd = whitespaceToken.IndexOf(separatorChars, tokStart, StringComparison.Ordinal)) > -1)
-		  {
-
-			string token = whitespaceToken.Substring(tokStart, tokEnd - tokStart);
-
-			addToken(untaggedSampleString, realTokenSpans, token, true);
-
-			tokStart = tokEnd + separatorChars.Length;
-			wasTokenReplaced = true;
-		  }
-
-		  if (wasTokenReplaced)
-		  {
-			// If the token contains the split chars at least once
-			// a span for the last token must still be added
-			string token = whitespaceToken.Substring(tokStart);
-
-			addToken(untaggedSampleString, realTokenSpans, token, false);
-		  }
-		  else
-		  {
-			// If it does not contain the split chars at lest once
-			// just copy the original token span
-
-			addToken(untaggedSampleString, realTokenSpans, whitespaceToken, false);
-		  }
-		}
-
-		return new TokenSample(untaggedSampleString.ToString(), realTokenSpans.ToArray());
-	  }
-
-	  public override bool Equals(object obj)
-	  {
-		if (this == obj)
-		{
-		  return true;
-		}
-		else if (obj is TokenSample)
-		{
-		  TokenSample a = (TokenSample) obj;
-
-		  return Text.Equals(a.Text) && Arrays.Equals(TokenSpans, a.TokenSpans);
-		}
-		else
-		{
-		  return false;
-		}
-	  }
-	}
-
+                return Text.Equals(a.Text) && Arrays.Equals(TokenSpans, a.TokenSpans);
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }

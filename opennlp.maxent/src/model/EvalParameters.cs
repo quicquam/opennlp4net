@@ -19,103 +19,87 @@
 
 namespace opennlp.model
 {
+    /// <summary>
+    /// This class encapsulates the varibales used in producing probabilities from a model 
+    /// and facilitaes passing these variables to the eval method.
+    /// </summary>
+    public class EvalParameters
+    {
+        /// <summary>
+        /// Mapping between outcomes and paramater values for each context. 
+        /// The integer representation of the context can be found using <code>pmap</code>.
+        /// </summary>
+        private Context[] @params;
 
-	 /// <summary>
-	 /// This class encapsulates the varibales used in producing probabilities from a model 
-	 /// and facilitaes passing these variables to the eval method.
-	 /// </summary>
-	public class EvalParameters
-	{
+        /// <summary>
+        /// The number of outcomes being predicted. </summary>
+        private readonly int numOutcomes;
 
-	 /// <summary>
-	 /// Mapping between outcomes and paramater values for each context. 
-	 /// The integer representation of the context can be found using <code>pmap</code>.
-	 /// </summary>
-	  private Context[] @params;
-	  /// <summary>
-	  /// The number of outcomes being predicted. </summary>
-	  private readonly int numOutcomes;
-	  /// <summary>
-	  /// The maximum number of feattures fired in an event. Usually refered to a C.
-	  /// This is used to normalize the number of features which occur in an event. 
-	  /// </summary>
-	  private double correctionConstant;
+        /// <summary>
+        /// The maximum number of feattures fired in an event. Usually refered to a C.
+        /// This is used to normalize the number of features which occur in an event. 
+        /// </summary>
+        private double correctionConstant;
 
-	  /// <summary>
-	  ///  Stores inverse of the correction constant, 1/C. </summary>
-	  private readonly double constantInverse;
-	  /// <summary>
-	  /// The correction parameter of the model. </summary>
-	  private double correctionParam;
+        /// <summary>
+        ///  Stores inverse of the correction constant, 1/C. </summary>
+        private readonly double constantInverse;
 
-	  /// <summary>
-	  /// Creates a set of paramters which can be evaulated with the eval method. </summary>
-	  /// <param name="params"> The parameters of the model. </param>
-	  /// <param name="correctionParam"> The correction paramter. </param>
-	  /// <param name="correctionConstant"> The correction constant. </param>
-	  /// <param name="numOutcomes"> The number of outcomes. </param>
-	  public EvalParameters(Context[] @params, double correctionParam, double correctionConstant, int numOutcomes)
-	  {
-		this.@params = @params;
-		this.correctionParam = correctionParam;
-		this.numOutcomes = numOutcomes;
-		this.correctionConstant = correctionConstant;
-		this.constantInverse = 1.0 / correctionConstant;
-	  }
+        /// <summary>
+        /// The correction parameter of the model. </summary>
+        private double correctionParam;
 
-	  public EvalParameters(Context[] @params, int numOutcomes) : this(@params,0,0,numOutcomes)
-	  {
-	  }
+        /// <summary>
+        /// Creates a set of paramters which can be evaulated with the eval method. </summary>
+        /// <param name="params"> The parameters of the model. </param>
+        /// <param name="correctionParam"> The correction paramter. </param>
+        /// <param name="correctionConstant"> The correction constant. </param>
+        /// <param name="numOutcomes"> The number of outcomes. </param>
+        public EvalParameters(Context[] @params, double correctionParam, double correctionConstant, int numOutcomes)
+        {
+            this.@params = @params;
+            this.correctionParam = correctionParam;
+            this.numOutcomes = numOutcomes;
+            this.correctionConstant = correctionConstant;
+            this.constantInverse = 1.0/correctionConstant;
+        }
 
-	  /* (non-Javadoc)
+        public EvalParameters(Context[] @params, int numOutcomes) : this(@params, 0, 0, numOutcomes)
+        {
+        }
+
+        /* (non-Javadoc)
 	   * @see opennlp.model.EvalParameters#getParams()
 	   */
-	  public virtual Context[] Params
-	  {
-		  get
-		  {
-			return @params;
-		  }
-	  }
 
-	  /* (non-Javadoc)
+        public virtual Context[] Params
+        {
+            get { return @params; }
+        }
+
+        /* (non-Javadoc)
 	   * @see opennlp.model.EvalParameters#getNumOutcomes()
 	   */
-	  public virtual int NumOutcomes
-	  {
-		  get
-		  {
-			return numOutcomes;
-		  }
-	  }
 
-	  public virtual double CorrectionConstant
-	  {
-		  get
-		  {
-			return correctionConstant;
-		  }
-	  }
+        public virtual int NumOutcomes
+        {
+            get { return numOutcomes; }
+        }
 
-	  public virtual double ConstantInverse
-	  {
-		  get
-		  {
-			return constantInverse;
-		  }
-	  }
+        public virtual double CorrectionConstant
+        {
+            get { return correctionConstant; }
+        }
 
-	  public virtual double CorrectionParam
-	  {
-		  get
-		  {
-			return correctionParam;
-		  }
-		  set
-		  {
-			this.correctionParam = value;
-		  }
-	  }
+        public virtual double ConstantInverse
+        {
+            get { return constantInverse; }
+        }
 
-	}
+        public virtual double CorrectionParam
+        {
+            get { return correctionParam; }
+            set { this.correctionParam = value; }
+        }
+    }
 }

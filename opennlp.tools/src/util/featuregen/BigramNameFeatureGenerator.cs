@@ -19,26 +19,24 @@
 
 namespace opennlp.tools.util.featuregen
 {
-
-	public class BigramNameFeatureGenerator : FeatureGeneratorAdapter
-	{
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
-	  {
-		string wc = FeatureGeneratorUtil.tokenFeature(tokens[index]);
-		//bi-gram features 
-		if (index > 0)
-		{
-		  features.Add("pw,w=" + tokens[index - 1] + "," + tokens[index]);
-		  string pwc = FeatureGeneratorUtil.tokenFeature(tokens[index - 1]);
-		  features.Add("pwc,wc=" + pwc + "," + wc);
-		}
-		if (index + 1 < tokens.Length)
-		{
-		  features.Add("w,nw=" + tokens[index] + "," + tokens[index + 1]);
-		  string nwc = FeatureGeneratorUtil.tokenFeature(tokens[index + 1]);
-		  features.Add("wc,nc=" + wc + "," + nwc);
-		}
-	  }
-	}
+    public class BigramNameFeatureGenerator : FeatureGeneratorAdapter
+    {
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
+        {
+            string wc = FeatureGeneratorUtil.tokenFeature(tokens[index]);
+            //bi-gram features 
+            if (index > 0)
+            {
+                features.Add("pw,w=" + tokens[index - 1] + "," + tokens[index]);
+                string pwc = FeatureGeneratorUtil.tokenFeature(tokens[index - 1]);
+                features.Add("pwc,wc=" + pwc + "," + wc);
+            }
+            if (index + 1 < tokens.Length)
+            {
+                features.Add("w,nw=" + tokens[index] + "," + tokens[index + 1]);
+                string nwc = FeatureGeneratorUtil.tokenFeature(tokens[index + 1]);
+                features.Add("wc,nc=" + wc + "," + nwc);
+            }
+        }
+    }
 }

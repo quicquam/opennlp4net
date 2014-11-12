@@ -9,10 +9,11 @@ namespace j4n.Object
     public class StringTokenizer
     {
         private readonly LinkedList<string> _tokens = new LinkedList<string>();
-        private LinkedListNode<string> _current = null; 
+        private LinkedListNode<string> _current = null;
+
         public StringTokenizer(string str)
         {
-            var tokens = str.Split(new[] { ' ', '\n', '\t', '\r', '\f' }, StringSplitOptions.None);
+            var tokens = str.Split(new[] {' ', '\n', '\t', '\r', '\f'}, StringSplitOptions.None);
             foreach (var token in tokens)
             {
                 _tokens.AddLast(token);
@@ -22,7 +23,7 @@ namespace j4n.Object
 
         public StringTokenizer(string str, string delimiter)
         {
-            Init(str, new[] { delimiter });
+            Init(str, new[] {delimiter});
         }
 
         private void Init(string str, string[] delimiters)
@@ -33,7 +34,6 @@ namespace j4n.Object
                 _tokens.AddLast(token);
             }
             _current = _tokens.First;
-
         }
 
         public string nextToken()

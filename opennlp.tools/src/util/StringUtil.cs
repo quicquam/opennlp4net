@@ -19,114 +19,110 @@ using j4n.Lang;
 
 namespace opennlp.tools.util
 {
+    public class StringUtil
+    {
+        /// <summary>
+        /// Determines if the specified character is a whitespace.
+        /// 
+        /// A character is considered a whitespace when one
+        /// of the following conditions is meet:
+        /// 
+        /// <ul>
+        /// <li>Its a <seealso cref="Character#isWhitespace(int)"/> whitespace.</li>
+        /// <li>Its a part of the Unicode Zs category (<seealso cref="Character#SPACE_SEPARATOR"/>).</li>
+        /// </ul>
+        /// 
+        /// <code>Character.isWhitespace(int)</code> does not include no-break spaces.
+        /// In OpenNLP no-break spaces are also considered as white spaces.
+        /// </summary>
+        /// <param name="charCode"> </param>
+        /// <returns> true if white space otherwise false </returns>
+        public static bool isWhitespace(char charCode)
+        {
+            return char.IsWhiteSpace(charCode);
+        }
 
-	public class StringUtil
-	{
-
-	  /// <summary>
-	  /// Determines if the specified character is a whitespace.
-	  /// 
-	  /// A character is considered a whitespace when one
-	  /// of the following conditions is meet:
-	  /// 
-	  /// <ul>
-	  /// <li>Its a <seealso cref="Character#isWhitespace(int)"/> whitespace.</li>
-	  /// <li>Its a part of the Unicode Zs category (<seealso cref="Character#SPACE_SEPARATOR"/>).</li>
-	  /// </ul>
-	  /// 
-	  /// <code>Character.isWhitespace(int)</code> does not include no-break spaces.
-	  /// In OpenNLP no-break spaces are also considered as white spaces.
-	  /// </summary>
-	  /// <param name="charCode"> </param>
-	  /// <returns> true if white space otherwise false </returns>
-	  public static bool isWhitespace(char charCode)
-	  {
-		return char.IsWhiteSpace(charCode);
-	  }
-
-	  /// <summary>
-	  /// Determines if the specified character is a whitespace.
-	  /// 
-	  /// A character is considered a whitespace when one
-	  /// of the following conditions is meet:
-	  /// 
-	  /// <ul>
-	  /// <li>Its a <seealso cref="Character#isWhitespace(int)"/> whitespace.</li>
-	  /// <li>Its a part of the Unicode Zs category (<seealso cref="Character#SPACE_SEPARATOR"/>).</li>
-	  /// </ul>
-	  /// 
-	  /// <code>Character.isWhitespace(int)</code> does not include no-break spaces.
-	  /// In OpenNLP no-break spaces are also considered as white spaces.
-	  /// </summary>
-	  /// <param name="charCode"> </param>
-	  /// <returns> true if white space otherwise false </returns>
-	  public static bool isWhitespace(int charCode)
-	  {
-		return char.IsWhiteSpace((char)charCode) ;
-	  }
+        /// <summary>
+        /// Determines if the specified character is a whitespace.
+        /// 
+        /// A character is considered a whitespace when one
+        /// of the following conditions is meet:
+        /// 
+        /// <ul>
+        /// <li>Its a <seealso cref="Character#isWhitespace(int)"/> whitespace.</li>
+        /// <li>Its a part of the Unicode Zs category (<seealso cref="Character#SPACE_SEPARATOR"/>).</li>
+        /// </ul>
+        /// 
+        /// <code>Character.isWhitespace(int)</code> does not include no-break spaces.
+        /// In OpenNLP no-break spaces are also considered as white spaces.
+        /// </summary>
+        /// <param name="charCode"> </param>
+        /// <returns> true if white space otherwise false </returns>
+        public static bool isWhitespace(int charCode)
+        {
+            return char.IsWhiteSpace((char) charCode);
+        }
 
 
-	  /// <summary>
-	  /// Converts to lower case independent of the current locale via 
-	  /// <seealso cref="Character#toLowerCase(char)"/> which uses mapping information
-	  /// from the UnicodeData file.
-	  /// </summary>
-	  /// <param name="string"> </param>
-	  /// <returns> lower cased String </returns>
-	  public static string ToLower(CharSequence @string)
-	  {
+        /// <summary>
+        /// Converts to lower case independent of the current locale via 
+        /// <seealso cref="Character#toLowerCase(char)"/> which uses mapping information
+        /// from the UnicodeData file.
+        /// </summary>
+        /// <param name="string"> </param>
+        /// <returns> lower cased String </returns>
+        public static string ToLower(CharSequence @string)
+        {
+            char[] lowerCaseChars = new char[@string.length()];
 
-		char[] lowerCaseChars = new char[@string.length()];
+            for (int i = 0; i < @string.length(); i++)
+            {
+                lowerCaseChars[i] = char.ToLower(@string.charAt(i));
+            }
 
-		for (int i = 0; i < @string.length(); i++)
-		{
-		  lowerCaseChars[i] = char.ToLower(@string.charAt(i));
-		}
+            return new string(lowerCaseChars);
+        }
 
-		return new string(lowerCaseChars);
-	  }
+        /// <summary>
+        /// Converts to upper case independent of the current locale via 
+        /// <seealso cref="Character#toUpperCase(char)"/> which uses mapping information
+        /// from the UnicodeData file.
+        /// </summary>
+        /// <param name="string"> </param>
+        /// <returns> upper cased String </returns>
+        public static string ToUpper(CharSequence @string)
+        {
+            char[] upperCaseChars = new char[@string.length()];
 
-	  /// <summary>
-	  /// Converts to upper case independent of the current locale via 
-	  /// <seealso cref="Character#toUpperCase(char)"/> which uses mapping information
-	  /// from the UnicodeData file.
-	  /// </summary>
-	  /// <param name="string"> </param>
-	  /// <returns> upper cased String </returns>
-	  public static string ToUpper(CharSequence @string)
-	  {
-		char[] upperCaseChars = new char[@string.length()];
+            for (int i = 0; i < @string.length(); i++)
+            {
+                upperCaseChars[i] = char.ToUpper(@string.charAt(i));
+            }
 
-		for (int i = 0; i < @string.length(); i++)
-		{
-		  upperCaseChars[i] = char.ToUpper(@string.charAt(i));
-		}
+            return new string(upperCaseChars);
+        }
 
-		return new string(upperCaseChars);
-	  }
+        /// <summary>
+        /// Returns <tt>true</tt> if <seealso cref="CharSequence#length()"/> is
+        /// <tt>0</tt> or <tt>null</tt>.
+        /// </summary>
+        /// <returns> <tt>true</tt> if <seealso cref="CharSequence#length()"/> is <tt>0</tt>, otherwise
+        ///         <tt>false</tt>
+        /// 
+        /// @since 1.5.1 </returns>
+        public static bool isEmpty(CharSequence theString)
+        {
+            return theString.length() == 0;
+        }
 
-	  /// <summary>
-	  /// Returns <tt>true</tt> if <seealso cref="CharSequence#length()"/> is
-	  /// <tt>0</tt> or <tt>null</tt>.
-	  /// </summary>
-	  /// <returns> <tt>true</tt> if <seealso cref="CharSequence#length()"/> is <tt>0</tt>, otherwise
-	  ///         <tt>false</tt>
-	  /// 
-	  /// @since 1.5.1 </returns>
-	  public static bool isEmpty(CharSequence theString)
-	  {
-		return theString.length() == 0;
-	  }
+        public static bool isEmpty(string theString)
+        {
+            return string.IsNullOrEmpty(theString);
+        }
 
-	    public static bool isEmpty(string theString)
-	    {
-	        return string.IsNullOrEmpty(theString);
-	    }
-
-	    public static string ToLower(string s)
-	    {
-	        return s.ToLower();
-	    }
-	}
-
+        public static string ToLower(string s)
+        {
+            return s.ToLower();
+        }
+    }
 }

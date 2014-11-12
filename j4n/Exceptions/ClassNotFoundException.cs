@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace j4n.Exceptions
 {
-    public class ClassNotFoundException: Exception
+    public class ClassNotFoundException : Exception
     {
     }
 }

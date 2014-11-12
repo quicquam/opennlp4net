@@ -38,8 +38,11 @@ namespace opennlp.tools.Tests
                 var model = new POSModel(modelIn);
                 var tagger = new POSTaggerME(model);
 
-                var sent = new[]{"Most", "large", "cities", "in", "the", "US", "had",
-                                             "morning", "and", "afternoon", "newspapers", "."};
+                var sent = new[]
+                {
+                    "Most", "large", "cities", "in", "the", "US", "had",
+                    "morning", "and", "afternoon", "newspapers", "."
+                };
                 var tags = tagger.tag(sent);
                 var probs = tagger.probs();
                 var topSequences = tagger.topKSequences(sent);

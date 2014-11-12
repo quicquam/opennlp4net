@@ -18,30 +18,27 @@
 
 namespace opennlp.tools.parser
 {
+    /// <summary>
+    ///  Interface for full-syntactic parsers.
+    /// </summary>
+    public interface Parser
+    {
+        /// <summary>
+        /// Returns the specified number of parses or fewer for the specified tokens. <br>
+        /// <b>Note:</b> The nodes within
+        /// the returned parses are shared with other parses and therefore their parent node references will not be consistent
+        /// with their child node reference.  <seealso cref="Parse#setParent(Parse)"/> can be used to make the parents consistent
+        /// with a particular parse, but subsequent calls to <code>setParents</code> can invalidate the results of earlier
+        /// calls.<br> </summary>
+        /// <param name="tokens"> A parse containing the tokens with a single parent node. </param>
+        /// <param name="numParses"> The number of parses desired. </param>
+        /// <returns> the specified number of parses for the specified tokens. </returns>
+        Parse[] parse(Parse tokens, int numParses);
 
-	/// <summary>
-	///  Interface for full-syntactic parsers.
-	/// </summary>
-	public interface Parser
-	{
-
-	  /// <summary>
-	  /// Returns the specified number of parses or fewer for the specified tokens. <br>
-	  /// <b>Note:</b> The nodes within
-	  /// the returned parses are shared with other parses and therefore their parent node references will not be consistent
-	  /// with their child node reference.  <seealso cref="Parse#setParent(Parse)"/> can be used to make the parents consistent
-	  /// with a particular parse, but subsequent calls to <code>setParents</code> can invalidate the results of earlier
-	  /// calls.<br> </summary>
-	  /// <param name="tokens"> A parse containing the tokens with a single parent node. </param>
-	  /// <param name="numParses"> The number of parses desired. </param>
-	  /// <returns> the specified number of parses for the specified tokens. </returns>
-	  Parse[] parse(Parse tokens, int numParses);
-
-	  /// <summary>
-	  /// Returns a parse for the specified parse of tokens. </summary>
-	  /// <param name="tokens"> The root node of a flat parse containing only tokens. </param>
-	  /// <returns> A full parse of the specified tokens or the flat chunks of the tokens if a fullparse could not be found. </returns>
-	  Parse parse(Parse tokens);
-
-	}
+        /// <summary>
+        /// Returns a parse for the specified parse of tokens. </summary>
+        /// <param name="tokens"> The root node of a flat parse containing only tokens. </param>
+        /// <returns> A full parse of the specified tokens or the flat chunks of the tokens if a fullparse could not be found. </returns>
+        Parse parse(Parse tokens);
+    }
 }

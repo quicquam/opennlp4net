@@ -19,23 +19,20 @@
 
 namespace opennlp.maxent
 {
-
-	/// <summary>
-	/// A simple interface that represents a domain to which a particular maxent
-	/// model is primarily applicable. For instance, one might have a
-	/// part-of-speech tagger trained on financial text and another based on
-	/// children's stories.  This interface is used by the DomainToModelMap class
-	/// to allow an application to grab the models relevant for the different
-	/// domains.
-	/// </summary>
-	public interface ModelDomain
-	{
-
-	  /// <summary>
-	  /// Get the name of this domain.
-	  /// </summary>
-	  /// <returns> The name of this domain. </returns>
-	  string Name {get;}
-	}
-
+    /// <summary>
+    /// A simple interface that represents a domain to which a particular maxent
+    /// model is primarily applicable. For instance, one might have a
+    /// part-of-speech tagger trained on financial text and another based on
+    /// children's stories.  This interface is used by the DomainToModelMap class
+    /// to allow an application to grab the models relevant for the different
+    /// domains.
+    /// </summary>
+    public interface ModelDomain
+    {
+        /// <summary>
+        /// Get the name of this domain.
+        /// </summary>
+        /// <returns> The name of this domain. </returns>
+        string Name { get; }
+    }
 }

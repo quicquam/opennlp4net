@@ -18,6 +18,7 @@
 /// <summary>
 /// Package related to the processing of English data.
 /// </summary>
+
 namespace opennlp.tools.lang.english
 {
 }

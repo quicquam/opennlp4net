@@ -17,39 +17,36 @@
 
 namespace opennlp.tools.coref.resolver
 {
+    using MentionContext = opennlp.tools.coref.mention.MentionContext;
 
-	using MentionContext = opennlp.tools.coref.mention.MentionContext;
+    /// <summary>
+    /// Provides the interface for a object to provide a resolver with a non-referential
+    /// probability.  Non-referential resolvers compute the probability that a particular mention refers
+    /// to no antecedent.  This probability can then compete with the probability that
+    /// a mention refers with a specific antecedent.
+    /// </summary>
+    public interface NonReferentialResolver
+    {
+        /// <summary>
+        /// Returns the probability that the specified mention doesn't refer to any previous mention.
+        /// </summary>
+        /// <param name="mention"> The mention under consideration. </param>
+        /// <returns> A probability that the specified mention doesn't refer to any previous mention. </returns>
+        double getNonReferentialProbability(MentionContext mention);
 
-	/// <summary>
-	/// Provides the interface for a object to provide a resolver with a non-referential
-	/// probability.  Non-referential resolvers compute the probability that a particular mention refers
-	/// to no antecedent.  This probability can then compete with the probability that
-	/// a mention refers with a specific antecedent.
-	/// </summary>
-	public interface NonReferentialResolver
-	{
+        /// <summary>
+        /// Designates that the specified mention be used for training.
+        /// </summary>
+        /// <param name="mention"> The mention to be used.  The mention id is used to determine
+        /// whether this mention is referential or non-referential. </param>
+        void addEvent(MentionContext mention);
 
-	  /// <summary>
-	  /// Returns the probability that the specified mention doesn't refer to any previous mention.
-	  /// </summary>
-	  /// <param name="mention"> The mention under consideration. </param>
-	  /// <returns> A probability that the specified mention doesn't refer to any previous mention. </returns>
-	  double getNonReferentialProbability(MentionContext mention);
-
-	  /// <summary>
-	  /// Designates that the specified mention be used for training.
-	  /// </summary>
-	  /// <param name="mention"> The mention to be used.  The mention id is used to determine
-	  /// whether this mention is referential or non-referential. </param>
-	  void addEvent(MentionContext mention);
-
-	  /// <summary>
-	  /// Trains a model based on the events given to this resolver via #addEvent.
-	  /// </summary>
-	  /// <exception cref="IOException"> When the model can not be written out. </exception>
+        /// <summary>
+        /// Trains a model based on the events given to this resolver via #addEvent.
+        /// </summary>
+        /// <exception cref="IOException"> When the model can not be written out. </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void train() throws java.io.IOException;
-	  void train();
-	}
-
+        void train();
+    }
 }

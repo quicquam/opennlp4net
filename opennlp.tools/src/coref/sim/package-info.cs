@@ -18,6 +18,7 @@
 /// <summary>
 /// Package related to the modeling mention similarity for coreference resolution.
 /// </summary>
+
 namespace opennlp.tools.coref.sim
 {
 }
