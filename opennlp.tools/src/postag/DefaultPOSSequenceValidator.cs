@@ -20,38 +20,35 @@ using System.Linq;
 
 namespace opennlp.tools.postag
 {
+    using opennlp.tools.util;
 
-	using opennlp.tools.util;
+    public class DefaultPOSSequenceValidator : SequenceValidator<string>
+    {
+        private TagDictionary tagDictionary;
 
-	public class DefaultPOSSequenceValidator : SequenceValidator<string>
-	{
+        public DefaultPOSSequenceValidator(TagDictionary tagDictionary)
+        {
+            this.tagDictionary = tagDictionary;
+        }
 
-	  private TagDictionary tagDictionary;
-
-	  public DefaultPOSSequenceValidator(TagDictionary tagDictionary)
-	  {
-		this.tagDictionary = tagDictionary;
-	  }
-
-	  public virtual bool validSequence(int i, string[] inputSequence, string[] outcomesSequence, string outcome)
-	  {
-		if (tagDictionary == null)
-		{
-		  return true;
-		}
-		else
-		{
-		  string[] tags = tagDictionary.getTags(inputSequence[i].ToString());
-		  if (tags == null)
-		  {
-			return true;
-		  }
-		  else
-		  {
-		      return tags.Any(tag => tag.Contains(outcome));
-		  }
-		}
-	  }
-	}
-
+        public virtual bool validSequence(int i, string[] inputSequence, string[] outcomesSequence, string outcome)
+        {
+            if (tagDictionary == null)
+            {
+                return true;
+            }
+            else
+            {
+                string[] tags = tagDictionary.getTags(inputSequence[i].ToString());
+                if (tags == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return tags.Any(tag => tag.Contains(outcome));
+                }
+            }
+        }
+    }
 }

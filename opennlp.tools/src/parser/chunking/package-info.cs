@@ -18,6 +18,7 @@
 /// <summary>
 /// Package containing code for performing full syntactic parsing using shift/reduce-style decisions.
 /// </summary>
+
 namespace opennlp.tools.parser.chunking
 {
 }

@@ -23,37 +23,33 @@ using j4n.IO.Reader;
 
 namespace opennlp.maxent.io
 {
+    using PlainTextFileDataReader = opennlp.model.PlainTextFileDataReader;
 
+    /// <summary>
+    /// A reader for GIS models stored in plain text format.
+    /// </summary>
+    public class PlainTextGISModelReader : GISModelReader
+    {
+        /// <summary>
+        /// Constructor which directly instantiates the BufferedReader containing the
+        /// model contents.
+        /// </summary>
+        /// <param name="br">
+        ///          The BufferedReader containing the model information. </param>
+        public PlainTextGISModelReader(BufferedReader br) : base(new PlainTextFileDataReader(br))
+        {
+        }
 
-	using PlainTextFileDataReader = opennlp.model.PlainTextFileDataReader;
-
-	/// <summary>
-	/// A reader for GIS models stored in plain text format.
-	/// </summary>
-	public class PlainTextGISModelReader : GISModelReader
-	{
-
-	  /// <summary>
-	  /// Constructor which directly instantiates the BufferedReader containing the
-	  /// model contents.
-	  /// </summary>
-	  /// <param name="br">
-	  ///          The BufferedReader containing the model information. </param>
-	  public PlainTextGISModelReader(BufferedReader br) : base(new PlainTextFileDataReader(br))
-	  {
-	  }
-
-	  /// <summary>
-	  /// Constructor which takes a File and creates a reader for it. Detects whether
-	  /// the file is gzipped or not based on whether the suffix contains ".gz".
-	  /// </summary>
-	  /// <param name="f">
-	  ///          The File in which the model is stored. </param>
+        /// <summary>
+        /// Constructor which takes a File and creates a reader for it. Detects whether
+        /// the file is gzipped or not based on whether the suffix contains ".gz".
+        /// </summary>
+        /// <param name="f">
+        ///          The File in which the model is stored. </param>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public PlainTextGISModelReader(java.io.File f) throws java.io.IOException
-	  public PlainTextGISModelReader(Jfile f) : base(f)
-	  {
-	  }
-	}
-
+        public PlainTextGISModelReader(Jfile f) : base(f)
+        {
+        }
+    }
 }

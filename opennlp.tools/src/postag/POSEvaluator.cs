@@ -18,99 +18,88 @@
 
 namespace opennlp.tools.postag
 {
+    using opennlp.tools.util.eval;
+    using Mean = opennlp.tools.util.eval.Mean;
 
-	using opennlp.tools.util.eval;
-	using Mean = opennlp.tools.util.eval.Mean;
+    /// <summary>
+    /// The <seealso cref="POSEvaluator"/> measures the performance of
+    /// the given <seealso cref="POSTagger"/> with the provided reference
+    /// <seealso cref="POSSample"/>s.
+    /// </summary>
+    public class POSEvaluator : Evaluator<POSSample>
+    {
+        private POSTagger tagger;
 
-	/// <summary>
-	/// The <seealso cref="POSEvaluator"/> measures the performance of
-	/// the given <seealso cref="POSTagger"/> with the provided reference
-	/// <seealso cref="POSSample"/>s.
-	/// </summary>
-	public class POSEvaluator : Evaluator<POSSample>
-	{
+        private Mean wordAccuracy = new Mean();
 
-	  private POSTagger tagger;
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="tagger"> </param>
+        /// <param name="listeners"> an array of evaluation listeners </param>
+        public POSEvaluator(POSTagger tagger, params POSTaggerEvaluationMonitor[] listeners) : base(listeners)
+        {
+            this.tagger = tagger;
+        }
 
-	  private Mean wordAccuracy = new Mean();
+        /// <summary>
+        /// Evaluates the given reference <seealso cref="POSSample"/> object.
+        /// 
+        /// This is done by tagging the sentence from the reference
+        /// <seealso cref="POSSample"/> with the <seealso cref="POSTagger"/>. The
+        /// tags are then used to update the word accuracy score.
+        /// </summary>
+        /// <param name="reference"> the reference <seealso cref="POSSample"/>.
+        /// </param>
+        /// <returns> the predicted <seealso cref="POSSample"/>. </returns>
+        protected internal override POSSample processSample(POSSample reference)
+        {
+            string[] predictedTags = tagger.tag(reference.Sentence, reference.AddictionalContext);
+            string[] referenceTags = reference.Tags;
 
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="tagger"> </param>
-	  /// <param name="listeners"> an array of evaluation listeners </param>
-	  public POSEvaluator(POSTagger tagger, params POSTaggerEvaluationMonitor[] listeners) : base(listeners)
-	  {
-		this.tagger = tagger;
-	  }
+            for (int i = 0; i < referenceTags.Length; i++)
+            {
+                if (referenceTags[i].Equals(predictedTags[i]))
+                {
+                    wordAccuracy.add(1);
+                }
+                else
+                {
+                    wordAccuracy.add(0);
+                }
+            }
 
-	  /// <summary>
-	  /// Evaluates the given reference <seealso cref="POSSample"/> object.
-	  /// 
-	  /// This is done by tagging the sentence from the reference
-	  /// <seealso cref="POSSample"/> with the <seealso cref="POSTagger"/>. The
-	  /// tags are then used to update the word accuracy score.
-	  /// </summary>
-	  /// <param name="reference"> the reference <seealso cref="POSSample"/>.
-	  /// </param>
-	  /// <returns> the predicted <seealso cref="POSSample"/>. </returns>
-	  protected internal override POSSample processSample(POSSample reference)
-	  {
+            return new POSSample(reference.Sentence, predictedTags);
+        }
 
-		string[] predictedTags = tagger.tag(reference.Sentence, reference.AddictionalContext);
-		string[] referenceTags = reference.Tags;
+        /// <summary>
+        /// Retrieves the word accuracy.
+        /// 
+        /// This is defined as:
+        /// word accuracy = correctly detected tags / total words
+        /// </summary>
+        /// <returns> the word accuracy </returns>
+        public virtual double WordAccuracy
+        {
+            get { return wordAccuracy.mean(); }
+        }
 
-		for (int i = 0; i < referenceTags.Length; i++)
-		{
-		  if (referenceTags[i].Equals(predictedTags[i]))
-		  {
-			wordAccuracy.add(1);
-		  }
-		  else
-		  {
-			wordAccuracy.add(0);
-		  }
-		}
+        /// <summary>
+        /// Retrieves the total number of words considered
+        /// in the evaluation.
+        /// </summary>
+        /// <returns> the word count </returns>
+        public virtual long WordCount
+        {
+            get { return wordAccuracy.count(); }
+        }
 
-		return new POSSample(reference.Sentence, predictedTags);
-	  }
-
-	  /// <summary>
-	  /// Retrieves the word accuracy.
-	  /// 
-	  /// This is defined as:
-	  /// word accuracy = correctly detected tags / total words
-	  /// </summary>
-	  /// <returns> the word accuracy </returns>
-	  public virtual double WordAccuracy
-	  {
-		  get
-		  {
-			return wordAccuracy.mean();
-		  }
-	  }
-
-	  /// <summary>
-	  /// Retrieves the total number of words considered
-	  /// in the evaluation.
-	  /// </summary>
-	  /// <returns> the word count </returns>
-	  public virtual long WordCount
-	  {
-		  get
-		  {
-			return wordAccuracy.count();
-		  }
-	  }
-
-	  /// <summary>
-	  /// Represents this objects as human readable <seealso cref="String"/>.
-	  /// </summary>
-	  public override string ToString()
-	  {
-		return "Accuracy:" + wordAccuracy.mean() + " Number of Samples: " + wordAccuracy.count();
-	  }
-
-	}
-
+        /// <summary>
+        /// Represents this objects as human readable <seealso cref="String"/>.
+        /// </summary>
+        public override string ToString()
+        {
+            return "Accuracy:" + wordAccuracy.mean() + " Number of Samples: " + wordAccuracy.count();
+        }
+    }
 }

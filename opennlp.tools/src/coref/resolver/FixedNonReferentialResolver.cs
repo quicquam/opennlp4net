@@ -17,36 +17,33 @@
 
 namespace opennlp.tools.coref.resolver
 {
+    using MentionContext = opennlp.tools.coref.mention.MentionContext;
 
-	using MentionContext = opennlp.tools.coref.mention.MentionContext;
+    /// <summary>
+    /// Implementation of non-referential classifier which uses a fixed-value threshold.
+    /// </summary>
+    public class FixedNonReferentialResolver : NonReferentialResolver
+    {
+        private double nonReferentialProbability;
 
-	/// <summary>
-	/// Implementation of non-referential classifier which uses a fixed-value threshold.
-	/// </summary>
-	public class FixedNonReferentialResolver : NonReferentialResolver
-	{
+        public FixedNonReferentialResolver(double nonReferentialProbability)
+        {
+            this.nonReferentialProbability = nonReferentialProbability;
+        }
 
-	  private double nonReferentialProbability;
+        public virtual double getNonReferentialProbability(MentionContext mention)
+        {
+            return this.nonReferentialProbability;
+        }
 
-	  public FixedNonReferentialResolver(double nonReferentialProbability)
-	  {
-		this.nonReferentialProbability = nonReferentialProbability;
-	  }
-
-	  public virtual double getNonReferentialProbability(MentionContext mention)
-	  {
-		return this.nonReferentialProbability;
-	  }
-
-	  public virtual void addEvent(MentionContext mention)
-	  {
-	  }
+        public virtual void addEvent(MentionContext mention)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void train() throws java.io.IOException
-	  public virtual void train()
-	  {
-	  }
-	}
-
+        public virtual void train()
+        {
+        }
+    }
 }

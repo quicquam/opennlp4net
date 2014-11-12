@@ -12,15 +12,12 @@ namespace j4n.IO.InputStream
 
         public Stream Stream
         {
-            get
-            {
-                return InnerStream;
-            } 
+            get { return InnerStream; }
         }
-        
+
         public InputStream(string path)
         {
-            Path = path;            
+            Path = path;
             InnerStream = new FileStream(path, FileMode.Open);
         }
 
@@ -81,15 +78,9 @@ namespace j4n.IO.InputStream
 
         public long Position
         {
-            get
-            {
-                return InnerStream.Position;
-            }
+            get { return InnerStream.Position; }
 
-            set
-            {
-                InnerStream.Position = value;
-            }
+            set { InnerStream.Position = value; }
         }
 
         public short readShort()
@@ -129,13 +120,13 @@ namespace j4n.IO.InputStream
 
         public byte readByte()
         {
-            return (byte)InnerStream.ReadByte();
+            return (byte) InnerStream.ReadByte();
         }
 
         public byte PeekByte()
         {
             long offset = InnerStream.Position;
-            var byteValue = (byte)InnerStream.ReadByte();
+            var byteValue = (byte) InnerStream.ReadByte();
             InnerStream.Seek(offset, SeekOrigin.Begin);
             return byteValue;
         }

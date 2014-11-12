@@ -20,132 +20,132 @@ using System.Collections.Generic;
 
 namespace opennlp.tools.namefind
 {
+    using AdaptiveFeatureGenerator = opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
+    using BigramNameFeatureGenerator = opennlp.tools.util.featuregen.BigramNameFeatureGenerator;
+    using CachedFeatureGenerator = opennlp.tools.util.featuregen.CachedFeatureGenerator;
+    using FeatureGeneratorUtil = opennlp.tools.util.featuregen.FeatureGeneratorUtil;
+    using OutcomePriorFeatureGenerator = opennlp.tools.util.featuregen.OutcomePriorFeatureGenerator;
+    using PreviousMapFeatureGenerator = opennlp.tools.util.featuregen.PreviousMapFeatureGenerator;
+    using TokenClassFeatureGenerator = opennlp.tools.util.featuregen.TokenClassFeatureGenerator;
+    using TokenFeatureGenerator = opennlp.tools.util.featuregen.TokenFeatureGenerator;
+    using WindowFeatureGenerator = opennlp.tools.util.featuregen.WindowFeatureGenerator;
 
+    /// <summary>
+    /// Class for determining contextual features for a tag/chunk style
+    /// named-entity recognizer.
+    /// </summary>
+    public class DefaultNameContextGenerator : NameContextGenerator
+    {
+        private AdaptiveFeatureGenerator[] featureGenerators;
 
-	using AdaptiveFeatureGenerator = opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
-	using BigramNameFeatureGenerator = opennlp.tools.util.featuregen.BigramNameFeatureGenerator;
-	using CachedFeatureGenerator = opennlp.tools.util.featuregen.CachedFeatureGenerator;
-	using FeatureGeneratorUtil = opennlp.tools.util.featuregen.FeatureGeneratorUtil;
-	using OutcomePriorFeatureGenerator = opennlp.tools.util.featuregen.OutcomePriorFeatureGenerator;
-	using PreviousMapFeatureGenerator = opennlp.tools.util.featuregen.PreviousMapFeatureGenerator;
-	using TokenClassFeatureGenerator = opennlp.tools.util.featuregen.TokenClassFeatureGenerator;
-	using TokenFeatureGenerator = opennlp.tools.util.featuregen.TokenFeatureGenerator;
-	using WindowFeatureGenerator = opennlp.tools.util.featuregen.WindowFeatureGenerator;
+        [Obsolete] private static AdaptiveFeatureGenerator windowFeatures =
+            new CachedFeatureGenerator(new AdaptiveFeatureGenerator[]
+            {
+                new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2),
+                new WindowFeatureGenerator(new TokenClassFeatureGenerator(true), 2, 2),
+                new OutcomePriorFeatureGenerator(), new PreviousMapFeatureGenerator(), new BigramNameFeatureGenerator()
+            });
 
-	/// <summary>
-	/// Class for determining contextual features for a tag/chunk style
-	/// named-entity recognizer.
-	/// </summary>
-	public class DefaultNameContextGenerator : NameContextGenerator
-	{
+        /// <summary>
+        /// Creates a name context generator. </summary>
+        /// @deprecated use the other constructor and always provide the feature generators 
+        [Obsolete("use the other constructor and always provide the feature generators")]
+        public DefaultNameContextGenerator()
+        {
+            Init(null);
+        }
 
-	  private AdaptiveFeatureGenerator[] featureGenerators;
+        /// <summary>
+        /// Creates a name context generator with the specified cache size.
+        /// </summary>
+        public DefaultNameContextGenerator(AdaptiveFeatureGenerator featureGenerators)
+        {
+            Init(featureGenerators);
+        }
 
-	  [Obsolete]
-	  private static AdaptiveFeatureGenerator windowFeatures = new CachedFeatureGenerator(new AdaptiveFeatureGenerator[]{ new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2), new WindowFeatureGenerator(new TokenClassFeatureGenerator(true), 2, 2), new OutcomePriorFeatureGenerator(), new PreviousMapFeatureGenerator(), new BigramNameFeatureGenerator()
-	});
+        private void Init(AdaptiveFeatureGenerator featureGenerators)
+        {
+            if (featureGenerators != null)
+            {
+                this.featureGenerators = new[] {featureGenerators};
+            }
+            else
+            {
+                // use defaults
 
-	  /// <summary>
-	  /// Creates a name context generator. </summary>
-	  /// @deprecated use the other constructor and always provide the feature generators 
-	  [Obsolete("use the other constructor and always provide the feature generators")]
-	  public DefaultNameContextGenerator()
-	  {
-		Init(null);
-	  }
+                this.featureGenerators = new AdaptiveFeatureGenerator[]
+                {windowFeatures, new PreviousMapFeatureGenerator()};
+            }
+        }
 
-	  /// <summary>
-	  /// Creates a name context generator with the specified cache size.
-	  /// </summary>
-	  public DefaultNameContextGenerator(AdaptiveFeatureGenerator featureGenerators)
-	  {
-          Init(featureGenerators);		
-	  }
+        public void addFeatureGenerator(AdaptiveFeatureGenerator generator)
+        {
+            AdaptiveFeatureGenerator[] generators = featureGenerators;
 
-      private void Init(AdaptiveFeatureGenerator featureGenerators)
-      {
+            featureGenerators = new AdaptiveFeatureGenerator[featureGenerators.Length + 1];
 
-          if (featureGenerators != null)
-          {
-              this.featureGenerators = new[] { featureGenerators };
-          }
-          else
-          {
-              // use defaults
+            Array.Copy(generators, 0, featureGenerators, 0, generators.Length);
 
-              this.featureGenerators = new AdaptiveFeatureGenerator[] { windowFeatures, new PreviousMapFeatureGenerator() };
-          }
-      }
+            featureGenerators[featureGenerators.Length - 1] = generator;
+        }
 
-	  public void addFeatureGenerator(AdaptiveFeatureGenerator generator)
-	  {
-		  AdaptiveFeatureGenerator[] generators = featureGenerators;
+        public void updateAdaptiveData(string[] tokens, String[] outcomes)
+        {
+            if (tokens != null && outcomes != null && tokens.Length != outcomes.Length)
+            {
+                throw new System.ArgumentException("The tokens and outcome arrays MUST have the same size!");
+            }
 
-		  featureGenerators = new AdaptiveFeatureGenerator[featureGenerators.Length + 1];
+            foreach (AdaptiveFeatureGenerator featureGenerator in featureGenerators)
+            {
+                featureGenerator.updateAdaptiveData(tokens, outcomes);
+            }
+        }
 
-		  Array.Copy(generators, 0, featureGenerators, 0, generators.Length);
+        public void clearAdaptiveData()
+        {
+            foreach (AdaptiveFeatureGenerator featureGenerator in featureGenerators)
+            {
+                featureGenerator.clearAdaptiveData();
+            }
+        }
 
-		  featureGenerators[featureGenerators.Length - 1] = generator;
-	  }
+        /// <summary>
+        /// Return the context for finding names at the specified index. </summary>
+        /// <param name="index"> The index of the token in the specified toks array for which the context should be constructed. </param>
+        /// <param name="tokens"> The tokens of the sentence.  The <code>toString</code> methods of these objects should return the token text. </param>
+        /// <param name="preds"> The previous decisions made in the tagging of this sequence.  Only indices less than i will be examined. </param>
+        /// <param name="additionalContext"> Addition features which may be based on a context outside of the sentence.
+        /// </param>
+        /// <returns> the context for finding names at the specified index. </returns>
+        public string[] getContext(int index, String[] tokens, String[] preds, Object[] additionalContext)
+        {
+            List<string> features = new List<string>();
 
-	  public void updateAdaptiveData(string[] tokens, String[] outcomes)
-	  {
+            foreach (AdaptiveFeatureGenerator featureGenerator in featureGenerators)
+            {
+                featureGenerator.createFeatures(features, tokens, index, preds);
+            }
 
-		if (tokens != null && outcomes != null && tokens.Length != outcomes.Length)
-		{
-			throw new System.ArgumentException("The tokens and outcome arrays MUST have the same size!");
-		}
+            //previous outcome features
+            string po = NameFinderME.OTHER;
+            string ppo = NameFinderME.OTHER;
 
-		foreach (AdaptiveFeatureGenerator featureGenerator in featureGenerators)
-		{
-		  featureGenerator.updateAdaptiveData(tokens, outcomes);
-		}
-	  }
+            if (index > 1)
+            {
+                ppo = preds[index - 2];
+            }
 
-	  public void clearAdaptiveData()
-	  {
-		foreach (AdaptiveFeatureGenerator featureGenerator in featureGenerators)
-		{
-		  featureGenerator.clearAdaptiveData();
-		}
-	  }
+            if (index > 0)
+            {
+                po = preds[index - 1];
+            }
+            features.Add("po=" + po);
+            features.Add("pow=" + po + "," + tokens[index]);
+            features.Add("powf=" + po + "," + FeatureGeneratorUtil.tokenFeature(tokens[index]));
+            features.Add("ppo=" + ppo);
 
-	  /// <summary>
-	  /// Return the context for finding names at the specified index. </summary>
-	  /// <param name="index"> The index of the token in the specified toks array for which the context should be constructed. </param>
-	  /// <param name="tokens"> The tokens of the sentence.  The <code>toString</code> methods of these objects should return the token text. </param>
-	  /// <param name="preds"> The previous decisions made in the tagging of this sequence.  Only indices less than i will be examined. </param>
-	  /// <param name="additionalContext"> Addition features which may be based on a context outside of the sentence.
-	  /// </param>
-	  /// <returns> the context for finding names at the specified index. </returns>
-	  public string[] getContext(int index, String[] tokens, String[] preds, Object[] additionalContext)
-	  {
-		List<string> features = new List<string>();
-
-		foreach (AdaptiveFeatureGenerator featureGenerator in featureGenerators)
-		{
-		  featureGenerator.createFeatures(features, tokens, index, preds);
-		}
-
-		//previous outcome features
-		string po = NameFinderME.OTHER;
-		string ppo = NameFinderME.OTHER;
-
-		if (index > 1)
-		{
-		  ppo = preds[index - 2];
-		}
-
-		if (index > 0)
-		{
-		  po = preds[index - 1];
-		}
-		features.Add("po=" + po);
-		features.Add("pow=" + po + "," + tokens[index]);
-		features.Add("powf=" + po + "," + FeatureGeneratorUtil.tokenFeature(tokens[index]));
-		features.Add("ppo=" + ppo);
-
-		return features.ToArray();
-	  }
-}
+            return features.ToArray();
+        }
+    }
 }

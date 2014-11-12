@@ -19,69 +19,60 @@
 
 namespace opennlp.tools.chunker
 {
-
-	using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using opennlp.tools.util;
+    using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
+    using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
+    using opennlp.tools.util;
     using ExtensionLoader = opennlp.tools.util.ext.ExtensionLoader<ChunkerFactory>;
 
-	public class ChunkerFactory : BaseToolFactory
-	{
-
-	  /// <summary>
-	  /// Creates a <seealso cref="ChunkerFactory"/> that provides the default implementation
-	  /// of the resources.
-	  /// </summary>
-	  public ChunkerFactory()
-	  {
-	  }
+    public class ChunkerFactory : BaseToolFactory
+    {
+        /// <summary>
+        /// Creates a <seealso cref="ChunkerFactory"/> that provides the default implementation
+        /// of the resources.
+        /// </summary>
+        public ChunkerFactory()
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static ChunkerFactory create(String subclassName) throws opennlp.tools.util.InvalidFormatException
-	  public static ChunkerFactory create(string subclassName)
-	  {
-		if (subclassName == null)
-		{
-		  // will create the default factory
-		  return new ChunkerFactory();
-		}
-		try
-		{
-		  ChunkerFactory theFactory = ExtensionLoader.instantiateExtension(subclassName);
-		  return theFactory;
-		}
-		catch (Exception e)
-		{
-		  string msg = "Could not instantiate the " + subclassName + ". The initialization throw an exception.";
-		  Console.Error.WriteLine(msg);
-		  Console.WriteLine(e.ToString());
-		  Console.Write(e.StackTrace);
-		  throw new InvalidFormatException(msg, e);
-		}
-	  }
+        public static ChunkerFactory create(string subclassName)
+        {
+            if (subclassName == null)
+            {
+                // will create the default factory
+                return new ChunkerFactory();
+            }
+            try
+            {
+                ChunkerFactory theFactory = ExtensionLoader.instantiateExtension(subclassName);
+                return theFactory;
+            }
+            catch (Exception e)
+            {
+                string msg = "Could not instantiate the " + subclassName + ". The initialization throw an exception.";
+                Console.Error.WriteLine(msg);
+                Console.WriteLine(e.ToString());
+                Console.Write(e.StackTrace);
+                throw new InvalidFormatException(msg, e);
+            }
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: @Override public void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
-	  public override void validateArtifactMap()
-	  {
-		// no additional artifacts
-	  }
+        public override void validateArtifactMap()
+        {
+            // no additional artifacts
+        }
 
-	  public virtual SequenceValidator<string> SequenceValidator
-	  {
-		  get
-		  {
-			return new DefaultChunkerSequenceValidator();
-		  }
-	  }
+        public virtual SequenceValidator<string> SequenceValidator
+        {
+            get { return new DefaultChunkerSequenceValidator(); }
+        }
 
-	  public virtual ChunkerContextGenerator ContextGenerator
-	  {
-		  get
-		  {
-			return new DefaultChunkerContextGenerator();
-		  }
-	  }
-	}
-
+        public virtual ChunkerContextGenerator ContextGenerator
+        {
+            get { return new DefaultChunkerContextGenerator(); }
+        }
+    }
 }

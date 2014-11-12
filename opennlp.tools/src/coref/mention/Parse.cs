@@ -20,145 +20,142 @@ using System.Collections.Generic;
 
 namespace opennlp.tools.coref.mention
 {
+    using Span = opennlp.tools.util.Span;
 
-	using Span = opennlp.tools.util.Span;
+    /// <summary>
+    /// Interface for syntactic and named-entity information to be used in coreference
+    /// annotation.
+    /// </summary>
+    public interface Parse : IComparable<Parse>
+    {
+        /// <summary>
+        /// Returns the index of the sentence which contains this parse.
+        /// </summary>
+        /// <returns> The index of the sentence which contains this parse. </returns>
+        int SentenceNumber { get; }
 
-	/// <summary>
-	/// Interface for syntactic and named-entity information to be used in coreference
-	/// annotation.
-	/// </summary>
-	public interface Parse : IComparable<Parse>
-	{
+        /// <summary>
+        /// Returns a list of the all noun phrases
+        /// contained by this parse.  The noun phrases in this list should
+        /// also implement the <seealso cref="Parse"/> interface.
+        /// </summary>
+        /// <returns> a list of all the noun phrases contained by this parse. </returns>
+        IList<Parse> NounPhrases { get; }
 
-	  /// <summary>
-	  /// Returns the index of the sentence which contains this parse.
-	  /// </summary>
-	  /// <returns> The index of the sentence which contains this parse. </returns>
-	  int SentenceNumber {get;}
+        /// <summary>
+        /// Returns a list of all the named entities
+        /// contained by this parse.  The named entities in this list should
+        /// also implement the <seealso cref="Parse"/> interface.
+        /// </summary>
+        /// <returns> a list of all the named entities contained by this parse.  </returns>
+        IList<Parse> NamedEntities { get; }
 
-	  /// <summary>
-	  /// Returns a list of the all noun phrases
-	  /// contained by this parse.  The noun phrases in this list should
-	  /// also implement the <seealso cref="Parse"/> interface.
-	  /// </summary>
-	  /// <returns> a list of all the noun phrases contained by this parse. </returns>
-	  IList<Parse> NounPhrases {get;}
+        /// <summary>
+        /// Returns a list of the children to this object.  The
+        /// children should also implement the <seealso cref="Parse"/> interface
+        /// . </summary>
+        /// <returns> a list of the children to this object.
+        ///  </returns>
+        IList<Parse> Children { get; }
 
-	  /// <summary>
-	  /// Returns a list of all the named entities
-	  /// contained by this parse.  The named entities in this list should
-	  /// also implement the <seealso cref="Parse"/> interface.
-	  /// </summary>
-	  /// <returns> a list of all the named entities contained by this parse.  </returns>
-	  IList<Parse> NamedEntities {get;}
+        /// <summary>
+        /// Returns a list of the children to this object which are constituents or tokens.  The
+        /// children should also implement the <seealso cref="Parse"/> interface.  This allows
+        /// implementations which contain addition nodes for things such as semantic categories to
+        /// hide those nodes from the components which only care about syntactic nodes.
+        /// </summary>
+        /// <returns> a list of the children to this object which are constituents or tokens. </returns>
+        IList<Parse> SyntacticChildren { get; }
 
-	  /// <summary>
-	  /// Returns a list of the children to this object.  The
-	  /// children should also implement the <seealso cref="Parse"/> interface
-	  /// . </summary>
-	  /// <returns> a list of the children to this object.
-	  ///  </returns>
-	  IList<Parse> Children {get;}
+        /// <summary>
+        /// Returns a list of the tokens contained by this object.  The tokens in this list should also
+        /// implement the <seealso cref="Parse"/> interface.
+        /// </summary>
+        /// <returns> the tokens </returns>
+        IList<Parse> Tokens { get; }
 
-	  /// <summary>
-	  /// Returns a list of the children to this object which are constituents or tokens.  The
-	  /// children should also implement the <seealso cref="Parse"/> interface.  This allows
-	  /// implementations which contain addition nodes for things such as semantic categories to
-	  /// hide those nodes from the components which only care about syntactic nodes.
-	  /// </summary>
-	  /// <returns> a list of the children to this object which are constituents or tokens. </returns>
-	  IList<Parse> SyntacticChildren {get;}
+        /// <summary>
+        /// Returns the syntactic type of this node. Typically this is the part-of-speech or
+        /// constituent labeling.
+        /// </summary>
+        /// <returns> the syntactic type. </returns>
+        string SyntacticType { get; }
 
-	  /// <summary>
-	  /// Returns a list of the tokens contained by this object.  The tokens in this list should also
-	  /// implement the <seealso cref="Parse"/> interface.
-	  /// </summary>
-	  /// <returns> the tokens </returns>
-	  IList<Parse> Tokens {get;}
+        /// <summary>
+        /// Returns the named-entity type of this node.
+        /// </summary>
+        /// <returns> the named-entity type.  </returns>
+        string EntityType { get; }
 
-	  /// <summary>
-	  /// Returns the syntactic type of this node. Typically this is the part-of-speech or
-	  /// constituent labeling.
-	  /// </summary>
-	  /// <returns> the syntactic type. </returns>
-	  string SyntacticType {get;}
+        /// <summary>
+        /// Determines whether this has an ancestor of type NAC.
+        /// </summary>
+        /// <returns> true is this has an ancestor of type NAC, false otherwise. </returns>
+        bool ParentNAC { get; }
 
-	  /// <summary>
-	  /// Returns the named-entity type of this node.
-	  /// </summary>
-	  /// <returns> the named-entity type.  </returns>
-	  string EntityType {get;}
+        /// <summary>
+        /// Returns the parent parse of this parse node.
+        /// </summary>
+        /// <returns> the parent parse of this parse node. </returns>
+        Parse Parent { get; }
 
-	  /// <summary>
-	  /// Determines whether this has an ancestor of type NAC.
-	  /// </summary>
-	  /// <returns> true is this has an ancestor of type NAC, false otherwise. </returns>
-	  bool ParentNAC {get;}
+        /// <summary>
+        /// Specifies whether this parse is a named-entity.
+        /// </summary>
+        /// <returns> True if this parse is a named-entity; false otherwise. </returns>
+        bool NamedEntity { get; }
 
-	  /// <summary>
-	  /// Returns the parent parse of this parse node.
-	  /// </summary>
-	  /// <returns> the parent parse of this parse node. </returns>
-	  Parse Parent {get;}
+        /// <summary>
+        /// Specifies whether this parse is a noun phrase.
+        /// </summary>
+        /// <returns> True if this parse is a noun phrase; false otherwise. </returns>
+        bool NounPhrase { get; }
 
-	  /// <summary>
-	  /// Specifies whether this parse is a named-entity.
-	  /// </summary>
-	  /// <returns> True if this parse is a named-entity; false otherwise. </returns>
-	  bool NamedEntity {get;}
+        /// <summary>
+        /// Specifies whether this parse is a sentence.
+        /// </summary>
+        /// <returns> True if this parse is a sentence; false otherwise. </returns>
+        bool Sentence { get; }
 
-	  /// <summary>
-	  /// Specifies whether this parse is a noun phrase.
-	  /// </summary>
-	  /// <returns> True if this parse is a noun phrase; false otherwise. </returns>
-	  bool NounPhrase {get;}
+        /// <summary>
+        /// Specifies whether this parse is a coordinated noun phrase.
+        /// </summary>
+        /// <returns> True if this parse is a coordinated noun phrase; false otherwise. </returns>
+        bool CoordinatedNounPhrase { get; }
 
-	  /// <summary>
-	  /// Specifies whether this parse is a sentence.
-	  /// </summary>
-	  /// <returns> True if this parse is a sentence; false otherwise. </returns>
-	  bool Sentence {get;}
+        /// <summary>
+        /// Specifies whether this parse is a token.
+        /// </summary>
+        /// <returns> True if this parse is a token; false otherwise. </returns>
+        bool Token { get; }
 
-	  /// <summary>
-	  /// Specifies whether this parse is a coordinated noun phrase.
-	  /// </summary>
-	  /// <returns> True if this parse is a coordinated noun phrase; false otherwise. </returns>
-	  bool CoordinatedNounPhrase {get;}
+        string ToString();
 
-	  /// <summary>
-	  /// Specifies whether this parse is a token.
-	  /// </summary>
-	  /// <returns> True if this parse is a token; false otherwise. </returns>
-	  bool Token {get;}
+        /// <summary>
+        /// Returns an entity id associated with this parse and coreferent parses.  This is only used for training on
+        /// already annotated coreference annotation.
+        /// </summary>
+        /// <returns> an entity id associated with this parse and coreferent parses. </returns>
+        int EntityId { get; }
 
-	  string ToString();
+        /// <summary>
+        /// Returns the character offsets of this parse node.
+        /// </summary>
+        /// <returns> The span representing the character offsets of this parse node. </returns>
+        Span Span { get; }
 
-	  /// <summary>
-	  /// Returns an entity id associated with this parse and coreferent parses.  This is only used for training on
-	  /// already annotated coreference annotation.
-	  /// </summary>
-	  /// <returns> an entity id associated with this parse and coreferent parses. </returns>
-	  int EntityId {get;}
+        /// <summary>
+        /// Returns the first token which is not a child of this parse.  If the first token of a sentence is
+        /// a child of this parse then null is returned.
+        /// </summary>
+        /// <returns> the first token which is not a child of this parse or null if no such token exists. </returns>
+        Parse PreviousToken { get; }
 
-	  /// <summary>
-	  /// Returns the character offsets of this parse node.
-	  /// </summary>
-	  /// <returns> The span representing the character offsets of this parse node. </returns>
-	  Span Span {get;}
-
-	  /// <summary>
-	  /// Returns the first token which is not a child of this parse.  If the first token of a sentence is
-	  /// a child of this parse then null is returned.
-	  /// </summary>
-	  /// <returns> the first token which is not a child of this parse or null if no such token exists. </returns>
-	  Parse PreviousToken {get;}
-
-	  /// <summary>
-	  /// Returns the next token which is not a child of this parse.  If the last token of a sentence is
-	  /// a child of this parse then null is returned.
-	  /// </summary>
-	  /// <returns> the next token which is not a child of this parse or null if no such token exists. </returns>
-	  Parse NextToken {get;}
-	}
-
+        /// <summary>
+        /// Returns the next token which is not a child of this parse.  If the last token of a sentence is
+        /// a child of this parse then null is returned.
+        /// </summary>
+        /// <returns> the next token which is not a child of this parse or null if no such token exists. </returns>
+        Parse NextToken { get; }
+    }
 }

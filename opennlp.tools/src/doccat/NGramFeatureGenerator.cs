@@ -19,23 +19,18 @@
 
 namespace opennlp.tools.doccat
 {
+    public class NGramFeatureGenerator : FeatureGenerator
+    {
+        public virtual ICollection<string> extractFeatures(string[] text)
+        {
+            IList<string> features = new List<string>();
 
+            for (int i = 0; i < text.Length - 1; i++)
+            {
+                features.Add(text[i] + " " + text[i + 1]);
+            }
 
-	public class NGramFeatureGenerator : FeatureGenerator
-	{
-
-	  public virtual ICollection<string> extractFeatures(string[] text)
-	  {
-
-		IList<string> features = new List<string>();
-
-		for (int i = 0; i < text.Length - 1; i++)
-		{
-		  features.Add(text[i] + " " + text[i + 1]);
-		}
-
-		return features;
-	  }
-	}
-
+            return features;
+        }
+    }
 }

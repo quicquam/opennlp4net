@@ -19,14 +19,11 @@ using j4n.Lang;
 
 namespace opennlp.tools.stemmer
 {
-
-	/// <summary>
-	/// The stemmer is reducing a word to its stem.
-	/// </summary>
-	public interface Stemmer
-	{
-
-	  CharSequence stem(CharSequence word);
-	}
-
+    /// <summary>
+    /// The stemmer is reducing a word to its stem.
+    /// </summary>
+    public interface Stemmer
+    {
+        CharSequence stem(CharSequence word);
+    }
 }

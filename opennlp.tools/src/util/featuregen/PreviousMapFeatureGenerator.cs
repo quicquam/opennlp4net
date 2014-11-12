@@ -19,48 +19,43 @@
 
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// This <seealso cref="FeatureGeneratorAdapter"/> generates features indicating the outcome associated with a previously occuring word.
+    /// </summary>
+    public class PreviousMapFeatureGenerator : AdaptiveFeatureGenerator
+    {
+        private IDictionary<string, string> previousMap = new Dictionary<string, string>();
 
+        public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
+        {
+            var feature = string.Format("pd=");
+            var mapValue = "null";
 
-	/// <summary>
-	/// This <seealso cref="FeatureGeneratorAdapter"/> generates features indicating the outcome associated with a previously occuring word.
-	/// </summary>
-	public class PreviousMapFeatureGenerator : AdaptiveFeatureGenerator
-	{
+            if (previousMap.ContainsKey(tokens[index]))
+            {
+                mapValue += previousMap[tokens[index]];
+            }
 
-	  private IDictionary<string, string> previousMap = new Dictionary<string, string>();
+            features.Add(feature + mapValue);
+        }
 
-	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
-	  {
-	      var feature = string.Format("pd=");
-	      var mapValue = "null";
+        /// <summary>
+        /// Generates previous decision features for the token based on contents of the previous map.
+        /// </summary>
+        public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
+        {
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                previousMap[tokens[i]] = outcomes[i];
+            }
+        }
 
-	      if (previousMap.ContainsKey(tokens[index]))
-	      {
-	          mapValue += previousMap[tokens[index]];
-	      }
-
-          features.Add(feature + mapValue);
-	  }
-
-	  /// <summary>
-	  /// Generates previous decision features for the token based on contents of the previous map.
-	  /// </summary>
-	  public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
-	  {
-
-		for (int i = 0; i < tokens.Length; i++)
-		{
-		  previousMap[tokens[i]] = outcomes[i];
-		}
-	  }
-
-	  /// <summary>
-	  /// Clears the previous map.
-	  /// </summary>
-	  public virtual void clearAdaptiveData()
-	  {
-		previousMap.Clear();
-	  }
-	}
-
+        /// <summary>
+        /// Clears the previous map.
+        /// </summary>
+        public virtual void clearAdaptiveData()
+        {
+            previousMap.Clear();
+        }
+    }
 }

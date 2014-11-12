@@ -18,6 +18,7 @@
 /// <summary>
 /// Package containing common code for performing full syntactic parsing.
 /// </summary>
+
 namespace opennlp.tools.parser
 {
 }

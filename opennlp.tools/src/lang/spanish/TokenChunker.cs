@@ -22,71 +22,68 @@ using j4n.IO.Reader;
 
 namespace opennlp.tools.lang.spanish
 {
+    using SuffixSensitiveGISModelReader = opennlp.maxent.io.SuffixSensitiveGISModelReader;
+    using NameFinderEventStream = opennlp.tools.namefind.NameFinderEventStream;
+    using NameFinderME = opennlp.tools.namefind.NameFinderME;
+    using Span = opennlp.tools.util.Span;
 
-
-	using SuffixSensitiveGISModelReader = opennlp.maxent.io.SuffixSensitiveGISModelReader;
-	using NameFinderEventStream = opennlp.tools.namefind.NameFinderEventStream;
-	using NameFinderME = opennlp.tools.namefind.NameFinderME;
-	using Span = opennlp.tools.util.Span;
-
-	/// <summary>
-	/// Class which identifies multi-token chunk which are treated as a single token in for POS-tagging.
-	/// </summary>
-	public class TokenChunker
-	{
-
-	  private NameFinderME nameFinder;
+    /// <summary>
+    /// Class which identifies multi-token chunk which are treated as a single token in for POS-tagging.
+    /// </summary>
+    public class TokenChunker
+    {
+        private NameFinderME nameFinder;
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public TokenChunker(String modelName) throws java.io.IOException
-	  public TokenChunker(string modelName)
-	  {
-	  nameFinder = new NameFinderME((new SuffixSensitiveGISModelReader(new Jfile(modelName))).Model);
-	  }
+        public TokenChunker(string modelName)
+        {
+            nameFinder = new NameFinderME((new SuffixSensitiveGISModelReader(new Jfile(modelName))).Model);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
-	  public static void Main(string[] args)
-	  {
-		if (args.Length == 0)
-		{
-		  Console.Error.WriteLine("Usage: java opennlp.tools.spanish.TokenChunker model < tokenized_sentences");
-		  Environment.Exit(1);
-		}
-		TokenChunker chunker = new TokenChunker(args[0]);
-		BufferedReader inReader = new BufferedReader(new InputStreamReader(Console.OpenStandardInput(),"ISO-8859-1"));
-		PrintStream @out = new PrintStream(Console.OpenStandardOutput() ,true,"ISO-8859-1");
-		for (string line = inReader.readLine(); line != null; line = inReader.readLine())
-		{
-		  if (line.Equals(""))
-		  {
-			@out.println();
-		  }
-		  else
-		  {
-			string[] tokens = line.Split(' ');
-			Span[] spans = chunker.nameFinder.find(tokens);
-			string[] outcomes = NameFinderEventStream.generateOutcomes(spans, null, tokens.Length);
-			//System.err.println(java.util.Arrays.asList(chunks));
-			for (int ci = 0,cn = outcomes.Length;ci < cn;ci++)
-			{
-			  if (ci == 0)
-			  {
-				@out.print(tokens[ci]);
-			  }
-			  else if (outcomes[ci].Equals(NameFinderME.CONTINUE))
-			  {
-				@out.print("_" + tokens[ci]);
-			  }
-			  else
-			  {
-				@out.print(" " + tokens[ci]);
-			  }
-			}
-			@out.println();
-		  }
-		}
-	  }
-	}
-
+        public static void Main(string[] args)
+        {
+            if (args.Length == 0)
+            {
+                Console.Error.WriteLine("Usage: java opennlp.tools.spanish.TokenChunker model < tokenized_sentences");
+                Environment.Exit(1);
+            }
+            TokenChunker chunker = new TokenChunker(args[0]);
+            BufferedReader inReader =
+                new BufferedReader(new InputStreamReader(Console.OpenStandardInput(), "ISO-8859-1"));
+            PrintStream @out = new PrintStream(Console.OpenStandardOutput(), true, "ISO-8859-1");
+            for (string line = inReader.readLine(); line != null; line = inReader.readLine())
+            {
+                if (line.Equals(""))
+                {
+                    @out.println();
+                }
+                else
+                {
+                    string[] tokens = line.Split(' ');
+                    Span[] spans = chunker.nameFinder.find(tokens);
+                    string[] outcomes = NameFinderEventStream.generateOutcomes(spans, null, tokens.Length);
+                    //System.err.println(java.util.Arrays.asList(chunks));
+                    for (int ci = 0, cn = outcomes.Length; ci < cn; ci++)
+                    {
+                        if (ci == 0)
+                        {
+                            @out.print(tokens[ci]);
+                        }
+                        else if (outcomes[ci].Equals(NameFinderME.CONTINUE))
+                        {
+                            @out.print("_" + tokens[ci]);
+                        }
+                        else
+                        {
+                            @out.print(" " + tokens[ci]);
+                        }
+                    }
+                    @out.println();
+                }
+            }
+        }
+    }
 }

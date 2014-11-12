@@ -19,29 +19,26 @@
 
 namespace opennlp.model
 {
+    /// <summary>
+    /// An interface for objects which read events during training.
+    /// </summary>
+    public interface EventCollector
+    {
+        /// <summary>
+        /// Return the events which this EventCollector has gathered. It must get its
+        /// data from a constructor.
+        /// </summary>
+        /// <returns> the events that this EventCollector has gathered </returns>
+        Event[] Events { get; }
 
-	/// <summary>
-	/// An interface for objects which read events during training.
-	/// </summary>
-	public interface EventCollector
-	{
-
-	  /// <summary>
-	  /// Return the events which this EventCollector has gathered. It must get its
-	  /// data from a constructor.
-	  /// </summary>
-	  /// <returns> the events that this EventCollector has gathered </returns>
-	  Event[] Events {get;}
-
-	  /// <summary>
-	  /// Return the events which this EventCollector has gathered based on whether
-	  /// we wish to train a model or evaluate one based on those events.
-	  /// </summary>
-	  /// <param name="evalMode">
-	  ///          true if we are evaluating based on the events, false if we are
-	  ///          training. </param>
-	  /// <returns> the events that this EventCollector has gathered </returns>
-	  Event[] getEvents(bool evalMode);
-	}
-
+        /// <summary>
+        /// Return the events which this EventCollector has gathered based on whether
+        /// we wish to train a model or evaluate one based on those events.
+        /// </summary>
+        /// <param name="evalMode">
+        ///          true if we are evaluating based on the events, false if we are
+        ///          training. </param>
+        /// <returns> the events that this EventCollector has gathered </returns>
+        Event[] getEvents(bool evalMode);
+    }
 }

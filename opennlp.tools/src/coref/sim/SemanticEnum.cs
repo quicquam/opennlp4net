@@ -17,31 +17,30 @@
 
 namespace opennlp.tools.coref.sim
 {
+    public class SemanticEnum
+    {
+        private string compatibility;
 
-	public class SemanticEnum
-	{
+        /// <summary>
+        /// Semantically compatible. </summary>
+        public static readonly SemanticEnum COMPATIBLE = new SemanticEnum("compatible");
 
-	  private string compatibility;
+        /// <summary>
+        /// Semantically incompatible. </summary>
+        public static readonly SemanticEnum INCOMPATIBLE = new SemanticEnum("incompatible");
 
-	  /// <summary>
-	  /// Semantically compatible. </summary>
-	  public static readonly SemanticEnum COMPATIBLE = new SemanticEnum("compatible");
-	  /// <summary>
-	  /// Semantically incompatible. </summary>
-	  public static readonly SemanticEnum INCOMPATIBLE = new SemanticEnum("incompatible");
-	  /// <summary>
-	  /// Semantic compatibility Unknown. </summary>
-	  public static readonly SemanticEnum UNKNOWN = new SemanticEnum("unknown");
+        /// <summary>
+        /// Semantic compatibility Unknown. </summary>
+        public static readonly SemanticEnum UNKNOWN = new SemanticEnum("unknown");
 
-	  private SemanticEnum(string g)
-	  {
-		compatibility = g;
-	  }
+        private SemanticEnum(string g)
+        {
+            compatibility = g;
+        }
 
-	  public override string ToString()
-	  {
-		return compatibility;
-	  }
-	}
-
+        public override string ToString()
+        {
+            return compatibility;
+        }
+    }
 }

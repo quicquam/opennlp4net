@@ -19,33 +19,29 @@ using j4n.Serialization;
 
 namespace opennlp.tools.coref
 {
+    using opennlp.tools.util;
+    using opennlp.tools.util;
 
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	public class CorefSampleDataStream : FilterObjectStream<string, CorefSample>
-	{
-
-	  public CorefSampleDataStream(ObjectStream<string> @in) : base(@in)
-	  {
-	  }
+    public class CorefSampleDataStream : FilterObjectStream<string, CorefSample>
+    {
+        public CorefSampleDataStream(ObjectStream<string> @in) : base(@in)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public CorefSample read() throws java.io.IOException
-	  public override CorefSample read()
-	  {
+        public override CorefSample read()
+        {
+            string document = samples.read();
 
-		string document = samples.read();
-
-		if (document != null)
-		{
-		  return CorefSample.parse(document);
-		}
-		else
-		{
-		  return null;
-		}
-	  }
-	}
-
+            if (document != null)
+            {
+                return CorefSample.parse(document);
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
 }

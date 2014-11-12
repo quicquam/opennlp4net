@@ -17,65 +17,62 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
 
 namespace opennlp.model
 {
-
-
-	public class PlainTextFileDataReader : DataReader
-	{
-
-	  private BufferedReader input;
+    public class PlainTextFileDataReader : DataReader
+    {
+        private BufferedReader input;
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public PlainTextFileDataReader(java.io.File f) throws java.io.IOException
-	  public PlainTextFileDataReader(Jfile f)
-	  {
-		if (f.Name.EndsWith(".gz", StringComparison.Ordinal))
-		{
-		  input = new BufferedReader(new InputStreamReader(new BufferedInputStream(new GZIPInputStream(new BufferedInputStream(new FileInputStream(f))))));
-		}
-		else
-		{
-		  input = new BufferedReader(new InputStreamReader(new BufferedInputStream(new FileInputStream(f))));
-		}
-	  }
+        public PlainTextFileDataReader(Jfile f)
+        {
+            if (f.Name.EndsWith(".gz", StringComparison.Ordinal))
+            {
+                input =
+                    new BufferedReader(
+                        new InputStreamReader(
+                            new BufferedInputStream(new GZIPInputStream(new BufferedInputStream(new FileInputStream(f))))));
+            }
+            else
+            {
+                input = new BufferedReader(new InputStreamReader(new BufferedInputStream(new FileInputStream(f))));
+            }
+        }
 
-	  public PlainTextFileDataReader(InputStream @in)
-	  {
-		input = new BufferedReader(new InputStreamReader(@in));
-	  }
+        public PlainTextFileDataReader(InputStream @in)
+        {
+            input = new BufferedReader(new InputStreamReader(@in));
+        }
 
-	  public PlainTextFileDataReader(BufferedReader @in)
-	  {
-		input = @in;
-	  }
+        public PlainTextFileDataReader(BufferedReader @in)
+        {
+            input = @in;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public double readDouble() throws java.io.IOException
-	  public virtual double readDouble()
-	  {
-		return Convert.ToDouble(input.readLine());
-	  }
+        public virtual double readDouble()
+        {
+            return Convert.ToDouble(input.readLine());
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public int readInt() throws java.io.IOException
-	  public virtual int readInt()
-	  {
-		return Convert.ToInt32(input.readLine());
-	  }
+        public virtual int readInt()
+        {
+            return Convert.ToInt32(input.readLine());
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public String readUTF() throws java.io.IOException
-	  public virtual string readUTF()
-	  {
-		return input.readLine();
-	  }
-
-	}
-
+        public virtual string readUTF()
+        {
+            return input.readLine();
+        }
+    }
 }

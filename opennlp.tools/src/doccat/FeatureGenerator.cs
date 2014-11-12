@@ -17,16 +17,13 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.doccat
 {
-
-	/// <summary>
-	/// Interface for generating features for document categorization.
-	/// </summary>
-	public interface FeatureGenerator
-	{
-	  ICollection<string> extractFeatures(string[] text);
-	}
-
+    /// <summary>
+    /// Interface for generating features for document categorization.
+    /// </summary>
+    public interface FeatureGenerator
+    {
+        ICollection<string> extractFeatures(string[] text);
+    }
 }

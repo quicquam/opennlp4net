@@ -17,41 +17,39 @@
 
 namespace opennlp.tools.coref.mention
 {
+    /// <summary>
+    /// Finds mentions from shallow np-chunking based parses.
+    /// </summary>
+    public class ShallowParseMentionFinder : AbstractMentionFinder
+    {
+        private static ShallowParseMentionFinder instance;
 
-	/// <summary>
-	/// Finds mentions from shallow np-chunking based parses.
-	/// </summary>
-	public class ShallowParseMentionFinder : AbstractMentionFinder
-	{
+        private ShallowParseMentionFinder(HeadFinder hf)
+        {
+            headFinder = hf;
+            collectPrenominalNamedEntities_Renamed = true;
+            collectCoordinatedNounPhrases = true;
+        }
 
-	  private static ShallowParseMentionFinder instance;
+        /// <summary>
+        /// Retrieves the one and only existing instance.
+        /// </summary>
+        /// <param name="hf"> </param>
+        /// <returns> one and only existing instance </returns>
+        public static ShallowParseMentionFinder getInstance(HeadFinder hf)
+        {
+            if (instance == null)
+            {
+                instance = new ShallowParseMentionFinder(hf);
+            }
+            else if (instance.headFinder != hf)
+            {
+                instance = new ShallowParseMentionFinder(hf);
+            }
+            return instance;
+        }
 
-	  private ShallowParseMentionFinder(HeadFinder hf)
-	  {
-		headFinder = hf;
-		collectPrenominalNamedEntities_Renamed = true;
-		collectCoordinatedNounPhrases = true;
-	  }
-
-	  /// <summary>
-	  /// Retrieves the one and only existing instance.
-	  /// </summary>
-	  /// <param name="hf"> </param>
-	  /// <returns> one and only existing instance </returns>
-	  public static ShallowParseMentionFinder getInstance(HeadFinder hf)
-	  {
-		if (instance == null)
-		{
-		  instance = new ShallowParseMentionFinder(hf);
-		}
-		else if (instance.headFinder != hf)
-		{
-		  instance = new ShallowParseMentionFinder(hf);
-		}
-		return instance;
-	  }
-
-	  /*
+        /*
 	  protected final List getNounPhrases(Parse p) {
 	    List nps = p.getNounPhrases();
 	    List basals = new ArrayList();
@@ -80,6 +78,5 @@ namespace opennlp.tools.coref.mention
 	    return(basals);
 	  }
 	  */
-	}
-
+    }
 }

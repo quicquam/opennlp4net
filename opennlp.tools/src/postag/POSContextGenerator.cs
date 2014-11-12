@@ -18,16 +18,14 @@
 
 namespace opennlp.tools.postag
 {
+    using opennlp.tools.util;
 
-	using opennlp.tools.util;
 
-
-	/// <summary>
-	/// The interface for a context generator for the POS Tagger.
-	/// </summary>
-	public interface POSContextGenerator : BeamSearchContextGenerator<string>
-	{
-	  string[] getContext(int pos, string[] tokens, string[] prevTags, object[] ac);
-	}
-
+    /// <summary>
+    /// The interface for a context generator for the POS Tagger.
+    /// </summary>
+    public interface POSContextGenerator : BeamSearchContextGenerator<string>
+    {
+        string[] getContext(int pos, string[] tokens, string[] prevTags, object[] ac);
+    }
 }

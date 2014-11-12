@@ -19,6 +19,7 @@
 /// Package containing experimental code for performing full syntactic
 /// parsing using attachment decisions.
 /// </summary>
+
 namespace opennlp.tools.parser.treeinsert
 {
 }

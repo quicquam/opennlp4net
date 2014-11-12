@@ -18,6 +18,7 @@
 /// <summary>
 /// Package related to resolution techniques for coreference resolution.
 /// </summary>
+
 namespace opennlp.tools.coref.resolver
 {
 }

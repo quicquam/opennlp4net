@@ -19,37 +19,32 @@ using j4n.Lang;
 
 namespace opennlp.tools.tokenize.lang
 {
+    public class Factory
+    {
+        public const string DEFAULT_ALPHANUMERIC = "^[A-Za-z0-9]+$";
 
+        /// <summary>
+        /// Gets the alpha numeric pattern for the language. Please save the value
+        /// locally because this call is expensive.
+        /// </summary>
+        /// <param name="languageCode">
+        ///          the language code. If null or unknow the default pattern will be
+        ///          returned. </param>
+        /// <returns> the alpha numeric pattern for the language or the default pattern. </returns>
+        public virtual Pattern getAlphanumeric(string languageCode)
+        {
+            if ("pt".Equals(languageCode))
+            {
+                return Pattern.compile("^[0-9a-záãâàéêíóõôúüçA-ZÁÃÂÀÉÊÍÓÕÔÚÜÇ]+$");
+            }
 
+            return Pattern.compile(DEFAULT_ALPHANUMERIC);
+        }
 
-	public class Factory
-	{
-
-	  public const string DEFAULT_ALPHANUMERIC = "^[A-Za-z0-9]+$";
-
-	  /// <summary>
-	  /// Gets the alpha numeric pattern for the language. Please save the value
-	  /// locally because this call is expensive.
-	  /// </summary>
-	  /// <param name="languageCode">
-	  ///          the language code. If null or unknow the default pattern will be
-	  ///          returned. </param>
-	  /// <returns> the alpha numeric pattern for the language or the default pattern. </returns>
-	  public virtual Pattern getAlphanumeric(string languageCode)
-	  {
-		if ("pt".Equals(languageCode))
-		{
-		  return Pattern.compile("^[0-9a-záãâàéêíóõôúüçA-ZÁÃÂÀÉÊÍÓÕÔÚÜÇ]+$");
-		}
-
-		return Pattern.compile(DEFAULT_ALPHANUMERIC);
-	  }
-
-	  public virtual TokenContextGenerator createTokenContextGenerator(string languageCode, HashSet<string> abbreviations)
-	  {
-		return new DefaultTokenContextGenerator(abbreviations);
-	  }
-
-	}
-
+        public virtual TokenContextGenerator createTokenContextGenerator(string languageCode,
+            HashSet<string> abbreviations)
+        {
+            return new DefaultTokenContextGenerator(abbreviations);
+        }
+    }
 }

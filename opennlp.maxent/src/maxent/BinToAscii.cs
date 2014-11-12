@@ -24,36 +24,32 @@ using j4n.IO.Writer;
 
 namespace opennlp.maxent
 {
-
-
-	/// <summary>
-	/// A program to convert from java binary doubles to ascii
-	/// </summary>
-	public class BinToAscii
-	{
-
+    /// <summary>
+    /// A program to convert from java binary doubles to ascii
+    /// </summary>
+    public class BinToAscii
+    {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
-	  public static void Main(string[] args)
-	  {
-		PrintWriter @out = new PrintWriter(new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(args[1]))));
-		DataInputStream @in = new DataInputStream(new GZIPInputStream(new FileInputStream(args[0])));
+        public static void Main(string[] args)
+        {
+            PrintWriter @out =
+                new PrintWriter(new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(args[1]))));
+            DataInputStream @in = new DataInputStream(new GZIPInputStream(new FileInputStream(args[0])));
 
-		double d;
-		try
-		{
-		  while (true)
-		  {
-			@out.println(@in.readDouble());
-		  }
-		}
-		catch (Exception)
-		{
-		}
-		@out.close();
-		@in.close();
-	  }
-
-	}
-
+            double d;
+            try
+            {
+                while (true)
+                {
+                    @out.println(@in.readDouble());
+                }
+            }
+            catch (Exception)
+            {
+            }
+            @out.close();
+            @in.close();
+        }
+    }
 }

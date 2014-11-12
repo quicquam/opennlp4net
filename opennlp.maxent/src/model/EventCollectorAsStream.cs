@@ -19,35 +19,32 @@
 
 namespace opennlp.model
 {
+    /// <summary>
+    /// A wrapper to turn EventCollectors created for Maxent 1.0 into EventStreams
+    /// for Maxent 1.2.  For efficiency, it would be best to convert your
+    /// EventCollector into a EventStream directly, but this will allow your
+    /// application to work with Maxent 1.2 with very little recoding.
+    /// </summary>
+    public sealed class EventCollectorAsStream : AbstractEventStream
+    {
+        internal readonly Event[] events;
+        internal readonly int numEvents;
+        internal int index = 0;
 
-	/// <summary>
-	/// A wrapper to turn EventCollectors created for Maxent 1.0 into EventStreams
-	/// for Maxent 1.2.  For efficiency, it would be best to convert your
-	/// EventCollector into a EventStream directly, but this will allow your
-	/// application to work with Maxent 1.2 with very little recoding.
-	/// </summary>
-	public sealed class EventCollectorAsStream : AbstractEventStream
-	{
-	  internal readonly Event[] events;
-	  internal readonly int numEvents;
-	  internal int index = 0;
+        public EventCollectorAsStream(EventCollector ec)
+        {
+            events = ec.getEvents(false);
+            numEvents = events.Length;
+        }
 
-	  public EventCollectorAsStream(EventCollector ec)
-	  {
-		events = ec.getEvents(false);
-		numEvents = events.Length;
-	  }
+        public override Event next()
+        {
+            return events[index++];
+        }
 
-	  public override Event next()
-	  {
-		return events[index++];
-	  }
-
-	  public override bool hasNext()
-	  {
-		return (index < numEvents);
-	  }
-
-	}
-
+        public override bool hasNext()
+        {
+            return (index < numEvents);
+        }
+    }
 }

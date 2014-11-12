@@ -18,21 +18,19 @@
  */
 
 using System.Collections.Generic;
+
 namespace opennlp.model
 {
-
-	/// <summary>
-	///  Interface for streams of sequences used to train sequence models. 
-	/// </summary>
-	public interface SequenceStream<T> : IEnumerable<Sequence<T>>
-	{
-	  /// <summary>
-	  /// Creates a new event array based on the outcomes predicted by the specified parameters 
-	  /// for the specified sequence. </summary>
-	  /// <param name="sequence"> The sequence to be evaluated. </param>
-	  /// <returns> event array </returns>
-	  Event[] updateContext(Sequence<T> sequence, AbstractModel model);
-
-	}
-
+    /// <summary>
+    ///  Interface for streams of sequences used to train sequence models. 
+    /// </summary>
+    public interface SequenceStream<T> : IEnumerable<Sequence<T>>
+    {
+        /// <summary>
+        /// Creates a new event array based on the outcomes predicted by the specified parameters 
+        /// for the specified sequence. </summary>
+        /// <param name="sequence"> The sequence to be evaluated. </param>
+        /// <returns> event array </returns>
+        Event[] updateContext(Sequence<T> sequence, AbstractModel model);
+    }
 }

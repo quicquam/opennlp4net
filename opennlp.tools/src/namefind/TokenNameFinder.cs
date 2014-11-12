@@ -17,28 +17,25 @@
 
 namespace opennlp.tools.namefind
 {
+    using Span = opennlp.tools.util.Span;
 
-	using Span = opennlp.tools.util.Span;
+    /// <summary>
+    /// The interface for name finders which provide name tags for a sequence of tokens.
+    /// </summary>
+    public interface TokenNameFinder
+    {
+        /// <summary>
+        /// Generates name tags for the given sequence, typically a sentence, returning token spans for any identified names. </summary>
+        /// <param name="tokens"> an array of the tokens or words of the sequence, typically a sentence. </param>
+        /// <returns> an array of spans for each of the names identified. </returns>
+        Span[] find(string[] tokens);
 
-	/// <summary>
-	/// The interface for name finders which provide name tags for a sequence of tokens.
-	/// </summary>
-	public interface TokenNameFinder
-	{
-
-	  /// <summary>
-	  /// Generates name tags for the given sequence, typically a sentence, returning token spans for any identified names. </summary>
-	  /// <param name="tokens"> an array of the tokens or words of the sequence, typically a sentence. </param>
-	  /// <returns> an array of spans for each of the names identified. </returns>
-	  Span[] find(string[] tokens);
-
-	  /// <summary>
-	  /// Forgets all adaptive data which was collected during previous
-	  /// calls to one of the find methods.
-	  /// 
-	  /// This method is typical called at the end of a document.
-	  /// </summary>
-	  void clearAdaptiveData();
-	}
-
+        /// <summary>
+        /// Forgets all adaptive data which was collected during previous
+        /// calls to one of the find methods.
+        /// 
+        /// This method is typical called at the end of a document.
+        /// </summary>
+        void clearAdaptiveData();
+    }
 }

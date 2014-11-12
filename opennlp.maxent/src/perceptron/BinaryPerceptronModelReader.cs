@@ -23,34 +23,29 @@ using j4n.IO.InputStream;
 
 namespace opennlp.perceptron
 {
+    using BinaryFileDataReader = opennlp.model.BinaryFileDataReader;
 
+    public class BinaryPerceptronModelReader : PerceptronModelReader
+    {
+        /// <summary>
+        /// Constructor which directly instantiates the DataInputStream containing
+        /// the model contents.
+        /// </summary>
+        /// <param name="dis"> The DataInputStream containing the model information. </param>
+        public BinaryPerceptronModelReader(DataInputStream dis) : base(new BinaryFileDataReader(dis))
+        {
+        }
 
-	using BinaryFileDataReader = opennlp.model.BinaryFileDataReader;
-
-	public class BinaryPerceptronModelReader : PerceptronModelReader
-	{
-
-
-	  /// <summary>
-	  /// Constructor which directly instantiates the DataInputStream containing
-	  /// the model contents.
-	  /// </summary>
-	  /// <param name="dis"> The DataInputStream containing the model information. </param>
-	  public BinaryPerceptronModelReader(DataInputStream dis) : base(new BinaryFileDataReader(dis))
-	  {
-	  }
-
-	  /// <summary>
-	  /// Constructor which takes a File and creates a reader for it. Detects
-	  /// whether the file is gzipped or not based on whether the suffix contains
-	  /// ".gz" 
-	  /// </summary>
-	  /// <param name="f"> The File in which the model is stored. </param>
+        /// <summary>
+        /// Constructor which takes a File and creates a reader for it. Detects
+        /// whether the file is gzipped or not based on whether the suffix contains
+        /// ".gz" 
+        /// </summary>
+        /// <param name="f"> The File in which the model is stored. </param>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public BinaryPerceptronModelReader(java.io.File f) throws java.io.IOException
-	  public BinaryPerceptronModelReader(Jfile f) : base(f)
-	  {
-	  }
-	}
-
+        public BinaryPerceptronModelReader(Jfile f) : base(f)
+        {
+        }
+    }
 }

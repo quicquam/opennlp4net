@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,69 +19,65 @@
 
 namespace opennlp.tools.tokenize
 {
+    using Span = opennlp.tools.util.Span;
+    using StringUtil = opennlp.tools.util.StringUtil;
 
+    /// <summary>
+    /// This tokenizer uses white spaces to tokenize the input text.
+    /// 
+    /// To obtain an instance of this tokenizer use the static final 
+    /// <code>INSTANCE</code> field.
+    /// </summary>
+    public class WhitespaceTokenizer : AbstractTokenizer
+    {
+        /// <summary>
+        /// Use this static reference to retrieve an instance of the
+        /// <seealso cref="WhitespaceTokenizer"/>.
+        /// </summary>
+        public static readonly WhitespaceTokenizer INSTANCE = new WhitespaceTokenizer();
 
-	using Span = opennlp.tools.util.Span;
-	using StringUtil = opennlp.tools.util.StringUtil;
+        /// <summary>
+        /// Use the <seealso cref="WhitespaceTokenizer#INSTANCE"/> field to retrieve an instance.
+        /// </summary>
+        private WhitespaceTokenizer()
+        {
+        }
 
-	/// <summary>
-	/// This tokenizer uses white spaces to tokenize the input text.
-	/// 
-	/// To obtain an instance of this tokenizer use the static final 
-	/// <code>INSTANCE</code> field.
-	/// </summary>
-	public class WhitespaceTokenizer : AbstractTokenizer
-	{
+        public override Span[] tokenizePos(string d)
+        {
+            int tokStart = -1;
+            var tokens = new List<Span>();
+            bool inTok = false;
 
-	  /// <summary>
-	  /// Use this static reference to retrieve an instance of the
-	  /// <seealso cref="WhitespaceTokenizer"/>.
-	  /// </summary>
-	  public static readonly WhitespaceTokenizer INSTANCE = new WhitespaceTokenizer();
+            //gather up potential tokens
+            int end = d.Length;
+            for (int i = 0; i < end; i++)
+            {
+                if (StringUtil.isWhitespace(d[i]))
+                {
+                    if (inTok)
+                    {
+                        tokens.Add(new Span(tokStart, i));
+                        inTok = false;
+                        tokStart = -1;
+                    }
+                }
+                else
+                {
+                    if (!inTok)
+                    {
+                        tokStart = i;
+                        inTok = true;
+                    }
+                }
+            }
 
-	  /// <summary>
-	  /// Use the <seealso cref="WhitespaceTokenizer#INSTANCE"/> field to retrieve an instance.
-	  /// </summary>
-	  private WhitespaceTokenizer()
-	  {
-	  }
+            if (inTok)
+            {
+                tokens.Add(new Span(tokStart, end));
+            }
 
-	  public override Span[] tokenizePos(string d)
-	  {
-		int tokStart = -1;
-		var tokens = new List<Span>();
-		bool inTok = false;
-
-		//gather up potential tokens
-		int end = d.Length;
-		for (int i = 0; i < end; i++)
-		{
-		  if (StringUtil.isWhitespace(d[i]))
-		  {
-			if (inTok)
-			{
-			  tokens.Add(new Span(tokStart, i));
-			  inTok = false;
-			  tokStart = -1;
-			}
-		  }
-		  else
-		  {
-			if (!inTok)
-			{
-			  tokStart = i;
-			  inTok = true;
-			}
-		  }
-		}
-
-		if (inTok)
-		{
-		  tokens.Add(new Span(tokStart, end));
-		}
-
-		return tokens.ToArray();
-	  }
-	}
-
+            return tokens.ToArray();
+        }
+    }
 }

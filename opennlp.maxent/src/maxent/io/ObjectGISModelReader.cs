@@ -22,23 +22,19 @@ using j4n.IO.InputStream;
 
 namespace opennlp.maxent.io
 {
+    using ObjectDataReader = opennlp.model.ObjectDataReader;
 
-	using ObjectDataReader = opennlp.model.ObjectDataReader;
+    public class ObjectGISModelReader : GISModelReader
+    {
+        protected internal ObjectInputStream input;
 
-	public class ObjectGISModelReader : GISModelReader
-	{
-
-	  protected internal ObjectInputStream input;
-
-	  /// <summary>
-	  /// Constructor which directly instantiates the ObjectInputStream containing
-	  /// the model contents.
-	  /// </summary>
-	  /// <param name="ois"> The DataInputStream containing the model information. </param>
-
-	  public ObjectGISModelReader(ObjectInputStream ois) : base(new ObjectDataReader(ois))
-	  {
-	  }
-	}
-
+        /// <summary>
+        /// Constructor which directly instantiates the ObjectInputStream containing
+        /// the model contents.
+        /// </summary>
+        /// <param name="ois"> The DataInputStream containing the model information. </param>
+        public ObjectGISModelReader(ObjectInputStream ois) : base(new ObjectDataReader(ois))
+        {
+        }
+    }
 }

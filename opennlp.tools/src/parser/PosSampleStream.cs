@@ -19,47 +19,42 @@ using j4n.Serialization;
 
 namespace opennlp.tools.parser
 {
+    using POSSample = opennlp.tools.postag.POSSample;
+    using opennlp.tools.util;
+    using opennlp.tools.util;
 
-	using POSSample = opennlp.tools.postag.POSSample;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	public class PosSampleStream : FilterObjectStream<Parse, POSSample>
-	{
-
-	  public PosSampleStream(ObjectStream<Parse> @in) : base(@in)
-	  {
-	  }
+    public class PosSampleStream : FilterObjectStream<Parse, POSSample>
+    {
+        public PosSampleStream(ObjectStream<Parse> @in) : base(@in)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public opennlp.tools.postag.POSSample read() throws java.io.IOException
-	  public override POSSample read()
-	  {
+        public override POSSample read()
+        {
+            Parse parse = samples.read();
 
-		Parse parse = samples.read();
+            if (parse != null)
+            {
+                Parse[] nodes = parse.TagNodes;
 
-		if (parse != null)
-		{
+                string[] toks = new string[nodes.Length];
+                string[] preds = new string[nodes.Length];
 
-		  Parse[] nodes = parse.TagNodes;
+                for (int ti = 0; ti < nodes.Length; ti++)
+                {
+                    Parse tok = nodes[ti];
+                    toks[ti] = tok.CoveredText;
+                    preds[ti] = tok.Type;
+                }
 
-		  string[] toks = new string[nodes.Length];
-		  string[] preds = new string[nodes.Length];
-
-		  for (int ti = 0; ti < nodes.Length; ti++)
-		  {
-			Parse tok = nodes[ti];
-			toks[ti] = tok.CoveredText;
-			preds[ti] = tok.Type;
-		  }
-
-		  return new POSSample(toks, preds);
-		}
-		else
-		{
-		  return null;
-		}
-	  }
-	}
-
+                return new POSSample(toks, preds);
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
 }

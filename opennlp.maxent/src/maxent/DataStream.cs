@@ -19,28 +19,24 @@
 
 namespace opennlp.maxent
 {
+    /// <summary>
+    /// A interface for objects which can deliver a stream of training data to be
+    /// supplied to an EventStream. It is not necessary to use a DataStream in a
+    /// Maxent application, but it can be used to support a wider variety of formats
+    /// in which your training data can be held.
+    /// </summary>
+    public interface DataStream
+    {
+        /// <summary>
+        /// Returns the next slice of data held in this DataStream.
+        /// </summary>
+        /// <returns> the Object representing the data which is next in this DataStream </returns>
+        object nextToken();
 
-	/// <summary>
-	/// A interface for objects which can deliver a stream of training data to be
-	/// supplied to an EventStream. It is not necessary to use a DataStream in a
-	/// Maxent application, but it can be used to support a wider variety of formats
-	/// in which your training data can be held.
-	/// </summary>
-	public interface DataStream
-	{
-
-	  /// <summary>
-	  /// Returns the next slice of data held in this DataStream.
-	  /// </summary>
-	  /// <returns> the Object representing the data which is next in this DataStream </returns>
-	  object nextToken();
-
-	  /// <summary>
-	  /// Test whether there are any Events remaining in this EventStream.
-	  /// </summary>
-	  /// <returns> true if this DataStream has more data tokens </returns>
-	  bool hasNext();
-	}
-
-
+        /// <summary>
+        /// Test whether there are any Events remaining in this EventStream.
+        /// </summary>
+        /// <returns> true if this DataStream has more data tokens </returns>
+        bool hasNext();
+    }
 }

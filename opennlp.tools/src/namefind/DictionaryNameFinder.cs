@@ -21,95 +21,91 @@ using System.Linq;
 
 namespace opennlp.tools.namefind
 {
+    using Dictionary = opennlp.tools.dictionary.Dictionary;
+    using Span = opennlp.tools.util.Span;
+    using StringList = opennlp.tools.util.StringList;
 
+    /// <summary>
+    /// This is a dictionary based name finder, it scans text
+    /// for names inside a dictionary.
+    /// </summary>
+    public class DictionaryNameFinder : TokenNameFinder
+    {
+        private const string DEFAULT_TYPE = "default";
 
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using Span = opennlp.tools.util.Span;
-	using StringList = opennlp.tools.util.StringList;
+        private Dictionary mDictionary;
+        private readonly string type;
 
-	/// <summary>
-	/// This is a dictionary based name finder, it scans text
-	/// for names inside a dictionary.
-	/// </summary>
-	public class DictionaryNameFinder : TokenNameFinder
-	{
+        /// <summary>
+        /// Initialized the current instance with he provided dictionary
+        /// and a type.
+        /// </summary>
+        /// <param name="dictionary"> </param>
+        /// <param name="type"> the name type used for the produced spans </param>
+        public DictionaryNameFinder(Dictionary dictionary, string type)
+        {
+            mDictionary = dictionary;
 
-	  private const string DEFAULT_TYPE = "default";
+            if (type == null)
+            {
+                throw new System.ArgumentException("type cannot be null!");
+            }
 
-	  private Dictionary mDictionary;
-	  private readonly string type;
+            this.type = type;
+        }
 
-	  /// <summary>
-	  /// Initialized the current instance with he provided dictionary
-	  /// and a type.
-	  /// </summary>
-	  /// <param name="dictionary"> </param>
-	  /// <param name="type"> the name type used for the produced spans </param>
-	  public DictionaryNameFinder(Dictionary dictionary, string type)
-	  {
-		mDictionary = dictionary;
+        /// <summary>
+        /// Initializes the current instance with the provided dictionary.
+        /// </summary>
+        /// <param name="dictionary"> </param>
+        public DictionaryNameFinder(Dictionary dictionary) : this(dictionary, DEFAULT_TYPE)
+        {
+        }
 
-		if (type == null)
-		{
-		  throw new System.ArgumentException("type cannot be null!");
-		}
+        public virtual Span[] find(string[] textTokenized)
+        {
+            var namesFound = new LinkedList<Span>();
 
-		this.type = type;
-	  }
+            for (int offsetFrom = 0; offsetFrom < textTokenized.Length; offsetFrom++)
+            {
+                Span nameFound = null;
+                string[] tokensSearching = new string[] {};
 
-	  /// <summary>
-	  /// Initializes the current instance with the provided dictionary.
-	  /// </summary>
-	  /// <param name="dictionary"> </param>
-	  public DictionaryNameFinder(Dictionary dictionary) : this(dictionary, DEFAULT_TYPE)
-	  {
-	  }
+                for (int offsetTo = offsetFrom; offsetTo < textTokenized.Length; offsetTo++)
+                {
+                    int lengthSearching = offsetTo - offsetFrom + 1;
 
-	  public virtual Span[] find(string[] textTokenized)
-	  {
-		var namesFound = new LinkedList<Span>();
+                    if (lengthSearching > mDictionary.MaxTokenCount)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        tokensSearching = new string[lengthSearching];
+                        Array.Copy(textTokenized, offsetFrom, tokensSearching, 0, lengthSearching);
 
-		for (int offsetFrom = 0; offsetFrom < textTokenized.Length; offsetFrom++)
-		{
-		  Span nameFound = null;
-		  string[] tokensSearching = new string[] {};
+                        StringList entryForSearch = new StringList(tokensSearching);
 
-		  for (int offsetTo = offsetFrom; offsetTo < textTokenized.Length; offsetTo++)
-		  {
-			int lengthSearching = offsetTo - offsetFrom + 1;
+                        if (mDictionary.contains(entryForSearch))
+                        {
+                            nameFound = new Span(offsetFrom, offsetTo + 1, type);
+                        }
+                    }
+                }
 
-			if (lengthSearching > mDictionary.MaxTokenCount)
-			{
-			  break;
-			}
-			else
-			{
-			  tokensSearching = new string[lengthSearching];
-			  Array.Copy(textTokenized, offsetFrom, tokensSearching, 0, lengthSearching);
+                if (nameFound != null)
+                {
+                    namesFound.AddLast(nameFound);
+                    // skip over the found tokens for the next search
+                    offsetFrom += (nameFound.length() - 1);
+                }
+            }
+            return namesFound.ToArray();
+        }
 
-			  StringList entryForSearch = new StringList(tokensSearching);
-
-			  if (mDictionary.contains(entryForSearch))
-			  {
-				nameFound = new Span(offsetFrom, offsetTo + 1, type);
-			  }
-			}
-		  }
-
-		  if (nameFound != null)
-		  {
-			namesFound.AddLast(nameFound);
-			// skip over the found tokens for the next search
-			offsetFrom += (nameFound.length() - 1);
-		  }
-		}
-		return namesFound.ToArray();
-	  }
-
-	  public virtual void clearAdaptiveData()
-	  {
-		// nothing to clear
-	  }
-	}
-
+        public virtual void clearAdaptiveData()
+        {
+            // nothing to clear
+        }
+    }
 }

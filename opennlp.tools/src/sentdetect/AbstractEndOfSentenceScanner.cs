@@ -19,50 +19,46 @@ using System.Text;
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.sentdetect
 {
+    using IntegerPool = opennlp.maxent.IntegerPool;
 
+    /// <summary>
+    /// Abstract class for common methods related to identifying potential ends of sentences. </summary>
+    /// @deprecated use DefaultEndOfSentenceScanner instead 
+    [Obsolete("use DefaultEndOfSentenceScanner instead")]
+    public abstract class AbstractEndOfSentenceScanner : EndOfSentenceScanner
+    {
+        public abstract char[] EndOfSentenceCharacters { get; }
 
-	using IntegerPool = opennlp.maxent.IntegerPool;
+        protected internal static readonly IntegerPool INT_POOL = new IntegerPool(500);
 
-	/// <summary>
-	/// Abstract class for common methods related to identifying potential ends of sentences. </summary>
-	/// @deprecated use DefaultEndOfSentenceScanner instead 
-	[Obsolete("use DefaultEndOfSentenceScanner instead")]
-	public abstract class AbstractEndOfSentenceScanner : EndOfSentenceScanner
-	{
-		public abstract char[] EndOfSentenceCharacters {get;}
+        public virtual IList<int?> getPositions(string s)
+        {
+            return getPositions(s.ToCharArray());
+        }
 
-	  protected internal static readonly IntegerPool INT_POOL = new IntegerPool(500);
+        public virtual IList<int?> getPositions(StringBuilder buf)
+        {
+            return getPositions(buf.ToString().ToCharArray());
+        }
 
-	  public virtual IList<int?> getPositions(string s)
-	  {
-		return getPositions(s.ToCharArray());
-	  }
-
-	  public virtual IList<int?> getPositions(StringBuilder buf)
-	  {
-		return getPositions(buf.ToString().ToCharArray());
-	  }
-
-	  public virtual IList<int?> getPositions(char[] cbuf)
-	  {
-		IList<int?> l = new List<int?>();
-		char[] eosCharacters = EndOfSentenceCharacters;
-		for (int i = 0; i < cbuf.Length; i++)
-		{
-		  foreach (char eosCharacter in eosCharacters)
-		  {
-			if (cbuf[i] == eosCharacter)
-			{
-			  l.Add(INT_POOL.get(i));
-			  break;
-			}
-		  }
-		}
-		return l;
-	  }
-	}
-
+        public virtual IList<int?> getPositions(char[] cbuf)
+        {
+            IList<int?> l = new List<int?>();
+            char[] eosCharacters = EndOfSentenceCharacters;
+            for (int i = 0; i < cbuf.Length; i++)
+            {
+                foreach (char eosCharacter in eosCharacters)
+                {
+                    if (cbuf[i] == eosCharacter)
+                    {
+                        l.Add(INT_POOL.get(i));
+                        break;
+                    }
+                }
+            }
+            return l;
+        }
+    }
 }

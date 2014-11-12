@@ -18,32 +18,29 @@
 
 namespace opennlp.tools.sentdetect
 {
+    using Span = opennlp.tools.util.Span;
 
-	using Span = opennlp.tools.util.Span;
+    /// <summary>
+    /// The interface for sentence detectors, which find the sentence boundaries in
+    /// a text.
+    /// </summary>
+    public interface SentenceDetector
+    {
+        /// <summary>
+        /// Sentence detect a string.
+        /// </summary>
+        /// <param name="s"> The string to be sentence detected. </param>
+        /// <returns>  The String[] with the individual sentences as the array
+        ///          elements. </returns>
+        string[] sentDetect(string s);
 
-	/// <summary>
-	/// The interface for sentence detectors, which find the sentence boundaries in
-	/// a text.
-	/// </summary>
-	public interface SentenceDetector
-	{
-
-		/// <summary>
-		/// Sentence detect a string.
-		/// </summary>
-		/// <param name="s"> The string to be sentence detected. </param>
-		/// <returns>  The String[] with the individual sentences as the array
-		///          elements. </returns>
-		string[] sentDetect(string s);
-
-		/// <summary>
-		/// Sentence detect a string.
-		/// </summary>
-		/// <param name="s"> The string to be sentence detected.
-		/// </param>
-		/// <returns> The Span[] with the spans (offsets into s) for each
-		/// detected sentence as the individuals array elements. </returns>
-		Span[] sentPosDetect(string s);
-	}
-
+        /// <summary>
+        /// Sentence detect a string.
+        /// </summary>
+        /// <param name="s"> The string to be sentence detected.
+        /// </param>
+        /// <returns> The Span[] with the spans (offsets into s) for each
+        /// detected sentence as the individuals array elements. </returns>
+        Span[] sentPosDetect(string s);
+    }
 }

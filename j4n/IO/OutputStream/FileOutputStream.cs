@@ -12,7 +12,7 @@ namespace j4n.IO.OutputStream
         }
 
         public FileOutputStream(string file)
-            :base(new FileStream(file, FileMode.Create))
+            : base(new FileStream(file, FileMode.Create))
         {
         }
     }

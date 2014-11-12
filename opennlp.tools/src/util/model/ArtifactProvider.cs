@@ -17,41 +17,38 @@
 
 namespace opennlp.tools.util.model
 {
+    /// <summary>
+    /// Provides access to model persisted artifacts.
+    /// </summary>
+    public interface ArtifactProvider
+    {
+        /// <summary>
+        /// Gets an artifact by name
+        /// </summary>
+        T getArtifact<T>(string key);
 
-	/// <summary>
-	/// Provides access to model persisted artifacts.
-	/// </summary>
-	public interface ArtifactProvider
-	{
+        /// <summary>
+        /// Retrieves the value to the given key from the manifest.properties
+        /// entry.
+        /// </summary>
+        /// <param name="key">
+        /// </param>
+        /// <returns> the value </returns>
+        string getManifestProperty(string key);
 
-	  /// <summary>
-	  /// Gets an artifact by name
-	  /// </summary>
-	  T getArtifact<T>(string key);
+        /// <summary>
+        /// Retrieves the language code of the material which was used to train the
+        /// model or x-unspecified if non was set.
+        /// </summary>
+        /// <returns> the language code of this model </returns>
+        string Language { get; }
 
-	  /// <summary>
-	  /// Retrieves the value to the given key from the manifest.properties
-	  /// entry.
-	  /// </summary>
-	  /// <param name="key">
-	  /// </param>
-	  /// <returns> the value </returns>
-	  string getManifestProperty(string key);
-
-	  /// <summary>
-	  /// Retrieves the language code of the material which was used to train the
-	  /// model or x-unspecified if non was set.
-	  /// </summary>
-	  /// <returns> the language code of this model </returns>
-	  string Language {get;}
-
-	  /// <summary>
-	  /// Indicates if this provider was loaded from serialized. It is useful, for
-	  /// example, while validating artifacts: you can skip the time consuming ones
-	  /// if they where already validated during the serialization.
-	  /// </summary>
-	  /// <returns> true if this model was loaded from serialized </returns>
-	  bool LoadedFromSerialized {get;}
-	}
-
+        /// <summary>
+        /// Indicates if this provider was loaded from serialized. It is useful, for
+        /// example, while validating artifacts: you can skip the time consuming ones
+        /// if they where already validated during the serialization.
+        /// </summary>
+        /// <returns> true if this model was loaded from serialized </returns>
+        bool LoadedFromSerialized { get; }
+    }
 }

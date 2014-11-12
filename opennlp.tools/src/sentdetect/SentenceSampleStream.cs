@@ -22,50 +22,44 @@ using j4n.Serialization;
 
 namespace opennlp.tools.sentdetect
 {
+    using util;
+    using Span = util.Span;
 
-
-	using util;
-	using Span = util.Span;
-
-	/// <summary>
-	/// This class is a stream filter which reads a sentence by line samples from
-	/// a <code>Reader</code> and converts them into <seealso cref="SentenceSample"/> objects.
-	/// </summary>
-	public class SentenceSampleStream : FilterObjectStream<string, SentenceSample>
-	{
-
-	  public SentenceSampleStream(ObjectStream<string> sentences) : base(new EmptyLinePreprocessorStream(sentences))
-	  {
-	  }
+    /// <summary>
+    /// This class is a stream filter which reads a sentence by line samples from
+    /// a <code>Reader</code> and converts them into <seealso cref="SentenceSample"/> objects.
+    /// </summary>
+    public class SentenceSampleStream : FilterObjectStream<string, SentenceSample>
+    {
+        public SentenceSampleStream(ObjectStream<string> sentences) : base(new EmptyLinePreprocessorStream(sentences))
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public SentenceSample read() throws java.io.IOException
-	  public override SentenceSample read()
-	  {
+        public override SentenceSample read()
+        {
+            StringBuilder sentencesString = new StringBuilder();
+            LinkedList<Span> sentenceSpans = new LinkedList<Span>();
 
-		StringBuilder sentencesString = new StringBuilder();
-		LinkedList<Span> sentenceSpans = new LinkedList<Span>();
+            string sentence;
+            while ((sentence = samples.read()) != null && !sentence.Equals(""))
+            {
+                int begin = sentencesString.Length;
+                sentencesString.Append(sentence.Trim());
+                int end = sentencesString.Length;
+                sentenceSpans.AddLast(new Span(begin, end));
+                sentencesString.Append(' ');
+            }
 
-		string sentence;
-		while ((sentence = samples.read()) != null && !sentence.Equals(""))
-		{
-
-		  int begin = sentencesString.Length;
-		  sentencesString.Append(sentence.Trim());
-		  int end = sentencesString.Length;
-		  sentenceSpans.AddLast(new Span(begin, end));
-		  sentencesString.Append(' ');
-		}
-
-		if (sentenceSpans.Count > 0)
-		{
-		  return new SentenceSample(sentencesString.ToString(), sentenceSpans.ToArray());
-		}
-		else
-		{
-		  return null;
-		}
-	  }
-	}
-
+            if (sentenceSpans.Count > 0)
+            {
+                return new SentenceSample(sentencesString.ToString(), sentenceSpans.ToArray());
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
 }

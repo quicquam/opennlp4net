@@ -20,55 +20,52 @@ using j4n.Serialization;
 
 namespace opennlp.tools.tokenize
 {
+    using opennlp.tools.util;
+    using Span = opennlp.tools.util.Span;
 
-	using opennlp.tools.util;
-	using Span = opennlp.tools.util.Span;
+    /// <summary>
+    /// The <seealso cref="TokenizerStream"/> uses a tokenizer to tokenize the
+    /// input string and output <seealso cref="TokenSample"/>s.
+    /// </summary>
+    public class TokenizerStream : ObjectStream<TokenSample>
+    {
+        private Tokenizer tokenizer;
+        private ObjectStream<string> input;
 
-	/// <summary>
-	/// The <seealso cref="TokenizerStream"/> uses a tokenizer to tokenize the
-	/// input string and output <seealso cref="TokenSample"/>s.
-	/// </summary>
-	public class TokenizerStream : ObjectStream<TokenSample>
-	{
-
-	  private Tokenizer tokenizer;
-	  private ObjectStream<string> input;
-
-	  public TokenizerStream(Tokenizer tokenizer, ObjectStream<string> input)
-	  {
-		this.tokenizer = tokenizer;
-		this.input = input;
-	  }
+        public TokenizerStream(Tokenizer tokenizer, ObjectStream<string> input)
+        {
+            this.tokenizer = tokenizer;
+            this.input = input;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public TokenSample read() throws java.io.IOException
-	  public virtual TokenSample read()
-	  {
-		string inputString = input.read();
+        public virtual TokenSample read()
+        {
+            string inputString = input.read();
 
-		if (inputString != null)
-		{
-		  Span[] tokens = tokenizer.tokenizePos(inputString);
+            if (inputString != null)
+            {
+                Span[] tokens = tokenizer.tokenizePos(inputString);
 
-		  return new TokenSample(inputString, tokens);
-		}
+                return new TokenSample(inputString, tokens);
+            }
 
-		return null;
-	  }
+            return null;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void close() throws java.io.IOException
-	  public virtual void close()
-	  {
-		input.close();
-	  }
+        public virtual void close()
+        {
+            input.close();
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void reset() throws java.io.IOException, UnsupportedOperationException
-	  public virtual void reset()
-	  {
-		input.reset();
-	  }
-	}
-
+        public virtual void reset()
+        {
+            input.reset();
+        }
+    }
 }

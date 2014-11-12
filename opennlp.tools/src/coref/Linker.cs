@@ -17,100 +17,89 @@
 
 namespace opennlp.tools.coref
 {
+    using HeadFinder = opennlp.tools.coref.mention.HeadFinder;
+    using Mention = opennlp.tools.coref.mention.Mention;
+    using MentionContext = opennlp.tools.coref.mention.MentionContext;
+    using MentionFinder = opennlp.tools.coref.mention.MentionFinder;
 
-	using HeadFinder = opennlp.tools.coref.mention.HeadFinder;
-	using Mention = opennlp.tools.coref.mention.Mention;
-	using MentionContext = opennlp.tools.coref.mention.MentionContext;
-	using MentionFinder = opennlp.tools.coref.mention.MentionFinder;
+    /// <summary>
+    /// A linker provides an interface for finding mentions, <seealso cref="#getMentionFinder getMentionFinder"/>,
+    /// and creating entities out of those mentions, <seealso cref="#getEntities getEntities"/>.  This interface also allows
+    /// for the training of a resolver with the method <seealso cref="#setEntities setEntitites"/> which is used to give the
+    /// resolver mentions whose entityId fields indicate which mentions refer to the same entity and the
+    /// <seealso cref="#train train"/> method which compiles all the information provided via calls to
+    /// <seealso cref="#setEntities setEntities"/> into a model.
+    /// </summary>
+    public interface Linker
+    {
+        /// <summary>
+        /// String constant used to label a mention which is a description.
+        /// </summary>
+        /// <summary>
+        /// String constant used to label an mention in an appositive relationship.
+        /// </summary>
+        /// <summary>
+        /// String constant used to label a mention which consists of two or more noun phrases.
+        /// </summary>
+        /// <summary>
+        /// String constant used to label a mention which consists of a single noun phrase.
+        /// </summary>
+        /// <summary>
+        /// String constant used to label a mention which is a proper noun modifying another noun.
+        /// </summary>
+        /// <summary>
+        /// String constant used to label a mention which is a pronoun.
+        /// </summary>
+        /// <summary>
+        /// Indicated that the specified mentions can be used to train this linker.
+        /// This requires that the coreference relationship between the mentions have been labeled
+        /// in the mention's id field.
+        /// </summary>
+        /// <param name="mentions"> The mentions to be used to train the linker. </param>
+        Mention[] Entities { set; }
 
-	/// <summary>
-	/// A linker provides an interface for finding mentions, <seealso cref="#getMentionFinder getMentionFinder"/>,
-	/// and creating entities out of those mentions, <seealso cref="#getEntities getEntities"/>.  This interface also allows
-	/// for the training of a resolver with the method <seealso cref="#setEntities setEntitites"/> which is used to give the
-	/// resolver mentions whose entityId fields indicate which mentions refer to the same entity and the
-	/// <seealso cref="#train train"/> method which compiles all the information provided via calls to
-	/// <seealso cref="#setEntities setEntities"/> into a model.
-	/// </summary>
-	public interface Linker
-	{
+        /// <summary>
+        /// Returns a list of entities which group the mentions into entity classes. </summary>
+        /// <param name="mentions"> A array of mentions.
+        /// </param>
+        /// <returns> An array of discourse entities. </returns>
+        DiscourseEntity[] getEntities(Mention[] mentions);
 
+        /// <summary>
+        /// Creates mention contexts for the specified mention exents.  These are used to compute coreference features over. </summary>
+        /// <param name="mentions"> The mention of a document.
+        /// </param>
+        /// <returns> mention contexts for the specified mention exents. </returns>
+        MentionContext[] constructMentionContexts(Mention[] mentions);
 
-	  /// <summary>
-	  /// String constant used to label a mention which is a description.
-	  /// </summary>
-
-	  /// <summary>
-	  /// String constant used to label an mention in an appositive relationship.
-	  /// </summary>
-
-	  /// <summary>
-	  /// String constant used to label a mention which consists of two or more noun phrases.
-	  /// </summary>
-
-	  /// <summary>
-	  /// String constant used to label a mention which consists of a single noun phrase.
-	  /// </summary>
-
-	  /// <summary>
-	  /// String constant used to label a mention which is a proper noun modifying another noun.
-	  /// </summary>
-
-	  /// <summary>
-	  /// String constant used to label a mention which is a pronoun.
-	  /// </summary>
-
-
-	  /// <summary>
-	  /// Indicated that the specified mentions can be used to train this linker.
-	  /// This requires that the coreference relationship between the mentions have been labeled
-	  /// in the mention's id field.
-	  /// </summary>
-	  /// <param name="mentions"> The mentions to be used to train the linker. </param>
-	  Mention[] Entities {set;}
-
-	  /// <summary>
-	  /// Returns a list of entities which group the mentions into entity classes. </summary>
-	  /// <param name="mentions"> A array of mentions.
-	  /// </param>
-	  /// <returns> An array of discourse entities. </returns>
-	  DiscourseEntity[] getEntities(Mention[] mentions);
-
-	  /// <summary>
-	  /// Creates mention contexts for the specified mention exents.  These are used to compute coreference features over. </summary>
-	  /// <param name="mentions"> The mention of a document.
-	  /// </param>
-	  /// <returns> mention contexts for the specified mention exents. </returns>
-	  MentionContext[] constructMentionContexts(Mention[] mentions);
-
-	  /// <summary>
-	  /// Trains the linker based on the data specified via calls to <seealso cref="#setEntities setEntities"/>.
-	  /// </summary>
-	  /// <exception cref="IOException"> </exception>
+        /// <summary>
+        /// Trains the linker based on the data specified via calls to <seealso cref="#setEntities setEntities"/>.
+        /// </summary>
+        /// <exception cref="IOException"> </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void train() throws java.io.IOException;
-	  void train();
+        void train();
 
-	  /// <summary>
-	  /// Returns the mention finder for this linker.  This can be used to get the mentions of a Parse.
-	  /// </summary>
-	  /// <returns> The object which finds mentions for this linker. </returns>
-	  MentionFinder MentionFinder {get;}
+        /// <summary>
+        /// Returns the mention finder for this linker.  This can be used to get the mentions of a Parse.
+        /// </summary>
+        /// <returns> The object which finds mentions for this linker. </returns>
+        MentionFinder MentionFinder { get; }
 
-	  /// <summary>
-	  /// Returns the head finder associated with this linker.
-	  /// </summary>
-	  /// <returns> The head finder associated with this linker. </returns>
-	  HeadFinder HeadFinder {get;}
-	}
+        /// <summary>
+        /// Returns the head finder associated with this linker.
+        /// </summary>
+        /// <returns> The head finder associated with this linker. </returns>
+        HeadFinder HeadFinder { get; }
+    }
 
-	public static class Linker_Fields
-	{
-	  public const string DESCRIPTOR = "desc";
-	  public const string ISA = "isa";
-	  public const string COMBINED_NPS = "cmbnd";
-	  public const string NP = "np";
-	  public const string PROPER_NOUN_MODIFIER = "pnmod";
-	  public const string PRONOUN_MODIFIER = "np";
-	}
-
+    public static class Linker_Fields
+    {
+        public const string DESCRIPTOR = "desc";
+        public const string ISA = "isa";
+        public const string COMBINED_NPS = "cmbnd";
+        public const string NP = "np";
+        public const string PROPER_NOUN_MODIFIER = "pnmod";
+        public const string PRONOUN_MODIFIER = "np";
+    }
 }

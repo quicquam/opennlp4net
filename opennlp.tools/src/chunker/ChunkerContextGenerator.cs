@@ -17,23 +17,20 @@
 
 namespace opennlp.tools.chunker
 {
+    using opennlp.tools.util;
 
-	using opennlp.tools.util;
-
-	/// <summary>
-	/// Interface for the context generator used in syntactic chunking.
-	/// </summary>
-	public interface ChunkerContextGenerator : BeamSearchContextGenerator<string>
-	{
-
-	  /// <summary>
-	  /// Returns the contexts for chunking of the specified index. </summary>
-	  /// <param name="i"> The index of the token in the specified toks array for which the context should be constructed. </param>
-	  /// <param name="toks"> The tokens of the sentence.  The <code>toString</code> methods of these objects should return the token text. </param>
-	  /// <param name="tags"> The POS tags for the the specified tokens. </param>
-	  /// <param name="preds"> The previous decisions made in the taging of this sequence.  Only indices less than i will be examined. </param>
-	  /// <returns> An array of predictive contexts on which a model basis its decisions. </returns>
-	  string[] getContext(int i, string[] toks, string[] tags, string[] preds);
-	}
-
+    /// <summary>
+    /// Interface for the context generator used in syntactic chunking.
+    /// </summary>
+    public interface ChunkerContextGenerator : BeamSearchContextGenerator<string>
+    {
+        /// <summary>
+        /// Returns the contexts for chunking of the specified index. </summary>
+        /// <param name="i"> The index of the token in the specified toks array for which the context should be constructed. </param>
+        /// <param name="toks"> The tokens of the sentence.  The <code>toString</code> methods of these objects should return the token text. </param>
+        /// <param name="tags"> The POS tags for the the specified tokens. </param>
+        /// <param name="preds"> The previous decisions made in the taging of this sequence.  Only indices less than i will be examined. </param>
+        /// <returns> An array of predictive contexts on which a model basis its decisions. </returns>
+        string[] getContext(int i, string[] toks, string[] tags, string[] preds);
+    }
 }

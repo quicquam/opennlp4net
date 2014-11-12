@@ -16,18 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 namespace opennlp.maxent.quasinewton
 {
+    /// <summary>
+    /// interface for a function.
+    /// </summary>
+    public interface Function
+    {
+        double valueAt(double[] x);
 
-	/// <summary>
-	/// interface for a function.
-	/// </summary>
-	public interface Function
-	{
-
-	  double valueAt(double[] x);
-
-	  int DomainDimension {get;}
-	}
-
+        int DomainDimension { get; }
+    }
 }

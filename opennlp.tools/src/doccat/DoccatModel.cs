@@ -21,66 +21,59 @@ using j4n.IO.InputStream;
 
 namespace opennlp.tools.doccat
 {
+    using AbstractModel = opennlp.model.AbstractModel;
+    using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
+    using BaseModel = opennlp.tools.util.model.BaseModel<DoccatModel>;
 
+    public class DoccatModel : BaseModel
+    {
+        private const string COMPONENT_NAME = "DocumentCategorizerME";
+        private const string DOCCAT_MODEL_ENTRY_NAME = "doccat.model";
 
-	using AbstractModel = opennlp.model.AbstractModel;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using BaseModel = opennlp.tools.util.model.BaseModel<DoccatModel>;
+        protected internal DoccatModel(string languageCode, AbstractModel doccatModel,
+            IDictionary<string, string> manifestInfoEntries) : base(COMPONENT_NAME, languageCode, manifestInfoEntries)
+        {
+            artifactMap[DOCCAT_MODEL_ENTRY_NAME] = doccatModel;
+            checkArtifactMap();
+        }
 
-	public class DoccatModel : BaseModel
-	{
-
-	  private const string COMPONENT_NAME = "DocumentCategorizerME";
-	  private const string DOCCAT_MODEL_ENTRY_NAME = "doccat.model";
-
-	  protected internal DoccatModel(string languageCode, AbstractModel doccatModel, IDictionary<string, string> manifestInfoEntries) : base(COMPONENT_NAME, languageCode, manifestInfoEntries)
-	  {
-
-		artifactMap[DOCCAT_MODEL_ENTRY_NAME] = doccatModel;
-		checkArtifactMap();
-	  }
-
-	  public DoccatModel(string languageCode, AbstractModel doccatModel) : this(languageCode, doccatModel, null)
-	  {
-	  }
+        public DoccatModel(string languageCode, AbstractModel doccatModel) : this(languageCode, doccatModel, null)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public DoccatModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
-	  public DoccatModel(InputStream @in) : base(COMPONENT_NAME, @in)
-	  {
-	  }
+        public DoccatModel(InputStream @in) : base(COMPONENT_NAME, @in)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public DoccatModel(java.io.File modelFile) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
-	  public DoccatModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
-	  {
-	  }
+        public DoccatModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public DoccatModel(java.net.URL modelURL) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
-	  public DoccatModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
-	  {
-	  }
+        public DoccatModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: @Override protected void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
-	  protected internal override void validateArtifactMap()
-	  {
-		base.validateArtifactMap();
+        protected internal override void validateArtifactMap()
+        {
+            base.validateArtifactMap();
 
-		if (!(artifactMap[DOCCAT_MODEL_ENTRY_NAME] is AbstractModel))
-		{
-		  throw new InvalidFormatException("Doccat model is incomplete!");
-		}
-	  }
+            if (!(artifactMap[DOCCAT_MODEL_ENTRY_NAME] is AbstractModel))
+            {
+                throw new InvalidFormatException("Doccat model is incomplete!");
+            }
+        }
 
-	  public virtual AbstractModel ChunkerModel
-	  {
-		  get
-		  {
-			return (AbstractModel) artifactMap[DOCCAT_MODEL_ENTRY_NAME];
-		  }
-	  }
-	}
-
+        public virtual AbstractModel ChunkerModel
+        {
+            get { return (AbstractModel) artifactMap[DOCCAT_MODEL_ENTRY_NAME]; }
+        }
+    }
 }

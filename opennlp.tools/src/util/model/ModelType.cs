@@ -17,12 +17,10 @@
 
 namespace opennlp.tools.util.model
 {
-
-	public enum ModelType
-	{
-	  MAXENT,
-	  PERCEPTRON,
-	  PERCEPTRON_SEQUENCE
-	}
-
+    public enum ModelType
+    {
+        MAXENT,
+        PERCEPTRON,
+        PERCEPTRON_SEQUENCE
+    }
 }

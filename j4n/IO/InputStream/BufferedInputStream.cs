@@ -8,7 +8,7 @@
         }
 
         public BufferedInputStream(InputStream fileInputStream)
-            :base(fileInputStream.Path)
+            : base(fileInputStream.Path)
         {
             throw new System.NotImplementedException();
         }

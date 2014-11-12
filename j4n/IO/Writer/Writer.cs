@@ -7,6 +7,7 @@ namespace j4n.IO.Writer
     public class Writer : Closeable, Flushable
     {
         public Stream InnerStream;
+
         public void close()
         {
             InnerStream.Close();
@@ -31,7 +32,7 @@ namespace j4n.IO.Writer
 
         private byte[] GetBytes(string str)
         {
-            var bytes = new byte[str.Length * sizeof(char)];
+            var bytes = new byte[str.Length*sizeof (char)];
             Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
         }

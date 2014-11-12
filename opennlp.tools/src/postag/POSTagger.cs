@@ -20,51 +20,48 @@ using System.Collections.Generic;
 
 namespace opennlp.tools.postag
 {
+    using Sequence = opennlp.tools.util.Sequence;
 
-	using Sequence = opennlp.tools.util.Sequence;
+    /// <summary>
+    /// The interface for part of speech taggers.
+    /// </summary>
+    public interface POSTagger
+    {
+        /// <summary>
+        /// Assigns the sentence of tokens pos tags.
+        /// </summary>
+        /// <param name="sentence">
+        ///          The sentence of tokens to be tagged. </param>
+        /// <returns> a list of pos tags for each token provided in sentence.
+        /// </returns>
+        /// @deprecated call <code> tag(String[]) </code> instead 
+        [Obsolete("call <code> tag(String[]) </code> instead")]
+        IList<string> tag(IList<string> sentence);
 
-	/// <summary>
-	/// The interface for part of speech taggers.
-	/// </summary>
-	public interface POSTagger
-	{
+        /// <summary>
+        /// Assigns the sentence of tokens pos tags. </summary>
+        /// <param name="sentence"> The sentece of tokens to be tagged. </param>
+        /// <returns> an array of pos tags for each token provided in sentence. </returns>
+        string[] tag(string[] sentence);
 
-	  /// <summary>
-	  /// Assigns the sentence of tokens pos tags.
-	  /// </summary>
-	  /// <param name="sentence">
-	  ///          The sentence of tokens to be tagged. </param>
-	  /// <returns> a list of pos tags for each token provided in sentence.
-	  /// </returns>
-	  /// @deprecated call <code> tag(String[]) </code> instead 
-	  [Obsolete("call <code> tag(String[]) </code> instead")]
-	  IList<string> tag(IList<string> sentence);
+        string[] tag(string[] sentence, object[] additionaContext);
 
-	  /// <summary>
-	  /// Assigns the sentence of tokens pos tags. </summary>
-	  /// <param name="sentence"> The sentece of tokens to be tagged. </param>
-	  /// <returns> an array of pos tags for each token provided in sentence. </returns>
-	  string[] tag(string[] sentence);
+        /// <summary>
+        /// Assigns the sentence of space-delimied tokens pos tags. </summary>
+        /// <param name="sentence"> The sentece of space-delimited tokens to be tagged. </param>
+        /// <returns> a string of space-delimited pos tags for each token provided in sentence.
+        /// </returns>
+        /// @deprecated call <code> tag(String[]) instead </code> use WhiteSpaceTokenizer.INSTANCE.tokenize
+        /// to obtain the String array. 
+        [Obsolete("call <code> tag(String[]) instead </code> use WhiteSpaceTokenizer.INSTANCE.tokenize")]
+        string tag(string sentence);
 
-	  string[] tag(string[] sentence, object[] additionaContext);
+        /// @deprecated call <code> topKSequences(String[]) </code> instead 
+        [Obsolete("call <code> topKSequences(String[]) </code> instead")]
+        Sequence[] topKSequences(IList<string> sentence);
 
-	  /// <summary>
-	  /// Assigns the sentence of space-delimied tokens pos tags. </summary>
-	  /// <param name="sentence"> The sentece of space-delimited tokens to be tagged. </param>
-	  /// <returns> a string of space-delimited pos tags for each token provided in sentence.
-	  /// </returns>
-	  /// @deprecated call <code> tag(String[]) instead </code> use WhiteSpaceTokenizer.INSTANCE.tokenize
-	  /// to obtain the String array. 
-	  [Obsolete("call <code> tag(String[]) instead </code> use WhiteSpaceTokenizer.INSTANCE.tokenize")]
-	  string tag(string sentence);
+        Sequence[] topKSequences(string[] sentence);
 
-	  /// @deprecated call <code> topKSequences(String[]) </code> instead 
-	  [Obsolete("call <code> topKSequences(String[]) </code> instead")]
-	  Sequence[] topKSequences(IList<string> sentence);
-
-	  Sequence[] topKSequences(string[] sentence);
-
-	  Sequence[] topKSequences(string[] sentence, object[] additionaContext);
-	}
-
+        Sequence[] topKSequences(string[] sentence, object[] additionaContext);
+    }
 }

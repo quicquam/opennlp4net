@@ -23,38 +23,34 @@ using j4n.IO.OutputStream;
 
 namespace opennlp.tools.util.model
 {
-
-
-	/// <summary>
-	/// Responsible to create an artifact from an <seealso cref="InputStream"/>.
-	/// </summary>
-	public interface ArtifactSerializer<T>
-	{
-
-	  /// <summary>
-	  /// Creates the artifact from the provided <seealso cref="InputStream"/>.
-	  /// 
-	  /// The <seealso cref="InputStream"/> remains open.
-	  /// </summary>
-	  /// <returns> the artifact
-	  /// </returns>
-	  /// <exception cref="IOException"> </exception>
-	  /// <exception cref="InvalidFormatException"> </exception>
+    /// <summary>
+    /// Responsible to create an artifact from an <seealso cref="InputStream"/>.
+    /// </summary>
+    public interface ArtifactSerializer<T>
+    {
+        /// <summary>
+        /// Creates the artifact from the provided <seealso cref="InputStream"/>.
+        /// 
+        /// The <seealso cref="InputStream"/> remains open.
+        /// </summary>
+        /// <returns> the artifact
+        /// </returns>
+        /// <exception cref="IOException"> </exception>
+        /// <exception cref="InvalidFormatException"> </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: T create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException;
-	  T create(InputStream @in);
+        T create(InputStream @in);
 
-	  /// <summary>
-	  /// Serializes the artifact to the provided <seealso cref="OutputStream"/>.
-	  /// 
-	  /// The <seealso cref="OutputStream"/> remains open.
-	  /// </summary>
-	  /// <param name="artifact"> </param>
-	  /// <param name="out"> </param>
-	  /// <exception cref="IOException"> </exception>
+        /// <summary>
+        /// Serializes the artifact to the provided <seealso cref="OutputStream"/>.
+        /// 
+        /// The <seealso cref="OutputStream"/> remains open.
+        /// </summary>
+        /// <param name="artifact"> </param>
+        /// <param name="out"> </param>
+        /// <exception cref="IOException"> </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: void serialize(T artifact, java.io.OutputStream out) throws java.io.IOException;
-	  void serialize(T artifact, OutputStream @out);
-	}
-
+        void serialize(T artifact, OutputStream @out);
+    }
 }

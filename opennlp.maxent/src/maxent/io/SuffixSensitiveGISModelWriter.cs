@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -19,95 +18,90 @@
  * under the License.
  */
 using j4n.Interfaces;
-
 using j4n.IO.File;
 using j4n.IO.OutputStream;
 using j4n.IO.Writer;
 
 namespace opennlp.maxent.io
 {
+    using AbstractModel = opennlp.model.AbstractModel;
 
+    /// <summary>
+    /// A writer for GIS models which inspects the filename and invokes the
+    /// appropriate GISModelWriter depending on the filename's suffixes.
+    /// 
+    /// <para>The following assumption are made about suffixes:
+    ///    <li>.gz  --> the file is gzipped (must be the last suffix)
+    ///    <li>.txt --> the file is plain text
+    ///    <li>.bin --> the file is binary
+    /// </para>
+    /// </summary>
+    public class SuffixSensitiveGISModelWriter : GISModelWriter
+    {
+        private readonly GISModelWriter suffixAppropriateWriter;
 
-	using AbstractModel = opennlp.model.AbstractModel;
-
-	/// <summary>
-	/// A writer for GIS models which inspects the filename and invokes the
-	/// appropriate GISModelWriter depending on the filename's suffixes.
-	/// 
-	/// <para>The following assumption are made about suffixes:
-	///    <li>.gz  --> the file is gzipped (must be the last suffix)
-	///    <li>.txt --> the file is plain text
-	///    <li>.bin --> the file is binary
-	/// </para>
-	/// </summary>
-	public class SuffixSensitiveGISModelWriter : GISModelWriter
-	{
-	  private readonly GISModelWriter suffixAppropriateWriter;
-
-	  /// <summary>
-	  /// Constructor which takes a GISModel and a File and invokes the
-	  /// GISModelWriter appropriate for the suffix.
-	  /// </summary>
-	  /// <param name="model"> The GISModel which is to be persisted. </param>
-	  /// <param name="f"> The File in which the model is to be stored. </param>
+        /// <summary>
+        /// Constructor which takes a GISModel and a File and invokes the
+        /// GISModelWriter appropriate for the suffix.
+        /// </summary>
+        /// <param name="model"> The GISModel which is to be persisted. </param>
+        /// <param name="f"> The File in which the model is to be stored. </param>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public SuffixSensitiveGISModelWriter(opennlp.model.AbstractModel model, java.io.File f) throws java.io.IOException
-	  public SuffixSensitiveGISModelWriter(AbstractModel model, Jfile f) : base(model)
-	  {
+        public SuffixSensitiveGISModelWriter(AbstractModel model, Jfile f) : base(model)
+        {
+            OutputStream output;
+            string filename = f.Name;
 
+            // handle the zipped/not zipped distinction
+            if (filename.EndsWith(".gz", StringComparison.Ordinal))
+            {
+                output = new GZIPOutputStream(new FileOutputStream(f));
+                filename = filename.Substring(0, filename.Length - 3);
+            }
+            else
+            {
+                output = new DataOutputStream(new FileOutputStream(f));
+            }
 
-		OutputStream output;
-		string filename = f.Name;
-
-		// handle the zipped/not zipped distinction
-		if (filename.EndsWith(".gz", StringComparison.Ordinal))
-		{
-		  output = new GZIPOutputStream(new FileOutputStream(f));
-		  filename = filename.Substring(0,filename.Length - 3);
-		}
-		else
-		{
-		  output = new DataOutputStream(new FileOutputStream(f));
-		}
-
-		// handle the different formats
-		if (filename.EndsWith(".bin", StringComparison.Ordinal))
-		{
-		  suffixAppropriateWriter = new BinaryGISModelWriter(model, new DataOutputStream(output));
-		}
-		else // default is ".txt"
-		{
-		  suffixAppropriateWriter = new PlainTextGISModelWriter(model, new BufferedWriter(new OutputStreamWriter(output)));
-		}
-	  }
+            // handle the different formats
+            if (filename.EndsWith(".bin", StringComparison.Ordinal))
+            {
+                suffixAppropriateWriter = new BinaryGISModelWriter(model, new DataOutputStream(output));
+            }
+            else // default is ".txt"
+            {
+                suffixAppropriateWriter = new PlainTextGISModelWriter(model,
+                    new BufferedWriter(new OutputStreamWriter(output)));
+            }
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeUTF(String s) throws java.io.IOException
-	  public override void writeUTF(string s)
-	  {
-		suffixAppropriateWriter.writeUTF(s);
-	  }
+        public override void writeUTF(string s)
+        {
+            suffixAppropriateWriter.writeUTF(s);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeInt(int i) throws java.io.IOException
-	  public override void writeInt(int i)
-	  {
-		suffixAppropriateWriter.writeInt(i);
-	  }
+        public override void writeInt(int i)
+        {
+            suffixAppropriateWriter.writeInt(i);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeDouble(double d) throws java.io.IOException
-	  public override void writeDouble(double d)
-	  {
-		suffixAppropriateWriter.writeDouble(d);
-	  }
+        public override void writeDouble(double d)
+        {
+            suffixAppropriateWriter.writeDouble(d);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void close() throws java.io.IOException
-	  public override void close()
-	  {
-		suffixAppropriateWriter.close();
-	  }
-	}
-
+        public override void close()
+        {
+            suffixAppropriateWriter.close();
+        }
+    }
 }

@@ -17,16 +17,14 @@
 
 namespace opennlp.tools.coref.sim
 {
-
-	/// <summary>
-	/// Interface for testing a gender model.
-	/// </summary>
-	public interface TestGenderModel
-	{
-	  double[] genderDistribution(Context np1);
-	  int MaleIndex {get;}
-	  int FemaleIndex {get;}
-	  int NeuterIndex {get;}
-	}
-
+    /// <summary>
+    /// Interface for testing a gender model.
+    /// </summary>
+    public interface TestGenderModel
+    {
+        double[] genderDistribution(Context np1);
+        int MaleIndex { get; }
+        int FemaleIndex { get; }
+        int NeuterIndex { get; }
+    }
 }

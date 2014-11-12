@@ -20,35 +20,30 @@ using System.Linq;
 
 namespace opennlp.tools.doccat
 {
+    /// 
+    internal class DocumentCategorizerContextGenerator
+    {
+        private FeatureGenerator[] mFeatureGenerators;
 
+        internal DocumentCategorizerContextGenerator(params FeatureGenerator[] featureGenerators)
+        {
+            mFeatureGenerators = featureGenerators;
+        }
 
-	/// 
-	internal class DocumentCategorizerContextGenerator
-	{
+        public virtual string[] getContext(string[] text)
+        {
+            ICollection<string> context = new LinkedList<string>();
 
-	  private FeatureGenerator[] mFeatureGenerators;
+            for (int i = 0; i < mFeatureGenerators.Length; i++)
+            {
+                ICollection<string> extractedFeatures = mFeatureGenerators[i].extractFeatures(text);
+                foreach (var feature in extractedFeatures)
+                {
+                    context.Add(feature);
+                }
+            }
 
-	  internal DocumentCategorizerContextGenerator(params FeatureGenerator[] featureGenerators)
-	  {
-		mFeatureGenerators = featureGenerators;
-	  }
-
-	  public virtual string[] getContext(string[] text)
-	  {
-
-		ICollection<string> context = new LinkedList<string>();
-
-		for (int i = 0; i < mFeatureGenerators.Length; i++)
-		{
-		  ICollection<string> extractedFeatures = mFeatureGenerators[i].extractFeatures(text);
-		foreach (var feature in extractedFeatures)
-		{
-            context.Add(feature);
-		}
-		}
-
-		return context.ToArray();
-	  }
-	}
-
+            return context.ToArray();
+        }
+    }
 }

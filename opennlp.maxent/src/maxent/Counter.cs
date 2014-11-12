@@ -19,29 +19,27 @@
 
 namespace opennlp.maxent
 {
+    /// <summary>
+    /// A simple class which is essentially an Integer which is mutable via
+    /// incrementation. 
+    /// </summary>
+    public class Counter
+    {
+        private int counter = 1;
 
-	/// <summary>
-	/// A simple class which is essentially an Integer which is mutable via
-	/// incrementation. 
-	/// </summary>
-	public class Counter
-	{
-	  private int counter = 1;
+        public virtual void increment()
+        {
+            counter++;
+        }
 
-	  public virtual void increment()
-	  {
-		counter++;
-	  }
+        public virtual int intValue()
+        {
+            return counter;
+        }
 
-	  public virtual int intValue()
-	  {
-		return counter;
-	  }
-
-	  public virtual bool passesCutoff(int c)
-	  {
-		return counter >= c;
-	  }
-	}
-
+        public virtual bool passesCutoff(int c)
+        {
+            return counter >= c;
+        }
+    }
 }

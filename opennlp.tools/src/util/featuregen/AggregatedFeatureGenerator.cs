@@ -20,89 +20,79 @@ using System.Linq;
 
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// The <seealso cref="AggregatedFeatureGenerator"/> aggregates a set of
+    /// <seealso cref="AdaptiveFeatureGenerator"/>s and calls them to generate the features.
+    /// </summary>
+    public class AggregatedFeatureGenerator : AdaptiveFeatureGenerator
+    {
+        /// <summary>
+        /// Contains all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
+        /// </summary>
+        private ICollection<AdaptiveFeatureGenerator> generators;
 
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="generators"> array of generators, null values are not permitted </param>
+        public AggregatedFeatureGenerator(params AdaptiveFeatureGenerator[] generators)
+        {
+            if (generators.Any(generator => generator == null))
+            {
+                throw new System.ArgumentException("null values in generators are not permitted!");
+            }
 
-	/// <summary>
-	/// The <seealso cref="AggregatedFeatureGenerator"/> aggregates a set of
-	/// <seealso cref="AdaptiveFeatureGenerator"/>s and calls them to generate the features.
-	/// </summary>
-	public class AggregatedFeatureGenerator : AdaptiveFeatureGenerator
-	{
+            this.generators = generators;
+        }
 
-	  /// <summary>
-	  /// Contains all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
-	  /// </summary>
-	  private ICollection<AdaptiveFeatureGenerator> generators;
+        public AggregatedFeatureGenerator(ICollection<AdaptiveFeatureGenerator> generators) : this(generators.ToArray())
+        {
+        }
 
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="generators"> array of generators, null values are not permitted </param>
-	  public AggregatedFeatureGenerator(params AdaptiveFeatureGenerator[] generators)
-	  {
-	      if (generators.Any(generator => generator == null))
-	      {
-	          throw new System.ArgumentException("null values in generators are not permitted!");
-	      }
+        /// <summary>
+        /// Calls the <seealso cref="AdaptiveFeatureGenerator#clearAdaptiveData()"/> method
+        /// on all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
+        /// </summary>
+        public virtual void clearAdaptiveData()
+        {
+            foreach (AdaptiveFeatureGenerator generator in generators)
+            {
+                generator.clearAdaptiveData();
+            }
+        }
 
-	      this.generators = generators;
-	  }
+        /// <summary>
+        /// Calls the <seealso cref="AdaptiveFeatureGenerator#createFeatures(List, String[], int, String[])"/>
+        /// method on all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
+        /// </summary>
+        public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
+        {
+            foreach (AdaptiveFeatureGenerator generator in generators)
+            {
+                generator.createFeatures(features, tokens, index, previousOutcomes);
+            }
+        }
 
-	  public AggregatedFeatureGenerator(ICollection<AdaptiveFeatureGenerator> generators) : this(generators.ToArray())
-	  {
-	  }
+        /// <summary>
+        /// Calls the <seealso cref="AdaptiveFeatureGenerator#updateAdaptiveData(String[], String[])"/>
+        /// method on all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
+        /// </summary>
+        public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
+        {
+            foreach (AdaptiveFeatureGenerator generator in generators)
+            {
+                generator.updateAdaptiveData(tokens, outcomes);
+            }
+        }
 
-	  /// <summary>
-	  /// Calls the <seealso cref="AdaptiveFeatureGenerator#clearAdaptiveData()"/> method
-	  /// on all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
-	  /// </summary>
-	  public virtual void clearAdaptiveData()
-	  {
-
-		foreach (AdaptiveFeatureGenerator generator in generators)
-		{
-		  generator.clearAdaptiveData();
-		}
-	  }
-
-	  /// <summary>
-	  /// Calls the <seealso cref="AdaptiveFeatureGenerator#createFeatures(List, String[], int, String[])"/>
-	  /// method on all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
-	  /// </summary>
-	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
-	  {
-
-		foreach (AdaptiveFeatureGenerator generator in generators)
-		{
-		  generator.createFeatures(features, tokens, index, previousOutcomes);
-		}
-	  }
-
-	  /// <summary>
-	  /// Calls the <seealso cref="AdaptiveFeatureGenerator#updateAdaptiveData(String[], String[])"/>
-	  /// method on all aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
-	  /// </summary>
-	  public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
-	  {
-
-		foreach (AdaptiveFeatureGenerator generator in generators)
-		{
-		  generator.updateAdaptiveData(tokens, outcomes);
-		}
-	  }
-
-	  /// <summary>
-	  /// Retrieves a <seealso cref="Collections"/> of all aggregated
-	  /// <seealso cref="AdaptiveFeatureGenerator"/>s.
-	  /// </summary>
-	  /// <returns> all aggregated generators </returns>
-	  public virtual ICollection<AdaptiveFeatureGenerator> Generators
-	  {
-		  get
-		  {
-			return generators;
-		  }
-	  }
-	}
-
+        /// <summary>
+        /// Retrieves a <seealso cref="Collections"/> of all aggregated
+        /// <seealso cref="AdaptiveFeatureGenerator"/>s.
+        /// </summary>
+        /// <returns> all aggregated generators </returns>
+        public virtual ICollection<AdaptiveFeatureGenerator> Generators
+        {
+            get { return generators; }
+        }
+    }
 }

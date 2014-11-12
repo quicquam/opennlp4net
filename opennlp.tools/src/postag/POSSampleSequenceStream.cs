@@ -22,144 +22,137 @@ using j4n.Serialization;
 using opennlp.model;
 
 namespace opennlp.tools.postag
- {
+{
+    using AbstractModel = opennlp.model.AbstractModel;
+    using Event = opennlp.model.Event;
+    using opennlp.tools.util;
 
-
-	using AbstractModel = opennlp.model.AbstractModel;
-	using Event = opennlp.model.Event;
-	using opennlp.tools.util;
-
-     public class POSSampleSequenceStream : SequenceStream<Event>
-	{
-
-	  private POSContextGenerator pcg;
-	  private IList<POSSample> samples;
+    public class POSSampleSequenceStream : SequenceStream<Event>
+    {
+        private POSContextGenerator pcg;
+        private IList<POSSample> samples;
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public POSSampleSequenceStream(opennlp.tools.util.ObjectStream<POSSample> psi) throws java.io.IOException
-	  public POSSampleSequenceStream(ObjectStream<POSSample> psi) : this(psi, new DefaultPOSContextGenerator(null))
-	  {
-	  }
+        public POSSampleSequenceStream(ObjectStream<POSSample> psi) : this(psi, new DefaultPOSContextGenerator(null))
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public POSSampleSequenceStream(opennlp.tools.util.ObjectStream<POSSample> psi, POSContextGenerator pcg) throws java.io.IOException
-	  public POSSampleSequenceStream(ObjectStream<POSSample> psi, POSContextGenerator pcg)
-	  {
-		samples = new List<POSSample>();
+        public POSSampleSequenceStream(ObjectStream<POSSample> psi, POSContextGenerator pcg)
+        {
+            samples = new List<POSSample>();
 
-		POSSample sample;
-		while ((sample = psi.read()) != null)
-		{
-		  samples.Add(sample);
-		}
-		Console.Error.WriteLine("Got " + samples.Count + " sequences");
-		this.pcg = pcg;
-	  }
+            POSSample sample;
+            while ((sample = psi.read()) != null)
+            {
+                samples.Add(sample);
+            }
+            Console.Error.WriteLine("Got " + samples.Count + " sequences");
+            this.pcg = pcg;
+        }
 
 
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @SuppressWarnings("unchecked") public opennlp.model.Event[] updateContext(opennlp.model.Sequence sequence, opennlp.model.AbstractModel model)
-	  public virtual Event[] updateContext(Sequence<POSSample> sequence, AbstractModel model)
-	  {
-		Sequence<POSSample> pss = sequence;
-		POSTagger tagger = new POSTaggerME(new POSModel("x-unspecified", model, null, new POSTaggerFactory()));
-		string[] sentence = pss.Source.Sentence;
-		object[] ac = pss.Source.AddictionalContext;
-		string[] tags = tagger.tag(pss.Source.Sentence);
-		Event[] events = POSSampleEventStream.generateEvents(sentence, tags, ac, pcg).ToArray();
-		return events;
-	  }
+        public virtual Event[] updateContext(Sequence<POSSample> sequence, AbstractModel model)
+        {
+            Sequence<POSSample> pss = sequence;
+            POSTagger tagger = new POSTaggerME(new POSModel("x-unspecified", model, null, new POSTaggerFactory()));
+            string[] sentence = pss.Source.Sentence;
+            object[] ac = pss.Source.AddictionalContext;
+            string[] tags = tagger.tag(pss.Source.Sentence);
+            Event[] events = POSSampleEventStream.generateEvents(sentence, tags, ac, pcg).ToArray();
+            return events;
+        }
 
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @SuppressWarnings("unchecked") public java.util.Iterator<opennlp.model.Sequence> iterator()
-	  public virtual IEnumerator<Sequence> iterator()
-	  {
-		return new POSSampleSequenceIterator(samples.GetEnumerator());
-	  }
+        public virtual IEnumerator<Sequence> iterator()
+        {
+            return new POSSampleSequenceIterator(samples.GetEnumerator());
+        }
 
-         public Event[] updateContext(Sequence<Event> sequence, AbstractModel model)
-         {
-             throw new NotImplementedException();
-         }
+        public Event[] updateContext(Sequence<Event> sequence, AbstractModel model)
+        {
+            throw new NotImplementedException();
+        }
 
-         public IEnumerator<Sequence<Event>> GetEnumerator()
-         {
-             throw new NotImplementedException();
-         }
+        public IEnumerator<Sequence<Event>> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
 
-         IEnumerator IEnumerable.GetEnumerator()
-         {
-             return GetEnumerator();
-         }
-	}
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
 
-	internal class POSSampleSequenceIterator : IEnumerator<Sequence>
-	{
+    internal class POSSampleSequenceIterator : IEnumerator<Sequence>
+    {
+        private IEnumerator<POSSample> psi;
+        private POSContextGenerator cg;
 
-	  private IEnumerator<POSSample> psi;
-	  private POSContextGenerator cg;
+        public POSSampleSequenceIterator(IEnumerator<POSSample> psi)
+        {
+            this.psi = psi;
+            cg = new DefaultPOSContextGenerator(null);
+        }
 
-	  public POSSampleSequenceIterator(IEnumerator<POSSample> psi)
-	  {
-		this.psi = psi;
-		cg = new DefaultPOSContextGenerator(null);
-	  }
-
-	  public virtual bool hasNext()
-	  {
+        public virtual bool hasNext()
+        {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-	      return psi.MoveNext();
-	  }
+            return psi.MoveNext();
+        }
 
-	  public virtual Sequence<POSSample> next()
-	  {
+        public virtual Sequence<POSSample> next()
+        {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		POSSample sample = psi.Current;
+            POSSample sample = psi.Current;
 
-		string[] sentence = sample.Sentence;
-		string[] tags = sample.Tags;
-		Event[] events = new Event[sentence.Length];
+            string[] sentence = sample.Sentence;
+            string[] tags = sample.Tags;
+            Event[] events = new Event[sentence.Length];
 
-		for (int i = 0; i < sentence.Length; i++)
-		{
+            for (int i = 0; i < sentence.Length; i++)
+            {
+                // it is safe to pass the tags as previous tags because
+                // the context generator does not look for non predicted tags
+                string[] context = cg.getContext(i, sentence, tags, null);
 
-		  // it is safe to pass the tags as previous tags because
-		  // the context generator does not look for non predicted tags
-		  string[] context = cg.getContext(i, sentence, tags, null);
+                events[i] = new Event(tags[i], context);
+            }
+            Sequence<POSSample> sequence = new Sequence<POSSample>(events, sample);
+            return sequence;
+        }
 
-		  events[i] = new Event(tags[i], context);
-		}
-		Sequence<POSSample> sequence = new Sequence<POSSample>(events,sample);
-		return sequence;
-	  }
+        public virtual void remove()
+        {
+            throw new System.NotSupportedException();
+        }
 
-	  public virtual void remove()
-	  {
-		throw new System.NotSupportedException();
-	  }
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
-	    public void Dispose()
-	    {
-	        throw new NotImplementedException();
-	    }
+        public bool MoveNext()
+        {
+            throw new NotImplementedException();
+        }
 
-	    public bool MoveNext()
-	    {
-	        throw new NotImplementedException();
-	    }
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
 
-	    public void Reset()
-	    {
-	        throw new NotImplementedException();
-	    }
+        public Sequence Current { get; private set; }
 
-	    public Sequence Current { get; private set; }
-
-	    object IEnumerator.Current
-	    {
-	        get { return Current; }
-	    }
-	}
-
-
- }
+        object IEnumerator.Current
+        {
+            get { return Current; }
+        }
+    }
+}

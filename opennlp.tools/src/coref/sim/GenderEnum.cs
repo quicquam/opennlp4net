@@ -17,36 +17,37 @@
 
 namespace opennlp.tools.coref.sim
 {
+    /// <summary>
+    /// Enumeration of gender types.
+    /// </summary>
+    public class GenderEnum
+    {
+        private string gender;
 
-	/// <summary>
-	/// Enumeration of gender types.
-	/// </summary>
-	public class GenderEnum
-	{
-	  private string gender;
+        /// <summary>
+        /// Male gender. </summary>
+        public static readonly GenderEnum MALE = new GenderEnum("male");
 
-	  /// <summary>
-	  /// Male gender. </summary>
-	  public static readonly GenderEnum MALE = new GenderEnum("male");
-	  /// <summary>
-	  /// Female gender. </summary>
-	  public static readonly GenderEnum FEMALE = new GenderEnum("female");
-	  /// <summary>
-	  /// Nueter gender. </summary>
-	  public static readonly GenderEnum NEUTER = new GenderEnum("neuter");
-	  /// <summary>
-	  /// Unknown gender. </summary>
-	  public static readonly GenderEnum UNKNOWN = new GenderEnum("unknown");
+        /// <summary>
+        /// Female gender. </summary>
+        public static readonly GenderEnum FEMALE = new GenderEnum("female");
 
-	  private GenderEnum(string g)
-	  {
-		gender = g;
-	  }
+        /// <summary>
+        /// Nueter gender. </summary>
+        public static readonly GenderEnum NEUTER = new GenderEnum("neuter");
 
-	  public override string ToString()
-	  {
-		return gender;
-	  }
-	}
+        /// <summary>
+        /// Unknown gender. </summary>
+        public static readonly GenderEnum UNKNOWN = new GenderEnum("unknown");
 
+        private GenderEnum(string g)
+        {
+            gender = g;
+        }
+
+        public override string ToString()
+        {
+            return gender;
+        }
+    }
 }

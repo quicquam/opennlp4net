@@ -17,17 +17,15 @@
 
 namespace opennlp.tools.coref.sim
 {
+    /// <summary>
+    /// Interface for testing a number model.
+    /// 
+    /// </summary>
+    public interface TestNumberModel
+    {
+        double[] numberDist(Context np1);
 
-	/// <summary>
-	/// Interface for testing a number model.
-	/// 
-	/// </summary>
-	public interface TestNumberModel
-	{
-	  double[] numberDist(Context np1);
-
-	  int SingularIndex {get;}
-	  int PluralIndex {get;}
-	}
-
+        int SingularIndex { get; }
+        int PluralIndex { get; }
+    }
 }

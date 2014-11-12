@@ -17,22 +17,19 @@
 
 namespace opennlp.tools.tokenize
 {
-
-	/// <summary>
-	/// Interface for <seealso cref="TokenizerME"/> context generators.
-	/// </summary>
-	public interface TokenContextGenerator
-	{
-
-	  /// <summary>
-	  /// Returns an array of features for the specified sentence string at the specified index.
-	  /// </summary>
-	  /// <param name="sentence"> The string for a sentence. </param>
-	  /// <param name="index"> The index to consider splitting as a token.
-	  /// </param>
-	  /// <returns> an array of features for the specified sentence string at the
-	  ///   specified index. </returns>
-	  string[] getContext(string sentence, int index);
-	}
-
+    /// <summary>
+    /// Interface for <seealso cref="TokenizerME"/> context generators.
+    /// </summary>
+    public interface TokenContextGenerator
+    {
+        /// <summary>
+        /// Returns an array of features for the specified sentence string at the specified index.
+        /// </summary>
+        /// <param name="sentence"> The string for a sentence. </param>
+        /// <param name="index"> The index to consider splitting as a token.
+        /// </param>
+        /// <returns> an array of features for the specified sentence string at the
+        ///   specified index. </returns>
+        string[] getContext(string sentence, int index);
+    }
 }

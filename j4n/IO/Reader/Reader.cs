@@ -17,7 +17,6 @@ namespace j4n.IO.Reader
 
         public Reader()
         {
-            
         }
 
         public void close()

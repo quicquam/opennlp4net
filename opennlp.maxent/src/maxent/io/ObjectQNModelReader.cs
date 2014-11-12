@@ -22,16 +22,13 @@ using j4n.IO.InputStream;
 
 namespace opennlp.maxent.io
 {
+    using ObjectDataReader = opennlp.model.ObjectDataReader;
 
-	using ObjectDataReader = opennlp.model.ObjectDataReader;
 
-// ReSharper disable once InconsistentNaming
-	public class ObjectQNModelReader : QNModelReader
-	{
-
-	  public ObjectQNModelReader(ObjectInputStream ois) : base(new ObjectDataReader(ois))
-	  {
-	  }
-	}
-
+    public class ObjectQNModelReader : QNModelReader
+    {
+        public ObjectQNModelReader(ObjectInputStream ois) : base(new ObjectDataReader(ois))
+        {
+        }
+    }
 }

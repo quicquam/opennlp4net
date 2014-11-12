@@ -17,12 +17,9 @@
 
 namespace opennlp.tools.tokenize
 {
+    using opennlp.tools.util.eval;
 
-	using opennlp.tools.util.eval;
-
-	public interface TokenizerEvaluationMonitor : EvaluationMonitor<TokenSample>
-	{
-
-	}
-
+    public interface TokenizerEvaluationMonitor : EvaluationMonitor<TokenSample>
+    {
+    }
 }

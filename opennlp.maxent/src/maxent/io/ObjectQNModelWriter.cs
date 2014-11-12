@@ -1,10 +1,8 @@
-﻿
-using j4n.IO.OutputStream;
+﻿using j4n.IO.OutputStream;
 
 namespace opennlp.maxent.io
 {
-
-	/*
+    /*
 	 * Licensed to the Apache Software Foundation (ASF) under one
 	 * or more contributor license agreements.  See the NOTICE file
 	 * distributed with this work for additional information
@@ -23,52 +21,50 @@ namespace opennlp.maxent.io
 	 * under the License.
 	 */
 
-	using AbstractModel = opennlp.model.AbstractModel;
+    using AbstractModel = opennlp.model.AbstractModel;
 
-	public class ObjectQNModelWriter : QNModelWriter
-	{
+    public class ObjectQNModelWriter : QNModelWriter
+    {
+        protected internal ObjectOutputStream output;
 
-	  protected internal ObjectOutputStream output;
-
-	  /// <summary>
-	  /// Constructor which takes a GISModel and a ObjectOutputStream and prepares
-	  /// itself to write the model to that stream.
-	  /// </summary>
-	  /// <param name="model"> The GISModel which is to be persisted. </param>
-	  /// <param name="dos"> The stream which will be used to persist the model. </param>
-	  public ObjectQNModelWriter(AbstractModel model, ObjectOutputStream dos) : base(model)
-	  {
-		output = dos;
-	  }
+        /// <summary>
+        /// Constructor which takes a GISModel and a ObjectOutputStream and prepares
+        /// itself to write the model to that stream.
+        /// </summary>
+        /// <param name="model"> The GISModel which is to be persisted. </param>
+        /// <param name="dos"> The stream which will be used to persist the model. </param>
+        public ObjectQNModelWriter(AbstractModel model, ObjectOutputStream dos) : base(model)
+        {
+            output = dos;
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeUTF(String s) throws java.io.IOException
-	  public override void writeUTF(string s)
-	  {
-		output.writeUTF(s);
-	  }
+        public override void writeUTF(string s)
+        {
+            output.writeUTF(s);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeInt(int i) throws java.io.IOException
-	  public override void writeInt(int i)
-	  {
-		output.writeInt(i);
-	  }
+        public override void writeInt(int i)
+        {
+            output.writeInt(i);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void writeDouble(double d) throws java.io.IOException
-	  public override void writeDouble(double d)
-	  {
-		output.writeDouble(d);
-	  }
+        public override void writeDouble(double d)
+        {
+            output.writeDouble(d);
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void close() throws java.io.IOException
-	  public override void close()
-	  {
-		output.flush();
-		output.close();
-	  }
-	}
-
+        public override void close()
+        {
+            output.flush();
+            output.close();
+        }
+    }
 }

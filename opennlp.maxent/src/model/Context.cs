@@ -19,54 +19,46 @@
 
 namespace opennlp.model
 {
+    /// <summary>
+    /// Class which associates a real valued parameter or expected value with a particular contextual
+    /// predicate or feature.  This is used to store maxent model parameters as well as model and empirical
+    /// expected values.
+    /// </summary>
+    public class Context
+    {
+        /// <summary>
+        /// The real valued parameters or expected values for this context. </summary>
+        protected internal double[] parameters;
 
-	/// <summary>
-	/// Class which associates a real valued parameter or expected value with a particular contextual
-	/// predicate or feature.  This is used to store maxent model parameters as well as model and empirical
-	/// expected values.
-	/// </summary>
-	public class Context
-	{
+        /// <summary>
+        /// The outcomes which occur with this context. </summary>
+        protected internal int[] outcomes;
 
-	  /// <summary>
-	  /// The real valued parameters or expected values for this context. </summary>
-	  protected internal double[] parameters;
-	  /// <summary>
-	  /// The outcomes which occur with this context. </summary>
-	  protected internal int[] outcomes;
+        /// <summary>
+        /// Creates a new parameters object with the specified parameters associated with the specified
+        /// outcome pattern. </summary>
+        /// <param name="outcomePattern"> Array of outcomes for which parameters exists for this context. </param>
+        /// <param name="parameters"> Parameters for the outcomes specified. </param>
+        public Context(int[] outcomePattern, double[] parameters)
+        {
+            this.outcomes = outcomePattern;
+            this.parameters = parameters;
+        }
 
-	  /// <summary>
-	  /// Creates a new parameters object with the specified parameters associated with the specified
-	  /// outcome pattern. </summary>
-	  /// <param name="outcomePattern"> Array of outcomes for which parameters exists for this context. </param>
-	  /// <param name="parameters"> Parameters for the outcomes specified. </param>
-	  public Context(int[] outcomePattern, double[] parameters)
-	  {
-		this.outcomes = outcomePattern;
-		this.parameters = parameters;
-	  }
+        /// <summary>
+        /// Returns the outcomes for which parameters exists for this context. </summary>
+        /// <returns> Array of outcomes for which parameters exists for this context. </returns>
+        public virtual int[] Outcomes
+        {
+            get { return outcomes; }
+        }
 
-	  /// <summary>
-	  /// Returns the outcomes for which parameters exists for this context. </summary>
-	  /// <returns> Array of outcomes for which parameters exists for this context. </returns>
-	  public virtual int[] Outcomes
-	  {
-		  get
-		  {
-			return outcomes;
-		  }
-	  }
-
-	  /// <summary>
-	  /// Returns the parameters or expected values for the outcomes which occur with this context. </summary>
-	  /// <returns> Array of parameters for the outcomes of this context. </returns>
-	  public virtual double[] Parameters
-	  {
-		  get
-		  {
-			return parameters;
-		  }
-	  }
-	}
-
+        /// <summary>
+        /// Returns the parameters or expected values for the outcomes which occur with this context. </summary>
+        /// <returns> Array of parameters for the outcomes of this context. </returns>
+        public virtual double[] Parameters
+        {
+            get { return parameters; }
+        }
+    }
 }

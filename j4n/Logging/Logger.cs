@@ -18,7 +18,12 @@ namespace j4n.Logging
             throw new NotImplementedException();
         }
 
-        public enum Level { INFO, WARNING , ERROR}
+        public enum Level
+        {
+            INFO,
+            WARNING,
+            ERROR
+        }
 
         public void warning(string s)
         {

@@ -14,12 +14,14 @@ namespace opennlp.tools.dictionary.serializer
             throw new System.NotImplementedException();
         }
 
-        public static void create(InputStream @in, DetokenizationDictionary.EntryInserterAnonymousInnerClassHelper entryInserterAnonymousInnerClassHelper)
+        public static void create(InputStream @in,
+            DetokenizationDictionary.EntryInserterAnonymousInnerClassHelper entryInserterAnonymousInnerClassHelper)
         {
             throw new System.NotImplementedException();
         }
 
-        public static void create(InputStream @in, NGramModel.EntryInserterAnonymousInnerClassHelper entryInserterAnonymousInnerClassHelper)
+        public static void create(InputStream @in,
+            NGramModel.EntryInserterAnonymousInnerClassHelper entryInserterAnonymousInnerClassHelper)
         {
             throw new System.NotImplementedException();
         }

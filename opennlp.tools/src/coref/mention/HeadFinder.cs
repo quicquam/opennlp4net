@@ -17,42 +17,39 @@
 
 namespace opennlp.tools.coref.mention
 {
+    /// <summary>
+    /// Interface for finding head words in noun phrases and head noun-phrases in parses.
+    /// </summary>
+    public interface HeadFinder
+    {
+        /// <summary>
+        /// Returns the child parse which contains the lexical head of the specified parse.
+        /// </summary>
+        /// <param name="parse"> The parse in which to find the head. </param>
+        /// <returns> The parse containing the lexical head of the specified parse.  If no head is
+        /// available or the constituent has no sub-components that are eligible heads then null is returned. </returns>
+        Parse getHead(Parse parse);
 
-	/// <summary>
-	/// Interface for finding head words in noun phrases and head noun-phrases in parses.
-	/// </summary>
-	public interface HeadFinder
-	{
+        /// <summary>
+        /// Returns which index the specified list of token is the head word.
+        /// </summary>
+        /// <param name="parse"> The parse in which to find the head index. </param>
+        /// <returns> The index of the head token. </returns>
+        int getHeadIndex(Parse parse);
 
-	  /// <summary>
-	  /// Returns the child parse which contains the lexical head of the specified parse.
-	  /// </summary>
-	  /// <param name="parse"> The parse in which to find the head. </param>
-	  /// <returns> The parse containing the lexical head of the specified parse.  If no head is
-	  /// available or the constituent has no sub-components that are eligible heads then null is returned. </returns>
-	  Parse getHead(Parse parse);
+        /// <summary>
+        /// Returns the parse bottom-most head of a <code>Parse</code>. If no
+        /// head is available which is a child of <code>p</code> then <code>p</code> is returned.
+        /// </summary>
+        /// <param name="p"> Parse to find the head of. </param>
+        /// <returns> bottom-most head of p. </returns>
+        Parse getLastHead(Parse p);
 
-	  /// <summary>
-	  /// Returns which index the specified list of token is the head word.
-	  /// </summary>
-	  /// <param name="parse"> The parse in which to find the head index. </param>
-	  /// <returns> The index of the head token. </returns>
-	  int getHeadIndex(Parse parse);
-
-	  /// <summary>
-	  /// Returns the parse bottom-most head of a <code>Parse</code>. If no
-	  /// head is available which is a child of <code>p</code> then <code>p</code> is returned.
-	  /// </summary>
-	  /// <param name="p"> Parse to find the head of. </param>
-	  /// <returns> bottom-most head of p. </returns>
-	  Parse getLastHead(Parse p);
-
-	  /// <summary>
-	  /// Returns head token for the specified np parse.
-	  /// </summary>
-	  /// <param name="np"> The noun parse to get head from. </param>
-	  /// <returns> head token parse. </returns>
-	  Parse getHeadToken(Parse np);
-	}
-
+        /// <summary>
+        /// Returns head token for the specified np parse.
+        /// </summary>
+        /// <param name="np"> The noun parse to get head from. </param>
+        /// <returns> head token parse. </returns>
+        Parse getHeadToken(Parse np);
+    }
 }

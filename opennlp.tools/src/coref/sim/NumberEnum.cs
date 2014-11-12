@@ -17,40 +17,36 @@
 
 namespace opennlp.tools.coref.sim
 {
+    /// <summary>
+    /// Enumeration of number types.
+    /// </summary>
+    public class NumberEnum
+    {
+        private readonly string name;
 
-	/// <summary>
-	/// Enumeration of number types.
-	/// </summary>
-	public class NumberEnum
-	{
+        /// <summary>
+        /// Singular number type. 
+        /// </summary>
+        public static readonly NumberEnum SINGULAR = new NumberEnum("singular");
 
-	  private readonly string name;
+        /// <summary>
+        /// Plural number type. 
+        /// </summary>
+        public static readonly NumberEnum PLURAL = new NumberEnum("plural");
 
-	  /// <summary>
-	  /// Singular number type. 
-	  /// </summary>
-	  public static readonly NumberEnum SINGULAR = new NumberEnum("singular");
+        /// <summary>
+        /// Unknown number type. 
+        /// </summary>
+        public static readonly NumberEnum UNKNOWN = new NumberEnum("unknown");
 
-	  /// <summary>
-	  /// Plural number type. 
-	  /// </summary>
-	  public static readonly NumberEnum PLURAL = new NumberEnum("plural");
+        private NumberEnum(string name)
+        {
+            this.name = name;
+        }
 
-	  /// <summary>
-	  /// Unknown number type. 
-	  /// </summary>
-	  public static readonly NumberEnum UNKNOWN = new NumberEnum("unknown");
-
-	  private NumberEnum(string name)
-	  {
-		this.name = name;
-	  }
-
-	  public override string ToString()
-	  {
-		return name;
-	  }
-
-	}
-
+        public override string ToString()
+        {
+            return name;
+        }
+    }
 }

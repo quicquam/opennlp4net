@@ -17,50 +17,46 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.sentdetect.lang.th
 {
+    /// <summary>
+    /// Creates contexts/features for end-of-sentence detection in Thai text.
+    /// </summary>
+    public class SentenceContextGenerator : DefaultSDContextGenerator
+    {
+        public static readonly char[] eosCharacters = new char[] {' ', '\n'};
 
-	/// <summary>
-	/// Creates contexts/features for end-of-sentence detection in Thai text.
-	/// </summary>
-	public class SentenceContextGenerator : DefaultSDContextGenerator
-	{
+        public SentenceContextGenerator() : base(eosCharacters)
+        {
+        }
 
-	  public static readonly char[] eosCharacters = new char[] {' ','\n'};
+        protected internal override void collectFeatures(string prefix, string suffix, string previous, string next)
+        {
+            buf.Append("p=");
+            buf.Append(prefix);
+            collectFeats.Add(buf.ToString());
+            buf.Length = 0;
 
-	  public SentenceContextGenerator() : base(eosCharacters)
-	  {
-	  }
+            buf.Append("s=");
+            buf.Append(suffix);
+            collectFeats.Add(buf.ToString());
+            buf.Length = 0;
 
-	  protected internal override void collectFeatures(string prefix, string suffix, string previous, string next)
-	  {
-		buf.Append("p=");
-		buf.Append(prefix);
-		collectFeats.Add(buf.ToString());
-		buf.Length = 0;
+            collectFeats.Add("p1=" + prefix.Substring(Math.Max(prefix.Length - 1, 0)));
+            collectFeats.Add("p2=" + prefix.Substring(Math.Max(prefix.Length - 2, 0)));
+            collectFeats.Add("p3=" + prefix.Substring(Math.Max(prefix.Length - 3, 0)));
+            collectFeats.Add("p4=" + prefix.Substring(Math.Max(prefix.Length - 4, 0)));
+            collectFeats.Add("p5=" + prefix.Substring(Math.Max(prefix.Length - 5, 0)));
+            collectFeats.Add("p6=" + prefix.Substring(Math.Max(prefix.Length - 6, 0)));
+            collectFeats.Add("p7=" + prefix.Substring(Math.Max(prefix.Length - 7, 0)));
 
-		buf.Append("s=");
-		buf.Append(suffix);
-		collectFeats.Add(buf.ToString());
-		buf.Length = 0;
-
-		collectFeats.Add("p1=" + prefix.Substring(Math.Max(prefix.Length - 1,0)));
-		collectFeats.Add("p2=" + prefix.Substring(Math.Max(prefix.Length - 2,0)));
-		collectFeats.Add("p3=" + prefix.Substring(Math.Max(prefix.Length - 3,0)));
-		collectFeats.Add("p4=" + prefix.Substring(Math.Max(prefix.Length - 4,0)));
-		collectFeats.Add("p5=" + prefix.Substring(Math.Max(prefix.Length - 5,0)));
-		collectFeats.Add("p6=" + prefix.Substring(Math.Max(prefix.Length - 6,0)));
-		collectFeats.Add("p7=" + prefix.Substring(Math.Max(prefix.Length - 7,0)));
-
-		collectFeats.Add("n1=" + suffix.Substring(0,Math.Min(1,suffix.Length)));
-		collectFeats.Add("n2=" + suffix.Substring(0,Math.Min(2,suffix.Length)));
-		collectFeats.Add("n3=" + suffix.Substring(0,Math.Min(3,suffix.Length)));
-		collectFeats.Add("n4=" + suffix.Substring(0,Math.Min(4,suffix.Length)));
-		collectFeats.Add("n5=" + suffix.Substring(0,Math.Min(5,suffix.Length)));
-		collectFeats.Add("n6=" + suffix.Substring(0,Math.Min(6,suffix.Length)));
-		collectFeats.Add("n7=" + suffix.Substring(0,Math.Min(7,suffix.Length)));
-	  }
-	}
-
+            collectFeats.Add("n1=" + suffix.Substring(0, Math.Min(1, suffix.Length)));
+            collectFeats.Add("n2=" + suffix.Substring(0, Math.Min(2, suffix.Length)));
+            collectFeats.Add("n3=" + suffix.Substring(0, Math.Min(3, suffix.Length)));
+            collectFeats.Add("n4=" + suffix.Substring(0, Math.Min(4, suffix.Length)));
+            collectFeats.Add("n5=" + suffix.Substring(0, Math.Min(5, suffix.Length)));
+            collectFeats.Add("n6=" + suffix.Substring(0, Math.Min(6, suffix.Length)));
+            collectFeats.Add("n7=" + suffix.Substring(0, Math.Min(7, suffix.Length)));
+        }
+    }
 }

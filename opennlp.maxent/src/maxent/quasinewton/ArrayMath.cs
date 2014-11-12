@@ -16,53 +16,50 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 namespace opennlp.maxent.quasinewton
 {
+    /// <summary>
+    /// utility class for simple vector arithmetics.
+    /// </summary>
+    public class ArrayMath
+    {
+        public static double innerProduct(double[] vecA, double[] vecB)
+        {
+            if (vecA == null || vecB == null)
+            {
+                return double.NaN;
+            }
+            if (vecA.Length != vecB.Length)
+            {
+                return double.NaN;
+            }
 
-	/// <summary>
-	/// utility class for simple vector arithmetics.
-	/// </summary>
-	public class ArrayMath
-	{
+            double product = 0.0;
+            for (int i = 0; i < vecA.Length; i++)
+            {
+                product += vecA[i]*vecB[i];
+            }
+            return product;
+        }
 
-	  public static double innerProduct(double[] vecA, double[] vecB)
-	  {
-		if (vecA == null || vecB == null)
-		{
-		  return double.NaN;
-		}
-		if (vecA.Length != vecB.Length)
-		{
-		  return double.NaN;
-		}
+        public static double[] updatePoint(double[] point, double[] vector, double scale)
+        {
+            if (point == null || vector == null)
+            {
+                return null;
+            }
+            if (point.Length != vector.Length)
+            {
+                return null;
+            }
 
-		double product = 0.0;
-		for (int i = 0; i < vecA.Length; i++)
-		{
-		  product += vecA[i] * vecB[i];
-		}
-		return product;
-	  }
-
-	  public static double[] updatePoint(double[] point, double[] vector, double scale)
-	  {
-		if (point == null || vector == null)
-		{
-		  return null;
-		}
-		if (point.Length != vector.Length)
-		{
-		  return null;
-		}
-
-		double[] updated = point.Clone() as double[];
-		for (int i = 0; i < updated.Length; i++)
-		{
-		  updated[i] = updated[i] + (vector[i] * scale);
-		}
-		return updated;
-	  }
-	}
-
-
+            double[] updated = point.Clone() as double[];
+            for (int i = 0; i < updated.Length; i++)
+            {
+                updated[i] = updated[i] + (vector[i]*scale);
+            }
+            return updated;
+        }
+    }
 }

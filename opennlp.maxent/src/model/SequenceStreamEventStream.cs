@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -22,57 +21,53 @@ using opennlp.nonjava.extensions;
 
 namespace opennlp.model
 {
+    /// <summary>
+    /// Class which turns a sequence stream into an event stream. 
+    /// 
+    /// </summary>
+    public class SequenceStreamEventStream : EventStream
+    {
+        private IEnumerator<Sequence<Event>> sequenceIterator;
+        internal int eventIndex = -1;
+        internal Event[] events;
 
-	/// <summary>
-	/// Class which turns a sequence stream into an event stream. 
-	/// 
-	/// </summary>
-	public class SequenceStreamEventStream : EventStream
-	{
+        public SequenceStreamEventStream(SequenceStream<Event> sequenceStream)
+        {
+            this.sequenceIterator = sequenceStream.GetEnumerator();
+        }
 
-	  private IEnumerator<Sequence<Event>> sequenceIterator;
-	  internal int eventIndex = -1;
-	  internal Event[] events;
-
-	  public SequenceStreamEventStream(SequenceStream<Event> sequenceStream)
-	  {
-		this.sequenceIterator = sequenceStream.GetEnumerator();
-	  }
-
-	  public virtual bool hasNext()
-	  {
-		if (events != null && eventIndex < events.Length)
-		{
-		  return true;
-		}
-		else
-		{
+        public virtual bool hasNext()
+        {
+            if (events != null && eventIndex < events.Length)
+            {
+                return true;
+            }
+            else
+            {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-		  if (sequenceIterator.hasNext())
-		  {
+                if (sequenceIterator.hasNext())
+                {
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			Sequence<Event> s = sequenceIterator.next();
-			eventIndex = 0;
-			events = s.Events;
-			return true;
-		  }
-		  else
-		  {
-			return false;
-		  }
-		}
-	  }
+                    Sequence<Event> s = sequenceIterator.next();
+                    eventIndex = 0;
+                    events = s.Events;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
-	  public virtual Event next()
-	  {
-		return events[eventIndex++];
-	  }
+        public virtual Event next()
+        {
+            return events[eventIndex++];
+        }
 
-	  public virtual void remove()
-	  {
-		throw new System.NotSupportedException();
-	  }
-
-	}
-
+        public virtual void remove()
+        {
+            throw new System.NotSupportedException();
+        }
+    }
 }

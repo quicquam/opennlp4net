@@ -19,38 +19,34 @@
 
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// Generates features for different for the class of the token.
+    /// </summary>
+    public class TokenClassFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private const string TOKEN_CLASS_PREFIX = "wc";
+        private const string TOKEN_AND_CLASS_PREFIX = "w&c";
 
+        private bool generateWordAndClassFeature;
 
-	/// <summary>
-	/// Generates features for different for the class of the token.
-	/// </summary>
-	public class TokenClassFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public TokenClassFeatureGenerator() : this(false)
+        {
+        }
 
-	  private const string TOKEN_CLASS_PREFIX = "wc";
-	  private const string TOKEN_AND_CLASS_PREFIX = "w&c";
+        public TokenClassFeatureGenerator(bool genearteWordAndClassFeature)
+        {
+            this.generateWordAndClassFeature = genearteWordAndClassFeature;
+        }
 
-	  private bool generateWordAndClassFeature;
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
+        {
+            string wordClass = FeatureGeneratorUtil.tokenFeature(tokens[index]);
+            features.Add(TOKEN_CLASS_PREFIX + "=" + wordClass);
 
-	  public TokenClassFeatureGenerator() : this(false)
-	  {
-	  }
-
-	  public TokenClassFeatureGenerator(bool genearteWordAndClassFeature)
-	  {
-		this.generateWordAndClassFeature = genearteWordAndClassFeature;
-	  }
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
-	  {
-		string wordClass = FeatureGeneratorUtil.tokenFeature(tokens[index]);
-		features.Add(TOKEN_CLASS_PREFIX + "=" + wordClass);
-
-		if (generateWordAndClassFeature)
-		{
-		  features.Add(TOKEN_AND_CLASS_PREFIX + "=" + tokens[index].ToLower() + "," + wordClass);
-		}
-	  }
-	}
-
+            if (generateWordAndClassFeature)
+            {
+                features.Add(TOKEN_AND_CLASS_PREFIX + "=" + tokens[index].ToLower() + "," + wordClass);
+            }
+        }
+    }
 }

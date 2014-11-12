@@ -17,35 +17,28 @@
 
 namespace opennlp.tools.coref.sim
 {
-	/// <summary>
-	/// Class which models the number of an entity and the confidence of that association.
-	/// </summary>
-	public class Number
-	{
-	  private NumberEnum type;
-	  private double confidence;
+    /// <summary>
+    /// Class which models the number of an entity and the confidence of that association.
+    /// </summary>
+    public class Number
+    {
+        private NumberEnum type;
+        private double confidence;
 
-	  public Number(NumberEnum type, double confidence)
-	  {
-		this.type = type;
-		this.confidence = confidence;
-	  }
+        public Number(NumberEnum type, double confidence)
+        {
+            this.type = type;
+            this.confidence = confidence;
+        }
 
-	  public virtual NumberEnum Type
-	  {
-		  get
-		  {
-			return type;
-		  }
-	  }
+        public virtual NumberEnum Type
+        {
+            get { return type; }
+        }
 
-	  public virtual double Confidence
-	  {
-		  get
-		  {
-			return confidence;
-		  }
-	  }
-	}
-
+        public virtual double Confidence
+        {
+            get { return confidence; }
+        }
+    }
 }

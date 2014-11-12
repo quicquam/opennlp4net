@@ -17,61 +17,57 @@
 
 namespace opennlp.tools.tokenize
 {
+    /// <summary>
+    /// A Detokenizer merges tokens back to their untokenized representation.
+    /// 
+    /// </summary>
+    public interface Detokenizer
+    {
+        /// <summary>
+        /// This enum contains an operation for every token to merge the
+        /// tokens together to their detokenized form.
+        /// </summary>
+        /// <summary>
+        /// Detokenize the input tokens.
+        /// </summary>
+        /// <param name="tokens"> the tokens to detokenize. </param>
+        /// <returns> the merge operations to detokenize the input tokens. </returns>
+        Detokenizer_DetokenizationOperation[] detokenize(string[] tokens);
 
-	/// <summary>
-	/// A Detokenizer merges tokens back to their untokenized representation.
-	/// 
-	/// </summary>
-	public interface Detokenizer
-	{
+        /// <summary>
+        /// Detokenize the input tokens into a String. Tokens which
+        /// are connected without a space inbetween can be separated by
+        /// a split marker.
+        /// </summary>
+        /// <param name="tokens"> </param>
+        /// <param name="splitMarker"> the split marker or null
+        /// 
+        /// @return </param>
+        string detokenize(string[] tokens, string splitMarker);
+    }
 
-	  /// <summary>
-	  /// This enum contains an operation for every token to merge the
-	  /// tokens together to their detokenized form.
-	  /// </summary>
+    public enum Detokenizer_DetokenizationOperation
+    {
+        /// <summary>
+        /// The current token should be attached to the begin token on the right side.
+        /// </summary>
+        MERGE_TO_RIGHT,
 
-	  /// <summary>
-	  /// Detokenize the input tokens.
-	  /// </summary>
-	  /// <param name="tokens"> the tokens to detokenize. </param>
-	  /// <returns> the merge operations to detokenize the input tokens. </returns>
-	  Detokenizer_DetokenizationOperation[] detokenize(string[] tokens);
+        /// <summary>
+        /// The current token should be attached to the string on the left side.
+        /// </summary>
+        MERGE_TO_LEFT,
 
-	  /// <summary>
-	  /// Detokenize the input tokens into a String. Tokens which
-	  /// are connected without a space inbetween can be separated by
-	  /// a split marker.
-	  /// </summary>
-	  /// <param name="tokens"> </param>
-	  /// <param name="splitMarker"> the split marker or null
-	  /// 
-	  /// @return </param>
-	  string detokenize(string[] tokens, string splitMarker);
-	}
+        /// <summary>
+        /// The current token should be attached to the string on the left side, as
+        /// well as to the begin token on the right side.
+        /// </summary>
+        MERGE_BOTH,
 
-	  public enum Detokenizer_DetokenizationOperation
-	  {
-	/// <summary>
-	/// The current token should be attached to the begin token on the right side.
-	/// </summary>
-	MERGE_TO_RIGHT,
-
-	/// <summary>
-	/// The current token should be attached to the string on the left side.
-	/// </summary>
-	MERGE_TO_LEFT,
-
-	/// <summary>
-	/// The current token should be attached to the string on the left side, as
-	/// well as to the begin token on the right side.
-	/// </summary>
-	MERGE_BOTH,
-
-	/// <summary>
-	/// Do not perform a merge operation for this token, but is possible that another
-	/// token can be attached to the left or right side of this one.
-	/// </summary>
-	NO_OPERATION
-	  }
-
+        /// <summary>
+        /// Do not perform a merge operation for this token, but is possible that another
+        /// token can be attached to the left or right side of this one.
+        /// </summary>
+        NO_OPERATION
+    }
 }

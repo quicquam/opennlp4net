@@ -17,54 +17,48 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.doccat
 {
+    using StringPattern = opennlp.tools.util.featuregen.StringPattern;
 
+    /// <summary>
+    /// Generates a feature for each word in a document.
+    /// </summary>
+    public class BagOfWordsFeatureGenerator : FeatureGenerator
+    {
+        private bool useOnlyAllLetterTokens = false;
 
-	using StringPattern = opennlp.tools.util.featuregen.StringPattern;
+        public BagOfWordsFeatureGenerator()
+        {
+        }
 
-	/// <summary>
-	/// Generates a feature for each word in a document.
-	/// </summary>
-	public class BagOfWordsFeatureGenerator : FeatureGenerator
-	{
+        internal BagOfWordsFeatureGenerator(bool useOnlyAllLetterTokens)
+        {
+            this.useOnlyAllLetterTokens = useOnlyAllLetterTokens;
+        }
 
-	  private bool useOnlyAllLetterTokens = false;
+        public virtual ICollection<string> extractFeatures(string[] text)
+        {
+            ICollection<string> bagOfWords = new List<string>(text.Length);
 
-	  public BagOfWordsFeatureGenerator()
-	  {
-	  }
+            foreach (string word in text)
+            {
+                if (useOnlyAllLetterTokens)
+                {
+                    StringPattern pattern = StringPattern.recognize(word);
 
-	  internal BagOfWordsFeatureGenerator(bool useOnlyAllLetterTokens)
-	  {
-		this.useOnlyAllLetterTokens = useOnlyAllLetterTokens;
-	  }
+                    if (pattern.AllLetter)
+                    {
+                        bagOfWords.Add("bow=" + word);
+                    }
+                }
+                else
+                {
+                    bagOfWords.Add("bow=" + word);
+                }
+            }
 
-	  public virtual ICollection<string> extractFeatures(string[] text)
-	  {
-
-		ICollection<string> bagOfWords = new List<string>(text.Length);
-
-		foreach (string word in text)
-		{
-		  if (useOnlyAllLetterTokens)
-		  {
-			StringPattern pattern = StringPattern.recognize(word);
-
-			if (pattern.AllLetter)
-			{
-			  bagOfWords.Add("bow=" + word);
-			}
-		  }
-		  else
-		  {
-			bagOfWords.Add("bow=" + word);
-		  }
-		}
-
-		return bagOfWords;
-	  }
-	}
-
+            return bagOfWords;
+        }
+    }
 }

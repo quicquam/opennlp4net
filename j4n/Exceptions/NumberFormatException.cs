@@ -7,7 +7,7 @@ namespace j4n.Exceptions
         private string p;
 
         public NumberFormatException(string message)
-            :base(message)
+            : base(message)
         {
         }
     }

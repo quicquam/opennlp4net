@@ -21,98 +21,98 @@ using opennlp.tools.util;
 
 namespace opennlp.tools.tokenize
 {
+    using Dictionary = opennlp.tools.dictionary.Dictionary;
+    using TrainingParameters = opennlp.tools.util.TrainingParameters;
+    using opennlp.tools.util.eval;
+    using FMeasure = opennlp.tools.util.eval.FMeasure;
+    using ModelUtil = opennlp.tools.util.model.ModelUtil;
 
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using TrainingParameters = opennlp.tools.util.TrainingParameters;
-	using opennlp.tools.util.eval;
-	using FMeasure = opennlp.tools.util.eval.FMeasure;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
+    public class TokenizerCrossValidator
+    {
+        private readonly TrainingParameters @params;
 
-	public class TokenizerCrossValidator
-	{
+        private FMeasure fmeasure = new FMeasure();
+        private TokenizerEvaluationMonitor[] listeners;
+        private readonly TokenizerFactory factory;
 
-	  private readonly TrainingParameters @params;
+        public TokenizerCrossValidator(TrainingParameters @params, TokenizerFactory factory,
+            params TokenizerEvaluationMonitor[] listeners)
+        {
+            this.@params = @params;
+            this.listeners = listeners;
+            this.factory = factory;
+        }
 
-	  private FMeasure fmeasure = new FMeasure();
-	  private TokenizerEvaluationMonitor[] listeners;
-	  private readonly TokenizerFactory factory;
+        /// @deprecated use
+        ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
+        ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
+        public TokenizerCrossValidator(string language, Dictionary abbreviations, bool alphaNumericOptimization,
+            TrainingParameters @params, params TokenizerEvaluationMonitor[] listeners)
+            : this(@params, new TokenizerFactory(language, abbreviations, alphaNumericOptimization, null), listeners)
+        {
+        }
 
-	  public TokenizerCrossValidator(TrainingParameters @params, TokenizerFactory factory, params TokenizerEvaluationMonitor[] listeners)
-	  {
-		this.@params = @params;
-		this.listeners = listeners;
-		this.factory = factory;
-	  }
+        /// @deprecated use
+        ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
+        ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
+        public TokenizerCrossValidator(string language, bool alphaNumericOptimization, int cutoff, int iterations)
+            : this(language, alphaNumericOptimization, ModelUtil.createTrainingParameters(iterations, cutoff))
+        {
+        }
 
-	  /// @deprecated use
-	  ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
-	  ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
-	  public TokenizerCrossValidator(string language, Dictionary abbreviations, bool alphaNumericOptimization, TrainingParameters @params, params TokenizerEvaluationMonitor[] listeners) : this(@params, new TokenizerFactory(language, abbreviations, alphaNumericOptimization, null), listeners)
-	  {
-	  }
+        /// @deprecated use
+        ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
+        ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
+        public TokenizerCrossValidator(string language, bool alphaNumericOptimization)
+            : this(language, alphaNumericOptimization, ModelUtil.createTrainingParameters(100, 5))
+        {
+        }
 
-	  /// @deprecated use
-	  ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
-	  ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
-	  public TokenizerCrossValidator(string language, bool alphaNumericOptimization, int cutoff, int iterations) : this(language, alphaNumericOptimization, ModelUtil.createTrainingParameters(iterations, cutoff))
-	  {
-	  }
-
-	  /// @deprecated use
-	  ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
-	  ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
-	  public TokenizerCrossValidator(string language, bool alphaNumericOptimization) : this(language, alphaNumericOptimization, ModelUtil.createTrainingParameters(100, 5))
-	  {
-	  }
-
-	  /// @deprecated use
-	  ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
-	  ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
-	  public TokenizerCrossValidator(string language, bool alphaNumericOptimization, TrainingParameters @params, params TokenizerEvaluationMonitor[] listeners) : this(language, null, alphaNumericOptimization, @params, listeners)
-	  {
-	  }
+        /// @deprecated use
+        ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
+        ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
+        public TokenizerCrossValidator(string language, bool alphaNumericOptimization, TrainingParameters @params,
+            params TokenizerEvaluationMonitor[] listeners)
+            : this(language, null, alphaNumericOptimization, @params, listeners)
+        {
+        }
 
 
-	  /// <summary>
-	  /// Starts the evaluation.
-	  /// </summary>
-	  /// <param name="samples">
-	  ///          the data to train and test </param>
-	  /// <param name="nFolds">
-	  ///          number of folds
-	  /// </param>
-	  /// <exception cref="IOException"> </exception>
+        /// <summary>
+        /// Starts the evaluation.
+        /// </summary>
+        /// <param name="samples">
+        ///          the data to train and test </param>
+        /// <param name="nFolds">
+        ///          number of folds
+        /// </param>
+        /// <exception cref="IOException"> </exception>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public void evaluate(opennlp.tools.util.ObjectStream<TokenSample> samples, int nFolds) throws java.io.IOException
-	  public virtual void evaluate(ObjectStream<TokenSample> samples, int nFolds)
-	  {
+        public virtual void evaluate(ObjectStream<TokenSample> samples, int nFolds)
+        {
+            CrossValidationPartitioner<TokenSample> partitioner = new CrossValidationPartitioner<TokenSample>(samples,
+                nFolds);
 
-		CrossValidationPartitioner<TokenSample> partitioner = new CrossValidationPartitioner<TokenSample>(samples, nFolds);
+            while (partitioner.hasNext())
+            {
+                CrossValidationPartitioner<TokenSample>.TrainingSampleStream trainingSampleStream = partitioner.next();
 
-		 while (partitioner.hasNext())
-		 {
+                // Maybe throws IOException if temporary file handling fails ...
+                TokenizerModel model;
 
-             CrossValidationPartitioner<TokenSample>.TrainingSampleStream trainingSampleStream = partitioner.next();
+                model = TokenizerME.train(trainingSampleStream, this.factory, @params);
 
-		   // Maybe throws IOException if temporary file handling fails ...
-		   TokenizerModel model;
+                TokenizerEvaluator evaluator = new TokenizerEvaluator(new TokenizerME(model), listeners);
 
-		  model = TokenizerME.train(trainingSampleStream, this.factory, @params);
+                evaluator.evaluate(trainingSampleStream.TestSampleStream);
+                fmeasure.mergeInto(evaluator.FMeasure);
+            }
+        }
 
-		   TokenizerEvaluator evaluator = new TokenizerEvaluator(new TokenizerME(model), listeners);
-
-		   evaluator.evaluate(trainingSampleStream.TestSampleStream);
-		   fmeasure.mergeInto(evaluator.FMeasure);
-		 }
-	  }
-
-	  public virtual FMeasure FMeasure
-	  {
-		  get
-		  {
-			return fmeasure;
-		  }
-	  }
-	}
-
+        public virtual FMeasure FMeasure
+        {
+            get { return fmeasure; }
+        }
+    }
 }

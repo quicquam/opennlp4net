@@ -19,25 +19,21 @@
 
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// This class provides empty implementations of some of the optional methods in
+    /// <seealso cref="AdditionalContextFeatureGenerator"/> to make implementing feature generators
+    /// easier.
+    /// </summary>
+    public abstract class FeatureGeneratorAdapter : AdaptiveFeatureGenerator
+    {
+        public abstract void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes);
 
+        public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
+        {
+        }
 
-	/// <summary>
-	/// This class provides empty implementations of some of the optional methods in
-	/// <seealso cref="AdditionalContextFeatureGenerator"/> to make implementing feature generators
-	/// easier.
-	/// </summary>
-	public abstract class FeatureGeneratorAdapter : AdaptiveFeatureGenerator
-	{
-		public abstract void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes);
-
-	  public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
-	  {
-	  }
-
-	  public virtual void clearAdaptiveData()
-	  {
-	  }
-
-	}
-
+        public virtual void clearAdaptiveData()
+        {
+        }
+    }
 }

@@ -18,45 +18,43 @@
 
 namespace opennlp.tools.coref.resolver
 {
-
-	/// <summary>
-	/// This class allows you to share a single instance of a non-referential resolver
-	/// among several resolvers.
-	/// </summary>
-	public class SingletonNonReferentialResolver : DefaultNonReferentialResolver
-	{
-
-	  private static SingletonNonReferentialResolver resolver;
-	  private static bool trained;
+    /// <summary>
+    /// This class allows you to share a single instance of a non-referential resolver
+    /// among several resolvers.
+    /// </summary>
+    public class SingletonNonReferentialResolver : DefaultNonReferentialResolver
+    {
+        private static SingletonNonReferentialResolver resolver;
+        private static bool trained;
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: private SingletonNonReferentialResolver(String projectName, ResolverMode mode) throws java.io.IOException
-	  private SingletonNonReferentialResolver(string projectName, ResolverMode mode) : base(projectName, "nonref", mode)
-	  {
-	  }
+        private SingletonNonReferentialResolver(string projectName, ResolverMode mode)
+            : base(projectName, "nonref", mode)
+        {
+        }
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static SingletonNonReferentialResolver getInstance(String modelName, ResolverMode mode) throws java.io.IOException
-	  public static SingletonNonReferentialResolver getInstance(string modelName, ResolverMode mode)
-	  {
-		if (resolver == null)
-		{
-		  resolver = new SingletonNonReferentialResolver(modelName, mode);
-		}
-		return resolver;
-	  }
+        public static SingletonNonReferentialResolver getInstance(string modelName, ResolverMode mode)
+        {
+            if (resolver == null)
+            {
+                resolver = new SingletonNonReferentialResolver(modelName, mode);
+            }
+            return resolver;
+        }
 
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: @Override public void train() throws java.io.IOException
-	  public override void train()
-	  {
-		if (!trained)
-		{
-		  base.train();
-		  trained = true;
-		}
-	  }
-	}
-
+        public override void train()
+        {
+            if (!trained)
+            {
+                base.train();
+                trained = true;
+            }
+        }
+    }
 }

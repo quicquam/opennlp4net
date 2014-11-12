@@ -21,76 +21,73 @@ using j4n.Lang;
 
 namespace opennlp.tools.util.featuregen
 {
+    using SimpleTokenizer = opennlp.tools.tokenize.SimpleTokenizer;
+    using Tokenizer = opennlp.tools.tokenize.Tokenizer;
 
+    /// <summary>
+    /// Partitions tokens into sub-tokens based on character classes and generates
+    /// class features for each of the sub-tokens and combinations of those sub-tokens.
+    /// </summary>
+    public class TokenPatternFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private Pattern noLetters = Pattern.compile("[^a-zA-Z]");
+        private Tokenizer tokenizer;
 
-	using SimpleTokenizer = opennlp.tools.tokenize.SimpleTokenizer;
-	using Tokenizer = opennlp.tools.tokenize.Tokenizer;
+        /// <summary>
+        /// Initializes a new instance.
+        /// For tokinization the <seealso cref="SimpleTokenizer"/> is used.
+        /// </summary>
+        public TokenPatternFeatureGenerator() : this(SimpleTokenizer.INSTANCE)
+        {
+        }
 
-	/// <summary>
-	/// Partitions tokens into sub-tokens based on character classes and generates
-	/// class features for each of the sub-tokens and combinations of those sub-tokens.
-	/// </summary>
-	public class TokenPatternFeatureGenerator : FeatureGeneratorAdapter
-	{
+        /// <summary>
+        /// Initializes a new instance.
+        /// </summary>
+        /// <param name="supportTokenizer"> </param>
+        public TokenPatternFeatureGenerator(Tokenizer supportTokenizer)
+        {
+            tokenizer = supportTokenizer;
+        }
 
-		private Pattern noLetters = Pattern.compile("[^a-zA-Z]");
-		private Tokenizer tokenizer;
+        public override void createFeatures(List<string> feats, string[] toks, int index, string[] preds)
+        {
+            string[] tokenized = tokenizer.tokenize(toks[index]);
 
-		/// <summary>
-		/// Initializes a new instance.
-		/// For tokinization the <seealso cref="SimpleTokenizer"/> is used.
-		/// </summary>
-		public TokenPatternFeatureGenerator() : this(SimpleTokenizer.INSTANCE)
-		{
-		}
+            if (tokenized.Length == 1)
+            {
+                feats.Add("st=" + toks[index].ToLower());
+                return;
+            }
 
-		/// <summary>
-		/// Initializes a new instance.
-		/// </summary>
-		/// <param name="supportTokenizer"> </param>
-		public TokenPatternFeatureGenerator(Tokenizer supportTokenizer)
-		{
-			tokenizer = supportTokenizer;
-		}
+            feats.Add("stn=" + tokenized.Length);
 
-		public override void createFeatures(List<string> feats, string[] toks, int index, string[] preds)
-		{
+            StringBuilder pattern = new StringBuilder();
 
-		  string[] tokenized = tokenizer.tokenize(toks[index]);
+            for (int i = 0; i < tokenized.Length; i++)
+            {
+                if (i < tokenized.Length - 1)
+                {
+                    feats.Add("pt2=" + FeatureGeneratorUtil.tokenFeature(tokenized[i]) +
+                              FeatureGeneratorUtil.tokenFeature(tokenized[i + 1]));
+                }
 
-		  if (tokenized.Length == 1)
-		  {
-			feats.Add("st=" + toks[index].ToLower());
-			return;
-		  }
+                if (i < tokenized.Length - 2)
+                {
+                    feats.Add("pt3=" + FeatureGeneratorUtil.tokenFeature(tokenized[i]) +
+                              FeatureGeneratorUtil.tokenFeature(tokenized[i + 1]) +
+                              FeatureGeneratorUtil.tokenFeature(tokenized[i + 2]));
+                }
 
-		  feats.Add("stn=" + tokenized.Length);
+                pattern.Append(FeatureGeneratorUtil.tokenFeature(tokenized[i]));
 
-		  StringBuilder pattern = new StringBuilder();
+                if (!noLetters.matcher(tokenized[i]).find())
+                {
+                    feats.Add("st=" + tokenized[i].ToLower());
+                }
+            }
 
-		  for (int i = 0; i < tokenized.Length; i++)
-		  {
-
-			if (i < tokenized.Length - 1)
-			{
-			  feats.Add("pt2=" + FeatureGeneratorUtil.tokenFeature(tokenized[i]) + FeatureGeneratorUtil.tokenFeature(tokenized[i + 1]));
-			}
-
-			if (i < tokenized.Length - 2)
-			{
-			  feats.Add("pt3=" + FeatureGeneratorUtil.tokenFeature(tokenized[i]) + FeatureGeneratorUtil.tokenFeature(tokenized[i + 1]) + FeatureGeneratorUtil.tokenFeature(tokenized[i + 2]));
-			}
-
-			pattern.Append(FeatureGeneratorUtil.tokenFeature(tokenized[i]));
-
-			if (!noLetters.matcher(tokenized[i]).find())
-			{
-			  feats.Add("st=" + tokenized[i].ToLower());
-			}
-		  }
-
-		  feats.Add("pta=" + pattern.ToString());
-		}
-	}
-
+            feats.Add("pta=" + pattern.ToString());
+        }
+    }
 }

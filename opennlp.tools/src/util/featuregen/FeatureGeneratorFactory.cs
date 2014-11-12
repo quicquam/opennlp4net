@@ -17,42 +17,39 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.util.featuregen
 {
-
-	/// <summary>
-	/// The <seealso cref="FeatureGeneratorFactory"/> interface is factory for <seealso cref="AdaptiveFeatureGenerator"/>s.
-	/// <para>
-	/// <b>Note:</b><br>
-	/// All implementing classes must be thread safe.
-	/// 
-	/// </para>
-	/// </summary>
-	/// <seealso cref= AdaptiveFeatureGenerator </seealso>
-	/// <seealso cref= FeatureGeneratorResourceProvider
-	/// 
-	/// </seealso>
-	/// @deprecated do not use this interface, will be removed! 
-	[Obsolete("do not use this interface, will be removed!")]
-	public interface FeatureGeneratorFactory
-	  /// <summary>
-	  /// Constructs a new <seealso cref="AdaptiveFeatureGenerator"/>.
-	  /// <para>
-	  /// <b>Note:</b><br>
-	  /// It is assumed that all resource objects are thread safe and can be shared
-	  /// between multiple instances of feature generators. If that is not the
-	  /// case the implementor should make a copy of the resource object.
-	  /// All resource objects that are included in OpenNLP can be assumed to be thread safe.
-	  /// 
-	  /// </para>
-	  /// </summary>
-	  /// <param name="resourceProvider"> provides access to resources which are needed for feature generation.
-	  /// </param>
-	  /// <returns> the newly created feature generator </returns>
-	{
-		[Obsolete]
-		AdaptiveFeatureGenerator createFeatureGenerator(FeatureGeneratorResourceProvider resourceProvider);
-	}
-
+    /// <summary>
+    /// The <seealso cref="FeatureGeneratorFactory"/> interface is factory for <seealso cref="AdaptiveFeatureGenerator"/>s.
+    /// <para>
+    /// <b>Note:</b><br>
+    /// All implementing classes must be thread safe.
+    /// 
+    /// </para>
+    /// </summary>
+    /// <seealso cref= AdaptiveFeatureGenerator </seealso>
+    /// <seealso cref= FeatureGeneratorResourceProvider
+    /// 
+    /// </seealso>
+    /// @deprecated do not use this interface, will be removed! 
+    [Obsolete("do not use this interface, will be removed!")]
+    public interface FeatureGeneratorFactory
+        /// <summary>
+        /// Constructs a new <seealso cref="AdaptiveFeatureGenerator"/>.
+        /// <para>
+        /// <b>Note:</b><br>
+        /// It is assumed that all resource objects are thread safe and can be shared
+        /// between multiple instances of feature generators. If that is not the
+        /// case the implementor should make a copy of the resource object.
+        /// All resource objects that are included in OpenNLP can be assumed to be thread safe.
+        /// 
+        /// </para>
+        /// </summary>
+        /// <param name="resourceProvider"> provides access to resources which are needed for feature generation.
+        /// </param>
+        /// <returns> the newly created feature generator </returns>
+    {
+        [Obsolete]
+        AdaptiveFeatureGenerator createFeatureGenerator(FeatureGeneratorResourceProvider resourceProvider);
+    }
 }

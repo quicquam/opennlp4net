@@ -21,34 +21,31 @@
 
 namespace opennlp.model
 {
+    /// <summary>
+    /// Provide a maximum entropy model with a uniform prior.
+    /// </summary>
+    public class UniformPrior : Prior
+    {
+        private int numOutcomes;
+        private double r;
 
-	/// <summary>
-	/// Provide a maximum entropy model with a uniform prior.
-	/// </summary>
-	public class UniformPrior : Prior
-	{
+        public virtual void logPrior(double[] dist, int[] context, float[] values)
+        {
+            for (int oi = 0; oi < numOutcomes; oi++)
+            {
+                dist[oi] = r;
+            }
+        }
 
-	  private int numOutcomes;
-	  private double r;
+        public virtual void logPrior(double[] dist, int[] context)
+        {
+            logPrior(dist, context, null);
+        }
 
-	  public virtual void logPrior(double[] dist, int[] context, float[] values)
-	  {
-		for (int oi = 0;oi < numOutcomes;oi++)
-		{
-		  dist[oi] = r;
-		}
-	  }
-
-	  public virtual void logPrior(double[] dist, int[] context)
-	  {
-		logPrior(dist,context,null);
-	  }
-
-	  public virtual void setLabels(string[] outcomeLabels, string[] contextLabels)
-	  {
-		this.numOutcomes = outcomeLabels.Length;
-		r = Math.Log(1.0 / numOutcomes);
-	  }
-	}
-
+        public virtual void setLabels(string[] outcomeLabels, string[] contextLabels)
+        {
+            this.numOutcomes = outcomeLabels.Length;
+            r = Math.Log(1.0/numOutcomes);
+        }
+    }
 }

@@ -17,24 +17,22 @@
 
 namespace opennlp.tools.parser
 {
-	/// <summary>
-	/// Class to hold feature information about a specific parse node.
-	/// </summary>
-	public class Cons
-	{
+    /// <summary>
+    /// Class to hold feature information about a specific parse node.
+    /// </summary>
+    public class Cons
+    {
+        internal readonly string cons;
+        internal readonly string consbo;
+        internal readonly int index;
+        internal readonly bool unigram;
 
-	  internal readonly string cons;
-	  internal readonly string consbo;
-	  internal readonly int index;
-	  internal readonly bool unigram;
-
-	  public Cons(string cons, string consbo, int index, bool unigram)
-	  {
-		this.cons = cons;
-		this.consbo = consbo;
-		this.index = index;
-		this.unigram = unigram;
-	  }
-	}
-
+        public Cons(string cons, string consbo, int index, bool unigram)
+        {
+            this.cons = cons;
+            this.consbo = consbo;
+            this.index = index;
+            this.unigram = unigram;
+        }
+    }
 }

@@ -17,33 +17,29 @@
 
 namespace opennlp.tools.namefind
 {
+    using opennlp.tools.util;
+    using AdaptiveFeatureGenerator = opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
 
-	using opennlp.tools.util;
-	using AdaptiveFeatureGenerator = opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
+    /// <summary>
+    /// Interface for generating the context for an name finder by specifying a set of geature generators.
+    /// 
+    /// </summary>
+    public interface NameContextGenerator : BeamSearchContextGenerator<string>
+    {
+        /// <summary>
+        /// Adds a feature generator to this set of feature generators. </summary>
+        /// <param name="generator"> The feature generator to add. </param>
+        void addFeatureGenerator(AdaptiveFeatureGenerator generator);
 
-	/// <summary>
-	/// Interface for generating the context for an name finder by specifying a set of geature generators.
-	/// 
-	/// </summary>
-	public interface NameContextGenerator : BeamSearchContextGenerator<string>
-	{
+        /// <summary>
+        /// Informs all the feature generators for a name finder that the specified tokens have been classified with the coorisponds set of specified outcomes. </summary>
+        /// <param name="tokens"> The tokens of the sentence or other text unit which has been processed. </param>
+        /// <param name="outcomes"> The outcomes associated with the specified tokens. </param>
+        void updateAdaptiveData(string[] tokens, string[] outcomes);
 
-	  /// <summary>
-	  /// Adds a feature generator to this set of feature generators. </summary>
-	  /// <param name="generator"> The feature generator to add. </param>
-	  void addFeatureGenerator(AdaptiveFeatureGenerator generator);
-
-	  /// <summary>
-	  /// Informs all the feature generators for a name finder that the specified tokens have been classified with the coorisponds set of specified outcomes. </summary>
-	  /// <param name="tokens"> The tokens of the sentence or other text unit which has been processed. </param>
-	  /// <param name="outcomes"> The outcomes associated with the specified tokens. </param>
-	  void updateAdaptiveData(string[] tokens, string[] outcomes);
-
-	  /// <summary>
-	  /// Informs all the feature generators for a name finder that the context of the adaptive data (typically a document) is no longer valid.
-	  /// </summary>
-	  void clearAdaptiveData();
-
-	}
-
+        /// <summary>
+        /// Informs all the feature generators for a name finder that the context of the adaptive data (typically a document) is no longer valid.
+        /// </summary>
+        void clearAdaptiveData();
+    }
 }

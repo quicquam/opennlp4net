@@ -17,105 +17,93 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// Caches features of the aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
+    /// </summary>
+    public class CachedFeatureGenerator : AdaptiveFeatureGenerator
+    {
+        private readonly AdaptiveFeatureGenerator generator;
 
+        private string[] prevTokens;
 
-	/// <summary>
-	/// Caches features of the aggregated <seealso cref="AdaptiveFeatureGenerator"/>s.
-	/// </summary>
-	public class CachedFeatureGenerator : AdaptiveFeatureGenerator
-	{
+        private Cache contextsCache;
 
-	  private readonly AdaptiveFeatureGenerator generator;
+        private long numberOfCacheHits;
+        private long numberOfCacheMisses;
 
-	  private string[] prevTokens;
-
-	  private Cache contextsCache;
-
-	  private long numberOfCacheHits;
-	  private long numberOfCacheMisses;
-
-	  public CachedFeatureGenerator(params AdaptiveFeatureGenerator[] generators)
-	  {
-		this.generator = new AggregatedFeatureGenerator(generators);
-		contextsCache = new Cache(100);
-	  }
+        public CachedFeatureGenerator(params AdaptiveFeatureGenerator[] generators)
+        {
+            this.generator = new AggregatedFeatureGenerator(generators);
+            contextsCache = new Cache(100);
+        }
 
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @SuppressWarnings("unchecked") public void createFeatures(java.util.List<String> features, String[] tokens, int index, String[] previousOutcomes)
-	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
-	  {
+        public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
+        {
+            List<string> cacheFeatures;
 
-		List<string> cacheFeatures;
+            if (tokens == prevTokens)
+            {
+                cacheFeatures = (List<string>) contextsCache.get(index);
 
-		if (tokens == prevTokens)
-		{
-		  cacheFeatures = (List<string>) contextsCache.get(index);
+                if (cacheFeatures != null)
+                {
+                    numberOfCacheHits++;
+                    features.AddRange(cacheFeatures);
+                    return;
+                }
+            }
+            else
+            {
+                contextsCache.Clear();
+                prevTokens = tokens;
+            }
 
-		  if (cacheFeatures != null)
-		  {
-			numberOfCacheHits++;
-			features.AddRange(cacheFeatures);
-			return;
-		  }
+            cacheFeatures = new List<string>();
 
-		}
-		else
-		{
-		  contextsCache.Clear();
-		  prevTokens = tokens;
-		}
+            numberOfCacheMisses++;
 
-		cacheFeatures = new List<string>();
+            generator.createFeatures(cacheFeatures, tokens, index, previousOutcomes);
 
-		numberOfCacheMisses++;
+            contextsCache.put(index, cacheFeatures);
+            features.AddRange(cacheFeatures);
+        }
 
-		generator.createFeatures(cacheFeatures, tokens, index, previousOutcomes);
+        public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
+        {
+            generator.updateAdaptiveData(tokens, outcomes);
+        }
 
-        contextsCache.put(index, cacheFeatures);
-		features.AddRange(cacheFeatures);
-	  }
+        public virtual void clearAdaptiveData()
+        {
+            generator.clearAdaptiveData();
+        }
 
-	    public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
-	  {
-		generator.updateAdaptiveData(tokens, outcomes);
-	  }
+        /// <summary>
+        /// Retrieves the number of times a cache hit occurred.
+        /// </summary>
+        /// <returns> number of cache hits </returns>
+        public virtual long NumberOfCacheHits
+        {
+            get { return numberOfCacheHits; }
+        }
 
-	  public virtual void clearAdaptiveData()
-	  {
-		generator.clearAdaptiveData();
-	  }
+        /// <summary>
+        /// Retrieves the number of times a cache miss occurred.
+        /// </summary>
+        /// <returns> number of cache misses </returns>
+        public virtual long NumberOfCacheMisses
+        {
+            get { return numberOfCacheMisses; }
+        }
 
-	  /// <summary>
-	  /// Retrieves the number of times a cache hit occurred.
-	  /// </summary>
-	  /// <returns> number of cache hits </returns>
-	  public virtual long NumberOfCacheHits
-	  {
-		  get
-		  {
-			return numberOfCacheHits;
-		  }
-	  }
-
-	  /// <summary>
-	  /// Retrieves the number of times a cache miss occurred.
-	  /// </summary>
-	  /// <returns> number of cache misses </returns>
-	  public virtual long NumberOfCacheMisses
-	  {
-		  get
-		  {
-			return numberOfCacheMisses;
-		  }
-	  }
-
-	  public override string ToString()
-	  {
-		return base.ToString() + ": hits=" + numberOfCacheHits + " misses=" + numberOfCacheMisses + " hit%" + (numberOfCacheHits > 0 ? (double) numberOfCacheHits / (numberOfCacheMisses + numberOfCacheHits) : 0);
-	  }
-	}
-
+        public override string ToString()
+        {
+            return base.ToString() + ": hits=" + numberOfCacheHits + " misses=" + numberOfCacheMisses + " hit%" +
+                   (numberOfCacheHits > 0 ? (double) numberOfCacheHits/(numberOfCacheMisses + numberOfCacheHits) : 0);
+        }
+    }
 }

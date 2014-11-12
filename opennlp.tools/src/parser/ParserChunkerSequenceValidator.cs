@@ -20,63 +20,60 @@ using System.Collections.Generic;
 
 namespace opennlp.tools.parser
 {
+    using ChunkerModel = opennlp.tools.chunker.ChunkerModel;
+    using Parser = opennlp.tools.parser.chunking.Parser;
+    using opennlp.tools.util;
 
+    public class ParserChunkerSequenceValidator : SequenceValidator<string>
+    {
+        private IDictionary<string, string> continueStartMap;
 
-	using ChunkerModel = opennlp.tools.chunker.ChunkerModel;
-	using Parser = opennlp.tools.parser.chunking.Parser;
-	using opennlp.tools.util;
+        public ParserChunkerSequenceValidator(ChunkerModel model)
+        {
+            continueStartMap = new Dictionary<string, string>(model.getChunkerModel().NumOutcomes);
+            for (int oi = 0, on = model.getChunkerModel().NumOutcomes; oi < on; oi++)
+            {
+                string outcome = model.getChunkerModel().getOutcome(oi);
+                if (outcome.StartsWith(AbstractBottomUpParser.CONT, StringComparison.Ordinal))
+                {
+                    continueStartMap[outcome] = AbstractBottomUpParser.START +
+                                                outcome.Substring(AbstractBottomUpParser.CONT.Length);
+                }
+            }
+        }
 
-	public class ParserChunkerSequenceValidator : SequenceValidator<string>
-	{
+        public virtual bool validSequence(int i, string[] inputSequence, string[] tagList, string outcome)
+        {
+            if (continueStartMap.ContainsKey(outcome))
+            {
+                int lti = tagList.Length - 1;
 
-	  private IDictionary<string, string> continueStartMap;
+                if (lti == -1)
+                {
+                    return false;
+                }
+                else
+                {
+                    string lastTag = tagList[lti];
 
-	  public ParserChunkerSequenceValidator(ChunkerModel model)
-	  {
+                    if (lastTag.Equals(outcome))
+                    {
+                        return true;
+                    }
 
-		continueStartMap = new Dictionary<string, string>(model.getChunkerModel().NumOutcomes);
-		for (int oi = 0, on = model.getChunkerModel().NumOutcomes; oi < on; oi++)
-		{
-		  string outcome = model.getChunkerModel().getOutcome(oi);
-		  if (outcome.StartsWith(AbstractBottomUpParser.CONT, StringComparison.Ordinal))
-		  {
-              continueStartMap[outcome] = AbstractBottomUpParser.START + outcome.Substring(AbstractBottomUpParser.CONT.Length);
-		  }
-		}
-	  }
+                    if (lastTag.Equals(continueStartMap[outcome]))
+                    {
+                        return true;
+                    }
 
-	  public virtual bool validSequence(int i, string[] inputSequence, string[] tagList, string outcome)
-	  {
-		if (continueStartMap.ContainsKey(outcome))
-		{
-		  int lti = tagList.Length - 1;
-
-		  if (lti == -1)
-		  {
-			return false;
-		  }
-		  else
-		  {
-			string lastTag = tagList[lti];
-
-			if (lastTag.Equals(outcome))
-			{
-			   return true;
-			}
-
-			if (lastTag.Equals(continueStartMap[outcome]))
-			{
-			  return true;
-			}
-
-            if (lastTag.Equals(AbstractBottomUpParser.OTHER))
-			{
-			  return false;
-			}
-			return false;
-		  }
-		}
-		return true;
-	  }
-	}
+                    if (lastTag.Equals(AbstractBottomUpParser.OTHER))
+                    {
+                        return false;
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
 }

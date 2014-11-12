@@ -17,101 +17,96 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.util
 {
-
-
-	/// <summary>
-	/// Class which creates mapping between keys and a list of values.
-	/// </summary>
+    /// <summary>
+    /// Class which creates mapping between keys and a list of values.
+    /// </summary>
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @SuppressWarnings("unchecked") public class HashList extends java.util.HashMap
-	public class HashList : Hashtable
-	{
+    public class HashList : Hashtable
+    {
+        private const long serialVersionUID = 1;
 
-	  private const long serialVersionUID = 1;
-
-	  public HashList()
-	  {
-	  }
-
-	  public virtual object get(object key, int index)
-	  {
-		if (this[key] != null)
-		{
-		  return ((IList) this[key])[index];
-		}
-		else
-		{
-		  return null;
-		}
-	  }
-
-	  public virtual object putAll(object key, ICollection values)
-	  {
-		IList o = (IList) this[key];
-
-		if (o == null)
-		{
-		  o = new ArrayList();
-		  base[key] = o;
-		}
-        
-        foreach (var value in values)
+        public HashList()
         {
-            o.Add(value);
         }
 
-		if (o.Count == values.Count)
-		{
-		  return null;
-		}
-		else
-		{
-		  return o;
-		}
-	  }
+        public virtual object get(object key, int index)
+        {
+            if (this[key] != null)
+            {
+                return ((IList) this[key])[index];
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-	  public IList Put(object key, object value)
-	  {
-		IList o = (IList) this[key];
+        public virtual object putAll(object key, ICollection values)
+        {
+            IList o = (IList) this[key];
 
-		if (o == null)
-		{
-		  o = new ArrayList();
-		  base[key] = o;
-		}
+            if (o == null)
+            {
+                o = new ArrayList();
+                base[key] = o;
+            }
 
-		o.Add(value);
+            foreach (var value in values)
+            {
+                o.Add(value);
+            }
 
-		if (o.Count == 1)
-		{
-		  return null;
-		}
-		else
-		{
-		  return o;
-		}
-	  }
+            if (o.Count == values.Count)
+            {
+                return null;
+            }
+            else
+            {
+                return o;
+            }
+        }
 
-	  public virtual bool remove(object key, object value)
-	  {
-		IList l = (IList) this[key];
-		if (l == null)
-		{
-		  return false;
-		}
-		else
-		{
-		  l.Remove(value);
-		  if (l.Count == 0)
-		  {
-		this.Remove(key);
-		  }
-		  return true;
-		}
-	  }
-	}
+        public IList Put(object key, object value)
+        {
+            IList o = (IList) this[key];
 
+            if (o == null)
+            {
+                o = new ArrayList();
+                base[key] = o;
+            }
+
+            o.Add(value);
+
+            if (o.Count == 1)
+            {
+                return null;
+            }
+            else
+            {
+                return o;
+            }
+        }
+
+        public virtual bool remove(object key, object value)
+        {
+            IList l = (IList) this[key];
+            if (l == null)
+            {
+                return false;
+            }
+            else
+            {
+                l.Remove(value);
+                if (l.Count == 0)
+                {
+                    this.Remove(key);
+                }
+                return true;
+            }
+        }
+    }
 }

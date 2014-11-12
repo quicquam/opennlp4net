@@ -18,51 +18,45 @@ using System.Text;
  * limitations under the License.
  */
 
-
-
 namespace opennlp.tools.sentdetect
 {
+    /// <summary>
+    /// Scans Strings, StringBuffers, and char[] arrays for the offsets of
+    /// sentence ending characters.
+    /// 
+    /// <para>Implementations of this interface can use regular expressions,
+    /// hand-coded DFAs, and other scanning techniques to locate end of
+    /// sentence offsets.</para>
+    /// </summary>
+    public interface EndOfSentenceScanner
+    {
+        /// <summary>
+        /// Returns an array of character which can indicate the end of a sentence. </summary>
+        /// <returns> an array of character which can indicate the end of a sentence. </returns>
+        char[] EndOfSentenceCharacters { get; }
 
-	/// <summary>
-	/// Scans Strings, StringBuffers, and char[] arrays for the offsets of
-	/// sentence ending characters.
-	/// 
-	/// <para>Implementations of this interface can use regular expressions,
-	/// hand-coded DFAs, and other scanning techniques to locate end of
-	/// sentence offsets.</para>
-	/// </summary>
+        /// <summary>
+        /// The receiver scans the specified string for sentence ending characters and
+        /// returns their offsets.
+        /// </summary>
+        /// <param name="s"> a <code>String</code> value </param>
+        /// <returns> a <code>List</code> of Integer objects. </returns>
+        IList<int?> getPositions(string s);
 
-	public interface EndOfSentenceScanner
-	{
+        /// <summary>
+        /// The receiver scans `buf' for sentence ending characters and
+        /// returns their offsets.
+        /// </summary>
+        /// <param name="buf"> a <code>StringBuffer</code> value </param>
+        /// <returns> a <code>List</code> of Integer objects. </returns>
+        IList<int?> getPositions(StringBuilder buf);
 
-	  /// <summary>
-	  /// Returns an array of character which can indicate the end of a sentence. </summary>
-	  /// <returns> an array of character which can indicate the end of a sentence. </returns>
-	   char[] EndOfSentenceCharacters {get;}
-
-		/// <summary>
-		/// The receiver scans the specified string for sentence ending characters and
-		/// returns their offsets.
-		/// </summary>
-		/// <param name="s"> a <code>String</code> value </param>
-		/// <returns> a <code>List</code> of Integer objects. </returns>
-		IList<int?> getPositions(string s);
-
-		/// <summary>
-		/// The receiver scans `buf' for sentence ending characters and
-		/// returns their offsets.
-		/// </summary>
-		/// <param name="buf"> a <code>StringBuffer</code> value </param>
-		/// <returns> a <code>List</code> of Integer objects. </returns>
-		IList<int?> getPositions(StringBuilder buf);
-
-		/// <summary>
-		/// The receiver scans `cbuf' for sentence ending characters and
-		/// returns their offsets.
-		/// </summary>
-		/// <param name="cbuf"> a <code>char[]</code> value </param>
-		/// <returns> a <code>List</code> of Integer objects. </returns>
-		IList<int?> getPositions(char[] cbuf);
-	}
-
+        /// <summary>
+        /// The receiver scans `cbuf' for sentence ending characters and
+        /// returns their offsets.
+        /// </summary>
+        /// <param name="cbuf"> a <code>char[]</code> value </param>
+        /// <returns> a <code>List</code> of Integer objects. </returns>
+        IList<int?> getPositions(char[] cbuf);
+    }
 }

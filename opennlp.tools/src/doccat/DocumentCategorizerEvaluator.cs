@@ -17,101 +17,92 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.doccat
 {
+    using POSSample = opennlp.tools.postag.POSSample;
+    using TokenSample = opennlp.tools.tokenize.TokenSample;
+    using Mean = opennlp.tools.util.eval.Mean;
 
-	using POSSample = opennlp.tools.postag.POSSample;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-	using Mean = opennlp.tools.util.eval.Mean;
+    /// <summary>
+    /// The <seealso cref="DocumentCategorizerEvaluator"/> measures the performance of
+    /// the given <seealso cref="DocumentCategorizer"/> with the provided reference
+    /// <seealso cref="DocumentSample"/>s.
+    /// </summary>
+    /// <seealso cref= DocumentCategorizer </seealso>
+    /// <seealso cref= DocumentSample </seealso>
+    public class DocumentCategorizerEvaluator
+    {
+        private DocumentCategorizer categorizer;
 
-	/// <summary>
-	/// The <seealso cref="DocumentCategorizerEvaluator"/> measures the performance of
-	/// the given <seealso cref="DocumentCategorizer"/> with the provided reference
-	/// <seealso cref="DocumentSample"/>s.
-	/// </summary>
-	/// <seealso cref= DocumentCategorizer </seealso>
-	/// <seealso cref= DocumentSample </seealso>
-	public class DocumentCategorizerEvaluator
-	{
+        private Mean accuracy = new Mean();
 
-	  private DocumentCategorizer categorizer;
+        /// <summary>
+        /// Initializes the current instance.
+        /// </summary>
+        /// <param name="categorizer"> </param>
+        public DocumentCategorizerEvaluator(DocumentCategorizer categorizer)
+        {
+            this.categorizer = categorizer;
+        }
 
-	  private Mean accuracy = new Mean();
+        /// <summary>
+        /// Evaluates the given reference <seealso cref="DocumentSample"/> object.
+        /// 
+        /// This is done by categorizing the document from the provided
+        /// <seealso cref="DocumentSample"/>. The detected category is then used
+        /// to calculate and update the score.
+        /// </summary>
+        /// <param name="sample"> the reference <seealso cref="TokenSample"/>. </param>
+        public virtual void evaluteSample(DocumentSample sample)
+        {
+            string[] document = sample.Text;
 
-	  /// <summary>
-	  /// Initializes the current instance.
-	  /// </summary>
-	  /// <param name="categorizer"> </param>
-	  public DocumentCategorizerEvaluator(DocumentCategorizer categorizer)
-	  {
-		this.categorizer = categorizer;
-	  }
+            double[] probs = categorizer.categorize(document);
 
-	  /// <summary>
-	  /// Evaluates the given reference <seealso cref="DocumentSample"/> object.
-	  /// 
-	  /// This is done by categorizing the document from the provided
-	  /// <seealso cref="DocumentSample"/>. The detected category is then used
-	  /// to calculate and update the score.
-	  /// </summary>
-	  /// <param name="sample"> the reference <seealso cref="TokenSample"/>. </param>
-	  public virtual void evaluteSample(DocumentSample sample)
-	  {
+            string cat = categorizer.getBestCategory(probs);
 
-		string[] document = sample.Text;
+            if (sample.Category.Equals(cat))
+            {
+                accuracy.add(1);
+            }
+            else
+            {
+                accuracy.add(0);
+            }
+        }
 
-		double[] probs = categorizer.categorize(document);
+        /// <summary>
+        /// Reads all <seealso cref="DocumentSample"/> objects from the stream
+        /// and evaluates each <seealso cref="DocumentSample"/> object with
+        /// <seealso cref="#evaluteSample(DocumentSample)"/> method.
+        /// </summary>
+        /// <param name="samples"> the stream of reference <seealso cref="POSSample"/> which
+        /// should be evaluated. </param>
+        public virtual void evaluate(IEnumerator<DocumentSample> samples)
+        {
+            while (samples.MoveNext())
+            {
+                evaluteSample(samples.Current);
+            }
+        }
 
-		string cat = categorizer.getBestCategory(probs);
+        /// <summary>
+        /// Retrieves the accuracy of provided <seealso cref="DocumentCategorizer"/>.
+        /// 
+        /// accuracy = correctly categorized documents / total documents
+        /// </summary>
+        /// <returns> the accuracy </returns>
+        public virtual double Accuracy
+        {
+            get { return accuracy.mean(); }
+        }
 
-		if (sample.Category.Equals(cat))
-		{
-		  accuracy.add(1);
-		}
-		else
-		{
-		  accuracy.add(0);
-		}
-	  }
-
-	  /// <summary>
-	  /// Reads all <seealso cref="DocumentSample"/> objects from the stream
-	  /// and evaluates each <seealso cref="DocumentSample"/> object with
-	  /// <seealso cref="#evaluteSample(DocumentSample)"/> method.
-	  /// </summary>
-	  /// <param name="samples"> the stream of reference <seealso cref="POSSample"/> which
-	  /// should be evaluated. </param>
-	  public virtual void evaluate(IEnumerator<DocumentSample> samples)
-	  {
-
-		while (samples.MoveNext())
-		{
-		  evaluteSample(samples.Current);
-		}
-	  }
-
-	  /// <summary>
-	  /// Retrieves the accuracy of provided <seealso cref="DocumentCategorizer"/>.
-	  /// 
-	  /// accuracy = correctly categorized documents / total documents
-	  /// </summary>
-	  /// <returns> the accuracy </returns>
-	  public virtual double Accuracy
-	  {
-		  get
-		  {
-			return accuracy.mean();
-		  }
-	  }
-
-	  /// <summary>
-	  /// Represents this objects as human readable <seealso cref="String"/>.
-	  /// </summary>
-	  public override string ToString()
-	  {
-		return "Accuracy: " + accuracy.mean() + "\n" + "Number of documents: " + accuracy.count();
-	  }
-	}
-
+        /// <summary>
+        /// Represents this objects as human readable <seealso cref="String"/>.
+        /// </summary>
+        public override string ToString()
+        {
+            return "Accuracy: " + accuracy.mean() + "\n" + "Number of documents: " + accuracy.count();
+        }
+    }
 }

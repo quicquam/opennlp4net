@@ -25,14 +25,16 @@ namespace opennlp.tools.util.model
 
         public Type GetValueType(string name)
         {
+            if (!_dictionary.ContainsKey(name)) return null;
             var serializer = _dictionary[name];
             return serializer != null ? serializer.GetType() : null;
         }
 
         public object GetValueObject(string name)
         {
+            if (!_dictionary.ContainsKey(name)) return null;
             var serializer = _dictionary[name];
-            return serializer ?? null;
+            return serializer;
         }
 
         public void putAll(ArtifactSerializers createArtifactSerializers)

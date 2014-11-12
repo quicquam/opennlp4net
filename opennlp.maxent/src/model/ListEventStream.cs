@@ -21,28 +21,26 @@
 
 namespace opennlp.model
 {
+    public class ListEventStream : EventStream
+    {
+        internal IList<Event> events;
+        internal int currentIndex = 0;
+        internal int numEvents;
 
-	public class ListEventStream : EventStream
-	{
-	  internal IList<Event> events;
-	  internal int currentIndex = 0;
-	  internal int numEvents;
+        public ListEventStream(IList<Event> events)
+        {
+            this.events = events;
+            numEvents = events.Count;
+        }
 
-	  public ListEventStream(IList<Event> events)
-	  {
-		this.events = events;
-		numEvents = events.Count;
-	  }
+        public virtual Event next()
+        {
+            return events[currentIndex++];
+        }
 
-	  public virtual Event next()
-	  {
-		return events[currentIndex++];
-	  }
-
-	  public virtual bool hasNext()
-	  {
-		return currentIndex < numEvents;
-	  }
-
-	}
+        public virtual bool hasNext()
+        {
+            return currentIndex < numEvents;
+        }
+    }
 }

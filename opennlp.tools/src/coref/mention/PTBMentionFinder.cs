@@ -17,47 +17,43 @@
 
 namespace opennlp.tools.coref.mention
 {
+    /// <summary>
+    /// Finds mentions from Penn Treebank style parses.
+    /// </summary>
+    public class PTBMentionFinder : AbstractMentionFinder
+    {
+        private static PTBMentionFinder instance = null;
 
-	/// <summary>
-	/// Finds mentions from Penn Treebank style parses.
-	/// </summary>
-	public class PTBMentionFinder : AbstractMentionFinder
-	{
+        /// <summary>
+        /// Creates a new mention finder with the specified head finder. </summary>
+        /// <param name="hf"> The head finder. </param>
+        private PTBMentionFinder(HeadFinder hf)
+        {
+            collectPrenominalNamedEntities_Renamed = false;
+            collectCoordinatedNounPhrases = true;
+            headFinder = hf;
+        }
 
-	  private static PTBMentionFinder instance = null;
-
-	  /// <summary>
-	  /// Creates a new mention finder with the specified head finder. </summary>
-	  /// <param name="hf"> The head finder. </param>
-	  private PTBMentionFinder(HeadFinder hf)
-	  {
-		collectPrenominalNamedEntities_Renamed = false;
-		collectCoordinatedNounPhrases = true;
-		headFinder = hf;
-	  }
-
-	  /// <summary>
-	  /// Retrives the one and only existing instance.
-	  /// </summary>
-	  /// <param name="hf"> </param>
-	  /// <returns> the one and only existing instance </returns>
-	  public static PTBMentionFinder getInstance(HeadFinder hf)
-	  {
-		if (instance == null)
-		{
-		  instance = new PTBMentionFinder(hf);
-		}
-		else if (instance.headFinder != hf)
-		{
-		  instance = new PTBMentionFinder(hf);
-		}
-		return instance;
-	  }
+        /// <summary>
+        /// Retrives the one and only existing instance.
+        /// </summary>
+        /// <param name="hf"> </param>
+        /// <returns> the one and only existing instance </returns>
+        public static PTBMentionFinder getInstance(HeadFinder hf)
+        {
+            if (instance == null)
+            {
+                instance = new PTBMentionFinder(hf);
+            }
+            else if (instance.headFinder != hf)
+            {
+                instance = new PTBMentionFinder(hf);
+            }
+            return instance;
+        }
 
 
-
-
-	  /*
+        /*
 	  private boolean isTraceNp(Parse np){
 	    List sc = np.getSyntacticChildren();
 	    return (sc.size() == 0);
@@ -87,30 +83,29 @@ namespace opennlp.tools.coref.mention
 	  }
 	  */
 
-	  /// <summary>
-	  /// Moves entity ids assigned to basal nps and possesives to their
-	  /// maximaly containing np.  Also assign head information of basal
-	  /// noun phase to the maximally containing np. </summary>
-	  /// @deprecated No on uses this any more.
-	  /// 
-	  /// private void propigateEntityIds(Map headMap) {
-	  ///  for (Iterator ki = headMap.keySet().iterator(); ki.hasNext();) {
-	  ///    Parse np = (Parse) ki.next();
-	  ///    if (isBasalNounPhrase(np) || isPossessive(np)) {
-	  ///      int ei = np.getEntityId();
-	  ///      if (ei != -1) {
-	  ///        Parse curHead = np;
-	  ///        Parse newHead = null;
-	  ///        while ((newHead = (Parse) headMap.get(curHead)) != null) {
-	  ///          curHead.removeEntityId();
-	  ///          curHead = newHead;
-	  ///        }
-	  ///        curHead.setEntityId(ei);
-	  ///        curHead.setProperty("head", np.getSpan().toString());
-	  ///      }
-	  ///    }
-	  ///  }
-	  /// } 
-	}
-
+        /// <summary>
+        /// Moves entity ids assigned to basal nps and possesives to their
+        /// maximaly containing np.  Also assign head information of basal
+        /// noun phase to the maximally containing np. </summary>
+        /// @deprecated No on uses this any more.
+        /// 
+        /// private void propigateEntityIds(Map headMap) {
+        ///  for (Iterator ki = headMap.keySet().iterator(); ki.hasNext();) {
+        ///    Parse np = (Parse) ki.next();
+        ///    if (isBasalNounPhrase(np) || isPossessive(np)) {
+        ///      int ei = np.getEntityId();
+        ///      if (ei != -1) {
+        ///        Parse curHead = np;
+        ///        Parse newHead = null;
+        ///        while ((newHead = (Parse) headMap.get(curHead)) != null) {
+        ///          curHead.removeEntityId();
+        ///          curHead = newHead;
+        ///        }
+        ///        curHead.setEntityId(ei);
+        ///        curHead.setProperty("head", np.getSpan().toString());
+        ///      }
+        ///    }
+        ///  }
+        /// } 
+    }
 }

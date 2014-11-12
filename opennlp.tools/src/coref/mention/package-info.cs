@@ -18,6 +18,7 @@
 /// <summary>
 /// Package related to the modeling mentions for coreference resolution.
 /// </summary>
+
 namespace opennlp.tools.coref.mention
 {
 }

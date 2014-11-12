@@ -22,57 +22,53 @@ using j4n.IO.Reader;
 
 namespace opennlp.maxent
 {
+    /// <summary>
+    /// This DataStream implementation will take care of reading a plain text file
+    /// and returning the Strings between each new line character, which is what
+    /// many Maxent applications need in order to create EventStreams.
+    /// </summary>
+    public class PlainTextByLineDataStream : DataStream
+    {
+        internal BufferedReader dataReader;
+        internal string next;
 
+        public PlainTextByLineDataStream(Reader dataSource)
+        {
+            dataReader = new BufferedReader(dataSource);
+            try
+            {
+                next = dataReader.readLine();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.ToString());
+                Console.Write(e.StackTrace);
+            }
+        }
 
-	/// <summary>
-	/// This DataStream implementation will take care of reading a plain text file
-	/// and returning the Strings between each new line character, which is what
-	/// many Maxent applications need in order to create EventStreams.
-	/// </summary>
-	public class PlainTextByLineDataStream : DataStream
-	{
-	  internal BufferedReader dataReader;
-	  internal string next;
+        public PlainTextByLineDataStream(StringReader smallReader)
+        {
+            throw new NotImplementedException();
+        }
 
-	  public PlainTextByLineDataStream(Reader dataSource)
-	  {
-		dataReader = new BufferedReader(dataSource);
-		try
-		{
-		  next = dataReader.readLine();
-		}
-		catch (IOException e)
-		{
-		  Console.WriteLine(e.ToString());
-		  Console.Write(e.StackTrace);
-		}
-	  }
+        public virtual object nextToken()
+        {
+            string current = next;
+            try
+            {
+                next = dataReader.readLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                Console.Write(e.StackTrace);
+            }
+            return current;
+        }
 
-	    public PlainTextByLineDataStream(StringReader smallReader)
-	    {
-	        throw new NotImplementedException();
-	    }
-
-	    public virtual object nextToken()
-	  {
-		string current = next;
-		try
-		{
-		  next = dataReader.readLine();
-		}
-		catch (Exception e)
-		{
-		  Console.WriteLine(e.ToString());
-		  Console.Write(e.StackTrace);
-		}
-		return current;
-	  }
-
-	  public virtual bool hasNext()
-	  {
-		return next != null;
-	  }
-	}
-
-
+        public virtual bool hasNext()
+        {
+            return next != null;
+        }
+    }
 }

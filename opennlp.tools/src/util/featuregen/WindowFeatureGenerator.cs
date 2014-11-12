@@ -17,124 +17,120 @@
  * limitations under the License.
  */
 
-
 namespace opennlp.tools.util.featuregen
 {
+    /// <summary>
+    /// Generates previous and next features for a given <seealso cref="AdaptiveFeatureGenerator"/>.
+    /// The window size can be specified.
+    /// 
+    /// Features:
+    /// Current token is always included unchanged
+    /// Previous tokens are prefixed with p distance
+    /// Next tokens are prefix with n distance
+    /// </summary>
+    public class WindowFeatureGenerator : AdaptiveFeatureGenerator
+    {
+        public const string PREV_PREFIX = "p";
+        public const string NEXT_PREFIX = "n";
 
+        private readonly AdaptiveFeatureGenerator generator;
 
-	/// <summary>
-	/// Generates previous and next features for a given <seealso cref="AdaptiveFeatureGenerator"/>.
-	/// The window size can be specified.
-	/// 
-	/// Features:
-	/// Current token is always included unchanged
-	/// Previous tokens are prefixed with p distance
-	/// Next tokens are prefix with n distance
-	/// </summary>
-	public class WindowFeatureGenerator : AdaptiveFeatureGenerator
-	{
+        private readonly int prevWindowSize;
+        private readonly int nextWindowSize;
 
-	  public const string PREV_PREFIX = "p";
-	  public const string NEXT_PREFIX = "n";
+        /// <summary>
+        /// Initializes the current instance with the given parameters.
+        /// </summary>
+        /// <param name="generator"> Feature generator to apply to the window. </param>
+        /// <param name="prevWindowSize"> Size of the window to the left of the current token. </param>
+        /// <param name="nextWindowSize"> Size of the window to the right of the current token. </param>
+        public WindowFeatureGenerator(AdaptiveFeatureGenerator generator, int prevWindowSize, int nextWindowSize)
+        {
+            this.generator = generator;
+            this.prevWindowSize = prevWindowSize;
+            this.nextWindowSize = nextWindowSize;
+        }
 
-	  private readonly AdaptiveFeatureGenerator generator;
+        /// <summary>
+        /// Initializes the current instance with the given parameters.
+        /// </summary>
+        /// <param name="prevWindowSize"> </param>
+        /// <param name="nextWindowSize"> </param>
+        /// <param name="generators"> </param>
+        public WindowFeatureGenerator(int prevWindowSize, int nextWindowSize,
+            params AdaptiveFeatureGenerator[] generators)
+            : this(new AggregatedFeatureGenerator(generators), prevWindowSize, nextWindowSize)
+        {
+        }
 
-	  private readonly int prevWindowSize;
-	  private readonly int nextWindowSize;
+        /// <summary>
+        /// Initializes the current instance. The previous and next window size is 5.
+        /// </summary>
+        /// <param name="generator"> feature generator </param>
+        public WindowFeatureGenerator(AdaptiveFeatureGenerator generator) : this(generator, 5, 5)
+        {
+        }
 
-	  /// <summary>
-	  /// Initializes the current instance with the given parameters.
-	  /// </summary>
-	  /// <param name="generator"> Feature generator to apply to the window. </param>
-	  /// <param name="prevWindowSize"> Size of the window to the left of the current token. </param>
-	  /// <param name="nextWindowSize"> Size of the window to the right of the current token. </param>
-	  public WindowFeatureGenerator(AdaptiveFeatureGenerator generator, int prevWindowSize, int nextWindowSize)
-	  {
-		this.generator = generator;
-		this.prevWindowSize = prevWindowSize;
-		this.nextWindowSize = nextWindowSize;
-	  }
+        /// <summary>
+        /// Initializes the current instance with the given parameters.
+        /// </summary>
+        /// <param name="generators"> array of feature generators </param>
+        public WindowFeatureGenerator(params AdaptiveFeatureGenerator[] generators)
+            : this(new AggregatedFeatureGenerator(generators), 5, 5)
+        {
+        }
 
-	  /// <summary>
-	  /// Initializes the current instance with the given parameters.
-	  /// </summary>
-	  /// <param name="prevWindowSize"> </param>
-	  /// <param name="nextWindowSize"> </param>
-	  /// <param name="generators"> </param>
-	  public WindowFeatureGenerator(int prevWindowSize, int nextWindowSize, params AdaptiveFeatureGenerator[] generators) : this(new AggregatedFeatureGenerator(generators), prevWindowSize, nextWindowSize)
-	  {
-	  }
+        public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
+        {
+            // current features
+            generator.createFeatures(features, tokens, index, preds);
 
-	  /// <summary>
-	  /// Initializes the current instance. The previous and next window size is 5.
-	  /// </summary>
-	  /// <param name="generator"> feature generator </param>
-	  public WindowFeatureGenerator(AdaptiveFeatureGenerator generator) : this(generator, 5, 5)
-	  {
-	  }
+            // previous features
+            for (int i = 1; i < prevWindowSize + 1; i++)
+            {
+                if (index - i >= 0)
+                {
+                    List<string> prevFeatures = new List<string>();
 
-	  /// <summary>
-	  /// Initializes the current instance with the given parameters.
-	  /// </summary>
-	  /// <param name="generators"> array of feature generators </param>
-	  public WindowFeatureGenerator(params AdaptiveFeatureGenerator[] generators) : this(new AggregatedFeatureGenerator(generators), 5, 5)
-	  {
-	  }
+                    generator.createFeatures(prevFeatures, tokens, index - i, preds);
 
-	  public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] preds)
-	  {
-		// current features
-		generator.createFeatures(features, tokens, index, preds);
+                    foreach (string prevFeature in prevFeatures)
+                    {
+                        features.Add(PREV_PREFIX + i + prevFeature);
+                    }
+                }
+            }
 
-		// previous features
-		for (int i = 1; i < prevWindowSize + 1; i++)
-		{
-		  if (index - i >= 0)
-		  {
+            // next features
+            for (int i = 1; i < nextWindowSize + 1; i++)
+            {
+                if (i + index < tokens.Length)
+                {
+                    List<string> nextFeatures = new List<string>();
 
-			List<string> prevFeatures = new List<string>();
+                    generator.createFeatures(nextFeatures, tokens, index + i, preds);
 
-			generator.createFeatures(prevFeatures, tokens, index - i, preds);
+                    foreach (string nextFeature in nextFeatures)
+                    {
+                        features.Add(NEXT_PREFIX + i + nextFeature);
+                    }
+                }
+            }
+        }
 
-			foreach (string prevFeature in prevFeatures)
-			{
-			  features.Add(PREV_PREFIX + i + prevFeature);
-			}
-		  }
-		}
+        public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
+        {
+            generator.updateAdaptiveData(tokens, outcomes);
+        }
 
-		// next features
-		for (int i = 1; i < nextWindowSize + 1; i++)
-		{
-		  if (i + index < tokens.Length)
-		  {
+        public virtual void clearAdaptiveData()
+        {
+            generator.clearAdaptiveData();
+        }
 
-			List<string> nextFeatures = new List<string>();
-
-			generator.createFeatures(nextFeatures, tokens, index + i, preds);
-
-			foreach (string nextFeature in nextFeatures)
-			{
-			  features.Add(NEXT_PREFIX + i + nextFeature);
-			}
-		  }
-		}
-	  }
-
-	  public virtual void updateAdaptiveData(string[] tokens, string[] outcomes)
-	  {
-		generator.updateAdaptiveData(tokens, outcomes);
-	  }
-
-	  public virtual void clearAdaptiveData()
-	  {
-		  generator.clearAdaptiveData();
-	  }
-
-	  public override string ToString()
-	  {
-		return base.ToString() + ": Prev window size: " + prevWindowSize + ", Next window size: " + nextWindowSize;
-	  }
-	}
-
+        public override string ToString()
+        {
+            return base.ToString() + ": Prev window size: " + prevWindowSize + ", Next window size: " + nextWindowSize;
+        }
+    }
 }

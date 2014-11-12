@@ -43,8 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\ChunkerTests.cs" />
+    <Compile Include="src\chunkerTests.cs" />
     <Compile Include="src\namefinderTests.cs" />
+    <Compile Include="src\postaggerTests.cs" />
     <Compile Include="src\sentdetectTests.cs" />
     <Compile Include="src\tokenizeTests.cs" />
     <Compile Include="utils\Dumper.cs" />

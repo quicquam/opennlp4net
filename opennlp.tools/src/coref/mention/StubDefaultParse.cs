@@ -11,6 +11,7 @@ namespace opennlp.tools.coref.mention
         }
 
         public parser.Parse Parse { get; set; }
+
         public int CompareTo(Parse other)
         {
             throw new System.NotImplementedException();

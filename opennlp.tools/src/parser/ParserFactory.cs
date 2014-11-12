@@ -19,35 +19,31 @@ using j4n.Exceptions;
 
 namespace opennlp.tools.parser
 {
+    public class ParserFactory
+    {
+        private ParserFactory()
+        {
+        }
 
-	public class ParserFactory
-	{
+        public static Parser create(ParserModel model, int beamSize, double advancePercentage)
+        {
+            if (ParserType.CHUNKING.Equals(model.ParserType))
+            {
+                return new opennlp.tools.parser.chunking.Parser(model, beamSize, advancePercentage);
+            }
+            else if (ParserType.TREEINSERT.Equals(model.ParserType))
+            {
+                return new opennlp.tools.parser.treeinsert.Parser(model, beamSize, advancePercentage);
+            }
+            else
+            {
+                throw new IllegalStateException("Unexpected ParserType: " + model.ParserType.name);
+            }
+        }
 
-	  private ParserFactory()
-	  {
-	  }
-
-	  public static Parser create(ParserModel model, int beamSize, double advancePercentage)
-	  {
-
-		if (ParserType.CHUNKING.Equals(model.ParserType))
-		{
-		  return new opennlp.tools.parser.chunking.Parser(model, beamSize, advancePercentage);
-		}
-		else if (ParserType.TREEINSERT.Equals(model.ParserType))
-		{
-		  return new opennlp.tools.parser.treeinsert.Parser(model, beamSize, advancePercentage);
-		}
-		else
-		{
-		  throw new IllegalStateException("Unexpected ParserType: " + model.ParserType.name);
-		}
-	  }
-
-	  public static Parser create(ParserModel model)
-	  {
-		return create(model, AbstractBottomUpParser.defaultBeamSize, AbstractBottomUpParser.defaultAdvancePercentage);
-	  }
-	}
-
+        public static Parser create(ParserModel model)
+        {
+            return create(model, AbstractBottomUpParser.defaultBeamSize, AbstractBottomUpParser.defaultAdvancePercentage);
+        }
+    }
 }

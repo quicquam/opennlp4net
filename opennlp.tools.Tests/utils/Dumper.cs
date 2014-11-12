@@ -22,7 +22,7 @@ namespace opennlp.tools.Tests.utils
         private static void InternalDump(int indentationLevel, string name, object value, TextWriter writer,
             Dictionary<object, int> lookup, bool recursiveDump)
         {
-            var str1 = new string(' ', indentationLevel * 3);
+            var str1 = new string(' ', indentationLevel*3);
             if (value == null)
             {
                 writer.WriteLine("{0}{1} = <null>", str1, name);
@@ -73,8 +73,8 @@ namespace opennlp.tools.Tests.utils
                         });
                     str5 = " = " + str6;
                 }
-                writer.WriteLine("{0}{1}{2}{3} [{4}]{5}", (object)str1, (object)str3, (object)name, (object)str5,
-                    (object)value.GetType(), (object)str2);
+                writer.WriteLine("{0}{1}{2}{3} [{4}]{5}", (object) str1, (object) str3, (object) name, (object) str5,
+                    (object) value.GetType(), (object) str2);
                 if (str2.Length > 0 || flag || type.IsValueType && type.FullName == "System." + type.Name ||
                     !recursiveDump)
                     return;
@@ -147,5 +147,4 @@ namespace opennlp.tools.Tests.utils
             }
         }
     }
-
 }

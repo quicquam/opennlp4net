@@ -20,30 +20,27 @@ using System.Collections.Generic;
 
 namespace opennlp.tools.util.featuregen
 {
+    public class SuffixFeatureGenerator : FeatureGeneratorAdapter
+    {
+        private const int SUFFIX_LENGTH = 4;
 
-	public class SuffixFeatureGenerator : FeatureGeneratorAdapter
-	{
+        public static string[] getSuffixes(string lex)
+        {
+            string[] suffs = new string[SUFFIX_LENGTH];
+            for (int li = 0, ll = SUFFIX_LENGTH; li < ll; li++)
+            {
+                suffs[li] = lex.Substring(Math.Max(lex.Length - li - 1, 0));
+            }
+            return suffs;
+        }
 
-	  private const int SUFFIX_LENGTH = 4;
-
-	  public static string[] getSuffixes(string lex)
-	  {
-		string[] suffs = new string[SUFFIX_LENGTH];
-		for (int li = 0, ll = SUFFIX_LENGTH; li < ll; li++)
-		{
-		  suffs[li] = lex.Substring(Math.Max(lex.Length - li - 1, 0));
-		}
-		return suffs;
-	  }
-
-	  public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
-	  {
-		string[] suffs = SuffixFeatureGenerator.getSuffixes(tokens[index]);
-		foreach (string suff in suffs)
-		{
-		  features.Add("suf=" + suff);
-		}
-	  }
-	}
-
+        public override void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
+        {
+            string[] suffs = SuffixFeatureGenerator.getSuffixes(tokens[index]);
+            foreach (string suff in suffs)
+            {
+                features.Add("suf=" + suff);
+            }
+        }
+    }
 }
