@@ -38,60 +38,60 @@ namespace opennlp.tools.coref.resolver
         /// <summary>
         /// Regular expression for English singular third person pronouns. </summary>
         public static readonly Pattern singularThirdPersonPronounPattern =
-            Pattern.compile("^(he|she|it|him|her|his|hers|its|himself|herself|itself)$", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^(he|she|it|him|her|his|hers|its|himself|herself|itself)$", Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English plural third person pronouns. </summary>
         public static readonly Pattern pluralThirdPersonPronounPattern =
-            Pattern.compile("^(they|their|theirs|them|themselves)$", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^(they|their|theirs|them|themselves)$", Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English speech pronouns. </summary>
         public static readonly Pattern speechPronounPattern = Pattern.compile(
-            "^(I|me|my|you|your|you|we|us|our|ours)$", Pattern.CASE_INSENSITIVE);
+            "^(I|me|my|you|your|you|we|us|our|ours)$", Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English female pronouns. </summary>
         public static readonly Pattern femalePronounPattern = Pattern.compile("^(she|her|hers|herself)$",
-            Pattern.CASE_INSENSITIVE);
+            Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English neuter pronouns. </summary>
         public static readonly Pattern neuterPronounPattern = Pattern.compile("^(it|its|itself)$",
-            Pattern.CASE_INSENSITIVE);
+            Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English first person pronouns. </summary>
         public static readonly Pattern firstPersonPronounPattern = Pattern.compile("^(I|me|my|we|our|us|ours)$",
-            Pattern.CASE_INSENSITIVE);
+            Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English singular second person pronouns. </summary>
         public static readonly Pattern secondPersonPronounPattern = Pattern.compile("^(you|your|yours)$",
-            Pattern.CASE_INSENSITIVE);
+            Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English third person pronouns. </summary>
         public static readonly Pattern thirdPersonPronounPattern =
             Pattern.compile(
                 "^(he|she|it|him|her|his|hers|its|himself|herself|itself|they|their|theirs|them|themselves)$",
-                Pattern.CASE_INSENSITIVE);
+                Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English singular pronouns. </summary>
         public static readonly Pattern singularPronounPattern =
             Pattern.compile("^(I|me|my|he|she|it|him|her|his|hers|its|himself|herself|itself)$",
-                Pattern.CASE_INSENSITIVE);
+                Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English plural pronouns. </summary>
         public static readonly Pattern pluralPronounPattern =
-            Pattern.compile("^(we|us|our|ours|they|their|theirs|them|themselves)$", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^(we|us|our|ours|they|their|theirs|them|themselves)$", Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English male pronouns. </summary>
         public static readonly Pattern malePronounPattern = Pattern.compile("^(he|him|his|himself)$",
-            Pattern.CASE_INSENSITIVE);
+            Pattern.TextCase.CASE_INSENSITIVE);
 
         /// <summary>
         /// Regular expression for English honorifics. </summary>

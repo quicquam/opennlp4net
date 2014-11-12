@@ -1,4 +1,5 @@
 ﻿using System;
+using j4n.Serialization;
 
 /*
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,8 +31,7 @@ namespace opennlp.tools.formats
 
 	public class Conll03NameSampleStreamFactory : LanguageSampleStreamFactory<NameSample>
 	{
-
-	  internal interface Parameters : BasicFormatParams
+	    public interface Parameters : BasicFormatParams
 	  {
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @ParameterDescription(valueName = "en|de") String getLang();
@@ -40,6 +40,7 @@ namespace opennlp.tools.formats
 //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 //ORIGINAL LINE: @ParameterDescription(valueName = "per,loc,org,misc") String getTypes();
 		string Types {get;}
+	      object Data { get; set; }
 	  }
 
 	  public static void registerFactory()

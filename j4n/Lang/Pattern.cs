@@ -10,7 +10,6 @@ namespace j4n.Lang
     public class Pattern
     {
         public readonly Regex _regex;
-        public static bool CASE_INSENSITIVE;
 
         public static Pattern compile(string s)
         {
@@ -37,9 +36,12 @@ namespace j4n.Lang
             return matcher(sentenceString.ToString());
         }
 
-        public static Pattern compile(string input, bool caseInsensitive)
+        public static Pattern compile(string input, TextCase textCase)
         {
-            throw new NotImplementedException();
+            return new Pattern(input);
         }
+
+        public enum TextCase { CASE_INSENSITIVE, CASE_SENSITIVE };
+
     }
 }

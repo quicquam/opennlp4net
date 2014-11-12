@@ -49,5 +49,10 @@ namespace j4n.Lang
         {
             throw new NotImplementedException();
         }
+
+        public string replaceAll(string s)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
