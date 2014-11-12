@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>2c6c9536-10b9-46a5-ab36-3b14ccd437a5</ProjectGuid>
+    <ProjectGuid>{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>opennlp.console</RootNamespace>
