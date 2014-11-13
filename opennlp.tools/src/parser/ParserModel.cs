@@ -185,13 +185,17 @@ namespace opennlp.tools.parser
         {
         }
 
-        protected internal void createArtifactSerializers(IDictionary<string, ArtifactSerializer<Object>> serializers)
+        public override void createArtifactSerializers()
         {
             base.createArtifactSerializers();
 
             artifactSerializers.Add("postagger", new POSModelSerializer());
             artifactSerializers.Add("chunker", new ChunkerModelSerializer());
             artifactSerializers.Add("headrules", new HeadRulesSerializer());
+        }
+
+        protected internal void createArtifactSerializers(IDictionary<string, ArtifactSerializer<Object>> serializers)
+        {
         }
 
         public virtual ParserType ParserType

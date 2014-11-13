@@ -8,7 +8,7 @@ namespace opennlp.tools.Tests
     [TestFixture]
     public class parserTests
     {
-                [SetUp]
+        [SetUp]
         public void Setup()
         {
             _modelFilePath = string.Format("{0}{1}", ModelPath, "en-parser-chunking.bin");
@@ -19,7 +19,7 @@ namespace opennlp.tools.Tests
         {
         }
 
-        private const string ModelPath = "E:\\opennlp-models\\";
+        private const string ModelPath = "C:\\opennlp-models\\";
         private string _modelFilePath;
 
         [Test]
@@ -27,18 +27,12 @@ namespace opennlp.tools.Tests
         {
             InputStream modelIn = new FileInputStream(_modelFilePath);
 
-            try
-            {
-                var model = new ParserModel(modelIn);
-                var parser = ParserFactory.create(model);
+            var model = new ParserModel(modelIn);
+            var parser = ParserFactory.create(model);
 
-                var sentence = "The quick brown fox jumps over the lazy dog .";
-                var topParses = StandAloneParserTool.parseLine(sentence, parser, 1);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            var sentence = "The quick brown fox jumps over the lazy dog .";
+            var topParses = StandAloneParserTool.parseLine(sentence, parser, 1);
         }
     }
 }
+
