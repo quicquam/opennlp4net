@@ -28,5 +28,10 @@ namespace j4n.IO.OutputStream
         {
             throw new NotImplementedException();
         }
+
+        public void println(string falseNegatives)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

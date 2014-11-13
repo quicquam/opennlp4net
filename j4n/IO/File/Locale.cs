@@ -11,5 +11,6 @@ namespace j4n.IO.File
     {
         public static CultureInfo ENGLISH { get; set; }
         public static Locale Default { get; set; }
+        public static string[] ISOLanguages { get; set; }
     }
 }

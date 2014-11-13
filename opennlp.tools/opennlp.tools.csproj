@@ -56,7 +56,6 @@
     <Compile Include="src\chunker\ChunkSampleStream.cs" />
     <Compile Include="src\chunker\DefaultChunkerContextGenerator.cs" />
     <Compile Include="src\chunker\DefaultChunkerSequenceValidator.cs" />
-    <Compile Include="src\cmdline\parser\StandAloneParserTool.cs" />
     <Compile Include="src\coref\AbstractLinker.cs" />
     <Compile Include="src\coref\CorefModel.cs" />
     <Compile Include="src\coref\CorefSample.cs" />
@@ -191,6 +190,7 @@
     <Compile Include="src\parser\ParserType.cs" />
     <Compile Include="src\parser\ParseSampleStream.cs" />
     <Compile Include="src\parser\PosSampleStream.cs" />
+    <Compile Include="src\parser\StandAloneParserTool.cs" />
     <Compile Include="src\parser\treeinsert\AttachContextGenerator.cs" />
     <Compile Include="src\parser\treeinsert\BuildContextGenerator.cs" />
     <Compile Include="src\parser\treeinsert\CheckContextGenerator.cs" />

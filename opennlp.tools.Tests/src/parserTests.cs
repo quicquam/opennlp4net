@@ -1,7 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
 using j4n.IO.InputStream;
-using opennlp.tools.cmdline.parser;
 using opennlp.tools.parser;
 
 namespace opennlp.tools.Tests

@@ -19,5 +19,10 @@ namespace j4n.Exceptions
         public IllegalStateException(string message)
         {
         }
+
+        public IllegalStateException()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

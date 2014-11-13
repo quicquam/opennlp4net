@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace j4n.IO.Reader
 {
@@ -10,6 +11,11 @@ namespace j4n.IO.Reader
         }
 
         public BufferedReader(FileReader inputStreamReader)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BufferedReader(StringReader inputStreamReader)
         {
             throw new NotImplementedException();
         }
