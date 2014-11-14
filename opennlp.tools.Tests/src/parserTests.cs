@@ -24,6 +24,7 @@ namespace opennlp.tools.Tests
         {
         }
 
+        [Ignore]
         [Test]
         public void TokenizeCanGetTokensArrayFromTestData()
         {

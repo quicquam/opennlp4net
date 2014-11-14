@@ -98,7 +98,7 @@ namespace opennlp.tools.util.model
 
             //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
             //ORIGINAL LINE: final java.util.zip.ZipInputStream zip = new java.util.zip.ZipInputStream(in);
-            using (var zip = new ZipInputStream(@in.Stream, true))
+            using (var zip = new ZipInputStream(@in.Stream))
             {
                 // will read it in two steps, first using the known factories, latter the
                 // unknown.
@@ -118,7 +118,7 @@ namespace opennlp.tools.util.model
                     }
                     else
                     {
-                        var data = new byte[entry.CompressedSize];
+                        var data = new byte[entry.UncompressedSize];
                         zip.Read(data, 0, data.Length);
                         var stream = new MemoryStream(data);
                         artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
