@@ -25,14 +25,14 @@ namespace opennlp.tools.formats
 	/// <summary>
 	/// Base class for sample stream factories.
 	/// </summary>
-	public abstract class AbstractSampleStreamFactory<T> : ObjectStreamFactory<T>
+	public abstract class AbstractSampleStreamFactory : ObjectStreamFactory
 	{
 	    public Type getParameters<TP>()
 	    {
 	        throw new NotImplementedException();
 	    }
 
-	    public abstract ObjectStream<T> create(string[] args);
+	    public abstract ObjectStream<T> create<T>(string[] args);
 	    public Type Parameters { get; set; }
 
 // ReSharper disable once InconsistentNaming

@@ -69,6 +69,7 @@
     <Compile Include="src\coref\LinkerMode.cs" />
     <Compile Include="src\coref\mention\AbstractMentionFinder.cs" />
     <Compile Include="src\coref\mention\AbstractParse.cs" />
+    <Compile Include="src\coref\mention\DefaultParse.cs" />
     <Compile Include="src\coref\mention\Dictionary.cs" />
     <Compile Include="src\coref\mention\DictionaryFactory.cs" />
     <Compile Include="src\coref\mention\HeadFinder.cs" />
@@ -317,6 +318,7 @@
     <Compile Include="src\util\model\ModelUtil.cs" />
     <Compile Include="src\util\model\PropertiesSerializer.cs" />
     <Compile Include="src\util\model\UncloseableInputStream.cs" />
+    <Compile Include="src\util\ParagraphStream.cs" />
     <Compile Include="src\util\PlainTextByLineStream.cs" />
     <Compile Include="src\util\Sequence.cs" />
     <Compile Include="src\util\SequenceCodec.cs" />

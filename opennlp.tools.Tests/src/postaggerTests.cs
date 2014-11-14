@@ -11,7 +11,8 @@ namespace opennlp.tools.Tests
     [TestFixture]
     public class postaggerTests
     {
-        private const string ModelPath = "C:\\opennlp-models\\";
+        private const string ModelPath = @"..\..\models\";
+        private const string DataPath = @"..\..\data\";
         private string _modelFilePath;
         private string _testTextBlock;
 
@@ -19,7 +20,7 @@ namespace opennlp.tools.Tests
         public void Setup()
         {
             _modelFilePath = string.Format("{0}{1}", ModelPath, "en-pos-maxent.bin");
-            var sr = new StreamReader("C:\\opennlp-models\\test-sentence.txt");
+            var sr = new StreamReader(string.Format("{0}{1}", DataPath, "test-sentence.txt"));
             _testTextBlock = sr.ReadToEnd();
         }
 

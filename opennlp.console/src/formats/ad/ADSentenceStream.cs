@@ -542,7 +542,7 @@ namespace opennlp.tools.formats.ad
 		  internal string secondaryTag;
 		  internal string functionalTag;
 
-		  public override bool isLeaf()
+		  public bool isLeaf()
 		  {
 			  return true;
 		  }

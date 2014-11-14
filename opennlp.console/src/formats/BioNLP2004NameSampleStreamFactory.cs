@@ -28,7 +28,7 @@ namespace opennlp.tools.formats
 	using NameSample = opennlp.tools.namefind.NameSample;
 	using opennlp.tools.util;
 
-	public class BioNLP2004NameSampleStreamFactory : AbstractSampleStreamFactory<NameSample>
+	public class BioNLP2004NameSampleStreamFactory : AbstractSampleStreamFactory
 	{
 
 	  internal interface Parameters : BasicFormatParams
@@ -47,7 +47,7 @@ namespace opennlp.tools.formats
 	  {
 	  }
 
-	  public override ObjectStream<NameSample> create(string[] args)
+	  public override ObjectStream<T> create<T>(string[] args)
 	  {
 
 		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));

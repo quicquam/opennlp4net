@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Ionic.Zip;
+using Ionic.Zlib;
 using j4n.Exceptions;
 using j4n.IO.File;
 using j4n.IO.InputStream;
@@ -9,6 +10,7 @@ using j4n.IO.OutputStream;
 using j4n.Utils;
 using opennlp.model;
 using opennlp.tools.dictionary;
+using opennlp.tools.parser;
 
 
 namespace opennlp.tools.util.model
@@ -96,7 +98,7 @@ namespace opennlp.tools.util.model
 
             //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
             //ORIGINAL LINE: final java.util.zip.ZipInputStream zip = new java.util.zip.ZipInputStream(in);
-            using (var zip = new ZipInputStream(@in.Stream))
+            using (var zip = new ZipInputStream(@in.Stream, true))
             {
                 // will read it in two steps, first using the known factories, latter the
                 // unknown.
@@ -116,7 +118,7 @@ namespace opennlp.tools.util.model
                     }
                     else
                     {
-                        var data = new byte[entry.UncompressedSize];
+                        var data = new byte[entry.CompressedSize];
                         zip.Read(data, 0, data.Length);
                         var stream = new MemoryStream(data);
                         artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
@@ -178,6 +180,12 @@ namespace opennlp.tools.util.model
                 var serializer = factory as DictionarySerializer;
                 return serializer.create(inputStream);
             }
+            if (factory is ParserModel.POSModelSerializer)
+            {
+                var serializer = factory as ParserModel.POSModelSerializer;
+                return serializer.create(inputStream);
+            }
+            
             return null;
         }
 

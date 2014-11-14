@@ -41,7 +41,7 @@ namespace opennlp.tools.parser
     // TODO: Model should validate the artifact map
     public class ParserModel : BaseModel
     {
-        private class POSModelSerializer : ArtifactSerializer<POSModel>
+        public class POSModelSerializer : ArtifactSerializer<POSModel>
         {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public opennlp.tools.postag.POSModel create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
@@ -58,7 +58,7 @@ namespace opennlp.tools.parser
             }
         }
 
-        private class ChunkerModelSerializer : ArtifactSerializer<ChunkerModel>
+        public class ChunkerModelSerializer : ArtifactSerializer<ChunkerModel>
         {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public opennlp.tools.chunker.ChunkerModel create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
@@ -75,7 +75,7 @@ namespace opennlp.tools.parser
             }
         }
 
-        private class HeadRulesSerializer : ArtifactSerializer<opennlp.tools.parser.lang.en.HeadRules>
+        public class HeadRulesSerializer : ArtifactSerializer<opennlp.tools.parser.lang.en.HeadRules>
         {
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public opennlp.tools.parser.lang.en.HeadRules create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException

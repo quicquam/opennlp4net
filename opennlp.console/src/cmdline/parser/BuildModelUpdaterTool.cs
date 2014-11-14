@@ -42,7 +42,7 @@ namespace opennlp.tools.cmdline.parser
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: @Override protected opennlp.tools.parser.ParserModel trainAndUpdate(opennlp.tools.parser.ParserModel originalModel, opennlp.tools.util.ObjectStream<opennlp.tools.parser.Parse> parseSamples, ModelUpdaterParams parameters) throws java.io.IOException
-	  protected internal ParserModel trainAndUpdate(ParserModel originalModel, ObjectStream<Parse> parseSamples, ModelUpdaterParams parameters)
+	  protected internal override ParserModel trainAndUpdate(ParserModel originalModel, ObjectStream<Parse> parseSamples, ModelUpdaterParams parameters)
 	  {
 
 		  Dictionary mdict = ParserTrainerTool.buildDictionary(parseSamples, originalModel.HeadRules, parameters.Cutoff.Value);

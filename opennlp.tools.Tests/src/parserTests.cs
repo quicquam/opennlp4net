@@ -8,6 +8,11 @@ namespace opennlp.tools.Tests
     [TestFixture]
     public class parserTests
     {
+        private const string ModelPath = @"..\..\models\";
+        private const string DataPath = @"..\..\data\";
+        private string _modelFilePath;
+        private string _testTextBlock;
+        
         [SetUp]
         public void Setup()
         {
@@ -18,9 +23,6 @@ namespace opennlp.tools.Tests
         public void TearDown()
         {
         }
-
-        private const string ModelPath = "C:\\opennlp-models\\";
-        private string _modelFilePath;
 
         [Test]
         public void TokenizeCanGetTokensArrayFromTestData()

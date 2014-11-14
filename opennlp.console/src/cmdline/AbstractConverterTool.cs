@@ -45,7 +45,7 @@ namespace opennlp.tools.cmdline
 	  {
 		  get
 		  {
-			IDictionary<string, ObjectStreamFactory<T>> factories = StreamFactoryRegistry.getFactories(type);
+			IDictionary<string, ObjectStreamFactory> factories = StreamFactoryRegistry.getFactories(type);
 			StringBuilder help = new StringBuilder();
 			if (2 == factories.Keys.size()) //opennlp + foreign
 			{
@@ -85,7 +85,7 @@ namespace opennlp.tools.cmdline
 	  {
 		  get
 		  {
-			IDictionary<string, ObjectStreamFactory<T>> factories = StreamFactoryRegistry.getFactories(type);
+			IDictionary<string, ObjectStreamFactory> factories = StreamFactoryRegistry.getFactories(type);
 			StringBuilder help = new StringBuilder("help|");
 			foreach (string formatName in factories.Keys)
 			{
@@ -112,7 +112,7 @@ namespace opennlp.tools.cmdline
 		else
 		{
 		  format = args[0];
-		  ObjectStreamFactory<T> streamFactory = getStreamFactory(format);
+		  ObjectStreamFactory streamFactory = getStreamFactory(format);
 
 		  string[] formatArgs = new string[args.Length - 1];
 		  Array.Copy(args, 1, formatArgs, 0, formatArgs.Length);

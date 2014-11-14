@@ -42,7 +42,7 @@ namespace opennlp.tools.formats.convert
 
 		InputStream @in = new BufferedInputStream(new FileInputStream(file));
 
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+	      ByteArrayOutputStream bytes = new ByteArrayOutputStream(new FileStream(file.Name, FileMode.Open));
 
 		try
 		{
@@ -70,14 +70,14 @@ namespace opennlp.tools.formats.convert
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public byte[] read() throws java.io.IOException
-	  public override sbyte[] read()
+	  public override byte[] read()
 	  {
 
 		Jfile sampleFile = samples.read();
 
 		if (sampleFile != null)
 		{
-		  return readFile(sampleFile);
+		    return null;  // MJJ 14/11/2014 need to cast sbyte[] to byte[] readFile(sampleFile);
 		}
 		else
 		{

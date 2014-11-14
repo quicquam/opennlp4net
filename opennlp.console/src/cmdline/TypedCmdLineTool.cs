@@ -48,9 +48,9 @@ namespace opennlp.tools.cmdline
 	  /// </summary>
 	  /// <param name="format"> data format name </param>
 	  /// <returns> stream factory for the type of this tool for the format </returns>
-	  protected internal virtual ObjectStreamFactory<T> getStreamFactory(string format)
+	  protected internal virtual ObjectStreamFactory getStreamFactory(string format)
 	  {
-		ObjectStreamFactory<T> factory = StreamFactoryRegistry.getFactory(type, format);
+		ObjectStreamFactory factory = StreamFactoryRegistry.getFactory(type, format);
 		if (null != factory)
 		{
 		  return factory;
@@ -73,7 +73,7 @@ namespace opennlp.tools.cmdline
 //ORIGINAL LINE: @SuppressWarnings({"unchecked"}) protected <A> void validateAllArgs(String[] args, Class argProxyInterface, String format)
 	  protected internal virtual void validateAllArgs<A>(string[] args, Type argProxyInterface, string format)
 	  {
-		ObjectStreamFactory<T> factory = getStreamFactory(format);
+		ObjectStreamFactory factory = getStreamFactory(format);
 		string errMessage = ArgumentParser.validateArgumentsLoudly(args, argProxyInterface, factory.getParameters<A>());
 		if (null != errMessage)
 		{
@@ -85,7 +85,7 @@ namespace opennlp.tools.cmdline
 	  /// Validates arguments for a format processed by the <code>factory</code>. </summary>
 	  /// <param name="factory"> a stream factory </param>
 	  /// <param name="args"> arguments </param>
-	  protected internal virtual void validateFactoryArgs(ObjectStreamFactory<T> factory, string[] args)
+	  protected internal virtual void validateFactoryArgs(ObjectStreamFactory factory, string[] args)
 	  {
 		string errMessage = ArgumentParser.validateArgumentsLoudly(args, factory.Parameters);
 		if (null != errMessage)
@@ -96,7 +96,7 @@ namespace opennlp.tools.cmdline
 
 	  protected internal override string getBasicHelp<A>(params Type[] argProxyInterfaces)
 	  {
-		IDictionary<string, ObjectStreamFactory<T>> factories = StreamFactoryRegistry.getFactories(type);
+		IDictionary<string, ObjectStreamFactory> factories = StreamFactoryRegistry.getFactories(type);
 
 		string formatsHelp = " ";
 		if (1 < factories.Count)

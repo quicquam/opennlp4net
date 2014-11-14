@@ -188,7 +188,7 @@ namespace opennlp.tools.cmdline
 		Console.WriteLine("All tools print help when invoked with help parameter");
 		Console.WriteLine("Example: opennlp SimpleTokenizer help");
 	  }
-
+        /*
 	  public static void Main(string[] args)
 	  {
 
@@ -270,7 +270,7 @@ namespace opennlp.tools.cmdline
 
 		  Environment.Exit(e.Code);
 		}
-	  }
-	}
+	  } */
+	} 
 
 }

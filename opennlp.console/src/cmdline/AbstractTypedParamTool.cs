@@ -51,7 +51,7 @@ namespace opennlp.tools.cmdline
 		}
 		else
 		{
-		  ObjectStreamFactory<T> factory = StreamFactoryRegistry.getFactory(type, format);
+		  ObjectStreamFactory factory = StreamFactoryRegistry.getFactory(type, format);
 		  if (null == factory)
 		  {
 			throw new TerminateToolException(1, "Format " + format + " is not found.\n" + Help);

@@ -37,7 +37,7 @@ namespace opennlp.tools.formats.ad
 	/// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
-	public class ADSentenceSampleStreamFactory : LanguageSampleStreamFactory<SentenceSample>, ObjectStreamFactory<SentenceSample>
+	public class ADSentenceSampleStreamFactory : LanguageSampleStreamFactory, ObjectStreamFactory
 	{
 
 	  internal interface Parameters
@@ -68,7 +68,7 @@ namespace opennlp.tools.formats.ad
 	  {
 	  }
 
-	  public override ObjectStream<SentenceSample> create(string[] args)
+      public override ObjectStream<T> create<T>(string[] args)
 	  {
 
 		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));

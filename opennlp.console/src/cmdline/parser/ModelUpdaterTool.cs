@@ -55,10 +55,10 @@ namespace opennlp.tools.cmdline.parser
 		Jfile modelFile = @params.Model;
 		ParserModel originalParserModel = (new ParserModelLoader()).load(modelFile);
 
-		ObjectStreamFactory<Parse> factory = getStreamFactory(format);
+		ObjectStreamFactory factory = getStreamFactory(format);
 		string[] fargs = ArgumentParser.filter(args, factory.Parameters);
 		validateFactoryArgs(factory, fargs);
-		ObjectStream<Parse> sampleStream = factory.create(fargs);
+		ObjectStream<Parse> sampleStream = factory.create<Parse>(fargs);
 
 		ParserModel updatedParserModel;
 		try

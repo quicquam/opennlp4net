@@ -182,9 +182,6 @@
     <Compile Include="src\formats\DetokenizerSampleStreamFactory.cs" />
     <Compile Include="src\formats\DirectorySampleStream.cs" />
     <Compile Include="src\formats\DocumentSampleStreamFactory.cs" />
-    <Compile Include="src\formats\frenchtreebank\ConstitDocumentHandler.cs" />
-    <Compile Include="src\formats\frenchtreebank\ConstitParseSampleStream.cs" />
-    <Compile Include="src\formats\frenchtreebank\ConstitParseSampleStreamFactory.cs" />
     <Compile Include="src\formats\LanguageSampleStreamFactory.cs" />
     <Compile Include="src\formats\LeipzigDoccatSampleStream.cs" />
     <Compile Include="src\formats\LeipzigDocumentSampleStreamFactory.cs" />

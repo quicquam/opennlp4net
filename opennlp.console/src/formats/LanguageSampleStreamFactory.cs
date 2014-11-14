@@ -23,7 +23,7 @@ namespace opennlp.tools.formats
 	/// <summary>
 	/// Stream factory for those streams which carry language.
 	/// </summary>
-	public abstract class LanguageSampleStreamFactory<T> : AbstractSampleStreamFactory<T>
+	public abstract class LanguageSampleStreamFactory : AbstractSampleStreamFactory
 	{
 
 	  protected internal string language;
