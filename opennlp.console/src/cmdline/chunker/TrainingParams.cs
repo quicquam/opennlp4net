@@ -30,8 +30,6 @@ namespace opennlp.tools.cmdline.chunker
 	public interface TrainingParams : BasicTrainingParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "factoryName", description = "A sub-class of ChunkerFactory where to get implementation and resources.") @OptionalParameter String getFactory();
 	  string Factory {get;}
 
 	}

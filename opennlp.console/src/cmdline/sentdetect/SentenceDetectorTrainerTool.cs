@@ -52,8 +52,6 @@ namespace opennlp.tools.cmdline.sentdetect
 		  }
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: static opennlp.tools.dictionary.Dictionary loadDict(java.io.File f) throws java.io.IOException
 	  internal static Dictionary loadDict(Jfile f)
 	  {
 		Dictionary dict = null;

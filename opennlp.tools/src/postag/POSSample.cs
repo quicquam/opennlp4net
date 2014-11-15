@@ -128,8 +128,6 @@ namespace opennlp.tools.postag
             return result.ToString();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static POSSample parse(String sentenceString) throws opennlp.tools.util.InvalidFormatException
         public static POSSample parse(string sentenceString)
         {
             string[] tokenTags = WhitespaceTokenizer.INSTANCE.tokenize(sentenceString);

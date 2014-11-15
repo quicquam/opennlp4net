@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 
 namespace opennlp.tools.coref
 {
@@ -56,8 +56,6 @@ namespace opennlp.tools.coref
         /// <param name="modelDirectory"> The directory where the models for this linker are kept. </param>
         /// <param name="mode"> The mode that this linker is running in. </param>
         /// <exception cref="IOException"> when the models can not be read or written to based on the mode. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DefaultLinker(String modelDirectory, LinkerMode mode) throws java.io.IOException
         public DefaultLinker(string modelDirectory, LinkerMode mode) : this(modelDirectory, mode, true, -1)
         {
         }
@@ -69,8 +67,6 @@ namespace opennlp.tools.coref
         /// <param name="mode"> The mode that this linker is running in. </param>
         /// <param name="useDiscourseModel"> Whether the model should use a discourse model or not. </param>
         /// <exception cref="IOException"> when the models can not be read or written to based on the mode. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DefaultLinker(String modelDirectory, LinkerMode mode, boolean useDiscourseModel) throws java.io.IOException
         public DefaultLinker(string modelDirectory, LinkerMode mode, bool useDiscourseModel)
             : this(modelDirectory, mode, useDiscourseModel, -1)
         {
@@ -84,8 +80,6 @@ namespace opennlp.tools.coref
         /// <param name="useDiscourseModel"> Whether the model should use a discourse model or not. </param>
         /// <param name="fixedNonReferentialProbability"> The probability which resolvers are required to exceed to positi a coreference relationship. </param>
         /// <exception cref="IOException"> when the models can not be read or written to based on the mode. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DefaultLinker(String modelDirectory, LinkerMode mode, boolean useDiscourseModel, double fixedNonReferentialProbability) throws java.io.IOException
         public DefaultLinker(string modelDirectory, LinkerMode mode, bool useDiscourseModel,
             double fixedNonReferentialProbability) : base(modelDirectory, mode, useDiscourseModel)
         {
@@ -107,8 +101,6 @@ namespace opennlp.tools.coref
         /// <param name="mode"> The mode in which this linker is being used. </param>
         /// <param name="fixedNonReferentialProbability"> </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: protected void initResolvers(LinkerMode mode, double fixedNonReferentialProbability) throws java.io.IOException
         protected internal virtual void initResolvers(LinkerMode mode, double fixedNonReferentialProbability)
         {
             if (mode == LinkerMode.TRAIN)

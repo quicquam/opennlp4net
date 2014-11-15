@@ -123,12 +123,7 @@ namespace opennlp.tools.util.featuregen
 
             for (int i = 0; i < token.Length; i++)
             {
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final char ch = token.charAt(i);
                 Char ch = token[i];
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final int letterType = Character.getType(ch);
 
                 bool isLetter = Char.IsUpper(ch) || Char.IsLower(ch);
                     // || letterType == char.TITLECASE_LETTER || letterType == char.MODIFIER_LETTER || letterType == char.OTHER_LETTER;

@@ -41,8 +41,6 @@ namespace opennlp.tools.postag
         /// </summary>
         /// <param name="sentences"> reader with sentences </param>
         /// <exception cref="IOException"> IOException </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public WordTagSampleStream(java.io.Reader sentences) throws java.io.IOException
         public WordTagSampleStream(Reader sentences) : base(new PlainTextByLineStream(sentences))
         {
         }
@@ -61,8 +59,6 @@ namespace opennlp.tools.postag
         /// 
         /// TODO: An exception in error case should be thrown.
         /// </summary>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSSample read() throws java.io.IOException
         public override POSSample read()
         {
             string sentence = samples.read();

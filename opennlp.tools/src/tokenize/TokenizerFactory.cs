@@ -78,8 +78,6 @@ namespace opennlp.tools.tokenize
             this.abbreviationDictionary = abbreviationDictionary;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         public override void validateArtifactMap()
         {
             if (this.artifactProvider.getManifestProperty(USE_ALPHA_NUMERIC_OPTIMIZATION) == null)
@@ -127,8 +125,6 @@ namespace opennlp.tools.tokenize
         /// <summary>
         /// Factory method the framework uses create a new <seealso cref="TokenizerFactory"/>.
         /// </summary>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenizerFactory create(String subclassName, String languageCode, opennlp.tools.dictionary.Dictionary abbreviationDictionary, boolean useAlphaNumericOptimization, java.util.regex.Pattern alphaNumericPattern) throws opennlp.tools.util.InvalidFormatException
         public static TokenizerFactory create(string subclassName, string languageCode,
             Dictionary abbreviationDictionary, bool useAlphaNumericOptimization, Pattern alphaNumericPattern)
         {

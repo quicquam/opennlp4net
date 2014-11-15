@@ -27,15 +27,11 @@ namespace opennlp.tools.coref.resolver
         private static SingletonNonReferentialResolver resolver;
         private static bool trained;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private SingletonNonReferentialResolver(String projectName, ResolverMode mode) throws java.io.IOException
         private SingletonNonReferentialResolver(string projectName, ResolverMode mode)
             : base(projectName, "nonref", mode)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static SingletonNonReferentialResolver getInstance(String modelName, ResolverMode mode) throws java.io.IOException
         public static SingletonNonReferentialResolver getInstance(string modelName, ResolverMode mode)
         {
             if (resolver == null)
@@ -45,9 +41,6 @@ namespace opennlp.tools.coref.resolver
             return resolver;
         }
 
-
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void train() throws java.io.IOException
         public override void train()
         {
             if (!trained)

@@ -39,8 +39,6 @@ namespace opennlp.tools.util.featuregen
             contextsCache = new Cache(100);
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public void createFeatures(java.util.List<String> features, String[] tokens, int index, String[] previousOutcomes)
         public virtual void createFeatures(List<string> features, string[] tokens, int index, string[] previousOutcomes)
         {
             List<string> cacheFeatures;

@@ -75,8 +75,6 @@ namespace opennlp.tools.chunker
         ///          number of folds
         /// </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void evaluate(opennlp.tools.util.ObjectStream<ChunkSample> samples, int nFolds) throws java.io.IOException, opennlp.tools.util.InvalidFormatException, java.io.IOException
         public virtual void evaluate(ObjectStream<ChunkSample> samples, int nFolds)
         {
             CrossValidationPartitioner<ChunkSample> partitioner = new CrossValidationPartitioner<ChunkSample>(samples,

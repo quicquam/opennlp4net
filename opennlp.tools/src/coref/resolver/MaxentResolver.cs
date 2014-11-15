@@ -113,8 +113,6 @@ namespace opennlp.tools.coref.resolver
         /// likely than non-reference.  This only affects testing. </param>
         /// <param name="nonReferentialResolver"> Determines how likely it is that this entity is non-referential. </param>
         /// <exception cref="IOException"> If the model file is not found or can not be written to. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public MaxentResolver(String modelDirectory, String name, ResolverMode mode, int numberOfEntitiesBack, boolean preferFirstReferent, NonReferentialResolver nonReferentialResolver) throws java.io.IOException
         public MaxentResolver(string modelDirectory, string name, ResolverMode mode, int numberOfEntitiesBack,
             bool preferFirstReferent, NonReferentialResolver nonReferentialResolver) : base(numberOfEntitiesBack)
         {
@@ -148,23 +146,17 @@ namespace opennlp.tools.coref.resolver
         /// <param name="numberEntitiesBack"> The number of entities back in the text that this resolver will look
         /// for a referent. </param>
         /// <exception cref="IOException"> If the model file is not found or can not be written to. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public MaxentResolver(String modelDirectory, String modelName, ResolverMode mode, int numberEntitiesBack) throws java.io.IOException
         public MaxentResolver(string modelDirectory, string modelName, ResolverMode mode, int numberEntitiesBack)
             : this(modelDirectory, modelName, mode, numberEntitiesBack, false)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public MaxentResolver(String modelDirectory, String modelName, ResolverMode mode, int numberEntitiesBack, NonReferentialResolver nonReferentialResolver) throws java.io.IOException
         public MaxentResolver(string modelDirectory, string modelName, ResolverMode mode, int numberEntitiesBack,
             NonReferentialResolver nonReferentialResolver)
             : this(modelDirectory, modelName, mode, numberEntitiesBack, false, nonReferentialResolver)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public MaxentResolver(String modelDirectory, String modelName, ResolverMode mode, int numberEntitiesBack, boolean preferFirstReferent) throws java.io.IOException
         public MaxentResolver(string modelDirectory, string modelName, ResolverMode mode, int numberEntitiesBack,
             bool preferFirstReferent)
             : this(
@@ -174,8 +166,6 @@ namespace opennlp.tools.coref.resolver
             //this(projectName, modelName, mode, numberEntitiesBack, preferFirstReferent, SingletonNonReferentialResolver.getInstance(projectName,mode));
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public MaxentResolver(String modelDirectory, String modelName, ResolverMode mode, int numberEntitiesBack, boolean preferFirstReferent, double nonReferentialProbability) throws java.io.IOException
         public MaxentResolver(string modelDirectory, string modelName, ResolverMode mode, int numberEntitiesBack,
             bool preferFirstReferent, double nonReferentialProbability)
             : this(
@@ -370,8 +360,6 @@ namespace opennlp.tools.coref.resolver
             return features;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void train() throws java.io.IOException
         public override void train()
         {
             if (ResolverMode.TRAIN == mode)

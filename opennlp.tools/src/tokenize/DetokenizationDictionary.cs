@@ -175,8 +175,6 @@ namespace opennlp.tools.tokenize
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DetokenizationDictionary(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public DetokenizationDictionary(InputStream @in)
         {
             DictionarySerializer.create(@in, new EntryInserterAnonymousInnerClassHelper(this));
@@ -196,8 +194,6 @@ namespace opennlp.tools.tokenize
                 this.outerInstance = outerInstance;
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void insert(opennlp.tools.dictionary.serializer.Entry entry) throws opennlp.tools.util.InvalidFormatException
             public virtual void insert(Entry entry)
             {
                 string operationString = entry.Attributes.getValue("operation");
@@ -227,8 +223,6 @@ namespace opennlp.tools.tokenize
         }
 
         // serialize method
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(java.io.OutputStream out) throws java.io.IOException
         public virtual void serialize(OutputStream @out)
         {
             IEnumerator<Entry> entries = new IteratorAnonymousInnerClassHelper(this);

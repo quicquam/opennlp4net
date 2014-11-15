@@ -69,8 +69,6 @@ namespace opennlp.tools.cmdline
 	  /// <param name="argProxyInterface"> interface with parameter descriptions </param>
 	  /// <param name="format"> data format name </param>
 	  /// @param <A> A </param>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings({"unchecked"}) protected <A> void validateAllArgs(String[] args, Class argProxyInterface, String format)
 	  protected internal virtual void validateAllArgs<A>(string[] args, Type argProxyInterface, string format)
 	  {
 		ObjectStreamFactory factory = getStreamFactory(format);

@@ -38,8 +38,6 @@ namespace opennlp.tools.cmdline.namefind
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected opennlp.tools.namefind.TokenNameFinderModel loadModel(java.io.InputStream modelIn) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
 	  protected internal override TokenNameFinderModel loadModel(InputStream modelIn)
 	  {
 		return new TokenNameFinderModel(modelIn);

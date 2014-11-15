@@ -53,8 +53,6 @@ namespace opennlp.tools.doccat
             mContextGenerator = new DocumentCategorizerContextGenerator(new BagOfWordsFeatureGenerator());
         }
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: @Override protected java.util.Iterator<opennlp.model.Event> createEvents(final DocumentSample sample)
         protected internal override IEnumerator<Event> createEvents(DocumentSample sample)
         {
             // commented out MJJ 07/11/2014

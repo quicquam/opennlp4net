@@ -27,8 +27,6 @@ namespace opennlp.tools.coref.resolver
     /// </summary>
     public class SpeechPronounResolver : MaxentResolver
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SpeechPronounResolver(String projectName, ResolverMode m) throws java.io.IOException
         public SpeechPronounResolver(string projectName, ResolverMode m) : base(projectName, "fmodel", m, 30)
         {
             this.numSentencesBack = 0;
@@ -36,8 +34,6 @@ namespace opennlp.tools.coref.resolver
             preferFirstReferent = true;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SpeechPronounResolver(String projectName, ResolverMode m, NonReferentialResolver nrr) throws java.io.IOException
         public SpeechPronounResolver(string projectName, ResolverMode m, NonReferentialResolver nrr)
             : base(projectName, "fmodel", m, 30, nrr)
         {

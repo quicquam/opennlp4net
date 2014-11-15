@@ -32,8 +32,6 @@ namespace opennlp.perceptron
     /// </summary>
     public class PerceptronModelReader : AbstractModelReader
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PerceptronModelReader(java.io.File file) throws java.io.IOException
         public PerceptronModelReader(Jfile file) : base(file)
         {
         }
@@ -64,8 +62,6 @@ namespace opennlp.perceptron
         /// </summary>
         /// <returns> The PerceptronModel stored in the format and location specified to
         ///         this PerceptronModelReader (usually via its the constructor). </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.model.AbstractModel constructModel() throws java.io.IOException
         public override AbstractModel constructModel()
         {
             string[] outcomeLabels = GetOutcomes();
@@ -76,8 +72,6 @@ namespace opennlp.perceptron
             return new PerceptronModel(@params, predLabels, outcomeLabels);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void checkModelType() throws java.io.IOException
         public override void checkModelType()
         {
             string modelType = readUTF();

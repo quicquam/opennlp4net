@@ -1,10 +1,4 @@
-﻿//-------------------------------------------------------------------------------------------
-//	Copyright © 2007 - 2014 Tangible Software Solutions Inc.
-//	This class can be used by anyone provided that the copyright notice remains intact.
-//
-//	This class is used to convert some aspects of the Java String class.
-//-------------------------------------------------------------------------------------------
-
+﻿
 namespace opennlp.tools.nonjava.extensions
 {
     internal static class StringHelperClass

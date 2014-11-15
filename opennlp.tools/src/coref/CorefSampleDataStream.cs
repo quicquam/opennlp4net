@@ -28,8 +28,6 @@ namespace opennlp.tools.coref
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public CorefSample read() throws java.io.IOException
         public override CorefSample read()
         {
             string document = samples.read();

@@ -72,8 +72,6 @@ namespace opennlp.tools.cmdline.namefind
 
 		TokenNameFinderEvaluator evaluator = new TokenNameFinderEvaluator(new NameFinderME(model), listeners.ToArray());
 
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final opennlp.tools.cmdline.PerformanceMonitor monitor = new opennlp.tools.cmdline.PerformanceMonitor("sent");
 		PerformanceMonitor monitor = new PerformanceMonitor("sent");
 
 		ObjectStream<NameSample> measuredSampleStream = new ObjectStreamAnonymousInnerClassHelper(this, monitor);
@@ -128,23 +126,17 @@ namespace opennlp.tools.cmdline.namefind
 		  }
 
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.namefind.NameSample read() throws java.io.IOException
 		  public virtual NameSample read()
 		  {
 			monitor.incrementCounter();
 			return outerInstance.sampleStream.read();
 		  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void reset() throws java.io.IOException
 		  public virtual void reset()
 		  {
 			outerInstance.sampleStream.reset();
 		  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
 		  public virtual void close()
 		  {
 			outerInstance.sampleStream.close();

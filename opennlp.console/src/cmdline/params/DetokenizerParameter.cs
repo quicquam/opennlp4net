@@ -22,8 +22,6 @@ namespace opennlp.tools.cmdline.@params
 
 	public interface DetokenizerParameter
 	{
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "dictionary", description = "specifies the file with detokenizer dictionary.") String getDetokenizer();
 	  string Detokenizer {get;}
 	}
 

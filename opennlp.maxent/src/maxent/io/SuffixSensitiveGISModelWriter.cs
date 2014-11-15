@@ -46,8 +46,7 @@ namespace opennlp.maxent.io
         /// </summary>
         /// <param name="model"> The GISModel which is to be persisted. </param>
         /// <param name="f"> The File in which the model is to be stored. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SuffixSensitiveGISModelWriter(opennlp.model.AbstractModel model, java.io.File f) throws java.io.IOException
+
         public SuffixSensitiveGISModelWriter(AbstractModel model, Jfile f) : base(model)
         {
             OutputStream output;
@@ -76,29 +75,24 @@ namespace opennlp.maxent.io
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeUTF(String s) throws java.io.IOException
+
         public override void writeUTF(string s)
         {
             suffixAppropriateWriter.writeUTF(s);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeInt(int i) throws java.io.IOException
+
         public override void writeInt(int i)
         {
             suffixAppropriateWriter.writeInt(i);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeDouble(double d) throws java.io.IOException
+
         public override void writeDouble(double d)
         {
             suffixAppropriateWriter.writeDouble(d);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
         public override void close()
         {
             suffixAppropriateWriter.close();

@@ -91,8 +91,6 @@ namespace opennlp.perceptron
         private string[] predLabels;
         internal int numSequences;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.model.AbstractModel trainModel(int iterations, opennlp.model.SequenceStream sequenceStream, int cutoff, boolean useAverage) throws java.io.IOException
         public virtual AbstractModel trainModel(int iterations, SequenceStream sequenceStream, int cutoff,
             bool useAverage)
         {
@@ -125,8 +123,6 @@ namespace opennlp.perceptron
             numOutcomes = outcomeLabels.Length;
             if (useAverage)
             {
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: updates = new int[numPreds][numOutcomes][3];
                 updates = RectangularArrays.ReturnRectangularIntArray(numPreds, numOutcomes, 3);
             }
 

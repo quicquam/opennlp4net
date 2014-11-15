@@ -38,8 +38,6 @@ namespace opennlp.tools.tokenize
             this.input = input;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TokenSample read() throws java.io.IOException
         public virtual TokenSample read()
         {
             string inputString = input.read();
@@ -54,15 +52,11 @@ namespace opennlp.tools.tokenize
             return null;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
         public virtual void close()
         {
             input.close();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void reset() throws java.io.IOException, UnsupportedOperationException
         public virtual void reset()
         {
             input.reset();

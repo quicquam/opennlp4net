@@ -25,24 +25,16 @@ namespace opennlp.model
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public abstract void writeUTF(String s) throws java.io.IOException;
+
         public abstract void writeUTF(string s);
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public abstract void writeInt(int i) throws java.io.IOException;
+
         public abstract void writeInt(int i);
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public abstract void writeDouble(double d) throws java.io.IOException;
         public abstract void writeDouble(double d);
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public abstract void close() throws java.io.IOException;
         public abstract void close();
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public abstract void persist() throws java.io.IOException;
         public abstract void persist();
     }
 }

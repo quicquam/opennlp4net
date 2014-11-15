@@ -70,15 +70,13 @@ namespace opennlp.maxent
             Console.WriteLine("Recall:    " + truePos/totPos);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.model.MaxentModel train(opennlp.model.EventStream events, int cutoff) throws java.io.IOException
+
         public static MaxentModel train(EventStream events, int cutoff)
         {
             return GIS.trainModel(events, 100, cutoff);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void run(String[] args, Evalable e) throws java.io.IOException
+
         public static void run(string[] args, Evalable e)
         {
             // TOM: Was commented out to remove dependency on gnu getopt.    	

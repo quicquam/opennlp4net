@@ -50,15 +50,11 @@ namespace opennlp.tools.util
             throw new System.NotImplementedException();
         }
 
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: public void reset() throws java.io.IOException, UnsupportedOperationException
         public virtual void reset()
         {
             samples.reset();
         }
 
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: public void close() throws java.io.IOException
         public virtual void close()
         {
             samples.close();

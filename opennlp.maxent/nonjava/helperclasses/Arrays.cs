@@ -1,11 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------
-//	Copyright © 2007 - 2014 Tangible Software Solutions Inc.
-//	This class can be used by anyone provided that the copyright notice remains intact.
-//
-//	This class is used to replace some calls to java.util.Arrays methods with the C# equivalent.
-//---------------------------------------------------------------------------------------------------------
-
-using opennlp.model;
+﻿using opennlp.model;
 
 namespace opennlp.nonjava.helperclasses
 {

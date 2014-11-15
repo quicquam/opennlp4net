@@ -33,8 +33,6 @@ namespace opennlp.tools.formats
 
 	  internal interface Parameters : BasicFormatParams
 	  {
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "DNA,protein,cell_type,cell_line,RNA") String getTypes();
 		string Types {get;}
 	  }
 

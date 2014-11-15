@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.chunker
@@ -72,8 +73,6 @@ namespace opennlp.tools.cmdline.chunker
 
 		ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model, ChunkerME.DEFAULT_BEAM_SIZE), listeners.ToArray());
 
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final opennlp.tools.cmdline.PerformanceMonitor monitor = new opennlp.tools.cmdline.PerformanceMonitor("sent");
 		PerformanceMonitor monitor = new PerformanceMonitor("sent");
 
 		ObjectStream<ChunkSample> measuredSampleStream = new ObjectStreamAnonymousInnerClassHelper(this, monitor);
@@ -128,23 +127,17 @@ namespace opennlp.tools.cmdline.chunker
 		  }
 
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.chunker.ChunkSample read() throws java.io.IOException
 		  public virtual ChunkSample read()
 		  {
 			monitor.incrementCounter();
 			return outerInstance.sampleStream.read();
 		  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void reset() throws java.io.IOException
 		  public virtual void reset()
 		  {
 			outerInstance.sampleStream.reset();
 		  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
 		  public virtual void close()
 		  {
 			outerInstance.sampleStream.close();

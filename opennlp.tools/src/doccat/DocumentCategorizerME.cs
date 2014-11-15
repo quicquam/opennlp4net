@@ -145,8 +145,6 @@ namespace opennlp.tools.doccat
         /// <param name="eventStream">
         /// </param>
         /// <returns> the new model </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static opennlp.model.AbstractModel train(DocumentCategorizerEventStream eventStream) throws java.io.IOException
         [Obsolete]
         public static AbstractModel train(DocumentCategorizerEventStream eventStream)
         {
@@ -154,8 +152,6 @@ namespace opennlp.tools.doccat
         }
 
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static DoccatModel train(String languageCode, opennlp.tools.util.ObjectStream<DocumentSample> samples, opennlp.tools.util.TrainingParameters mlParams, FeatureGenerator... featureGenerators) throws java.io.IOException
         public static DoccatModel train(string languageCode, ObjectStream<DocumentSample> samples,
             TrainingParameters mlParams, params FeatureGenerator[] featureGenerators)
         {
@@ -184,8 +180,6 @@ namespace opennlp.tools.doccat
         /// <returns> the trained doccat model
         /// </returns>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static DoccatModel train(String languageCode, opennlp.tools.util.ObjectStream<DocumentSample> samples, int cutoff, int iterations, FeatureGenerator... featureGenerators) throws java.io.IOException
         public static DoccatModel train(string languageCode, ObjectStream<DocumentSample> samples, int cutoff,
             int iterations, params FeatureGenerator[] featureGenerators)
         {
@@ -203,8 +197,6 @@ namespace opennlp.tools.doccat
         /// </returns>
         /// <exception cref="IOException"> </exception>
         /// <exception cref="ObjectStreamException">  </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static DoccatModel train(String languageCode, opennlp.tools.util.ObjectStream<DocumentSample> samples, int cutoff, int iterations) throws java.io.IOException
         public static DoccatModel train(string languageCode, ObjectStream<DocumentSample> samples, int cutoff,
             int iterations)
         {
@@ -221,8 +213,6 @@ namespace opennlp.tools.doccat
         /// </returns>
         /// <exception cref="IOException"> </exception>
         /// <exception cref="ObjectStreamException">  </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static DoccatModel train(String languageCode, opennlp.tools.util.ObjectStream<DocumentSample> samples) throws java.io.IOException
         public static DoccatModel train(string languageCode, ObjectStream<DocumentSample> samples)
         {
             return train(languageCode, samples, 5, 100, defaultFeatureGenerator);

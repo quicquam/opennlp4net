@@ -681,8 +681,6 @@ namespace opennlp.tools.formats.ad
 	  }
 
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public Sentence read() throws java.io.IOException
 	  public override Sentence read()
 	  {
 

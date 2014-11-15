@@ -54,8 +54,6 @@ namespace opennlp.tools.namefind
 
         private class ByteArraySerializer : ArtifactSerializer<byte[]>
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public byte[] create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
             public virtual sbyte[] create(InputStream @in)
             {
                 return ModelUtil.read(@in);
@@ -66,8 +64,6 @@ namespace opennlp.tools.namefind
                 throw new NotImplementedException();
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(byte[] artifact, java.io.OutputStream out) throws java.io.IOException
             public virtual void serialize(sbyte[] artifact, OutputStream @out)
             {
                 @out.write(artifact);
@@ -112,7 +108,6 @@ namespace opennlp.tools.namefind
 
                 // TODO: Add checks to not put resources where no serializer exists,
                 // make that case fail here, should be done in the BaseModel
-//JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
                 foreach (var resource in resources)
                 {
                     artifactMap.Add(resource);
@@ -127,20 +122,14 @@ namespace opennlp.tools.namefind
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TokenNameFinderModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public TokenNameFinderModel(InputStream @in) : base(COMPONENT_NAME, @in)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TokenNameFinderModel(java.io.File modelFile) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public TokenNameFinderModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TokenNameFinderModel(java.net.URL modelURL) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public TokenNameFinderModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
         {
         }
@@ -231,10 +220,7 @@ namespace opennlp.tools.namefind
             TokenNameFinderModel model = new TokenNameFinderModel(Language, NameFinderModel, descriptor,
                 new Dictionary<string, object>(), new Dictionary<string, string>());
 
-            // TODO: Not so nice!
             model.artifactMap.Clear();
-//JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
-            //model.artifactMap.putAll(artifactMap);
             model.artifactMap[GENERATOR_DESCRIPTOR_ENTRY_NAME] = descriptor;
 
             return model;
@@ -298,8 +284,6 @@ namespace opennlp.tools.namefind
             return true;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         protected internal override void validateArtifactMap()
         {
             base.validateArtifactMap();

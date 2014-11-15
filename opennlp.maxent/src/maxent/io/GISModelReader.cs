@@ -27,8 +27,6 @@ namespace opennlp.maxent.io
     /// </summary>
     public class GISModelReader : AbstractModelReader
     {
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: public GISModelReader(java.io.File file) throws java.io.IOException
         public GISModelReader(Jfile file)
             : base(file)
         {

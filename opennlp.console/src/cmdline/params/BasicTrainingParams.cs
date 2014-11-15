@@ -29,16 +29,10 @@ namespace opennlp.tools.cmdline.@params
 	public interface BasicTrainingParams : LanguageParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "num", description = "number of training iterations, ignored if -params is used.") @OptionalParameter(defaultValue="100") Integer getIterations();
 	  int? Iterations {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "num", description = "minimal number of times a feature must be seen, ignored if -params is used.") @OptionalParameter(defaultValue="5") Integer getCutoff();
 	  int? Cutoff {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "paramsFile", description = "training parameters file.") @OptionalParameter() String getParams();
 	  string Params {get;}
 	}
 

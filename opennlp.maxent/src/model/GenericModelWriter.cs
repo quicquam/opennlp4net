@@ -35,8 +35,6 @@ namespace opennlp.model
     {
         private AbstractModelWriter delegateWriter;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public GenericModelWriter(AbstractModel model, java.io.File file) throws java.io.IOException
         public GenericModelWriter(AbstractModel model, Jfile file)
         {
             string filename = file.Name;
@@ -96,36 +94,27 @@ namespace opennlp.model
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void close() throws java.io.IOException
         public override void close()
         {
             delegateWriter.close();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void persist() throws java.io.IOException
         public override void persist()
         {
             delegateWriter.persist();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void writeDouble(double d) throws java.io.IOException
         public override void writeDouble(double d)
         {
             delegateWriter.writeDouble(d);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void writeInt(int i) throws java.io.IOException
         public override void writeInt(int i)
         {
             delegateWriter.writeInt(i);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void writeUTF(String s) throws java.io.IOException
+
         public override void writeUTF(string s)
         {
             delegateWriter.writeUTF(s);

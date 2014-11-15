@@ -43,15 +43,11 @@ namespace opennlp.model
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean hasNext() throws java.io.IOException
         public virtual bool hasNext()
         {
             return eventStream.hasNext();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.model.Event next() throws java.io.IOException
         public virtual Event next()
         {
             Event @event = eventStream.next();

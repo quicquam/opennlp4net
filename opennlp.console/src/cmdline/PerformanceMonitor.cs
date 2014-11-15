@@ -41,8 +41,6 @@ namespace opennlp.tools.cmdline
 
 	  private readonly string unit;
 
-//JAVA TO C# CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-//ORIGINAL LINE: private java.util.concurrent.ScheduledFuture<?> beeperHandle;
 	  private ScheduledFuture beeperHandle;
 
 	  private volatile long startTime = -1;
@@ -107,8 +105,6 @@ namespace opennlp.tools.cmdline
 
 		start();
 
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Runnable beeper = new Runnable()
 		Runnable beeper = new RunnableAnonymousInnerClassHelper(this);
 
 	   beeperHandle = scheduler.scheduleAtFixedRate(beeper, 1, 1, TimeUnit.SECONDS);

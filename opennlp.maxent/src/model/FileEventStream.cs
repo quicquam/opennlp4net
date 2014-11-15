@@ -43,8 +43,7 @@ namespace opennlp.model
         /// Creates a new file event stream from the specified file name. </summary>
         /// <param name="fileName"> the name fo the file containing the events. </param>
         /// <exception cref="IOException"> When the specified file can not be read. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public FileEventStream(String fileName, String encoding) throws java.io.IOException
+
         public FileEventStream(string fileName, string encoding)
         {
             if (encoding == null)
@@ -57,8 +56,6 @@ namespace opennlp.model
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public FileEventStream(String fileName) throws java.io.IOException
         public FileEventStream(string fileName) : this(fileName, null)
         {
         }
@@ -67,8 +64,7 @@ namespace opennlp.model
         /// Creates a new file event stream from the specified file. </summary>
         /// <param name="file"> the file containing the events. </param>
         /// <exception cref="IOException"> When the specified file can not be read. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public FileEventStream(java.io.File file) throws java.io.IOException
+
         public FileEventStream(Jfile file)
         {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
@@ -100,8 +96,6 @@ namespace opennlp.model
             return (new Event(outcome, context));
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
         public virtual void close()
         {
             reader.close();
@@ -129,8 +123,7 @@ namespace opennlp.model
         /// the name of the model created is based on the event file name. </summary>
         /// <param name="args"> eventfile [iterations cuttoff] </param>
         /// <exception cref="IOException"> when the eventfile can not be read or the model file can not be written. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
+
         public static void Main(string[] args)
         {
             if (args.Length == 0)

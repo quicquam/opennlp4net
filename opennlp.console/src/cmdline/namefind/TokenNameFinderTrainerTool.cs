@@ -39,8 +39,6 @@ namespace opennlp.tools.cmdline.namefind
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams
 	  {
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @OptionalParameter @ParameterDescription(valueName = "types", description = "name types to use for training") String getNameTypes();
 		string NameTypes {get;}
 	  }
 

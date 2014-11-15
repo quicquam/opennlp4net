@@ -32,15 +32,11 @@ namespace opennlp.tools.coref.resolver
 
         internal Pattern PronounPattern;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SingularPronounResolver(String projectName, ResolverMode m) throws java.io.IOException
         public SingularPronounResolver(string projectName, ResolverMode m) : base(projectName, "pmodel", m, 30)
         {
             this.numSentencesBack = 2;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SingularPronounResolver(String projectName, ResolverMode m, NonReferentialResolver nonReferentialResolver) throws java.io.IOException
         public SingularPronounResolver(string projectName, ResolverMode m, NonReferentialResolver nonReferentialResolver)
             : base(projectName, "pmodel", m, 30, nonReferentialResolver)
         {

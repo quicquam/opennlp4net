@@ -556,8 +556,6 @@ namespace opennlp.tools.parser.treeinsert
             p.Type = TOP_NODE;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.tools.parser.ParserModel train(String languageCode, opennlp.tools.util.ObjectStream<opennlp.tools.parser.Parse> parseSamples, opennlp.tools.parser.HeadRules rules, opennlp.tools.util.TrainingParameters mlParams) throws java.io.IOException
         public static ParserModel train(string languageCode, ObjectStream<Parse> parseSamples, HeadRules rules,
             TrainingParameters mlParams)
         {
@@ -611,8 +609,6 @@ namespace opennlp.tools.parser.treeinsert
                 (opennlp.tools.parser.lang.en.HeadRules) rules, ParserType.TREEINSERT, manifestInfoEntries);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.tools.parser.ParserModel train(String languageCode, opennlp.tools.util.ObjectStream<opennlp.tools.parser.Parse> parseSamples, opennlp.tools.parser.HeadRules rules, int iterations, int cut) throws java.io.IOException
         public static ParserModel train(string languageCode, ObjectStream<Parse> parseSamples, HeadRules rules,
             int iterations, int cut)
         {
@@ -631,8 +627,6 @@ namespace opennlp.tools.parser.treeinsert
             return train(languageCode, parseSamples, rules, @params);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static opennlp.model.AbstractModel train(opennlp.model.EventStream es, int iterations, int cut) throws java.io.IOException
         [Obsolete]
         public static AbstractModel train(opennlp.model.EventStream es, int iterations, int cut)
         {

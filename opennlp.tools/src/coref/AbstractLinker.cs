@@ -269,8 +269,6 @@ namespace opennlp.tools.coref
             set { getEntities(value); }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void train() throws java.io.IOException
         public virtual void train()
         {
             for (int ri = 0; ri < resolvers.Length; ri++)

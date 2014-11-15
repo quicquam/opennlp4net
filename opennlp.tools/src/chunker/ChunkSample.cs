@@ -151,8 +151,6 @@ namespace opennlp.tools.chunker
             return phrases.ToArray();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static void validateArguments(int sentenceSize, int tagsSize, int predsSize) throws IllegalArgumentException
         private static void validateArguments(int sentenceSize, int tagsSize, int predsSize)
         {
             if (sentenceSize != tagsSize || tagsSize != predsSize)

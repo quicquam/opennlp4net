@@ -53,8 +53,6 @@ namespace opennlp.maxent
         ///          trained. </param>
         /// <returns> The newly trained model, which can be used immediately or saved to
         ///         disk using an opennlp.maxent.io.GISModelWriter object. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static GISModel trainModel(opennlp.model.EventStream eventStream) throws java.io.IOException
         public static GISModel trainModel(EventStream eventStream)
         {
             return trainModel(eventStream, 100, 0, false, PRINT_MESSAGES);
@@ -72,8 +70,6 @@ namespace opennlp.maxent
         ///          training the model. </param>
         /// <returns> The newly trained model, which can be used immediately or saved to
         ///         disk using an opennlp.maxent.io.GISModelWriter object. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static GISModel trainModel(opennlp.model.EventStream eventStream, boolean smoothing) throws java.io.IOException
         public static GISModel trainModel(EventStream eventStream, bool smoothing)
         {
             return trainModel(eventStream, 100, 0, smoothing, PRINT_MESSAGES);
@@ -92,8 +88,6 @@ namespace opennlp.maxent
         ///          for training. </param>
         /// <returns> The newly trained model, which can be used immediately or saved to
         ///         disk using an opennlp.maxent.io.GISModelWriter object. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static GISModel trainModel(opennlp.model.EventStream eventStream, int iterations, int cutoff) throws java.io.IOException
         public static GISModel trainModel(EventStream eventStream, int iterations, int cutoff)
         {
             return trainModel(eventStream, iterations, cutoff, false, PRINT_MESSAGES);
@@ -117,8 +111,6 @@ namespace opennlp.maxent
         ///          Determines whether training status messages are written to STDOUT. </param>
         /// <returns> The newly trained model, which can be used immediately or saved to
         ///         disk using an opennlp.maxent.io.GISModelWriter object. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static GISModel trainModel(opennlp.model.EventStream eventStream, int iterations, int cutoff, boolean smoothing, boolean printMessagesWhileTraining) throws java.io.IOException
         public static GISModel trainModel(EventStream eventStream, int iterations, int cutoff, bool smoothing,
             bool printMessagesWhileTraining)
         {
@@ -143,8 +135,6 @@ namespace opennlp.maxent
         ///          The standard deviation for the gaussian smoother. </param>
         /// <returns> The newly trained model, which can be used immediately or saved to
         ///         disk using an opennlp.maxent.io.GISModelWriter object. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static GISModel trainModel(opennlp.model.EventStream eventStream, int iterations, int cutoff, double sigma) throws java.io.IOException
         public static GISModel trainModel(EventStream eventStream, int iterations, int cutoff, double sigma)
         {
             GISTrainer trainer = new GISTrainer(PRINT_MESSAGES);

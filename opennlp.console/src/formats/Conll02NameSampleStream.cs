@@ -101,8 +101,6 @@ namespace opennlp.tools.formats
 		this.types = types;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: static final opennlp.tools.util.Span extract(int begin, int end, String beginTag) throws opennlp.tools.util.InvalidFormatException
 	  internal static Span extract(int begin, int end, string beginTag)
 	  {
 
@@ -133,8 +131,6 @@ namespace opennlp.tools.formats
 	  }
 
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.namefind.NameSample read() throws java.io.IOException
 	  public virtual NameSample read()
 	  {
 
@@ -259,15 +255,11 @@ namespace opennlp.tools.formats
 		}
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void reset() throws java.io.IOException, UnsupportedOperationException
 	  public virtual void reset()
 	  {
 		lineStream.reset();
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
 	  public virtual void close()
 	  {
 		lineStream.close();

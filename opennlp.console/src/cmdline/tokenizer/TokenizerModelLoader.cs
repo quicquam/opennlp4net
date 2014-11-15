@@ -37,8 +37,6 @@ namespace opennlp.tools.cmdline.tokenizer
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected opennlp.tools.tokenize.TokenizerModel loadModel(java.io.InputStream modelIn) throws java.io.IOException
 	  protected internal override TokenizerModel loadModel(InputStream modelIn)
 	  {
 		return new TokenizerModel(modelIn);

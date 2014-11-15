@@ -128,8 +128,6 @@ namespace opennlp.tools.formats.muc
 		return !failed;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.coref.CorefSample read() throws java.io.IOException
 	  public override CorefSample read()
 	  {
 

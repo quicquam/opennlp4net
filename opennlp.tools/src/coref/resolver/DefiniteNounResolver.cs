@@ -27,15 +27,11 @@ namespace opennlp.tools.coref.resolver
     /// </summary>
     public class DefiniteNounResolver : MaxentResolver
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DefiniteNounResolver(String projectName, ResolverMode m) throws java.io.IOException
         public DefiniteNounResolver(string projectName, ResolverMode m) : base(projectName, "defmodel", m, 80)
         {
             //preferFirstReferent = true;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DefiniteNounResolver(String projectName, ResolverMode m, NonReferentialResolver nrr) throws java.io.IOException
         public DefiniteNounResolver(string projectName, ResolverMode m, NonReferentialResolver nrr)
             : base(projectName, "defmodel", m, 80, nrr)
         {

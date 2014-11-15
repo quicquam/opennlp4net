@@ -75,8 +75,6 @@ namespace opennlp.tools.formats.muc
 		this.storedSamples = storedSamples;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void startElement(String name, java.util.Map<String, String> attributes) throws opennlp.tools.util.InvalidFormatException
 	  public override void startElement(string name, IDictionary<string, string> attributes)
 	  {
 

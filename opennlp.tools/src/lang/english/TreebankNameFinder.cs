@@ -59,8 +59,6 @@ namespace opennlp.tools.lang.english
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static void processParse(TreebankNameFinder[] finders, String[] tags, java.io.BufferedReader input) throws java.io.IOException
         private static void processParse(TreebankNameFinder[] finders, string[] tags, BufferedReader input)
         {
             Span[][] nameSpans = new Span[finders.Length][];
@@ -101,8 +99,6 @@ namespace opennlp.tools.lang.english
         /// <param name="tags"> The tag names for the corresponding name finder. </param>
         /// <param name="input"> The input reader. </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static void processText(TreebankNameFinder[] finders, String[] tags, java.io.BufferedReader input) throws java.io.IOException
         private static void processText(TreebankNameFinder[] finders, string[] tags, BufferedReader input)
         {
             Span[][] nameSpans = new Span[finders.Length][];
@@ -180,8 +176,6 @@ namespace opennlp.tools.lang.english
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length == 0)

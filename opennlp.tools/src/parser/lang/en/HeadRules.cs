@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using j4n.IO.Reader;
 using j4n.IO.Writer;
 using j4n.Object;
@@ -80,8 +81,6 @@ namespace opennlp.tools.parser.lang.en
         /// <param name="ruleFile"> the head rules file.
         /// </param>
         /// <exception cref="IOException"> if the head rules file can not be read. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public HeadRules(String ruleFile) throws java.io.IOException
         [Obsolete]
         public HeadRules(string ruleFile) : this(new BufferedReader(new FileReader(ruleFile)))
         {
@@ -93,8 +92,6 @@ namespace opennlp.tools.parser.lang.en
         /// <param name="rulesReader"> the head rules reader.
         /// </param>
         /// <exception cref="IOException"> if the head rules reader can not be read. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public HeadRules(java.io.Reader rulesReader) throws java.io.IOException
         public HeadRules(Reader rulesReader)
         {
             BufferedReader @in = new BufferedReader(rulesReader);
@@ -201,8 +198,6 @@ namespace opennlp.tools.parser.lang.en
             return constituents[constituents.Length - 1].Head;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private void readHeadRules(java.io.BufferedReader str) throws java.io.IOException
         private void readHeadRules(BufferedReader str)
         {
             string line;
@@ -265,8 +260,6 @@ namespace opennlp.tools.parser.lang.en
         /// </summary>
         /// <param name="writer"> </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(java.io.Writer writer) throws java.io.IOException
         public virtual void serialize(Writer writer)
         {
             foreach (string type in headRules.Keys)

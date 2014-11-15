@@ -60,8 +60,6 @@ namespace opennlp.tools.formats.convert
 
 	  protected internal abstract string[] toSentence(T sample);
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.sentdetect.SentenceSample read() throws java.io.IOException
 	  public override SentenceSample read()
 	  {
 		IList<string[]> sentences = new List<string[]>();

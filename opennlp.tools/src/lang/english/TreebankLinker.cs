@@ -48,21 +48,15 @@ namespace opennlp.tools.lang.english
     [Obsolete("will be removed soon!")]
     public class TreebankLinker : DefaultLinker
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TreebankLinker(String project, opennlp.tools.coref.LinkerMode mode) throws java.io.IOException
         public TreebankLinker(string project, LinkerMode mode) : base(project, mode)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TreebankLinker(String project, opennlp.tools.coref.LinkerMode mode, boolean useDiscourseModel) throws java.io.IOException
         public TreebankLinker(string project, LinkerMode mode, bool useDiscourseModel)
             : base(project, mode, useDiscourseModel)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TreebankLinker(String project, opennlp.tools.coref.LinkerMode mode, boolean useDiscourseModel, double fixedNonReferentialProbability) throws java.io.IOException
         public TreebankLinker(string project, LinkerMode mode, bool useDiscourseModel,
             double fixedNonReferentialProbability)
             : base(project, mode, useDiscourseModel, fixedNonReferentialProbability)
@@ -86,8 +80,6 @@ namespace opennlp.tools.lang.english
         /// Identitifies corefernce relationships for parsed input passed via standard in. </summary>
         /// <param name="args"> The model directory. </param>
         /// <exception cref="IOException"> when the model directory can not be read. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length == 0)

@@ -427,8 +427,6 @@ namespace opennlp.tools.parser.treeinsert
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public static void Main(string[] args)
         {
             if (args.Length == 0)

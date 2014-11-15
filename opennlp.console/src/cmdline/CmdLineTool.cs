@@ -58,8 +58,6 @@ namespace opennlp.tools.cmdline
 		return true;
 	  }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings({"unchecked"}) protected <T> String getBasicHelp(Class argProxyInterface)
 	  protected internal virtual string getBasicHelp<T>(Type argProxyInterface)
 	  {
 		return getBasicHelp(new Type[]{argProxyInterface});

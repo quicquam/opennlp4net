@@ -222,8 +222,6 @@ namespace opennlp.maxent
             return prior;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length == 0)

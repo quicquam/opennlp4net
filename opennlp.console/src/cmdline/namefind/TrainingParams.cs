@@ -32,16 +32,10 @@ namespace opennlp.tools.cmdline.namefind
 	public interface TrainingParams : BasicTrainingParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "modelType", description = "The type of the token name finder model") @OptionalParameter(defaultValue = "default") String getType();
 	  string Type {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "resourcesDir", description = "The resources directory") @OptionalParameter java.io.File getResources();
 	  Jfile Resources {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "featuregenFile", description = "The feature generator descriptor file") @OptionalParameter java.io.File getFeaturegen();
       Jfile Featuregen { get; }
 	}
 

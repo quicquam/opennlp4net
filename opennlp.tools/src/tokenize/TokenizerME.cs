@@ -246,8 +246,6 @@ namespace opennlp.tools.tokenize
         ///           thrown during IO operations on a temp file which is created
         ///           during training. Or if reading from the <seealso cref="ObjectStream"/>
         ///           fails. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenizerModel train(opennlp.tools.util.ObjectStream<TokenSample> samples, TokenizerFactory factory, opennlp.tools.util.TrainingParameters mlParams) throws java.io.IOException
         public static TokenizerModel train(ObjectStream<TokenSample> samples, TokenizerFactory factory,
             TrainingParameters mlParams)
         {
@@ -278,8 +276,6 @@ namespace opennlp.tools.tokenize
         /// @deprecated Use 
         ///    <seealso cref="#train(String, ObjectStream, TokenizerFactory, TrainingParameters)"/> 
         ///    and pass in a <seealso cref="TokenizerFactory"/> 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenizerModel train(String languageCode, opennlp.tools.util.ObjectStream<TokenSample> samples, boolean useAlphaNumericOptimization, opennlp.tools.util.TrainingParameters mlParams) throws java.io.IOException
         public static TokenizerModel train(string languageCode, ObjectStream<TokenSample> samples,
             bool useAlphaNumericOptimization, TrainingParameters mlParams)
         {
@@ -304,8 +300,6 @@ namespace opennlp.tools.tokenize
         /// @deprecated Use 
         ///    <seealso cref="#train(String, ObjectStream, TokenizerFactory, TrainingParameters)"/> 
         ///    and pass in a <seealso cref="TokenizerFactory"/> 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenizerModel train(String languageCode, opennlp.tools.util.ObjectStream<TokenSample> samples, opennlp.tools.dictionary.Dictionary abbreviations, boolean useAlphaNumericOptimization, opennlp.tools.util.TrainingParameters mlParams) throws java.io.IOException
         public static TokenizerModel train(string languageCode, ObjectStream<TokenSample> samples,
             Dictionary abbreviations, bool useAlphaNumericOptimization, TrainingParameters mlParams)
         {
@@ -341,8 +335,6 @@ namespace opennlp.tools.tokenize
         /// @deprecated Use 
         ///    <seealso cref="#train(String, ObjectStream, TokenizerFactory, TrainingParameters)"/> 
         ///    and pass in a <seealso cref="TokenizerFactory"/> 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("Use") public static TokenizerModel train(String languageCode, opennlp.tools.util.ObjectStream<TokenSample> samples, boolean useAlphaNumericOptimization, int cutoff, int iterations) throws java.io.IOException
         [Obsolete("Use")]
         public static TokenizerModel train(string languageCode, ObjectStream<TokenSample> samples,
             bool useAlphaNumericOptimization, int cutoff, int iterations)
@@ -371,8 +363,6 @@ namespace opennlp.tools.tokenize
         /// @deprecated Use 
         ///    <seealso cref="#train(String, ObjectStream, TokenizerFactory, TrainingParameters)"/> 
         ///    and pass in a <seealso cref="TokenizerFactory"/> 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenizerModel train(String languageCode, opennlp.tools.util.ObjectStream<TokenSample> samples, boolean useAlphaNumericOptimization) throws java.io.IOException, java.io.ObjectStreamException
         public static TokenizerModel train(string languageCode, ObjectStream<TokenSample> samples,
             bool useAlphaNumericOptimization)
         {

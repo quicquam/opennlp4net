@@ -69,8 +69,6 @@ namespace opennlp.tools.formats
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public java.io.File read() throws java.io.IOException
       public virtual Jfile read()
 	  {
 
@@ -120,8 +118,6 @@ namespace opennlp.tools.formats
 		directories.addAll(inputDirectories);
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
 	  public virtual void close()
 	  {
 	  }

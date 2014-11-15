@@ -39,8 +39,7 @@ namespace opennlp.maxent.io
         /// Constructor which takes the name of the model without any suffixes, such as
         /// ".mei.gz" or ".mep.gz".
         /// </summary>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public OldFormatGISModelReader(String modelname) throws java.io.IOException
+
         public OldFormatGISModelReader(string modelname) : base(new Jfile(modelname + ".mei.gz"))
         {
             paramsInput = new DataInputStream(new GZIPInputStream(new FileInputStream(modelname + ".mep.gz")));
@@ -59,8 +58,7 @@ namespace opennlp.maxent.io
         /// <exception cref="java.io.IOException">
         ///           when the model file does not match the outcome patterns or can
         ///           not be read. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: protected opennlp.model.Context[] getParameters(int[][] outcomePatterns) throws java.io.IOException
+
         protected new Context[] GetParameters(int[][] outcomePatterns)
         {
             Context[] @params = new Context[NUM_PREDS];
@@ -101,8 +99,7 @@ namespace opennlp.maxent.io
         /// gzipped, binary format as "<model_name_prefix>.bin.gz".
         /// </para>
         /// </summary>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
+
         public static void Main(string[] args)
         {
             if (args.Length < 1)

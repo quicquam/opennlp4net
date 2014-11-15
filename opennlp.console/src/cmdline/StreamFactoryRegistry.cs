@@ -163,8 +163,7 @@ namespace opennlp.tools.cmdline
 	  /// </summary>
 	  /// <param name="sampleClass"> class of the objects, produced by the streams instantiated by the factory </param>
 	  /// <returns> formats mapped to factories </returns>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public static <T> java.util.Map<String, ObjectStreamFactory<T>> getFactories(Class sampleClass)
+
 	  public static IDictionary<string, ObjectStreamFactory> getFactories(Type sampleClass)
 	  {
 		return (IDictionary<string, ObjectStreamFactory>)(object) registry[sampleClass];
@@ -177,8 +176,7 @@ namespace opennlp.tools.cmdline
 	  /// <param name="sampleClass"> class of the objects, produced by the streams instantiated by the factory </param>
 	  /// <param name="formatName">  name of the format, if null, assumes OpenNLP format </param>
 	  /// <returns> factory instance </returns>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public static <T> ObjectStreamFactory<T> getFactory(Class sampleClass, String formatName)
+
       public static ObjectStreamFactory getFactory(Type sampleClass, string formatName)
 	  {
 		if (null == formatName)

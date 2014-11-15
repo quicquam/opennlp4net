@@ -290,8 +290,6 @@ namespace opennlp.tools.parser
         /// method assumes that the specified constituent can be inserted into this parse.
         /// </summary>
         /// <param name="constituent"> The constituent to be inserted. </param>
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: public void insert(final Parse constituent)
         public virtual void insert(Parse constituent)
         {
             Span ic = constituent.span;
@@ -1231,8 +1229,6 @@ namespace opennlp.tools.parser
         /// <param name="args"> The head rules files.
         /// </param>
         /// <exception cref="IOException"> If the head rules file can not be opened and read. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static void main(String[] args) throws java.io.IOException
         [Obsolete]
         public static void Main(string[] args)
         {

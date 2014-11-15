@@ -71,8 +71,6 @@ namespace opennlp.tools.postag
         /// <exception cref="IOException"> when the specified file can not be read.
         /// </exception>
         /// @deprecated Use <seealso cref="POSDictionary#create(InputStream)"/> instead, old format might removed. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("Use <seealso cref="POSDictionary#create(java.io.InputStream)"/> instead, old format might removed.") public POSDictionary(String file) throws java.io.IOException
         [Obsolete("Use <seealso cref=\"POSDictionary#create(java.io.InputStream)\"/> instead, old format might removed."
             )]
         public POSDictionary(string file) : this(file, null, true)
@@ -89,8 +87,6 @@ namespace opennlp.tools.postag
         /// <exception cref="IOException"> when the specified file can not be read.
         /// </exception>
         /// @deprecated Use <seealso cref="POSDictionary#create(InputStream)"/> instead, old format might removed. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("Use <seealso cref="POSDictionary#create(java.io.InputStream)"/> instead, old format might removed.") public POSDictionary(String file, boolean caseSensitive) throws java.io.IOException
         [Obsolete("Use <seealso cref=\"POSDictionary#create(java.io.InputStream)\"/> instead, old format might removed."
             )]
         public POSDictionary(string file, bool caseSensitive) : this(file, null, caseSensitive)
@@ -108,8 +104,6 @@ namespace opennlp.tools.postag
         /// <exception cref="IOException"> when the specified file can not be read.
         /// </exception>
         /// @deprecated Use <seealso cref="POSDictionary#create(InputStream)"/> instead, old format might removed. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("Use <seealso cref="POSDictionary#create(java.io.InputStream)"/> instead, old format might removed.") public POSDictionary(String file, String encoding, boolean caseSensitive) throws java.io.IOException
         [Obsolete("Use <seealso cref=\"POSDictionary#create(java.io.InputStream)\"/> instead, old format might removed."
             )]
         public POSDictionary(string file, string encoding, bool caseSensitive)
@@ -129,8 +123,6 @@ namespace opennlp.tools.postag
         /// <exception cref="IOException"> when the specified file can not be read.
         /// </exception>
         /// @deprecated Use <seealso cref="POSDictionary#create(InputStream)"/> instead, old format might removed. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("Use <seealso cref="POSDictionary#create(java.io.InputStream)"/> instead, old format might removed.") public POSDictionary(java.io.BufferedReader reader, boolean caseSensitive) throws java.io.IOException
         [Obsolete("Use <seealso cref=\"POSDictionary#create(java.io.InputStream)\"/> instead, old format might removed."
             )]
         public POSDictionary(BufferedReader reader, bool caseSensitive)
@@ -229,8 +221,6 @@ namespace opennlp.tools.postag
         /// </param>
         /// <exception cref="IOException">
         ///             if writing to the <seealso cref="OutputStream"/> fails </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(java.io.OutputStream out) throws java.io.IOException
         public virtual void serialize(OutputStream @out)
         {
             // Commented out 07/11/2014 MJJ
@@ -333,12 +323,8 @@ namespace opennlp.tools.postag
         /// </returns>
         /// <exception cref="IOException"> </exception>
         /// <exception cref="InvalidFormatException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static POSDictionary create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public static POSDictionary create(InputStream @in)
         {
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final POSDictionary newPosDict = new POSDictionary();
             POSDictionary newPosDict = new POSDictionary();
 
             bool isCaseSensitive = true;
@@ -372,8 +358,6 @@ namespace opennlp.tools.postag
                 this.newPosDict = newPosDict;
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void insert(opennlp.tools.dictionary.serializer.Entry entry) throws opennlp.tools.util.InvalidFormatException
             public virtual void insert(Entry entry)
             {
                 string tagString = entry.Attributes.getValue("tags");

@@ -35,13 +35,13 @@ namespace opennlp.tools.util
 
         public override Event next()
         {
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
             return ci.Current;
         }
 
         public override bool hasNext()
         {
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
             return ci.Current != null;
         }
     }

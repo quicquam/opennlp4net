@@ -32,24 +32,14 @@ namespace opennlp.tools.cmdline.postag
 	public interface TrainingParams : BasicTrainingParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "maxent|perceptron|perceptron_sequence", description = "The type of the token name finder model. One of maxent|perceptron|perceptron_sequence.") @OptionalParameter(defaultValue = "maxent") String getType();
 	  string Type {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "dictionaryPath", description = "The XML tag dictionary file") @OptionalParameter java.io.File getDict();
 	  Jfile Dict {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "cutoff", description = "NGram cutoff. If not specified will not create ngram dictionary.") @OptionalParameter Integer getNgram();
 	  int? Ngram {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "tagDictCutoff", description = "TagDictionary cutoff. If specified will create/expand a mutable TagDictionary") @OptionalParameter Integer getTagDictCutoff();
 	  int? TagDictCutoff {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "factoryName", description = "A sub-class of POSTaggerFactory where to get implementation and resources.") @OptionalParameter String getFactory();
 	  string Factory {get;}
 	}
 

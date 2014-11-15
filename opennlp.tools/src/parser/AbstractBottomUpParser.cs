@@ -266,8 +266,6 @@ namespace opennlp.tools.parser
         /// more than the specified amount of probability mass. </summary>
         /// <param name="p"> The parse to advance. </param>
         /// <param name="probMass"> The amount of probability mass that should be accounted for by the advanced parses. </param>
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: protected abstract Parse[] advanceParses(final Parse p, double probMass);
         protected internal abstract Parse[] advanceParses(Parse p, double probMass);
 
         /// <summary>
@@ -296,7 +294,7 @@ namespace opennlp.tools.parser
                 ndh = new ListHeap<Parse>(K);
 
                 int derivationRank = 0;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
                 for (IEnumerator<Parse> pi = odh.iterator(); pi.MoveNext() && derivationRank < K; derivationRank++)
                     // forearch derivation
                 {
@@ -423,8 +421,6 @@ namespace opennlp.tools.parser
         /// <param name="p"> A pos-tag assigned parse. </param>
         /// <param name="minChunkScore"> A minimum score below which chunks should not be advanced. </param>
         /// <returns> The top chunk assignments to the specified parse. </returns>
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: protected Parse[] advanceChunks(final Parse p, double minChunkScore)
         protected internal virtual Parse[] advanceChunks(Parse p, double minChunkScore)
         {
             // chunk
@@ -518,8 +514,6 @@ namespace opennlp.tools.parser
         /// Advances the parse by assigning it POS tags and returns multiple tag sequences. </summary>
         /// <param name="p"> The parse to be tagged. </param>
         /// <returns> Parses with different POS-tag sequence assignments. </returns>
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: protected Parse[] advanceTags(final Parse p)
         protected internal virtual Parse[] advanceTags(Parse p)
         {
             Parse[] children = p.Children;
@@ -589,8 +583,6 @@ namespace opennlp.tools.parser
         /// <param name="params"> can contain a cutoff, the minimum number of entries required for the
         ///        n-gram to be saved as part of the dictionary. </param>
         /// <returns> A dictionary object. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.tools.dictionary.Dictionary buildDictionary(opennlp.tools.util.ObjectStream<Parse> data, HeadRules rules, opennlp.tools.util.TrainingParameters params) throws java.io.IOException
         public static Dictionary buildDictionary(ObjectStream<Parse> data, HeadRules rules, TrainingParameters @params)
         {
             int cutoff = 5;
@@ -698,8 +690,6 @@ namespace opennlp.tools.parser
         /// <param name="rules"> The head rules for the parses. </param>
         /// <param name="cutoff"> The minimum number of entries required for the n-gram to be saved as part of the dictionary. </param>
         /// <returns> A dictionary object. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.tools.dictionary.Dictionary buildDictionary(opennlp.tools.util.ObjectStream<Parse> data, HeadRules rules, int cutoff) throws java.io.IOException
         public static Dictionary buildDictionary(ObjectStream<Parse> data, HeadRules rules, int cutoff)
         {
             TrainingParameters @params = new TrainingParameters();

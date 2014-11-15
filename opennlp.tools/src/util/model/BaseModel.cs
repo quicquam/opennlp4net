@@ -96,8 +96,6 @@ namespace opennlp.tools.util.model
         {
             createBaseArtifactSerializers();
 
-            //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-            //ORIGINAL LINE: final java.util.zip.ZipInputStream zip = new java.util.zip.ZipInputStream(in);
             using (var zip = new ZipInputStream(@in.Stream))
             {
                 // will read it in two steps, first using the known factories, latter the
@@ -133,9 +131,7 @@ namespace opennlp.tools.util.model
 
             checkArtifactMap();
         }
-
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: private void initializeFactory() throws opennlp.tools.util.InvalidFormatException
+       
         private void initializeFactory()
         {
             string factoryName = getManifestProperty(FACTORY_NAME);
@@ -208,7 +204,6 @@ namespace opennlp.tools.util.model
 
         protected void createBaseArtifactSerializers()
         {
-            //JAVA TO C# CONVERTER TODO TASK: There is no .NET Dictionary equivalent to the Java 'putAll' method:
             createArtifactSerializers();
         }
 

@@ -31,12 +31,8 @@ namespace opennlp.tools.cmdline.dictionary
 	internal interface DictionaryBuilderParams : EncodingParameter
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "in", description = "Plain file with one entry per line") java.io.File getInputFile();
 	  Jfile InputFile {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "out", description = "The dictionary file.") java.io.File getOutputFile();
       Jfile OutputFile { get; }
 
 	}

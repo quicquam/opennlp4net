@@ -100,8 +100,6 @@ namespace opennlp.tools.namefind
             get { return fmeasure; }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static void main(String[] args) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         [Obsolete]
         public static void Main(string[] args)
         {
@@ -117,14 +115,10 @@ namespace opennlp.tools.namefind
                 Console.WriteLine("Performing evaluation ...");
                 TokenNameFinderEvaluator evaluator = new TokenNameFinderEvaluator(nameFinder);
 
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final NameSampleDataStream sampleStream = new NameSampleDataStream(new opennlp.tools.util.PlainTextByLineStream(new java.io.InputStreamReader(new java.io.FileInputStream(args[2]), args[1])));
                 NameSampleDataStream sampleStream =
                     new NameSampleDataStream(
                         new PlainTextByLineStream(new InputStreamReader(new FileInputStream(args[2]), args[1])));
 
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final opennlp.tools.cmdline.PerformanceMonitor monitor = new opennlp.tools.cmdline.PerformanceMonitor("sent");
                 PerformanceMonitor monitor = new PerformanceMonitor("sent");
 
                 monitor.startAndPrintThroughput();
@@ -158,17 +152,12 @@ namespace opennlp.tools.namefind
                 this.monitor = monitor;
             }
 
-
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public NameSample read() throws java.io.IOException
             public virtual NameSample read()
             {
                 monitor.incrementCounter();
                 return sampleStream.read();
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void reset() throws java.io.IOException
             public virtual void reset()
             {
                 sampleStream.reset();

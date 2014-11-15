@@ -322,8 +322,6 @@ namespace opennlp.tools.sentdetect
         /// @deprecated Use
         ///             <seealso cref="#train(String, ObjectStream, SentenceDetectorFactory, TrainingParameters)"/>
         ///             and pass in af <seealso cref="SentenceDetectorFactory"/>. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static SentenceModel train(String languageCode, opennlp.tools.util.ObjectStream<SentenceSample> samples, boolean useTokenEnd, opennlp.tools.dictionary.Dictionary abbreviations, opennlp.tools.util.TrainingParameters mlParams) throws java.io.IOException
         public static SentenceModel train(string languageCode, ObjectStream<SentenceSample> samples, bool useTokenEnd,
             Dictionary abbreviations, TrainingParameters mlParams)
         {
@@ -332,8 +330,6 @@ namespace opennlp.tools.sentdetect
             return train(languageCode, samples, sdFactory, mlParams);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static SentenceModel train(String languageCode, opennlp.tools.util.ObjectStream<SentenceSample> samples, SentenceDetectorFactory sdFactory, opennlp.tools.util.TrainingParameters mlParams) throws java.io.IOException
         public static SentenceModel train(string languageCode, ObjectStream<SentenceSample> samples,
             SentenceDetectorFactory sdFactory, TrainingParameters mlParams)
         {
@@ -351,8 +347,6 @@ namespace opennlp.tools.sentdetect
         /// @deprecated Use
         ///             <seealso cref="#train(String, ObjectStream, SentenceDetectorFactory, TrainingParameters)"/>
         ///             and pass in af <seealso cref="SentenceDetectorFactory"/>. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("Use") public static SentenceModel train(String languageCode, opennlp.tools.util.ObjectStream<SentenceSample> samples, boolean useTokenEnd, opennlp.tools.dictionary.Dictionary abbreviations, int cutoff, int iterations) throws java.io.IOException
         [Obsolete("Use")]
         public static SentenceModel train(string languageCode, ObjectStream<SentenceSample> samples, bool useTokenEnd,
             Dictionary abbreviations, int cutoff, int iterations)
@@ -364,8 +358,6 @@ namespace opennlp.tools.sentdetect
         /// @deprecated Use
         ///             <seealso cref="#train(String, ObjectStream, SentenceDetectorFactory, TrainingParameters)"/>
         ///             and pass in af <seealso cref="SentenceDetectorFactory"/>. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static SentenceModel train(String languageCode, opennlp.tools.util.ObjectStream<SentenceSample> samples, boolean useTokenEnd, opennlp.tools.dictionary.Dictionary abbreviations) throws java.io.IOException
         public static SentenceModel train(string languageCode, ObjectStream<SentenceSample> samples, bool useTokenEnd,
             Dictionary abbreviations)
         {

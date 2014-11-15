@@ -38,8 +38,6 @@ namespace opennlp.tools.cmdline.postag
 	{
 	    public interface CVToolParams : CVParams, TrainingParams
 	  {
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "outputFile", description = "the path of the fine-grained report file.") @OptionalParameter java.io.File getReportOutputFile();
 		Jfile ReportOutputFile {get;}
 	  }
 

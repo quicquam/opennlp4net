@@ -94,8 +94,6 @@ namespace opennlp.tools.coref
             return mentions.ToArray();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void train(String modelDirectory, opennlp.tools.util.ObjectStream<CorefSample> samples, boolean useTreebank, boolean useDiscourseModel) throws java.io.IOException
         public static void train(string modelDirectory, ObjectStream<CorefSample> samples, bool useTreebank,
             bool useDiscourseModel)
         {

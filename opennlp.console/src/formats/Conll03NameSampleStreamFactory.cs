@@ -33,12 +33,8 @@ namespace opennlp.tools.formats
 	{
 	    public interface Parameters : BasicFormatParams
 	  {
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "en|de") String getLang();
 		string Lang {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "per,loc,org,misc") String getTypes();
 		string Types {get;}
 	      object Data { get; set; }
 	  }

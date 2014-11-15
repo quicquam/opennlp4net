@@ -32,8 +32,6 @@ namespace opennlp.tools.coref.sim
 
         private bool debugOn = false;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public MaxentCompatibilityModel(String corefProject) throws java.io.IOException
         public MaxentCompatibilityModel(string corefProject)
         {
             genModel = GenderModel.testModel(corefProject + "/gen");

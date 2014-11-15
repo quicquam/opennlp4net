@@ -24,8 +24,6 @@ namespace opennlp.tools.util
     /// <summary>
     /// Provides fixed size, pre-allocated, least recently used replacement cache.
     /// </summary>
-    //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-    //ORIGINAL LINE: @SuppressWarnings("unchecked") public class Cache implements java.util.Map
     public class Cache
     {
         /// <summary>

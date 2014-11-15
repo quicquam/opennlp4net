@@ -52,24 +52,18 @@ namespace opennlp.tools.coref.sim
         private HashSet<string> maleNames;
         private HashSet<string> femaleNames;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TestGenderModel PrepAttachDataUtil.testModel(String name) throws java.io.IOException
         public static TestGenderModel testModel(string name)
         {
             GenderModel gm = new GenderModel(name, false);
             return gm;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TrainSimilarityModel trainModel(String name) throws java.io.IOException
         public static TrainSimilarityModel trainModel(string name)
         {
             GenderModel gm = new GenderModel(name, true);
             return gm;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private java.util.Set<String> readNames(String nameFile) throws java.io.IOException
         private HashSet<string> readNames(string nameFile)
         {
             HashSet<string> names = new HashSet<string>();
@@ -81,8 +75,6 @@ namespace opennlp.tools.coref.sim
             return names;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private GenderModel(String modelName, boolean train) throws java.io.IOException
         private GenderModel(string modelName, bool train)
         {
             this.modelName = modelName;
@@ -197,8 +189,6 @@ namespace opennlp.tools.coref.sim
             return GenderEnum.UNKNOWN;
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public void setExtents(Context[] extentContexts)
         public virtual Context[] Extents
         {
             set
@@ -279,8 +269,6 @@ namespace opennlp.tools.coref.sim
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -312,8 +300,6 @@ namespace opennlp.tools.coref.sim
             return testModel_Renamed.eval(features.ToArray());
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void trainModel() throws java.io.IOException
         public virtual void trainModel()
         {
             if (debugOn)

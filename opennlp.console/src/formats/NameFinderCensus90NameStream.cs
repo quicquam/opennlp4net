@@ -79,8 +79,6 @@ namespace opennlp.tools.formats
 		this.lineStream = new PlainTextByLineStream(@in, this.encoding);
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.util.StringList read() throws java.io.IOException
 	  public virtual StringList read()
 	  {
 		string line = lineStream.read();
@@ -111,15 +109,11 @@ namespace opennlp.tools.formats
 		return name;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void reset() throws java.io.IOException, UnsupportedOperationException
 	  public virtual void reset()
 	  {
 		lineStream.reset();
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
 	  public virtual void close()
 	  {
 		lineStream.close();

@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using System.Linq;
 using j4n.IO.InputStream;
 using j4n.Lang;
@@ -173,9 +174,6 @@ namespace opennlp.tools.namefind
             });
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static opennlp.tools.util.featuregen.AdaptiveFeatureGenerator createFeatureGenerator(byte[] generatorDescriptor, final java.util.Map<String, Object> resources) throws java.io.IOException
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
         private static AdaptiveFeatureGenerator createFeatureGenerator(sbyte[] generatorDescriptor,
             IDictionary<string, object> resources)
         {
@@ -361,9 +359,6 @@ namespace opennlp.tools.namefind
         /// <returns> the newly trained model
         /// </returns>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenNameFinderModel train(String languageCode, String type, opennlp.tools.util.ObjectStream<NameSample> samples, opennlp.tools.util.TrainingParameters trainParams, opennlp.tools.util.featuregen.AdaptiveFeatureGenerator generator, final java.util.Map<String, Object> resources) throws java.io.IOException
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
         public static TokenNameFinderModel train(string languageCode, string type, ObjectStream<NameSample> samples,
             TrainingParameters trainParams, AdaptiveFeatureGenerator generator, IDictionary<string, object> resources)
         {
@@ -424,9 +419,7 @@ namespace opennlp.tools.namefind
         /// <returns> the newly trained model
         /// </returns>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenNameFinderModel train(String languageCode, String type, opennlp.tools.util.ObjectStream<NameSample> samples, opennlp.tools.util.TrainingParameters trainParams, byte[] featureGeneratorBytes, final java.util.Map<String, Object> resources) throws java.io.IOException
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
+
         public static TokenNameFinderModel train(string languageCode, string type, ObjectStream<NameSample> samples,
             TrainingParameters trainParams, sbyte[] featureGeneratorBytes, IDictionary<string, object> resources)
         {
@@ -456,9 +449,6 @@ namespace opennlp.tools.namefind
         /// </returns>
         /// <exception cref="IOException"> </exception>
         /// <exception cref="ObjectStreamException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenNameFinderModel train(String languageCode, String type, opennlp.tools.util.ObjectStream<NameSample> samples, opennlp.tools.util.featuregen.AdaptiveFeatureGenerator generator, final java.util.Map<String, Object> resources, int iterations, int cutoff) throws java.io.IOException
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
         public static TokenNameFinderModel train(string languageCode, string type, ObjectStream<NameSample> samples,
             AdaptiveFeatureGenerator generator, IDictionary<string, object> resources, int iterations, int cutoff)
         {
@@ -468,9 +458,6 @@ namespace opennlp.tools.namefind
 
         /// @deprecated use <seealso cref="#train(String, String, ObjectStream, TrainingParameters, AdaptiveFeatureGenerator, Map)"/>
         /// instead and pass in a TrainingParameters object. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("use <seealso cref="#train(String, String, opennlp.tools.util.ObjectStream, opennlp.tools.util.TrainingParameters, opennlp.tools.util.featuregen.AdaptiveFeatureGenerator, java.util.Map)"/>") public static TokenNameFinderModel train(String languageCode, String type, opennlp.tools.util.ObjectStream<NameSample> samples, final java.util.Map<String, Object> resources, int iterations, int cutoff) throws java.io.IOException
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
         [Obsolete(
             "use <seealso cref=\"#train(String, String, opennlp.tools.util.ObjectStream, opennlp.tools.util.TrainingParameters, opennlp.tools.util.featuregen.AdaptiveFeatureGenerator, java.util.Map)\"/>"
             )]
@@ -480,9 +467,6 @@ namespace opennlp.tools.namefind
             return train(languageCode, type, samples, (AdaptiveFeatureGenerator) null, resources, iterations, cutoff);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenNameFinderModel train(String languageCode, String type, opennlp.tools.util.ObjectStream<NameSample> samples, final java.util.Map<String, Object> resources) throws java.io.IOException
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
         public static TokenNameFinderModel train(string languageCode, string type, ObjectStream<NameSample> samples,
             IDictionary<string, object> resources)
         {
@@ -491,9 +475,6 @@ namespace opennlp.tools.namefind
 
         /// @deprecated use <seealso cref="#train(String, String, ObjectStream, TrainingParameters, byte[], Map)"/>
         /// instead and pass in a TrainingParameters object. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("use <seealso cref="#train(String, String, opennlp.tools.util.ObjectStream, opennlp.tools.util.TrainingParameters, byte[] , java.util.Map)"/>") public static TokenNameFinderModel train(String languageCode, String type, opennlp.tools.util.ObjectStream<NameSample> samples, byte[] generatorDescriptor, final java.util.Map<String, Object> resources, int iterations, int cutoff) throws java.io.IOException
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
         [Obsolete(
             "use <seealso cref=\"#train(String, String, opennlp.tools.util.ObjectStream, opennlp.tools.util.TrainingParameters, byte[] , java.util.Map)\"/>"
             )]
@@ -515,8 +496,6 @@ namespace opennlp.tools.namefind
             return model;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static opennlp.maxent.GISModel train(opennlp.model.EventStream es, int iterations, int cut) throws java.io.IOException
         [Obsolete]
         public static GISModel train(EventStream es, int iterations, int cut)
         {

@@ -41,26 +41,18 @@ namespace opennlp.tools.doccat
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DoccatModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public DoccatModel(InputStream @in) : base(COMPONENT_NAME, @in)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DoccatModel(java.io.File modelFile) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public DoccatModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DoccatModel(java.net.URL modelURL) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public DoccatModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         protected internal override void validateArtifactMap()
         {
             base.validateArtifactMap();

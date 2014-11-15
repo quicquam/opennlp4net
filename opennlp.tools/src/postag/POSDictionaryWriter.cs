@@ -38,8 +38,6 @@ namespace opennlp.tools.postag
         private CountedSet<string> wordCounts;
         private string newline = Environment.NewLine;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSDictionaryWriter(String file, String encoding) throws java.io.IOException
         public POSDictionaryWriter(string file, string encoding)
         {
             if (encoding != null)
@@ -54,8 +52,6 @@ namespace opennlp.tools.postag
             wordCounts = new CountedSet<string>();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSDictionaryWriter(String file) throws java.io.IOException
         public POSDictionaryWriter(string file) : this(file, null)
         {
         }
@@ -72,15 +68,11 @@ namespace opennlp.tools.postag
             wordCounts.add(word);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void write() throws java.io.IOException
         public virtual void write()
         {
             write(5);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void write(int cutoff) throws java.io.IOException
         public virtual void write(int cutoff)
         {
             for (IEnumerator<string> wi = wordCounts.GetEnumerator(); wi.MoveNext();)
@@ -107,8 +99,6 @@ namespace opennlp.tools.postag
             Environment.Exit(1);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length == 0)

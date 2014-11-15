@@ -42,8 +42,6 @@ namespace opennlp.tools.chunker
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ChunkSample read() throws java.io.IOException
         public override ChunkSample read()
         {
             IList<string> toks = new List<string>();

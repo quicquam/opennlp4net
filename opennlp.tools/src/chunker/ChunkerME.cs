@@ -201,8 +201,6 @@ namespace opennlp.tools.chunker
             return bestSequence.Probs;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static ChunkerModel train(String lang, opennlp.tools.util.ObjectStream<ChunkSample> in, opennlp.tools.util.TrainingParameters mlParams, ChunkerFactory factory) throws java.io.IOException
         public static ChunkerModel train(string lang, ObjectStream<ChunkSample> @in, TrainingParameters mlParams,
             ChunkerFactory factory)
         {
@@ -218,8 +216,6 @@ namespace opennlp.tools.chunker
         /// @deprecated Use
         ///             <seealso cref="#train(String, ObjectStream, ChunkerContextGenerator, TrainingParameters, ChunkerFactory)"/>
         ///             instead. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static ChunkerModel train(String lang, opennlp.tools.util.ObjectStream<ChunkSample> in, ChunkerContextGenerator contextGenerator, opennlp.tools.util.TrainingParameters mlParams) throws java.io.IOException
         public static ChunkerModel train(string lang, ObjectStream<ChunkSample> @in,
             ChunkerContextGenerator contextGenerator, TrainingParameters mlParams)
         {
@@ -234,8 +230,6 @@ namespace opennlp.tools.chunker
 
         /// @deprecated use <seealso cref="#train(String, ObjectStream, ChunkerContextGenerator, TrainingParameters)"/>
         /// instead and pass in a TrainingParameters object. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static ChunkerModel train(String lang, opennlp.tools.util.ObjectStream<ChunkSample> in, int cutoff, int iterations, ChunkerContextGenerator contextGenerator) throws java.io.IOException
         public static ChunkerModel train(string lang, ObjectStream<ChunkSample> @in, int cutoff, int iterations,
             ChunkerContextGenerator contextGenerator)
         {
@@ -255,8 +249,6 @@ namespace opennlp.tools.chunker
         /// </exception>
         /// @deprecated use <seealso cref="#train(String, ObjectStream, ChunkerContextGenerator, TrainingParameters)"/>
         /// instead and pass in a TrainingParameters object. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("use <seealso cref="#train(String, opennlp.tools.util.ObjectStream, ChunkerContextGenerator, opennlp.tools.util.TrainingParameters)"/>") public static ChunkerModel train(String lang, opennlp.tools.util.ObjectStream<ChunkSample> in, int cutoff, int iterations) throws java.io.IOException, java.io.ObjectStreamException
         [Obsolete(
             "use <seealso cref=\"#train(String, opennlp.tools.util.ObjectStream, ChunkerContextGenerator, opennlp.tools.util.TrainingParameters)\"/>"
             )]

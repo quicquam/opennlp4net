@@ -42,8 +42,6 @@ namespace opennlp.tools.namefind
             this.types = new HashSet<string>(types);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public NameSample read() throws java.io.IOException
         public override NameSample read()
         {
             NameSample sample = samples.read();

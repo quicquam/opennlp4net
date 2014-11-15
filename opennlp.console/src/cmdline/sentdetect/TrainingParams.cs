@@ -32,16 +32,10 @@ namespace opennlp.tools.cmdline.sentdetect
 	public interface TrainingParams : BasicTrainingParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "path", description = "abbreviation dictionary in XML format.") @OptionalParameter java.io.File getAbbDict();
 	  Jfile AbbDict {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "string", description = "EOS characters.") @OptionalParameter String getEosChars();
 	  string EosChars {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "factoryName", description = "A sub-class of SentenceDetectorFactory where to get implementation and resources.") @OptionalParameter String getFactory();
 	  string Factory {get;}
 	}
 

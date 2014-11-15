@@ -70,20 +70,14 @@ namespace opennlp.tools.postag
             checkArtifactMap();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public POSModel(InputStream @in) : base(COMPONENT_NAME, @in)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSModel(java.io.File modelFile) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public POSModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSModel(java.net.URL modelURL) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public POSModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
         {
         }
@@ -93,15 +87,11 @@ namespace opennlp.tools.postag
             get { return typeof (POSTaggerFactory); }
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @Override @SuppressWarnings("rawtypes") protected void createArtifactSerializers(java.util.Map<String, opennlp.tools.util.model.ArtifactSerializer> serializers)
         protected internal void createArtifactSerializers(IDictionary<string, ArtifactSerializer<Object>> serializers)
         {
             base.createArtifactSerializers();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         protected internal override void validateArtifactMap()
         {
             base.validateArtifactMap();
@@ -142,7 +132,6 @@ namespace opennlp.tools.postag
                         {
                             return (POSDictionary) dict;
                         }
-                        //JAVA TO C# CONVERTER WARNING: The .NET Type.FullName property will not always yield results identical to the Java Class.getCanonicalName method:
                         string clazz = dict.GetType().FullName;
                         throw new IllegalStateException("Can not get a dictionary of type " + clazz +
                                                         " using the deprecated method POSModel.getTagDictionary() " +

@@ -53,8 +53,6 @@ namespace opennlp.tools.formats
 	  /// <param name="sentencesPerDocument"> the number of sentences which should be grouped into once <seealso cref="DocumentSample"/> </param>
 	  /// <param name="in"> the InputStream pointing to the contents of the sentences.txt input file </param>
 	  /// <exception cref="IOException"> IOException </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: LeipzigDoccatSampleStream(String language, int sentencesPerDocument, java.io.InputStream in) throws java.io.IOException
 	  internal LeipzigDoccatSampleStream(string language, int sentencesPerDocument, InputStream @in) : base(new PlainTextByLineStream(@in, "UTF-8"))
 	  {
         var ps = new PrintStream(Console.OpenStandardOutput(), true, "UTF-8");
@@ -62,8 +60,6 @@ namespace opennlp.tools.formats
 		this.sentencesPerDocument = sentencesPerDocument;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.doccat.DocumentSample read() throws java.io.IOException
 	  public override DocumentSample read()
 	  {
 

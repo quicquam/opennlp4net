@@ -59,8 +59,6 @@ namespace opennlp.tools.coref
 
         private const string PLURAL_PRONOUN_RESOLVER_MODEL_ENTRY_NAME = "pluralPronounResolver.model";
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public CorefModel(String languageCode, String project) throws java.io.IOException
         public CorefModel(string languageCode, string project) : base(COMPONENT_NAME, languageCode, null)
         {
             artifactMap[MALE_NAMES_DICTIONARY_ENTRY_NAME] = readNames(project + Jfile.separator + "gen.mas");
@@ -99,8 +97,6 @@ namespace opennlp.tools.coref
             checkArtifactMap();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private opennlp.model.AbstractModel createModel(String fileName) throws java.io.IOException
         private AbstractModel createModel(string fileName)
         {
             return
@@ -108,8 +104,6 @@ namespace opennlp.tools.coref
                     .Model;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static opennlp.tools.dictionary.Dictionary readNames(String nameFile) throws java.io.IOException
         private static Dictionary readNames(string nameFile)
         {
             Dictionary names = new Dictionary(true);
@@ -187,8 +181,6 @@ namespace opennlp.tools.coref
             get { return (AbstractModel) artifactMap[PLURAL_PRONOUN_RESOLVER_MODEL_ENTRY_NAME]; }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length != 1)

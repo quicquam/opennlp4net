@@ -26,16 +26,12 @@ namespace opennlp.tools.coref.resolver
     /// </summary>
     public class CommonNounResolver : MaxentResolver
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public CommonNounResolver(String projectName, ResolverMode m) throws java.io.IOException
         public CommonNounResolver(string projectName, ResolverMode m) : base(projectName, "cmodel", m, 80, true)
         {
             showExclusions = false;
             preferFirstReferent = true;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public CommonNounResolver(String projectName, ResolverMode m, NonReferentialResolver nrr) throws java.io.IOException
         public CommonNounResolver(string projectName, ResolverMode m, NonReferentialResolver nrr)
             : base(projectName, "cmodel", m, 80, true, nrr)
         {

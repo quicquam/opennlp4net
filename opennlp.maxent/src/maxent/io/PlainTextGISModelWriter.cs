@@ -39,8 +39,7 @@ namespace opennlp.maxent.io
         /// </summary>
         /// <param name="model"> The GISModel which is to be persisted. </param>
         /// <param name="f"> The File in which the model is to be persisted. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PlainTextGISModelWriter(opennlp.model.AbstractModel model, java.io.File f) throws java.io.IOException, java.io.FileNotFoundException
+
         public PlainTextGISModelWriter(AbstractModel model, Jfile f) : base(model)
         {
             if (f.Name.EndsWith(".gz", StringComparison.Ordinal))
@@ -64,32 +63,24 @@ namespace opennlp.maxent.io
             output = bw;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeUTF(String s) throws java.io.IOException
         public override void writeUTF(string s)
         {
             output.write(s);
             output.newLine();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeInt(int i) throws java.io.IOException
         public override void writeInt(int i)
         {
             output.write(Convert.ToString(i));
             output.newLine();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeDouble(double d) throws java.io.IOException
         public override void writeDouble(double d)
         {
             output.write(Convert.ToString(d));
             output.newLine();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
         public override void close()
         {
             output.flush();

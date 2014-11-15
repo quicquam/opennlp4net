@@ -43,8 +43,7 @@ namespace opennlp.maxent.io
         /// </summary>
         /// <param name="f">
         ///          The File in which the model is stored. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SuffixSensitiveGISModelReader(java.io.File f) throws java.io.IOException
+
         public SuffixSensitiveGISModelReader(Jfile f) : base(f)
         {
         }
@@ -79,8 +78,7 @@ namespace opennlp.maxent.io
         /// inspect a few of them as plain text files.
         /// </para>
         /// </summary>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
+
         public static void Main(string[] args)
         {
             AbstractModel m = (new SuffixSensitiveGISModelReader(new Jfile(args[0]))).Model;

@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.namefind
@@ -46,20 +47,12 @@ namespace opennlp.tools.cmdline.namefind
 	  internal interface Parameters
 	  {
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "code") @OptionalParameter(defaultValue = "en") String getLang();
 		string Lang {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "charsetName") @OptionalParameter(defaultValue="UTF-8") String getEncoding();
 		string Encoding {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "censusDict") String getCensusData();
 		string CensusData {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "dict") String getDict();
 		string Dict {get;}
 	  }
 
@@ -87,8 +80,6 @@ namespace opennlp.tools.cmdline.namefind
 	  /// <returns> a {@code Dictionary} class containing the name dictionary
 	  ///    built from the input file. </returns>
 	  /// <exception cref="IOException"> IOException </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.tools.dictionary.Dictionary createDictionary(opennlp.tools.util.ObjectStream<opennlp.tools.util.StringList> sampleStream) throws java.io.IOException
 	  public static Dictionary createDictionary(ObjectStream<StringList> sampleStream)
 	  {
 

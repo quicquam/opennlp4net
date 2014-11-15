@@ -87,8 +87,6 @@ namespace opennlp.tools.tokenize
         ///          number of folds
         /// </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void evaluate(opennlp.tools.util.ObjectStream<TokenSample> samples, int nFolds) throws java.io.IOException
         public virtual void evaluate(ObjectStream<TokenSample> samples, int nFolds)
         {
             CrossValidationPartitioner<TokenSample> partitioner = new CrossValidationPartitioner<TokenSample>(samples,

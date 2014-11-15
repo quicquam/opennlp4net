@@ -49,8 +49,6 @@ namespace opennlp.tools.cmdline
 		this.modelName = modelName;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: protected abstract T loadModel(java.io.InputStream modelIn) throws java.io.IOException, opennlp.tools.util.InvalidFormatException;
 	  protected internal abstract T loadModel(InputStream modelIn);
 
 	  public virtual T load(Jfile modelFile)

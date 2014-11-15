@@ -28,8 +28,6 @@ namespace opennlp.tools.cmdline.@params
 	public interface BasicFormatParams : EncodingParameter
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "sampleData", description = "data to be used, usually a file name.") java.io.File getData();
 	  Jfile Data {get;}
 	}
 }

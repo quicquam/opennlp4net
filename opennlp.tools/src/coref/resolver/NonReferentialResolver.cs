@@ -45,8 +45,6 @@ namespace opennlp.tools.coref.resolver
         /// Trains a model based on the events given to this resolver via #addEvent.
         /// </summary>
         /// <exception cref="IOException"> When the model can not be written out. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void train() throws java.io.IOException;
         void train();
     }
 }

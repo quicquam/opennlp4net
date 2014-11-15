@@ -72,8 +72,6 @@ namespace opennlp.tools.postag
             this.posDictionary = posDictionary;
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @Override @SuppressWarnings("rawtypes") public java.util.Map<String, opennlp.tools.util.model.ArtifactSerializer> createArtifactSerializersMap()
         public IDictionary<string, ArtifactSerializer<Object>> createArtifactSerializersMap()
         {
             IDictionary<string, ArtifactSerializer<Object>> serializers = base.createArtifactSerializersMap();
@@ -99,15 +97,11 @@ namespace opennlp.tools.postag
             return artifactMap;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TagDictionary createTagDictionary(java.io.File dictionary) throws opennlp.tools.util.InvalidFormatException, java.io.FileNotFoundException, java.io.IOException
         public virtual TagDictionary createTagDictionary(Jfile dictionary)
         {
             return createTagDictionary(new FileInputStream(dictionary));
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TagDictionary createTagDictionary(java.io.InputStream in) throws opennlp.tools.util.InvalidFormatException, java.io.IOException
         public virtual TagDictionary createTagDictionary(InputStream @in)
         {
             return POSDictionary.create(@in);
@@ -172,22 +166,16 @@ namespace opennlp.tools.postag
 
         internal class POSDictionarySerializer : ArtifactSerializer<POSDictionary>
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSDictionary create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
             public virtual POSDictionary create(InputStream @in)
             {
                 return POSDictionary.create(new UncloseableInputStream(@in));
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(POSDictionary artifact, java.io.OutputStream out) throws java.io.IOException
             public virtual void serialize(POSDictionary artifact, OutputStream @out)
             {
                 artifact.serialize(@out);
             }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("rawtypes") static void register(java.util.Map<String, opennlp.tools.util.model.ArtifactSerializer> factories)
             internal static void register(IDictionary<string, ArtifactSerializer<Object>> factories)
             {
                 throw new NotImplementedException();
@@ -195,8 +183,6 @@ namespace opennlp.tools.postag
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: protected void validatePOSDictionary(POSDictionary posDict, opennlp.model.AbstractModel posModel) throws opennlp.tools.util.InvalidFormatException
         protected internal virtual void validatePOSDictionary(POSDictionary posDict, AbstractModel posModel)
         {
             HashSet<string> dictTags = new HashSet<string>();
@@ -229,8 +215,6 @@ namespace opennlp.tools.postag
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         public override void validateArtifactMap()
         {
             // Ensure that the tag dictionary is compatible with the model
@@ -263,8 +247,6 @@ namespace opennlp.tools.postag
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static POSTaggerFactory create(String subclassName, opennlp.tools.dictionary.Dictionary ngramDictionary, TagDictionary posDictionary) throws opennlp.tools.util.InvalidFormatException
         public static POSTaggerFactory create(string subclassName, Dictionary ngramDictionary,
             TagDictionary posDictionary)
         {

@@ -71,8 +71,6 @@ namespace opennlp.tools.sentdetect
             this.abbreviationDictionary = abbreviationDictionary;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         public override void validateArtifactMap()
         {
             if (this.artifactProvider.getManifestProperty(TOKEN_END_PROPERTY) == null)
@@ -117,8 +115,6 @@ namespace opennlp.tools.sentdetect
             return manifestEntries;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static SentenceDetectorFactory create(String subclassName, String languageCode, boolean useTokenEnd, opennlp.tools.dictionary.Dictionary abbreviationDictionary, char[] eosCharacters) throws opennlp.tools.util.InvalidFormatException
         public static SentenceDetectorFactory create(string subclassName, string languageCode, bool useTokenEnd,
             Dictionary abbreviationDictionary, char[] eosCharacters)
         {

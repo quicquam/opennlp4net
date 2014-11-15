@@ -35,8 +35,6 @@ namespace opennlp.tools.formats.convert
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static byte[] readFile(java.io.File file) throws java.io.IOException
 	  private static sbyte[] readFile(Jfile file)
 	  {
 
@@ -68,8 +66,6 @@ namespace opennlp.tools.formats.convert
         return bytes.toSbyteArray();
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public byte[] read() throws java.io.IOException
 	  public override byte[] read()
 	  {
 

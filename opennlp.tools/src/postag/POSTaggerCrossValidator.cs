@@ -138,8 +138,6 @@ namespace opennlp.tools.postag
         ///          number of folds
         /// </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void evaluate(opennlp.tools.util.ObjectStream<POSSample> samples, int nFolds) throws java.io.IOException
         public virtual void evaluate(ObjectStream<POSSample> samples, int nFolds)
         {
             CrossValidationPartitioner<POSSample> partitioner = new CrossValidationPartitioner<POSSample>(samples,

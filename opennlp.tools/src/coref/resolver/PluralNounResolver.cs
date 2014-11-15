@@ -27,15 +27,11 @@ namespace opennlp.tools.coref.resolver
     /// </summary>
     public class PluralNounResolver : MaxentResolver
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PluralNounResolver(String projectName, ResolverMode m) throws java.io.IOException
         public PluralNounResolver(string projectName, ResolverMode m) : base(projectName, "plmodel", m, 80, true)
         {
             showExclusions = false;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PluralNounResolver(String projectName, ResolverMode m, NonReferentialResolver nrr) throws java.io.IOException
         public PluralNounResolver(string projectName, ResolverMode m, NonReferentialResolver nrr)
             : base(projectName, "plmodel", m, 80, true, nrr)
         {

@@ -32,8 +32,6 @@ namespace opennlp.model
     {
         internal float[][] values;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public OnePassRealValueDataIndexer(EventStream eventStream, int cutoff, boolean sort) throws java.io.IOException
         public OnePassRealValueDataIndexer(EventStream eventStream, int cutoff, bool sort)
             : base(eventStream, cutoff, sort)
         {
@@ -45,8 +43,6 @@ namespace opennlp.model
         ///               seen in the training data. </param>
         /// <param name="cutoff"> The minimum number of times a predicate must have been
         ///               observed in order to be included in the model. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public OnePassRealValueDataIndexer(EventStream eventStream, int cutoff) throws java.io.IOException
         public OnePassRealValueDataIndexer(EventStream eventStream, int cutoff) : base(eventStream, cutoff)
         {
         }

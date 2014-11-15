@@ -31,16 +31,10 @@ namespace opennlp.tools.cmdline.tokenizer
 	/// </summary>
 	public interface TrainingParams : BasicTrainingParams
 	{
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "isAlphaNumOpt", description = "Optimization flag to skip alpha numeric tokens for further tokenization") @OptionalParameter(defaultValue = "false") Boolean getAlphaNumOpt();
 	  bool? AlphaNumOpt {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "path", description = "abbreviation dictionary in XML format.") @OptionalParameter java.io.File getAbbDict();
 	  Jfile AbbDict {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "factoryName", description = "A sub-class of TokenizerFactory where to get implementation and resources.") @OptionalParameter String getFactory();
 	  string Factory {get;}
 	}
 

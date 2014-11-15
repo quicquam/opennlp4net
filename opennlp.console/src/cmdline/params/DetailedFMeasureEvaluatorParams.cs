@@ -30,8 +30,6 @@ namespace opennlp.tools.cmdline.@params
 	public interface DetailedFMeasureEvaluatorParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "true|false", description = "if true will print detailed FMeasure results.") @OptionalParameter(defaultValue="false") Boolean getDetailedF();
 	  bool? DetailedF {get;}
 
 	}

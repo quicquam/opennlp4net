@@ -22,8 +22,6 @@ namespace opennlp.tools.util
     /// <summary>
     /// Class which creates mapping between keys and a list of values.
     /// </summary>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public class HashList extends java.util.HashMap
     public class HashList : Hashtable
     {
         private const long serialVersionUID = 1;

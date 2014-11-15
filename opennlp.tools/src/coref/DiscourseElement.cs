@@ -67,7 +67,6 @@ namespace opennlp.tools.coref
         {
             get
             {
-                //JAVA TO C# CONVERTER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
                 return (extents.GetEnumerator());
             }
         }
@@ -112,7 +111,7 @@ namespace opennlp.tools.coref
         public override string ToString()
         {
             IEnumerator<MentionContext> ei = extents.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
             MentionContext ex = ei.Current;
             StringBuilder de = new StringBuilder();
             de.Append("[ ").Append(ex.toText()); //.append("<").append(ex.getHeadText()).append(">");

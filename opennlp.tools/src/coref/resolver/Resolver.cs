@@ -61,8 +61,6 @@ namespace opennlp.tools.coref.resolver
         /// Retrains model on examples for which retain was called.
         /// </summary>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void train() throws java.io.IOException;
         void train();
     }
 }

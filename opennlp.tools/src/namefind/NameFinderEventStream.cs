@@ -149,8 +149,6 @@ namespace opennlp.tools.namefind
         /// <returns> An additional context array with features for each token. </returns>
         public static string[][] additionalContext(string[] tokens, IDictionary<string, string> prevMap)
         {
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: string[][] ac = new string[tokens.Length][1];
             string[][] ac = RectangularArrays.ReturnRectangularStringArray(tokens.Length, 1);
             for (int ti = 0; ti < tokens.Length; ti++)
             {
@@ -161,8 +159,6 @@ namespace opennlp.tools.namefind
         }
 
         // Will be removed soon!
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static final void main(String[] args) throws java.io.IOException
         [Obsolete]
         public static void main(string[] args)
         {

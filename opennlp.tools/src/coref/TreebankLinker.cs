@@ -32,21 +32,15 @@ namespace opennlp.tools.coref
     /// </summary>
     public class TreebankLinker : DefaultLinker
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TreebankLinker(String project, LinkerMode mode) throws java.io.IOException
         public TreebankLinker(string project, LinkerMode mode) : base(project, mode)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TreebankLinker(String project, LinkerMode mode, boolean useDiscourseModel) throws java.io.IOException
         public TreebankLinker(string project, LinkerMode mode, bool useDiscourseModel)
             : base(project, mode, useDiscourseModel)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TreebankLinker(String project, LinkerMode mode, boolean useDiscourseModel, double fixedNonReferentialProbability) throws java.io.IOException
         public TreebankLinker(string project, LinkerMode mode, bool useDiscourseModel,
             double fixedNonReferentialProbability)
             : base(project, mode, useDiscourseModel, fixedNonReferentialProbability)

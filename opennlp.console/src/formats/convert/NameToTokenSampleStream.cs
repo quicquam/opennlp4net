@@ -40,8 +40,6 @@ namespace opennlp.tools.formats.convert
 		this.detokenizer = detokenizer;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.tokenize.TokenSample read() throws java.io.IOException
 	  public override TokenSample read()
 	  {
 		NameSample nameSample = samples.read();

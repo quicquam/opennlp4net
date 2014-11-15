@@ -41,27 +41,19 @@ namespace opennlp.tools.formats.muc
 	  public abstract class ContentHandler
 	  {
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void startElement(String name, java.util.Map<String, String> attributes) throws opennlp.tools.util.InvalidFormatException
 		public virtual void startElement(string name, IDictionary<string, string> attributes)
 		{
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void characters(CharSequence chars) throws opennlp.tools.util.InvalidFormatException
 		public virtual void characters(CharSequence chars)
 		{
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void endElement(String name) throws opennlp.tools.util.InvalidFormatException
 		public virtual void endElement(string name)
 		{
 		}
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static String extractTagName(CharSequence tagChars) throws opennlp.tools.util.InvalidFormatException
 	  private static string extractTagName(CharSequence tagChars)
 	  {
 
@@ -146,8 +138,6 @@ namespace opennlp.tools.formats.muc
 		return attributes;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void parse(java.io.Reader in, ContentHandler handler) throws java.io.IOException
 	  public virtual void parse(Reader @in, ContentHandler handler)
 	  {
 

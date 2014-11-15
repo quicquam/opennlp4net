@@ -23,8 +23,6 @@ namespace opennlp.tools.cmdline.@params
 	public interface LanguageParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "language", description = "language which is being processed.") String getLang();
 	  string Lang {get;}
 
 	}

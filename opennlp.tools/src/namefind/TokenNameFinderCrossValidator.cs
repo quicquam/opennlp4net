@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using System.Linq;
 using j4n.Serialization;
 using opennlp.nonjava.helperclasses;
@@ -66,8 +67,6 @@ namespace opennlp.tools.namefind
                 this.outerInstance = outerInstance;
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DocumentSample read() throws java.io.IOException
             public override DocumentSample read()
             {
                 IList<NameSample> document = new List<NameSample>();
@@ -108,8 +107,6 @@ namespace opennlp.tools.namefind
                 return new DocumentSample(outerInstance, document.ToArray());
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void reset() throws java.io.IOException, UnsupportedOperationException
             public override void reset()
             {
                 base.reset();
@@ -134,16 +131,14 @@ namespace opennlp.tools.namefind
 
             internal IEnumerable<NameSample> documentSamples = new List<NameSample>();
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public NameSample read() throws java.io.IOException
             public override NameSample read()
             {
                 // Note: Empty document samples should be skipped
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
                 if (documentSamples.GetEnumerator().Current != null)
                 {
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
                     documentSamples.GetEnumerator().MoveNext();
                     return documentSamples.GetEnumerator().Current;
                 }
@@ -289,8 +284,6 @@ namespace opennlp.tools.namefind
         /// <param name="nFolds">
         ///          number of folds </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void evaluate(opennlp.tools.util.ObjectStream<NameSample> samples, int nFolds) throws java.io.IOException
         public virtual void evaluate(ObjectStream<NameSample> samples, int nFolds)
         {
             // Note: The name samples need to be grouped on a document basis.

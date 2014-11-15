@@ -48,23 +48,17 @@ namespace opennlp.tools.coref.sim
         private const string DIFF = "diff";
         private bool debugOn = false;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TestSimilarityModel PrepAttachDataUtil.testModel(String name) throws java.io.IOException
         public static TestSimilarityModel testModel(string name)
         {
             return new SimilarityModel(name, false);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TrainSimilarityModel trainModel(String name) throws java.io.IOException
         public static TrainSimilarityModel trainModel(string name)
         {
             SimilarityModel sm = new SimilarityModel(name, true);
             return sm;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private SimilarityModel(String modelName, boolean train) throws java.io.IOException
         private SimilarityModel(string modelName, bool train)
         {
             this.modelName = modelName;
@@ -164,8 +158,6 @@ namespace opennlp.tools.coref.sim
         /// </param>
         /// <returns> A set of mentions for all the entities which might be semantically compatible
         /// with entity indicated by the specified key. </returns>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") private java.util.Set<Context> constructExclusionSet(Integer entityKey, opennlp.tools.util.HashList entities, java.util.Map<Integer, java.util.Set<String>> headSets, java.util.Map<Integer, java.util.Set<String>> nameSets, java.util.List<Context> singletons)
         private HashSet<Context> constructExclusionSet(int? entityKey, HashList entities,
             IDictionary<int?, HashSet<string>> headSets, IDictionary<int?, HashSet<string>> nameSets,
             IList<Context> singletons)
@@ -234,8 +226,6 @@ namespace opennlp.tools.coref.sim
         /// </param>
         /// <returns> a mapping between the keys of the specified entity mapping and the head set
         /// generated from the mentions associated with that key. </returns>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") private java.util.Map<Integer, java.util.Set<String>> constructHeadSets(opennlp.tools.util.HashList entities)
         private IDictionary<int?, HashSet<string>> constructHeadSets(HashList entities)
         {
             IDictionary<int?, HashSet<string>> headSets = new Dictionary<int?, HashSet<string>>();
@@ -274,8 +264,6 @@ namespace opennlp.tools.coref.sim
         /// <param name="entities"> A mapping between a key and a list of mentions.
         /// </param>
         /// <returns> a mapping between each key in the specified entity map and the name types associated with the each mention of that entity. </returns>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") private java.util.Map<Integer, java.util.Set<String>> constructNameSets(opennlp.tools.util.HashList entities)
         private IDictionary<int?, HashSet<string>> constructNameSets(HashList entities)
         {
             IDictionary<int?, HashSet<string>> nameSets = new Dictionary<int?, HashSet<string>>();
@@ -326,8 +314,6 @@ namespace opennlp.tools.coref.sim
 	  }
 	  */
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public void setExtents(Context[] extentContexts)
         public virtual Context[] Extents
         {
             set
@@ -424,8 +410,6 @@ namespace opennlp.tools.coref.sim
         /// <summary>
         /// Train a model based on the previously supplied evidence. </summary>
         /// <seealso cref= #setExtents(Context[]) </seealso>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void trainModel() throws java.io.IOException
         public virtual void trainModel()
         {
             if (debugOn)
@@ -751,8 +735,6 @@ namespace opennlp.tools.coref.sim
             return (features);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length == 0)

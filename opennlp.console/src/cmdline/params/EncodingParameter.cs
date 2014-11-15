@@ -31,8 +31,6 @@ namespace opennlp.tools.cmdline.@params
 	public interface EncodingParameter
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "charsetName", description = "encoding for reading and writing text, if absent the system default is used.") @OptionalParameter(defaultValue = opennlp.tools.cmdline.ArgumentParser.OptionalParameter.DEFAULT_CHARSET) java.nio.charset.Charset getEncoding();
 	  Charset Encoding {get;}
 
 	}

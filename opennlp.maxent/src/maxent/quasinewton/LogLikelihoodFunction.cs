@@ -75,8 +75,6 @@ namespace opennlp.maxent.quasinewton
             this.numFeatures = indexer.PredLabels.Length;
             this.numContexts = this.contexts.Length;
             this.domainDimension = numOutcomes*numFeatures;
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: this.probModel = new double[numContexts][numOutcomes];
             this.probModel = RectangularArrays.ReturnRectangularDoubleArray(numContexts, numOutcomes);
             this.gradient = null;
         }

@@ -42,20 +42,12 @@ namespace opennlp.tools.formats.ad
 
 	  internal interface Parameters
 	  {
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "charsetName", description = "encoding for reading and writing text.") java.nio.charset.Charset getEncoding();
 		Charset Encoding {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "sampleData", description = "data to be used, usually a file name.") java.io.File getData();
 		Jfile Data {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "language", description = "language which is being processed.") String getLang();
 		string Lang {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "includeTitles", description = "if true will include sentences marked as headlines.") @OptionalParameter(defaultValue = "false") Boolean getIncludeTitles();
 		bool? IncludeTitles {get;}
 	  }
 

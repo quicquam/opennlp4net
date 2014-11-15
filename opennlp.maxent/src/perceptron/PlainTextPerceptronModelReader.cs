@@ -41,8 +41,6 @@ namespace opennlp.perceptron
         /// ".gz".
         /// </summary>
         /// <param name="f"> The File in which the model is stored. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PlainTextPerceptronModelReader(java.io.File f) throws java.io.IOException
         public PlainTextPerceptronModelReader(Jfile f) : base(f)
         {
         }

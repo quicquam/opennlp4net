@@ -30,8 +30,6 @@ namespace opennlp.model
     {
         private AbstractModelReader delegateModelReader;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public GenericModelReader(java.io.File f) throws java.io.IOException
         public GenericModelReader(Jfile f) : base(f)
         {
         }
@@ -40,8 +38,6 @@ namespace opennlp.model
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void checkModelType() throws java.io.IOException
         public override void checkModelType()
         {
             string modelType = readUTF();
@@ -63,9 +59,6 @@ namespace opennlp.model
             }
         }
 
-
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AbstractModel constructModel() throws java.io.IOException
         public override AbstractModel constructModel()
         {
             try
@@ -78,8 +71,6 @@ namespace opennlp.model
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             AbstractModel m = (new GenericModelReader(new Jfile(args[0]))).Model;

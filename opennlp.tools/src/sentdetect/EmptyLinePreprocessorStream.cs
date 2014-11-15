@@ -49,8 +49,6 @@ namespace opennlp.tools.sentdetect
             return line.Trim().Length == 0;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public String read() throws java.io.IOException
         public override string read()
         {
             string line = samples.read();

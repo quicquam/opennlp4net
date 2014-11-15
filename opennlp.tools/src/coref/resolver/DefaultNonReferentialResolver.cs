@@ -48,8 +48,6 @@ namespace opennlp.tools.coref.resolver
         private string modelExtension = ".bin.gz";
         private int nonRefIndex;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DefaultNonReferentialResolver(String projectName, String name, ResolverMode mode) throws java.io.IOException
         public DefaultNonReferentialResolver(string projectName, string name, ResolverMode mode)
         {
             this.mode = mode;
@@ -131,8 +129,6 @@ namespace opennlp.tools.coref.resolver
             return features;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void train() throws java.io.IOException
         public virtual void train()
         {
             if (ResolverMode.TRAIN == mode)

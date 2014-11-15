@@ -33,8 +33,6 @@ namespace opennlp.tools.util.model
         /// This method does not has any effect the <seealso cref="InputStream"/>
         /// cannot be closed.
         /// </summary>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void close() throws java.io.IOException
         public override void close()
         {
         }

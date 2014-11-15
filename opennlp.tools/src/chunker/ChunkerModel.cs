@@ -70,26 +70,18 @@ namespace opennlp.tools.chunker
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ChunkerModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public ChunkerModel(InputStream @in) : base(COMPONENT_NAME, @in)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ChunkerModel(java.io.File modelFile) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public ChunkerModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ChunkerModel(java.net.URL modelURL) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public ChunkerModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         protected internal override void validateArtifactMap()
         {
             base.validateArtifactMap();
@@ -116,8 +108,6 @@ namespace opennlp.tools.chunker
             get { return (ChunkerFactory) this.toolFactory; }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.FileNotFoundException, java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length != 4)

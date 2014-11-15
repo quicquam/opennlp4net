@@ -42,14 +42,11 @@ namespace opennlp.maxent.io
         /// </summary>
         /// <param name="f"> </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PooledGISModelReader(java.io.File f) throws java.io.IOException
+
         public PooledGISModelReader(Jfile f) : base(f)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public String readUTF() throws java.io.IOException
         public override string readUTF()
         {
             return base.readUTF();

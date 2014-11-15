@@ -32,14 +32,10 @@ namespace opennlp.tools.postag
         private POSContextGenerator pcg;
         private IList<POSSample> samples;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSSampleSequenceStream(opennlp.tools.util.ObjectStream<POSSample> psi) throws java.io.IOException
         public POSSampleSequenceStream(ObjectStream<POSSample> psi) : this(psi, new DefaultPOSContextGenerator(null))
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public POSSampleSequenceStream(opennlp.tools.util.ObjectStream<POSSample> psi, POSContextGenerator pcg) throws java.io.IOException
         public POSSampleSequenceStream(ObjectStream<POSSample> psi, POSContextGenerator pcg)
         {
             samples = new List<POSSample>();
@@ -54,8 +50,6 @@ namespace opennlp.tools.postag
         }
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public opennlp.model.Event[] updateContext(opennlp.model.Sequence sequence, opennlp.model.AbstractModel model)
         public virtual Event[] updateContext(Sequence<POSSample> sequence, AbstractModel model)
         {
             Sequence<POSSample> pss = sequence;
@@ -67,8 +61,6 @@ namespace opennlp.tools.postag
             return events;
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public java.util.Iterator<opennlp.model.Sequence> iterator()
         public virtual IEnumerator<Sequence> iterator()
         {
             return new POSSampleSequenceIterator(samples.GetEnumerator());
@@ -103,13 +95,13 @@ namespace opennlp.tools.postag
 
         public virtual bool hasNext()
         {
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
             return psi.MoveNext();
         }
 
         public virtual Sequence<POSSample> next()
         {
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
             POSSample sample = psi.Current;
 
             string[] sentence = sample.Sentence;

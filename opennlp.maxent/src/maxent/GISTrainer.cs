@@ -219,8 +219,6 @@ namespace opennlp.maxent
         /// <param name="iterations"> The number of iterations to use for GIS. </param>
         /// <param name="cutoff"> The number of times a feature must occur to be included. </param>
         /// <returns> A GIS model trained with specified  </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public GISModel trainModel(opennlp.model.EventStream eventStream, int iterations, int cutoff) throws java.io.IOException
         public virtual GISModel trainModel(EventStream eventStream, int iterations, int cutoff)
         {
             return trainModel(iterations, new OnePassDataIndexer(eventStream, cutoff), cutoff);
@@ -307,8 +305,6 @@ namespace opennlp.maxent
             display("\t  Number of Predicates: " + numPreds + "\n");
 
             // set up feature arrays
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: float[][] predCount = new float[numPreds][numOutcomes];
             float[][] predCount = RectangularArrays.ReturnRectangularFloatArray(numPreds, numOutcomes);
             for (int ti = 0; ti < numUniqueEvents; ti++)
             {
@@ -331,8 +327,6 @@ namespace opennlp.maxent
             // A fake "observation" to cover features which are not detected in
             // the data.  The default is to assume that we observed "1/10th" of a
             // feature during training.
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final double smoothingObservation = _smoothingObservation;
             double smoothingObservation = _smoothingObservation;
 
             // Get the observed expectations of the features. Strictly speaking,
@@ -536,8 +530,6 @@ namespace opennlp.maxent
 
             public virtual ModelExpactationComputeTask call()
             {
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final double[] modelDistribution = new double[numOutcomes];
                 double[] modelDistribution = new double[outerInstance.numOutcomes];
 
 
@@ -660,8 +652,7 @@ namespace opennlp.maxent
 
             int leftOver = numUniqueEvents%numberOfThreads;
 
-//JAVA TO C# CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-//ORIGINAL LINE: java.util.List<java.util.concurrent.Future<?>> futures = new java.util.ArrayList<java.util.concurrent.Future<?>>();
+//TODO TASK: Java wildcard generics are not converted to .NET:
             /*
         IList<Future<?>> futures = new List<Future<?>>();
 
@@ -677,8 +668,7 @@ namespace opennlp.maxent
 		  }
 		}
 
-//JAVA TO C# CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-//ORIGINAL LINE: for (java.util.concurrent.Future<?> future : futures)
+// TODO TASK: Java wildcard generics are not converted to .NET:
 		foreach (Future<?> future in futures)
 		{
 		  ModelExpactationComputeTask finishedTask = null;

@@ -32,22 +32,16 @@ namespace opennlp.tools.namefind
         private NameContextGenerator pcg;
         private IList<NameSample> samples;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public NameSampleSequenceStream(opennlp.tools.util.ObjectStream<NameSample> psi) throws java.io.IOException
         public NameSampleSequenceStream(ObjectStream<NameSample> psi)
             : this(psi, new DefaultNameContextGenerator((AdaptiveFeatureGenerator) null))
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public NameSampleSequenceStream(opennlp.tools.util.ObjectStream<NameSample> psi, opennlp.tools.util.featuregen.AdaptiveFeatureGenerator featureGen) throws java.io.IOException
         public NameSampleSequenceStream(ObjectStream<NameSample> psi, AdaptiveFeatureGenerator featureGen)
             : this(psi, new DefaultNameContextGenerator(featureGen))
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public NameSampleSequenceStream(opennlp.tools.util.ObjectStream<NameSample> psi, NameContextGenerator pcg) throws java.io.IOException
         public NameSampleSequenceStream(ObjectStream<NameSample> psi, NameContextGenerator pcg)
         {
             samples = new List<NameSample>();
@@ -64,8 +58,6 @@ namespace opennlp.tools.namefind
         }
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public opennlp.model.Event[] updateContext(opennlp.model.Sequence sequence, opennlp.model.AbstractModel model)
         public virtual Event[] updateContext(Sequence<NameSample> sequence, AbstractModel model)
         {
             Sequence<NameSample> pss = sequence;
@@ -80,8 +72,6 @@ namespace opennlp.tools.namefind
             return events;
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public java.util.Iterator<opennlp.model.Sequence> iterator()
         public virtual IEnumerator<Sequence<NameSample>> iterator()
         {
             return new NameSampleSequenceIterator(samples.GetEnumerator());
@@ -111,13 +101,13 @@ namespace opennlp.tools.namefind
 
         public virtual bool hasNext()
         {
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
             return psi.Current != null;
         }
 
         public virtual Sequence<NameSample> next()
         {
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+
             psi.MoveNext();
             NameSample sample = psi.Current;
 

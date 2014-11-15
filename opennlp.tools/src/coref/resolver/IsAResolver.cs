@@ -30,8 +30,6 @@ namespace opennlp.tools.coref.resolver
     {
         internal Pattern predicativePattern;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public IsAResolver(String projectName, ResolverMode m) throws java.io.IOException
         public IsAResolver(string projectName, ResolverMode m) : base(projectName, "/imodel", m, 20)
         {
             showExclusions = false;
@@ -39,8 +37,6 @@ namespace opennlp.tools.coref.resolver
             predicativePattern = Pattern.compile("^(,|--)$");
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public IsAResolver(String projectName, ResolverMode m, NonReferentialResolver nrr) throws java.io.IOException
         public IsAResolver(string projectName, ResolverMode m, NonReferentialResolver nrr)
             : base(projectName, "/imodel", m, 20, nrr)
         {

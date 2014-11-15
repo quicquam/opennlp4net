@@ -26,15 +26,11 @@ namespace opennlp.tools.util.model
 
     internal class DictionarySerializer : ArtifactSerializer<Dictionary>
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.dictionary.Dictionary create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public virtual Dictionary create(InputStream @in)
         {
             return new Dictionary(@in);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(opennlp.tools.dictionary.Dictionary dictionary, java.io.OutputStream out) throws java.io.IOException
         public virtual void serialize(Dictionary dictionary, OutputStream @out)
         {
             dictionary.serialize(@out);

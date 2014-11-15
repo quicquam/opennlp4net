@@ -91,8 +91,6 @@ namespace opennlp.tools.formats.ad
 		}
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.postag.POSSample read() throws java.io.IOException
 	  public virtual POSSample read()
 	  {
 		Sentence paragraph;
@@ -184,15 +182,11 @@ namespace opennlp.tools.formats.ad
 
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void reset() throws java.io.IOException, UnsupportedOperationException
 	  public virtual void reset()
 	  {
 		adSentenceStream.reset();
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
 	  public virtual void close()
 	  {
 		adSentenceStream.close();

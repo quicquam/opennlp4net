@@ -57,16 +57,12 @@ namespace opennlp.tools.namefind
             this.seqCodec = new BioCodec();
         }
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: public TokenNameFinderFactory(byte[] featureGeneratorBytes, final java.util.Map<String, Object> resources, opennlp.tools.util.SequenceCodec<String> seqCodec)
         public TokenNameFinderFactory(sbyte[] featureGeneratorBytes, IDictionary<string, object> resources,
             SequenceCodec seqCodec)
         {
             init(featureGeneratorBytes, resources, seqCodec);
         }
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: void init(byte[] featureGeneratorBytes, final java.util.Map<String, Object> resources, opennlp.tools.util.SequenceCodec<String> seqCodec)
         internal virtual void init(sbyte[] featureGeneratorBytes, IDictionary<string, object> resources,
             SequenceCodec seqCodec)
         {
@@ -85,9 +81,6 @@ namespace opennlp.tools.namefind
             get { return resources; }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TokenNameFinderFactory create(String subclassName, byte[] featureGeneratorBytes, final java.util.Map<String, Object> resources, opennlp.tools.util.SequenceCodec<String> seqCodec) throws opennlp.tools.util.InvalidFormatException
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
         public static TokenNameFinderFactory create(string subclassName, sbyte[] featureGeneratorBytes,
             IDictionary<string, object> resources, SequenceCodec seqCodec)
         {
@@ -112,8 +105,6 @@ namespace opennlp.tools.namefind
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         public override void validateArtifactMap()
         {
             // no additional artifacts

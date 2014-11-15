@@ -38,8 +38,6 @@ namespace opennlp.tools.formats.muc
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public String read() throws java.io.IOException
 	  public override string read()
 	  {
 

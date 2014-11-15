@@ -57,8 +57,6 @@ namespace opennlp.tools.ngram
         /// <param name="in"> </param>
         /// <exception cref="IOException"> </exception>
         /// <exception cref="InvalidFormatException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public NGramModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public NGramModel(InputStream @in)
         {
             DictionarySerializer.create(@in, new EntryInserterAnonymousInnerClassHelper(this));
@@ -73,8 +71,6 @@ namespace opennlp.tools.ngram
                 this.outerInstance = outerInstance;
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void insert(opennlp.tools.dictionary.serializer.Entry entry) throws opennlp.tools.util.InvalidFormatException
             public virtual void insert(Entry entry)
             {
                 int count;
@@ -327,8 +323,6 @@ namespace opennlp.tools.ngram
         /// <param name="out">
         /// </param>
         /// <exception cref="IOException"> if an I/O Error during writing occurs </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(java.io.OutputStream out) throws java.io.IOException
         public virtual void serialize(OutputStream @out)
         {
             IEnumerator<Entry> entryIterator = new IteratorAnonymousInnerClassHelper(this);

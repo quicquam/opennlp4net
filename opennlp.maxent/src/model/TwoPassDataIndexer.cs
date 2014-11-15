@@ -42,14 +42,10 @@ namespace opennlp.model
         /// </summary>
         /// <param name="eventStream"> An Event[] which contains the a list of all the Events
         ///               seen in the training data. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TwoPassDataIndexer(EventStream eventStream) throws java.io.IOException
         public TwoPassDataIndexer(EventStream eventStream) : this(eventStream, 0)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TwoPassDataIndexer(EventStream eventStream, int cutoff) throws java.io.IOException
         public TwoPassDataIndexer(EventStream eventStream, int cutoff) : this(eventStream, cutoff, true)
         {
         }
@@ -61,8 +57,6 @@ namespace opennlp.model
         ///               seen in the training data. </param>
         /// <param name="cutoff"> The minimum number of times a predicate must have been
         ///               observed in order to be included in the model. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TwoPassDataIndexer(EventStream eventStream, int cutoff, boolean sort) throws java.io.IOException
         public TwoPassDataIndexer(EventStream eventStream, int cutoff, bool sort)
         {
             IDictionary<string, int?> predicateIndex = new Dictionary<string, int?>();
@@ -122,8 +116,6 @@ namespace opennlp.model
         /// <param name="eventStore"> a writer to which the events are written to for later processing. </param>
         /// <param name="predicatesInOut"> a <code>TObjectIntHashMap</code> value </param>
         /// <param name="cutoff"> an <code>int</code> value </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private int computeEventCounts(EventStream eventStream, java.io.Writer eventStore, java.util.Map<String,Integer> predicatesInOut, int cutoff) throws java.io.IOException
         private int computeEventCounts(EventStream eventStream, Writer eventStore,
             IDictionary<string, int?> predicatesInOut, int cutoff)
         {
@@ -150,8 +142,6 @@ namespace opennlp.model
             return eventCount;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private java.util.List<ComparableEvent> index(int numEvents, EventStream es, java.util.Map<String,Integer> predicateIndex) throws java.io.IOException
         private IList<ComparableEvent> index(int numEvents, EventStream es, IDictionary<string, int?> predicateIndex)
         {
             IDictionary<string, int?> omap = new Dictionary<string, int?>();

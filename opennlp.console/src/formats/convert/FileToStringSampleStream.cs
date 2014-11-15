@@ -39,8 +39,6 @@ namespace opennlp.tools.formats.convert
 		this.encoding = encoding;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static String readFile(java.io.File textFile, java.nio.charset.Charset encoding) throws java.io.IOException
 	  private static string readFile(Jfile textFile, Charset encoding)
 	  {
 
@@ -72,12 +70,10 @@ namespace opennlp.tools.formats.convert
 		return text.ToString();
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public String read() throws java.io.IOException
 	  public override string read()
 	  {
 
-		File sampleFile = samples.read();
+		Jfile sampleFile = samples.read();
 
 		if (sampleFile != null)
 		{

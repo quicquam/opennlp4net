@@ -33,14 +33,10 @@ namespace opennlp.maxent.io
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public QNModelReader(java.io.File file) throws java.io.IOException
         public QNModelReader(Jfile file) : base(file)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void checkModelType() throws java.io.IOException
         public override void checkModelType()
         {
             string modelType = readUTF();
@@ -51,8 +47,6 @@ namespace opennlp.maxent.io
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public opennlp.model.AbstractModel constructModel() throws java.io.IOException
         public override AbstractModel constructModel()
         {
             string[] predNames = GetPredicates();
@@ -62,8 +56,6 @@ namespace opennlp.maxent.io
             return new QNModel(predNames, outcomeNames, @params, parameters);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private double[] getDoubleArrayParams() throws java.io.IOException
         private double[] DoubleArrayParams
         {
             get
@@ -78,8 +70,6 @@ namespace opennlp.maxent.io
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private int[] getIntArrayParams() throws java.io.IOException
         private int[] IntArrayParams
         {
             get
@@ -94,8 +84,6 @@ namespace opennlp.maxent.io
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: protected opennlp.model.Context[] getParameters() throws java.io.IOException
         protected internal virtual Context[] Parameters
         {
             get

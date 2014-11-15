@@ -38,8 +38,6 @@ namespace opennlp.tools.cmdline.postag
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected opennlp.tools.postag.POSModel loadModel(java.io.InputStream modelIn) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
 	  protected internal override POSModel loadModel(InputStream modelIn)
 	  {
 		return new POSModel(modelIn);

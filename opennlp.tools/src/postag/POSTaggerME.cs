@@ -310,8 +310,6 @@ namespace opennlp.tools.postag
             return orderedTags;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static POSModel train(String languageCode, opennlp.tools.util.ObjectStream<POSSample> samples, opennlp.tools.util.TrainingParameters trainParams, POSTaggerFactory posFactory) throws java.io.IOException
         public static POSModel train(string languageCode, ObjectStream<POSSample> samples,
             TrainingParameters trainParams, POSTaggerFactory posFactory)
         {
@@ -340,8 +338,6 @@ namespace opennlp.tools.postag
         /// @deprecated use
         ///             <seealso cref="#train(String, ObjectStream, TrainingParameters, POSTaggerFactory)"/>
         ///             instead and pass in a <seealso cref="POSTaggerFactory"/>. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static POSModel train(String languageCode, opennlp.tools.util.ObjectStream<POSSample> samples, opennlp.tools.util.TrainingParameters trainParams, POSDictionary tagDictionary, opennlp.tools.dictionary.Dictionary ngramDictionary) throws java.io.IOException
         public static POSModel train(string languageCode, ObjectStream<POSSample> samples,
             TrainingParameters trainParams, POSDictionary tagDictionary, Dictionary ngramDictionary)
         {
@@ -352,8 +348,6 @@ namespace opennlp.tools.postag
         ///             <seealso cref="#train(String, ObjectStream, TrainingParameters, POSTaggerFactory)"/>
         ///             instead and pass in a <seealso cref="POSTaggerFactory"/> and a
         ///             <seealso cref="TrainingParameters"/>. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("use") public static POSModel train(String languageCode, opennlp.tools.util.ObjectStream<POSSample> samples, opennlp.tools.util.model.ModelType modelType, POSDictionary tagDictionary, opennlp.tools.dictionary.Dictionary ngramDictionary, int cutoff, int iterations) throws java.io.IOException
         [Obsolete("use")]
         public static POSModel train(string languageCode, ObjectStream<POSSample> samples, ModelType modelType,
             POSDictionary tagDictionary, Dictionary ngramDictionary, int cutoff, int iterations)
@@ -367,8 +361,6 @@ namespace opennlp.tools.postag
             return train(languageCode, samples, @params, tagDictionary, ngramDictionary);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.tools.dictionary.Dictionary buildNGramDictionary(opennlp.tools.util.ObjectStream<POSSample> samples, int cutoff) throws java.io.IOException
         public static Dictionary buildNGramDictionary(ObjectStream<POSSample> samples, int cutoff)
         {
             NGramModel ngramModel = new NGramModel();
@@ -389,8 +381,6 @@ namespace opennlp.tools.postag
             return ngramModel.toDictionary(true);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void populatePOSDictionary(opennlp.tools.util.ObjectStream<POSSample> samples, MutableTagDictionary dict, int cutoff) throws java.io.IOException
         public static void populatePOSDictionary(ObjectStream<POSSample> samples, MutableTagDictionary dict, int cutoff)
         {
             Console.WriteLine("Expanding POS Dictionary ...");

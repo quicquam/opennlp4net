@@ -67,8 +67,7 @@ namespace opennlp.maxent.io
         /// implementing the <code>writeX()</code> methods.
         /// </para>
         /// </summary>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void persist() throws java.io.IOException
+
         public override void persist()
         {
             // the type of model (GIS)

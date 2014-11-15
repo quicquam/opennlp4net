@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+using System.IO;
+
 namespace opennlp.tools.coref
 {
     using HeadFinder = opennlp.tools.coref.mention.HeadFinder;
@@ -76,8 +78,6 @@ namespace opennlp.tools.coref
         /// Trains the linker based on the data specified via calls to <seealso cref="#setEntities setEntities"/>.
         /// </summary>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void train() throws java.io.IOException;
         void train();
 
         /// <summary>

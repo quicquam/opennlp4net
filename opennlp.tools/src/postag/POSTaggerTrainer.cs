@@ -66,8 +66,6 @@ namespace opennlp.tools.postag
         /// </param>
         /// <exception cref="IOException">  its throws if an <seealso cref="IOException"/> is thrown
         /// during IO operations on a temp file which is created during training occur. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static POSModel train(String languageCode, opennlp.tools.util.ObjectStream<POSSample> samples, POSDictionary tagDictionary, opennlp.tools.dictionary.Dictionary ngramDictionary, int cutoff, int iterations) throws java.io.IOException
         public static POSModel train(string languageCode, ObjectStream<POSSample> samples, POSDictionary tagDictionary,
             Dictionary ngramDictionary, int cutoff, int iterations)
         {
@@ -84,8 +82,6 @@ namespace opennlp.tools.postag
         /// <param name="evc"> </param>
         /// <param name="modelFile"> </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static void trainMaxentModel(opennlp.model.EventStream evc, java.io.File modelFile) throws java.io.IOException
         [Obsolete]
         public static void trainMaxentModel(EventStream evc, Jfile modelFile)
         {
@@ -101,39 +97,29 @@ namespace opennlp.tools.postag
         /// <param name="cut"> </param>
         /// <returns> the new model </returns>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static opennlp.model.AbstractModel trainMaxentModel(opennlp.model.EventStream es, int iterations, int cut) throws java.io.IOException
         [Obsolete]
         public static AbstractModel trainMaxentModel(EventStream es, int iterations, int cut)
         {
             return opennlp.maxent.GIS.trainModel(iterations, new TwoPassDataIndexer(es, cut));
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.model.AbstractModel trainPerceptronModel(opennlp.model.EventStream es, int iterations, int cut, boolean useAverage) throws java.io.IOException
         public static AbstractModel trainPerceptronModel(EventStream es, int iterations, int cut, bool useAverage)
         {
             return (new opennlp.perceptron.PerceptronTrainer()).trainModel(iterations,
                 new TwoPassDataIndexer(es, cut, false), cut, useAverage);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.model.AbstractModel trainPerceptronModel(opennlp.model.EventStream es, int iterations, int cut) throws java.io.IOException
         public static AbstractModel trainPerceptronModel(EventStream es, int iterations, int cut)
         {
             return trainPerceptronModel(es, iterations, cut, true);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.model.AbstractModel trainPerceptronSequenceModel(opennlp.model.SequenceStream ss, int iterations, int cut, boolean useAverage) throws java.io.IOException
         public static AbstractModel trainPerceptronSequenceModel(SequenceStream<Event> ss, int iterations, int cut,
             bool useAverage)
         {
             return (new SimplePerceptronSequenceTrainer()).trainModel(iterations, ss, cut, useAverage);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static void test(opennlp.model.AbstractModel model) throws java.io.IOException
         [Obsolete]
         public static void test(AbstractModel model)
         {
@@ -147,8 +133,6 @@ namespace opennlp.tools.postag
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static void main(String[] args) throws java.io.IOException
         [Obsolete]
         public static void Main(string[] args)
         {
@@ -346,8 +330,6 @@ namespace opennlp.tools.postag
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static void buildDictionary(String dict, java.io.File inFile, int cutoff) throws java.io.FileNotFoundException, java.io.IOException
         private static void buildDictionary(string dict, Jfile inFile, int cutoff)
         {
             Console.Error.WriteLine("Building dictionary");

@@ -40,8 +40,6 @@ namespace opennlp.tools.tokenize.lang.en
         private Pattern alphaNumeric = Pattern.compile("[A-Za-z0-9]");
         private bool evenq = true;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TokenSampleStream(java.io.InputStream is) throws java.io.IOException
         public TokenSampleStream(InputStream @is)
         {
             this.@in = new BufferedReader(new InputStreamReader(@is));
@@ -160,8 +158,6 @@ namespace opennlp.tools.tokenize.lang.en
             Console.Error.WriteLine("Where in is a space delimited list of tokens.");
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             bool showSpans = false;

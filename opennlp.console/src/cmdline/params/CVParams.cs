@@ -29,12 +29,8 @@ namespace opennlp.tools.cmdline.@params
 	public interface CVParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "true|false", description = "if true will print false negatives and false positives.") @OptionalParameter(defaultValue="false") Boolean getMisclassified();
 	  bool? Misclassified {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "num", description = "number of folds, default is 10.") @OptionalParameter(defaultValue="10") Integer getFolds();
 	  int? Folds {get;}
 
 	}

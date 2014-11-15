@@ -257,8 +257,6 @@ namespace opennlp.tools.cmdline.postag
 		string[] tags = tagset.toArray(new string[tagset.size()]);
 		StringBuilder sb = new StringBuilder();
 		int minColumnSize = int.MinValue;
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: string[][] matrix = new string[data.Length][data[0].Length];
 		string[][] matrix = RectangularArrays.ReturnRectangularStringArray(data.Length, data[0].Length);
 		for (int i = 0; i < data.Length; i++)
 		{
@@ -278,14 +276,8 @@ namespace opennlp.tools.cmdline.postag
 		  }
 		}
 
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String headerFormat = "%" + (minColumnSize + 2) + "s ";
 		string headerFormat = "%" + (minColumnSize + 2) + "s "; // | 1234567 |
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String cellFormat = "%" + (minColumnSize + 2) + "s ";
 		string cellFormat = "%" + (minColumnSize + 2) + "s "; // | 12345 |
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String diagFormat = " %" + (minColumnSize + 2) + "s";
 		string diagFormat = " %" + (minColumnSize + 2) + "s";
 		for (int i = initialIndex; i < tagset.size(); i++)
 		{
@@ -946,8 +938,6 @@ namespace opennlp.tools.cmdline.postag
 		internal virtual double[][] createConfusionMatrix(SortedSet<string> tagset, IDictionary<string, ConfusionMatrixLine> data)
 		{
 		  int size = tagset.size();
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: double[][] matrix = new double[size][size + 1];
 		  double[][] matrix = RectangularArrays.ReturnRectangularDoubleArray(size, size + 1);
 		  int line = 0;
 		  foreach (string @ref in tagset)

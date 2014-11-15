@@ -37,8 +37,6 @@ namespace opennlp.tools.cmdline.chunker
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected opennlp.tools.chunker.ChunkerModel loadModel(java.io.InputStream modelIn) throws java.io.IOException
 	  protected internal override ChunkerModel loadModel(InputStream modelIn)
 	  {
 		return new ChunkerModel(modelIn);

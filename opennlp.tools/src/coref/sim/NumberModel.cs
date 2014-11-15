@@ -43,24 +43,18 @@ namespace opennlp.tools.coref.sim
         private int singularIndex;
         private int pluralIndex;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TestNumberModel PrepAttachDataUtil.testModel(String name) throws java.io.IOException
         public static TestNumberModel testModel(string name)
         {
             NumberModel nm = new NumberModel(name, false);
             return nm;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static TrainSimilarityModel trainModel(String modelName) throws java.io.IOException
         public static TrainSimilarityModel trainModel(string modelName)
         {
             NumberModel gm = new NumberModel(modelName, true);
             return gm;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private NumberModel(String modelName, boolean train) throws java.io.IOException
         private NumberModel(string modelName, bool train)
         {
             this.modelName = modelName;
@@ -129,8 +123,6 @@ namespace opennlp.tools.coref.sim
             return NumberEnum.UNKNOWN;
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public void setExtents(Context[] extentContexts)
         public virtual Context[] Extents
         {
             set
@@ -211,8 +203,6 @@ namespace opennlp.tools.coref.sim
             get { return pluralIndex; }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void trainModel() throws java.io.IOException
         public virtual void trainModel()
         {
             (new SuffixSensitiveGISModelWriter(GIS.trainModel(new CollectionEventStream(events), 100, 10),

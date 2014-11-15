@@ -33,8 +33,6 @@ namespace opennlp.tools.coref.resolver
         private static IDictionary<string, HashSet<string>> acroMap;
         private static bool acroMapLoaded = false;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ProperNounResolver(String projectName, ResolverMode m) throws java.io.IOException
         public ProperNounResolver(string projectName, ResolverMode m) : base(projectName, "pnmodel", m, 500)
         {
             if (!acroMapLoaded)
@@ -45,8 +43,6 @@ namespace opennlp.tools.coref.resolver
             showExclusions = false;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ProperNounResolver(String projectName, ResolverMode m,NonReferentialResolver nonRefResolver) throws java.io.IOException
         public ProperNounResolver(string projectName, ResolverMode m, NonReferentialResolver nonRefResolver)
             : base(projectName, "pnmodel", m, 500, nonRefResolver)
         {

@@ -46,15 +46,11 @@ namespace opennlp.tools.formats
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ConllXPOSSampleStream(java.io.Reader in) throws java.io.IOException
 	  internal ConllXPOSSampleStream(Reader @in) : base(new ParagraphStream(new PlainTextByLineStream(@in)))
 	  {
 		// encoding is handled by the factory...
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.postag.POSSample read() throws java.io.IOException
 	  public override POSSample read()
 	  {
 

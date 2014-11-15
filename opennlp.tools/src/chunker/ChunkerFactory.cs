@@ -34,8 +34,6 @@ namespace opennlp.tools.chunker
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static ChunkerFactory create(String subclassName) throws opennlp.tools.util.InvalidFormatException
         public static ChunkerFactory create(string subclassName)
         {
             if (subclassName == null)
@@ -58,8 +56,6 @@ namespace opennlp.tools.chunker
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         public override void validateArtifactMap()
         {
             // no additional artifacts

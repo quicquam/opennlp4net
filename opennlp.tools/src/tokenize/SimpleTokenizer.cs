@@ -103,8 +103,6 @@ namespace opennlp.tools.tokenize
         /// <param name="args">
         /// </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated public static void main(String[] args) throws java.io.IOException
         [Obsolete]
         public static void Main(string[] args)
         {

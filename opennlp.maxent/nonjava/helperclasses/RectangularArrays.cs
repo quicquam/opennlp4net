@@ -1,11 +1,4 @@
-﻿//----------------------------------------------------------------------------------------
-//	Copyright © 2007 - 2014 Tangible Software Solutions Inc.
-//	This class can be used by anyone provided that the copyright notice remains intact.
-//
-//	This class provides the logic to simulate Java rectangular arrays, which are jagged
-//	arrays with inner arrays of the same length. A size of -1 indicates unknown length.
-//----------------------------------------------------------------------------------------
-
+﻿
 namespace opennlp.nonjava.helperclasses
 {
     internal static class RectangularArrays

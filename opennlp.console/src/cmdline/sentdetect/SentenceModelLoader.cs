@@ -38,8 +38,6 @@ namespace opennlp.tools.cmdline.sentdetect
 	  {
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected opennlp.tools.sentdetect.SentenceModel loadModel(java.io.InputStream modelIn) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
 	  protected internal override SentenceModel loadModel(InputStream modelIn)
 	  {
 		return new SentenceModel(modelIn);

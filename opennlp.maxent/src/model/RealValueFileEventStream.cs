@@ -29,20 +29,14 @@ namespace opennlp.model
 
     public class RealValueFileEventStream : FileEventStream
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public RealValueFileEventStream(String fileName) throws java.io.IOException
         public RealValueFileEventStream(string fileName) : base(fileName)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public RealValueFileEventStream(String fileName, String encoding) throws java.io.IOException
         public RealValueFileEventStream(string fileName, string encoding) : base(fileName, encoding)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public RealValueFileEventStream(java.io.File file) throws java.io.IOException
         public RealValueFileEventStream(Jfile file) : base(file)
         {
         }
@@ -111,8 +105,6 @@ namespace opennlp.model
         /// </summary>
         /// <param name="args"> eventfile [iterations cuttoff] </param>
         /// <exception cref="IOException"> when the eventfile can not be read or the model file can not be written. </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
         public static void Main(string[] args)
         {
             if (args.Length == 0)

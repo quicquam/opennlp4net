@@ -31,16 +31,14 @@ namespace opennlp.model
         /// Returns the next Event object held in this EventStream.
         /// </summary>
         /// <returns> the Event object which is next in this EventStream </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public Event next() throws java.io.IOException;
+
         Event next();
 
         /// <summary>
         /// Test whether there are any Events remaining in this EventStream.
         /// </summary>
         /// <returns> true if this EventStream has more Events </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean hasNext() throws java.io.IOException;
+
         bool hasNext();
     }
 }

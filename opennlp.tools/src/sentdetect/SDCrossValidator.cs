@@ -101,8 +101,6 @@ namespace opennlp.tools.sentdetect
         ///          number of folds
         /// </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void evaluate(opennlp.tools.util.ObjectStream<SentenceSample> samples, int nFolds) throws java.io.IOException
         public virtual void evaluate(ObjectStream<SentenceSample> samples, int nFolds)
         {
             CrossValidationPartitioner<SentenceSample> partitioner =

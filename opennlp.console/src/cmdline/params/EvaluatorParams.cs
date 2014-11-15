@@ -31,12 +31,8 @@ namespace opennlp.tools.cmdline.@params
 	public interface EvaluatorParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "model", description = "the model file to be evaluated.") java.io.File getModel();
 	  Jfile Model {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "true|false", description = "if true will print false negatives and false positives.") @OptionalParameter(defaultValue="false") Boolean getMisclassified();
 	  bool? Misclassified {get;}
 
 	}

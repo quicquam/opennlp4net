@@ -160,8 +160,6 @@ namespace opennlp.model
 
         // TODO: Need a way to report results and settings back for inclusion in model ...
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static AbstractModel train(EventStream events, java.util.Map<String, String> trainParams, java.util.Map<String, String> reportMap) throws java.io.IOException
         public static AbstractModel train(EventStream events, IDictionary<string, string> trainParams,
             IDictionary<string, string> reportMap)
         {
@@ -280,8 +278,6 @@ namespace opennlp.model
             return PERCEPTRON_SEQUENCE_VALUE.Equals(trainParams[ALGORITHM_PARAM]);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static AbstractModel train(SequenceStream events, java.util.Map<String, String> trainParams, java.util.Map<String, String> reportMap) throws java.io.IOException
         public static AbstractModel train(SequenceStream<Event> events, IDictionary<string, string> trainParams,
             IDictionary<string, string> reportMap)
         {

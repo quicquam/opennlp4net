@@ -28,8 +28,6 @@ namespace opennlp.tools.parser
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public Parse read() throws java.io.IOException
         public override Parse read()
         {
             string parse = samples.read();

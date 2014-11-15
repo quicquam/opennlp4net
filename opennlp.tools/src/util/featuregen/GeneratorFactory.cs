@@ -83,8 +83,6 @@ namespace opennlp.tools.util.featuregen
             ///     to access referenced resources
             /// </param>
             /// <returns> the configured <seealso cref="AdaptiveFeatureGenerator"/> </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException;
             AdaptiveFeatureGenerator create(XmlElement generatorXmlElement,
                 FeatureGeneratorResourceProvider resourceManager);
         }
@@ -92,8 +90,6 @@ namespace opennlp.tools.util.featuregen
         /// <seealso cref= AggregatedFeatureGenerator </seealso>
         internal class AggregatedFeatureGeneratorFactory : XmlFeatureGeneratorFactory
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
             public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement,
                 FeatureGeneratorResourceProvider resourceManager)
             {
@@ -130,8 +126,6 @@ namespace opennlp.tools.util.featuregen
             {
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
             public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement,
                 FeatureGeneratorResourceProvider resourceManager)
             {
@@ -170,8 +164,6 @@ namespace opennlp.tools.util.featuregen
         /// <seealso cref= CharacterNgramFeatureGenerator </seealso>
         internal class CharacterNgramFeatureGeneratorFactory : XmlFeatureGeneratorFactory
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
             public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement,
                 FeatureGeneratorResourceProvider resourceManager)
             {
@@ -219,8 +211,6 @@ namespace opennlp.tools.util.featuregen
             {
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
             public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement,
                 FeatureGeneratorResourceProvider resourceManager)
             {
@@ -236,8 +226,6 @@ namespace opennlp.tools.util.featuregen
         /// <seealso cref= DictionaryFeatureGenerator </seealso>
         internal class DictionaryFeatureGeneratorFactory : XmlFeatureGeneratorFactory
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
             public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement,
                 FeatureGeneratorResourceProvider resourceManager)
             {
@@ -370,8 +358,6 @@ namespace opennlp.tools.util.featuregen
         /// <seealso cref= WindowFeatureGenerator </seealso>
         internal class WindowFeatureGeneratorFactory : XmlFeatureGeneratorFactory
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
             public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement,
                 FeatureGeneratorResourceProvider resourceManager)
             {
@@ -468,8 +454,6 @@ namespace opennlp.tools.util.featuregen
 
         internal class CustomFeatureGeneratorFactory : XmlFeatureGeneratorFactory
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public AdaptiveFeatureGenerator create(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
             public virtual AdaptiveFeatureGenerator create(XmlElement generatorXmlElement,
                 FeatureGeneratorResourceProvider resourceManager)
             {
@@ -518,8 +502,6 @@ namespace opennlp.tools.util.featuregen
         /// <param name="resourceManager">
         /// 
         /// @return </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: static AdaptiveFeatureGenerator createGenerator(org.w3c.dom.XmlElement generatorXmlElement, FeatureGeneratorResourceProvider resourceManager) throws opennlp.tools.util.InvalidFormatException
         internal static AdaptiveFeatureGenerator createGenerator(XmlElement generatorXmlElement,
             FeatureGeneratorResourceProvider resourceManager)
         {
@@ -552,8 +534,6 @@ namespace opennlp.tools.util.featuregen
         /// </returns>
         /// <exception cref="IOException"> if an error occurs during reading from the descriptor
         ///     <seealso cref="InputStream"/> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static AdaptiveFeatureGenerator create(java.io.InputStream xmlDescriptorIn, FeatureGeneratorResourceProvider resourceManager) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public static AdaptiveFeatureGenerator create(InputStream xmlDescriptorIn,
             FeatureGeneratorResourceProvider resourceManager)
         {

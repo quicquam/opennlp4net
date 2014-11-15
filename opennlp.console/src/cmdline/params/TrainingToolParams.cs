@@ -30,8 +30,6 @@ namespace opennlp.tools.cmdline.@params
 	public interface TrainingToolParams : BasicTrainingParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "modelFile", description = "output model file.") java.io.File getModel();
 	  Jfile Model {get;}
 	}
 

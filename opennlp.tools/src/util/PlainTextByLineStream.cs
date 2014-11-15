@@ -44,8 +44,6 @@ namespace opennlp.tools.util
             this.encoding = null;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PlainTextByLineStream(java.io.InputStream in, String charsetName) throws java.io.UnsupportedEncodingException
         public PlainTextByLineStream(InputStream @in, string charsetName)
             : this(new InputStreamReader(@in, charsetName))
         {
@@ -73,15 +71,11 @@ namespace opennlp.tools.util
             throw new System.NotImplementedException();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public String read() throws java.io.IOException
         public virtual string read()
         {
             return @in.readLine();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void reset() throws java.io.IOException
         public virtual void reset()
         {
             if (channel == null)
@@ -95,8 +89,6 @@ namespace opennlp.tools.util
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
         public virtual void close()
         {
             if (channel == null)

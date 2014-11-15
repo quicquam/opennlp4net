@@ -256,8 +256,6 @@ namespace opennlp.tools.cmdline
               /// </summary>
               /// <param name="argProxyInterface"> interface with parameter descriptions </param>
               /// <returns> the help message usage string </returns>
-        //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-        //ORIGINAL LINE: @SuppressWarnings({"unchecked"}) public static <T> String createUsage(Class argProxyInterface)
               public static <T> string createUsage(Type argProxyInterface)
               {
                 return createUsage(new Type[]{argProxyInterface});
@@ -349,8 +347,6 @@ namespace opennlp.tools.cmdline
               /// <param name="args"> command line arguments </param>
               /// <param name="argProxyInterface"> interface with parameters description </param>
               /// <returns> true, if arguments are valid </returns>
-        //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-        //ORIGINAL LINE: @SuppressWarnings({"unchecked"}) public static <T> boolean validateArguments(String args[] , Class argProxyInterface)
               public static <T> bool validateArguments(string args[] , Type argProxyInterface)
               {
                 return validateArguments(args, new Type[]{argProxyInterface});
@@ -375,8 +371,6 @@ namespace opennlp.tools.cmdline
               /// <param name="args"> command line arguments </param>
               /// <param name="argProxyInterface"> interface with parameters description </param>
               /// <returns> null, if arguments are valid or error message otherwise </returns>
-        //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-        //ORIGINAL LINE: @SuppressWarnings({"unchecked"}) public static <T> String validateArgumentsLoudly(String args[] , Class argProxyInterface)
               public static <T> string validateArgumentsLoudly(string args[] , Type argProxyInterface)
               {
                 return validateArgumentsLoudly(args, new Type[]{argProxyInterface});
@@ -458,8 +452,6 @@ namespace opennlp.tools.cmdline
               /// </returns>
               /// <exception cref="TerminateToolException"> if an argument value cannot be parsed. </exception>
               /// <exception cref="IllegalArgumentException"> if validateArguments returns false, if the proxy interface is not compatible. </exception>
-        //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-        //ORIGINAL LINE: @SuppressWarnings("unchecked") public static <T> T parse(String args[] , Class argProxyInterface)
               public static <T> T parse(string args[] , Type argProxyInterface)
               {
 

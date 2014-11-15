@@ -32,17 +32,11 @@ namespace opennlp.tools.cmdline.parser
 	public interface TrainingParams : BasicTrainingParams
 	{
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "CHUNKING|TREEINSERT", description = "one of CHUNKING or TREEINSERT, default is CHUNKING.") @OptionalParameter(defaultValue = "CHUNKING") String getParserType();
 	  string ParserType {get;}
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "headRulesFile", description = "head rules file.") java.io.File getHeadRules();
       Jfile HeadRules { get; }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "true|false", description = "Learn to generate function tags.") @OptionalParameter(defaultValue = "false") Boolean getFun();
 	  bool? Fun {get;}
 
 	}

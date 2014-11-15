@@ -38,8 +38,6 @@ namespace opennlp.tools.formats.muc
 		this.tokenizer = tokenizer;
 	  }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.namefind.NameSample read() throws java.io.IOException
 	  public override NameSample read()
 	  {
 		if (storedSamples.Count == 0)

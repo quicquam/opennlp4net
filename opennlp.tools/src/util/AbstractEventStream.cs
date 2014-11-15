@@ -56,12 +56,10 @@ namespace opennlp.tools.util
         /// <summary>
         /// Checks if there are more training events available.
         /// 
-        /// </summary>
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: public final boolean hasNext() throws java.io.IOException
+        /// </summary>        
         public override bool hasNext()
         {
-            //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+            
             if (events.MoveNext())
             {
                 return true;
@@ -75,7 +73,7 @@ namespace opennlp.tools.util
                     events = createEvents(sample);
                 }
 
-                //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+                
                 return events.MoveNext();
             }
         }

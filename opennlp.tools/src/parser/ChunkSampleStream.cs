@@ -70,8 +70,6 @@ namespace opennlp.tools.parser
             return chunks.ToArray();
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.chunker.ChunkSample read() throws java.io.IOException
         public override ChunkSample read()
         {
             Parse parse = samples.read();

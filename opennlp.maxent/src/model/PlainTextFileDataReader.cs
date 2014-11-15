@@ -27,8 +27,6 @@ namespace opennlp.model
     {
         private BufferedReader input;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PlainTextFileDataReader(java.io.File f) throws java.io.IOException
         public PlainTextFileDataReader(Jfile f)
         {
             if (f.Name.EndsWith(".gz", StringComparison.Ordinal))
@@ -54,22 +52,16 @@ namespace opennlp.model
             input = @in;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public double readDouble() throws java.io.IOException
         public virtual double readDouble()
         {
             return Convert.ToDouble(input.readLine());
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public int readInt() throws java.io.IOException
         public virtual int readInt()
         {
             return Convert.ToInt32(input.readLine());
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public String readUTF() throws java.io.IOException
         public virtual string readUTF()
         {
             return input.readLine();

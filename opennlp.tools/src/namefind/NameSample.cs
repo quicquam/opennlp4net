@@ -220,15 +220,11 @@ namespace opennlp.tools.namefind
 
         private static readonly Pattern START_TAG_PATTERN = Pattern.compile("<START(:([^:>\\s]*))?>");
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static NameSample parse(String taggedTokens, boolean isClearAdaptiveData) throws java.io.IOException
         public static NameSample parse(string taggedTokens, bool isClearAdaptiveData)
         {
             return parse(taggedTokens, DEFAULT_TYPE, isClearAdaptiveData);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static NameSample parse(String taggedTokens, String defaultType, boolean isClearAdaptiveData) throws java.io.IOException
         public static NameSample parse(string taggedTokens, string defaultType, bool isClearAdaptiveData)
         {
             // TODO: Should throw another exception, and then convert it into an IOException in the stream

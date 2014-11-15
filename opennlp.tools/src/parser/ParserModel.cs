@@ -43,15 +43,11 @@ namespace opennlp.tools.parser
     {
         public class POSModelSerializer : ArtifactSerializer<POSModel>
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.postag.POSModel create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
             public virtual POSModel create(InputStream @in)
             {
                 return new POSModel(@in);
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(opennlp.tools.postag.POSModel artifact, java.io.OutputStream out) throws java.io.IOException
             public virtual void serialize(POSModel artifact, OutputStream @out)
             {
                 artifact.serialize(@out as FileOutputStream);
@@ -60,15 +56,12 @@ namespace opennlp.tools.parser
 
         public class ChunkerModelSerializer : ArtifactSerializer<ChunkerModel>
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.chunker.ChunkerModel create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
+
             public virtual ChunkerModel create(InputStream @in)
             {
                 return new ChunkerModel(@in);
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(opennlp.tools.chunker.ChunkerModel artifact, java.io.OutputStream out) throws java.io.IOException
             public virtual void serialize(ChunkerModel artifact, OutputStream @out)
             {
                 artifact.serialize(@out as FileOutputStream);
@@ -77,16 +70,13 @@ namespace opennlp.tools.parser
 
         public class HeadRulesSerializer : ArtifactSerializer<opennlp.tools.parser.lang.en.HeadRules>
         {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.tools.parser.lang.en.HeadRules create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
+
             public virtual opennlp.tools.parser.lang.en.HeadRules create(InputStream @in)
             {
                 return
                     new opennlp.tools.parser.lang.en.HeadRules(new BufferedReader(new InputStreamReader(@in, "UTF-8")));
             }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(opennlp.tools.parser.lang.en.HeadRules artifact, java.io.OutputStream out) throws java.io.IOException
             public virtual void serialize(opennlp.tools.parser.lang.en.HeadRules artifact, OutputStream @out)
             {
                 artifact.serialize(new OutputStreamWriter((FileOutputStream) @out, "UTF-8"));
@@ -167,20 +157,14 @@ namespace opennlp.tools.parser
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ParserModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public ParserModel(InputStream @in) : base(COMPONENT_NAME, @in)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ParserModel(java.io.File modelFile) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public ParserModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public ParserModel(java.net.URL modelURL) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public ParserModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
         {
         }
@@ -258,8 +242,6 @@ namespace opennlp.tools.parser
                 HeadRules, ParserType);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         protected internal override void validateArtifactMap()
         {
             base.validateArtifactMap();

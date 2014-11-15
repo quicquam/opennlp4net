@@ -36,8 +36,6 @@ namespace opennlp.maxent.io
         protected internal IndexHashTable<string> pmap;
         protected internal double[] parameters;
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @SuppressWarnings("unchecked") public QNModelWriter(opennlp.model.AbstractModel model)
         public QNModelWriter(AbstractModel model)
         {
             object[] data = model.DataStructures;
@@ -49,8 +47,6 @@ namespace opennlp.maxent.io
             parameters = qnModel.Parameters;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override public void persist() throws java.io.IOException
         public override void persist()
         {
             // the type of model (QN)

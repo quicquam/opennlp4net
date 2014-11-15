@@ -39,8 +39,6 @@ namespace opennlp.tools.doccat
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public DocumentSample read() throws java.io.IOException
         public override DocumentSample read()
         {
             string sampleString = samples.read();

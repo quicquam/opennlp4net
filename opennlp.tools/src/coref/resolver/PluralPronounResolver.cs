@@ -29,14 +29,10 @@ namespace opennlp.tools.coref.resolver
     {
         internal int NUM_SENTS_BACK_PRONOUNS = 2;
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PluralPronounResolver(String projectName, ResolverMode m) throws java.io.IOException
         public PluralPronounResolver(string projectName, ResolverMode m) : base(projectName, "tmodel", m, 30)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public PluralPronounResolver(String projectName, ResolverMode m,NonReferentialResolver nrr) throws java.io.IOException
         public PluralPronounResolver(string projectName, ResolverMode m, NonReferentialResolver nrr)
             : base(projectName, "tmodel", m, 30, nrr)
         {

@@ -41,24 +41,14 @@ namespace opennlp.tools.formats.ad
 
 	  internal interface Parameters
 	  {
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "charsetName", description = "encoding for reading and writing text, if absent the system default is used.") java.nio.charset.Charset getEncoding();
 		Charset Encoding {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "sampleData", description = "data to be used, usually a file name.") java.io.File getData();
 		Jfile Data {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "language", description = "language which is being processed.") String getLang();
 		string Lang {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "expandME", description = "expand multiword expressions.") @OptionalParameter(defaultValue = "false") Boolean getExpandME();
 		bool? ExpandME {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "includeFeatures", description = "combine POS Tags with word features, like number and gender.") @OptionalParameter(defaultValue = "false") Boolean getIncludeFeatures();
 		bool? IncludeFeatures {get;}
 	  }
 

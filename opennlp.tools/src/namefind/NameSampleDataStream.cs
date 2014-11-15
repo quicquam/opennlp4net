@@ -39,8 +39,6 @@ namespace opennlp.tools.namefind
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public NameSample read() throws java.io.IOException
         public override NameSample read()
         {
             string token = samples.read();

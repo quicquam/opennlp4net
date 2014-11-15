@@ -138,8 +138,6 @@ namespace opennlp.tools.parser.chunking
             p.Type = TOP_NODE;
         }
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: @Override protected opennlp.tools.parser.Parse[] advanceParses(final opennlp.tools.parser.Parse p, double probMass)
         protected internal override Parse[] advanceParses(Parse p, double probMass)
         {
             double q = 1 - probMass;
@@ -297,8 +295,6 @@ namespace opennlp.tools.parser.chunking
 
         /// @deprecated Please do not use anymore, use the ObjectStream train methods instead! This method
         /// will be removed soon. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("Please do not use anymore, use the ObjectStream train methods instead! This method") public static opennlp.model.AbstractModel train(opennlp.model.EventStream es, int iterations, int cut) throws java.io.IOException
         [Obsolete("Please do not use anymore, use the ObjectStream train methods instead! This method")]
         public static AbstractModel train(opennlp.model.EventStream es, int iterations, int cut)
         {
@@ -314,8 +310,6 @@ namespace opennlp.tools.parser.chunking
             }
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static opennlp.tools.parser.ParserModel train(String languageCode, opennlp.tools.util.ObjectStream<opennlp.tools.parser.Parse> parseSamples, opennlp.tools.parser.HeadRules rules, opennlp.tools.util.TrainingParameters mlParams) throws java.io.IOException
         public static ParserModel train(string languageCode, ObjectStream<Parse> parseSamples, HeadRules rules,
             TrainingParameters mlParams)
         {
@@ -362,8 +356,6 @@ namespace opennlp.tools.parser.chunking
 
         /// @deprecated use <seealso cref="#train(String, ObjectStream, HeadRules, TrainingParameters)"/>
         /// instead and pass in a TrainingParameters object. 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated("use <seealso cref="#train(String, opennlp.tools.util.ObjectStream, opennlp.tools.parser.HeadRules, opennlp.tools.util.TrainingParameters)"/>") public static opennlp.tools.parser.ParserModel train(String languageCode, opennlp.tools.util.ObjectStream<opennlp.tools.parser.Parse> parseSamples, opennlp.tools.parser.HeadRules rules, int iterations, int cut) throws java.io.IOException
         [Obsolete(
             "use <seealso cref=\"#train(String, opennlp.tools.util.ObjectStream, opennlp.tools.parser.HeadRules, opennlp.tools.util.TrainingParameters)\"/>"
             )]

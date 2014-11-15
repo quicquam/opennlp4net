@@ -84,26 +84,18 @@ namespace opennlp.tools.sentdetect
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SentenceModel(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public SentenceModel(InputStream @in) : base(COMPONENT_NAME, @in)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SentenceModel(java.io.File modelFile) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public SentenceModel(Jfile modelFile) : base(COMPONENT_NAME, modelFile)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public SentenceModel(java.net.URL modelURL) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public SentenceModel(Uri modelURL) : base(COMPONENT_NAME, modelURL)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Override protected void validateArtifactMap() throws opennlp.tools.util.InvalidFormatException
         protected internal override void validateArtifactMap()
         {
             base.validateArtifactMap();
@@ -169,8 +161,6 @@ namespace opennlp.tools.sentdetect
 
         public string Language { get; set; }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void main(String[] args) throws java.io.FileNotFoundException, java.io.IOException, opennlp.tools.util.InvalidFormatException
         public static void Main(string[] args)
         {
             if (args.Length < 3)

@@ -37,14 +37,10 @@ namespace opennlp.model
         /// <param name="eventStream">
         ///          An Event[] which contains the a list of all the Events seen in the
         ///          training data. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public OnePassDataIndexer(EventStream eventStream) throws java.io.IOException
         public OnePassDataIndexer(EventStream eventStream) : this(eventStream, 0)
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public OnePassDataIndexer(EventStream eventStream, int cutoff) throws java.io.IOException
         public OnePassDataIndexer(EventStream eventStream, int cutoff) : this(eventStream, cutoff, true)
         {
         }
@@ -58,8 +54,6 @@ namespace opennlp.model
         /// <param name="cutoff">
         ///          The minimum number of times a predicate must have been observed in
         ///          order to be included in the model. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public OnePassDataIndexer(EventStream eventStream, int cutoff, boolean sort) throws java.io.IOException
         public OnePassDataIndexer(EventStream eventStream, int cutoff, bool sort)
         {
             IDictionary<string, int?> predicateIndex = new Dictionary<string, int?>();
@@ -99,8 +93,6 @@ namespace opennlp.model
         /// <param name="cutoff">
         ///          an <code>int</code> value </param>
         /// <returns> a <code>TLinkedList</code> value </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private java.util.LinkedList<Event> computeEventCounts(EventStream eventStream, java.util.Map<String, Integer> predicatesInOut, int cutoff) throws java.io.IOException
         private LinkedList<Event> computeEventCounts(EventStream eventStream, IDictionary<string, int?> predicatesInOut,
             int cutoff)
         {

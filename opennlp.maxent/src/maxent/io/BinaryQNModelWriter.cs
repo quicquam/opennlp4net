@@ -37,9 +37,7 @@ namespace opennlp.maxent.io
         ///          The GISModel which is to be persisted. </param>
         /// <param name="f">
         ///          The File in which the model is to be persisted. </param>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public BinaryQNModelWriter(opennlp.model.AbstractModel model, java.io.File f) throws java.io.IOException
-        public BinaryQNModelWriter(AbstractModel model, Jfile f) : base(model)
+       public BinaryQNModelWriter(AbstractModel model, Jfile f) : base(model)
         {
             if (f.Name.EndsWith(".gz", StringComparison.Ordinal))
             {
@@ -64,29 +62,21 @@ namespace opennlp.maxent.io
             output = dos;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeUTF(String s) throws java.io.IOException
         public override void writeUTF(string s)
         {
             output.writeUTF(s);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeInt(int i) throws java.io.IOException
         public override void writeInt(int i)
         {
             output.writeInt(i);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void writeDouble(double d) throws java.io.IOException
         public override void writeDouble(double d)
         {
             output.writeDouble(d);
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void close() throws java.io.IOException
         public override void close()
         {
             output.flush();

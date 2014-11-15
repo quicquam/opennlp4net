@@ -28,15 +28,11 @@ namespace opennlp.tools.util.model
 
     public class GenericModelSerializer : ArtifactSerializer<AbstractModel>
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public opennlp.model.AbstractModel create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public virtual AbstractModel create(InputStream @in)
         {
             return (new GenericModelReader(new BinaryFileDataReader(@in))).Model;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(opennlp.model.AbstractModel artifact, java.io.OutputStream out) throws java.io.IOException
         public virtual void serialize(AbstractModel artifact, OutputStream @out)
         {
             ModelUtil.writeModel(artifact, @out);

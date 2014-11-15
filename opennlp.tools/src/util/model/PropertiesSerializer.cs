@@ -25,8 +25,6 @@ namespace opennlp.tools.util.model
 {
     internal class PropertiesSerializer : ArtifactSerializer<Properties>
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public java.util.Properties create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException
         public Properties create(InputStream @in)
         {
             Properties properties = new Properties();
@@ -35,8 +33,6 @@ namespace opennlp.tools.util.model
             return properties;
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void serialize(java.util.Properties properties, java.io.OutputStream out) throws java.io.IOException
         public void serialize(Properties properties, OutputStream @out)
         {
             properties.store(@out, "");

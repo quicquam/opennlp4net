@@ -37,8 +37,6 @@ namespace opennlp.tools.util.model
         /// </returns>
         /// <exception cref="IOException"> </exception>
         /// <exception cref="InvalidFormatException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: T create(java.io.InputStream in) throws java.io.IOException, opennlp.tools.util.InvalidFormatException;
         T create(InputStream @in);
 
         /// <summary>
@@ -49,8 +47,6 @@ namespace opennlp.tools.util.model
         /// <param name="artifact"> </param>
         /// <param name="out"> </param>
         /// <exception cref="IOException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: void serialize(T artifact, java.io.OutputStream out) throws java.io.IOException;
         void serialize(T artifact, OutputStream @out);
     }
 }

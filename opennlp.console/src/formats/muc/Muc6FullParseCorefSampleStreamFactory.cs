@@ -54,20 +54,12 @@ namespace opennlp.tools.formats.muc
 	  internal interface Parameters : BasicFormatParams
 	  {
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "modelFile") java.io.File getParserModel();
 		Jfile ParserModel {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "modelFile") java.io.File getTokenizerModel();
         Jfile TokenizerModel { get; }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "modelFile") java.io.File getPersonModel();
         Jfile PersonModel { get; }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "modelFile") java.io.File getOrganizationModel();
         Jfile OrganizationModel { get; }
 
 		// TODO: Add other models here !!!

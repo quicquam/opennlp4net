@@ -22,8 +22,6 @@ namespace opennlp.tools.coref.sim
     /// </summary>
     public interface TrainSimilarityModel
     {
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void trainModel() throws java.io.IOException;
         void trainModel();
 
         /// <summary>

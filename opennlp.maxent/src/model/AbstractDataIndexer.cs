@@ -194,8 +194,6 @@ namespace opennlp.model
         /// @since maxent 1.2.6 </returns>
         protected internal static string[] toIndexedStringArray(IDictionary<string, int?> labelToIndexMap)
         {
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String[] array = new String[labelToIndexMap.size()];
             string[] array = new string[labelToIndexMap.Count];
             foreach (string label in labelToIndexMap.Keys)
             {

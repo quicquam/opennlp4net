@@ -59,8 +59,6 @@ namespace opennlp.tools.tokenize
         {
         }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public TokenSample read() throws java.io.IOException
         public override TokenSample read()
         {
             string sampleString = samples.read();

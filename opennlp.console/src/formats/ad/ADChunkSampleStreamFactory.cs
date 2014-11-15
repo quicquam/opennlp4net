@@ -47,24 +47,14 @@ namespace opennlp.tools.formats.ad
 	  {
 		//all have to be repeated, because encoding is not optional,
 		//according to the check if (encoding == null) { below (now removed)
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "charsetName", description = "encoding for reading and writing text, if absent the system default is used.") java.nio.charset.Charset getEncoding();
 		Charset Encoding {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "sampleData", description = "data to be used, usually a file name.") java.io.File getData();
 		Jfile Data {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "language", description = "language which is being processed.") String getLang();
 		string Lang {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "start", description = "index of first sentence") @OptionalParameter Integer getStart();
 		int? Start {get;}
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ParameterDescription(valueName = "end", description = "index of last sentence") @OptionalParameter Integer getEnd();
 		int? End {get;}
 	  }
 
