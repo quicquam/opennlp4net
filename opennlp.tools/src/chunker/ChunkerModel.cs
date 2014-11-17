@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
+using opennlp.tools.util.model;
 
 
 namespace opennlp.tools.chunker
@@ -28,7 +29,6 @@ namespace opennlp.tools.chunker
     using GenericModelReader = opennlp.model.GenericModelReader;
     using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
     using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-    using BaseModel = opennlp.tools.util.model.BaseModel<ChunkerModel>;
 
     /// <summary>
     /// The <seealso cref="ChunkerModel"/> is the model used

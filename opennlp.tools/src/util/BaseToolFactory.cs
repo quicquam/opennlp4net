@@ -32,7 +32,7 @@ namespace opennlp.tools.util
             throw new NotImplementedException();
         }
 
-        public static BaseToolFactory create<T>(Type factoryClass, BaseModel<T> m)
+        public static BaseToolFactory create(Type factoryClass)
         {
             BaseToolFactory theFactory = null;
             if (factoryClass != null)
@@ -56,7 +56,7 @@ namespace opennlp.tools.util
             return theFactory;
         }
 
-        public static BaseToolFactory create<T>(string factoryClass, BaseModel<T> m)
+        public static BaseToolFactory create(string factoryClass)
         {
             BaseToolFactory theFactory = null;
 

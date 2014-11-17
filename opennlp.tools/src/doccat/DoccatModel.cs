@@ -18,12 +18,12 @@ using System.Collections.Generic;
  */
 using j4n.IO.File;
 using j4n.IO.InputStream;
+using opennlp.tools.util.model;
 
 namespace opennlp.tools.doccat
 {
     using AbstractModel = opennlp.model.AbstractModel;
     using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-    using BaseModel = opennlp.tools.util.model.BaseModel<DoccatModel>;
 
     public class DoccatModel : BaseModel
     {

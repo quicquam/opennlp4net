@@ -28,7 +28,6 @@ namespace opennlp.tools.postag
     using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
     using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
     using opennlp.tools.util.model;
-    using BaseModel = opennlp.tools.util.model.BaseModel<POSModel>;
 
     /// <summary>
     /// The <seealso cref="POSModel"/> is the model used

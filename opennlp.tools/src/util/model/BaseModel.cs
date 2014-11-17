@@ -15,7 +15,7 @@ using opennlp.tools.parser;
 
 namespace opennlp.tools.util.model
 {
-    public class BaseModel<T> : ArtifactProvider
+    public class BaseModel : ArtifactProvider
     {
         private static int MODEL_BUFFER_SIZE_LIMIT = Int32.MaxValue;
 
@@ -141,14 +141,14 @@ namespace opennlp.tools.util.model
                 Type factoryClass = DefaultFactory;
                 if (factoryClass != null)
                 {
-                    this.toolFactory = BaseToolFactory.create(factoryClass, this);
+                    this.toolFactory = BaseToolFactory.create(factoryClass);
                 }
             }
             else
             {
                 try
                 {
-                    this.toolFactory = BaseToolFactory.create(factoryName, this);
+                    this.toolFactory = BaseToolFactory.create(factoryName);
                 }
                 catch (InvalidFormatException e)
                 {
@@ -342,7 +342,7 @@ namespace opennlp.tools.util.model
             {
                 try
                 {
-                    if (BaseToolFactory.create(factoryName, this) == null)
+                    if (BaseToolFactory.create(factoryName) == null)
                     {
                         throw new InvalidFormatException(
                             "Could not load an user extension specified by the model: "

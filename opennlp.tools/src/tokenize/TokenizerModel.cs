@@ -21,6 +21,7 @@ using j4n.Interfaces;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
+using opennlp.tools.util.model;
 
 
 namespace opennlp.tools.tokenize
@@ -30,7 +31,6 @@ namespace opennlp.tools.tokenize
     using MaxentModel = opennlp.model.MaxentModel;
     using Dictionary = opennlp.tools.dictionary.Dictionary;
     using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-    using BaseModel = opennlp.tools.util.model.BaseModel<TokenizerModel>;
     using ModelUtil = opennlp.tools.util.model.ModelUtil;
 
     /// <summary>

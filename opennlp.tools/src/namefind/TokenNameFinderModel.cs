@@ -41,7 +41,7 @@ namespace opennlp.tools.namefind
     /// by a learnable <seealso cref="TokenNameFinder"/>.
     /// </summary>
     /// <seealso cref= NameFinderME </seealso>
-    public class TokenNameFinderModel : BaseModel<TokenNameFinderModel>
+    public class TokenNameFinderModel : BaseModel
     {
         public static string SEQUENCE_CODEC_CLASS_NAME_PARAMETER;
 

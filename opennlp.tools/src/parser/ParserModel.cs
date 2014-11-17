@@ -32,7 +32,6 @@ namespace opennlp.tools.parser
     using POSModel = opennlp.tools.postag.POSModel;
     using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
     using opennlp.tools.util.model;
-    using BaseModel = opennlp.tools.util.model.BaseModel<ParserModel>;
     using UncloseableInputStream = opennlp.tools.util.model.UncloseableInputStream;
 
     /// <summary>
