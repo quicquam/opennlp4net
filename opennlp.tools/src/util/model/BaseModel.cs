@@ -46,7 +46,7 @@ namespace opennlp.tools.util.model
         protected internal BaseToolFactory toolFactory;
         private bool isLoadedFromSerialized;
         private string componentName;
-        private Dictionary<string, sbyte[]> leftoverArtifacts;
+        private Dictionary<string, byte[]> leftoverArtifacts;
 
         private BaseModel(string componentName, bool isLoadedFromSerialized)
         {
@@ -100,7 +100,7 @@ namespace opennlp.tools.util.model
             {
                 // will read it in two steps, first using the known factories, latter the
                 // unknown.
-                leftoverArtifacts = new Dictionary<string, sbyte[]>();
+                leftoverArtifacts = new Dictionary<string, byte[]>();
 
                 ZipEntry entry;
                 while ((entry = zip.GetNextEntry()) != null)
@@ -111,8 +111,9 @@ namespace opennlp.tools.util.model
                     if (factory == null)
                     {
                         /* TODO: find a better solution, that would consume less memory */
-                        //sbyte[] bytes = toByteArray(zip);
-                        //leftoverArtifacts[entry.FileName] = bytes;
+                        var data = new byte[entry.UncompressedSize];
+                        zip.Read(data, 0, data.Length);
+                        leftoverArtifacts[entry.FileName] = data;
                     }
                     else
                     {
@@ -382,11 +383,6 @@ namespace opennlp.tools.util.model
         public void serialize(FileOutputStream fileOutputStream)
         {
             throw new NotImplementedException();
-        }
-
-        private sbyte[] toByteArray(ZipInputStream stream)
-        {
-            return null;
         }
 
         protected internal virtual Type DefaultFactory
