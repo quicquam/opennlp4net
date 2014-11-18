@@ -172,9 +172,12 @@ namespace opennlp.tools.parser
         {
             base.createArtifactSerializers();
 
-            artifactSerializers.Add("postagger", new POSModelSerializer());
-            artifactSerializers.Add("chunker", new ChunkerModelSerializer());
-            artifactSerializers.Add("headrules", new HeadRulesSerializer());
+            if (!artifactSerializers.Contains("postagger"))
+                artifactSerializers.Add("postagger", new POSModelSerializer());
+            if (!artifactSerializers.Contains("chunker"))
+                artifactSerializers.Add("chunker", new ChunkerModelSerializer());
+            if (!artifactSerializers.Contains("headrules"))
+                artifactSerializers.Add("headrules", new HeadRulesSerializer());
         }
 
         protected internal void createArtifactSerializers(IDictionary<string, ArtifactSerializer<Object>> serializers)

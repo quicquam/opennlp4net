@@ -95,8 +95,11 @@ namespace opennlp.tools.util.model
         private void loadModel(InputStream @in)
         {
             createBaseArtifactSerializers();
+            var readStream = new MemoryStream();
+            @in.Stream.CopyTo(readStream);
+            readStream.Seek(0, SeekOrigin.Begin);
 
-            using (var zip = new ZipInputStream(@in.Stream))
+            using (var zip = new ZipInputStream(readStream))
             {
                 // will read it in two steps, first using the known factories, latter the
                 // unknown.
@@ -157,7 +160,8 @@ namespace opennlp.tools.util.model
                     throw new System.ArgumentException(e.Message);
                 }
             }
-            this.toolFactory.init(this);
+            if(toolFactory != null)
+                this.toolFactory.init(this);
         }
 
 

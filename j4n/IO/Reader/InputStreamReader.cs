@@ -6,22 +6,23 @@ namespace j4n.IO.Reader
 {
     public class InputStreamReader : Reader
     {
+        private string Encoding;
         public InputStreamReader(BufferedInputStream bufferedInputStream)
             : base(bufferedInputStream)
         {
-            throw new System.NotImplementedException();
+            Encoding = "UTF-8";
         }
 
         public InputStreamReader(InputStream.InputStream bufferedInputStream, string encoding = null)
             : base(bufferedInputStream)
         {
-            throw new System.NotImplementedException();
+            Encoding = encoding;
         }
 
         public InputStreamReader(FileInputStream bufferedInputStream, string encoding = null)
             : base(bufferedInputStream)
         {
-            throw new System.NotImplementedException();
+            Encoding = encoding;
         }
 
         public InputStreamReader(Stream bufferedInputStream, string encoding)

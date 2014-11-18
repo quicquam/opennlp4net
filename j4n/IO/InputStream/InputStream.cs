@@ -8,7 +8,7 @@ namespace j4n.IO.InputStream
     public class InputStream : Closeable
     {
         public readonly string Path;
-        protected readonly Stream InnerStream;
+        public readonly Stream InnerStream;
 
         public Stream Stream
         {

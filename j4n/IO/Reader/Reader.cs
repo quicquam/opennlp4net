@@ -1,18 +1,20 @@
 ﻿using System;
+using System.IO;
 using j4n.Interfaces;
 
 namespace j4n.IO.Reader
 {
     public class Reader : Closeable
     {
-        public Reader(InputStream.InputStream bufferedInputStream)
+        public InputStream.InputStream InnerStream;
+        public Reader(InputStream.InputStream stream)
         {
-            throw new System.NotImplementedException();
+            InnerStream = stream;
         }
 
-        protected Reader(Reader bufferedInputStream)
+        protected Reader(Reader reader)
         {
-            throw new NotImplementedException();
+            InnerStream = reader.InnerStream;
         }
 
         public Reader()
