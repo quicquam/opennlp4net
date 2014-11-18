@@ -118,9 +118,10 @@ namespace opennlp.tools.util.model
                     else
                     {
                         var data = new byte[entry.UncompressedSize];
-                        zip.Read(data, 0, data.Length);
+                        zip.Read(data, 0, (int)entry.UncompressedSize);
                         var stream = new MemoryStream(data);
                         artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
+                        zip.Seek(entry.CompressedSize, SeekOrigin.Begin);
                     }
                 }
 
