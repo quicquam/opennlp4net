@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Ionic.Zip;
-using Ionic.Zlib;
 using j4n.Exceptions;
 using j4n.IO.File;
 using j4n.IO.InputStream;
