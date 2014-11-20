@@ -68,6 +68,8 @@ namespace opennlp.tools.Tests
                 Assert.AreEqual(1, nameSpans.Count());
                 Assert.AreEqual(2, nameSpans[0].Start);
                 Assert.AreEqual(4, nameSpans[0].End);
+
+                modelInToken.close();
             }
             catch (IOException e)
             {
