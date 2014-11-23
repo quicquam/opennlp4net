@@ -122,7 +122,8 @@ namespace opennlp.tools.namefind
         {
         }
 
-        public TokenNameFinderModel(InputStream @in) : base(COMPONENT_NAME, @in)
+        public TokenNameFinderModel(InputStream @in, long streamOffset = 0)
+            : base(COMPONENT_NAME, @in, streamOffset)
         {
         }
 

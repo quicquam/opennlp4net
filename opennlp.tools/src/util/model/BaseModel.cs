@@ -65,7 +65,7 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
-        protected BaseModel(string componentName, InputStream @in)
+        protected BaseModel(string componentName, InputStream @in, long streamOffset)
             : this(componentName, true)
         {
             if (@in == null)
@@ -73,7 +73,7 @@ namespace opennlp.tools.util.model
                 throw new System.ArgumentException("in must not be null!");
             }
 
-            loadModel(@in);
+            loadModel(@in, streamOffset);
         }
 
         protected BaseModel(string componentName, Jfile languageCode)
@@ -91,14 +91,12 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
-        private void loadModel(InputStream @in)
+        private void loadModel(InputStream @in, long streamOffset)
         {
+            long dataRead = 0;
             createBaseArtifactSerializers();
-            var readStream = new MemoryStream();
-            @in.Stream.CopyTo(readStream);
-            readStream.Seek(0, SeekOrigin.Begin);
 
-            using (var zip = new ZipInputStream(readStream))
+            using (var zip = new ZipInputStream(@in.InnerStream))
             {
                 // will read it in two steps, first using the known factories, latter the
                 // unknown.
@@ -120,10 +118,9 @@ namespace opennlp.tools.util.model
                     else
                     {
                         var data = new byte[entry.UncompressedSize];
-                        zip.Read(data, 0, (int)entry.UncompressedSize);
+                        dataRead = zip.Read(data, 0, (int)entry.UncompressedSize);
                         var stream = new MemoryStream(data);
                         artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
-                        zip.Seek(entry.CompressedSize, SeekOrigin.Begin);
                     }
                 }
 
@@ -186,7 +183,12 @@ namespace opennlp.tools.util.model
                 var serializer = factory as ParserModel.POSModelSerializer;
                 return serializer.create(inputStream);
             }
-            
+            if (factory is ParserModel.HeadRulesSerializer)
+            {
+                var serializer = factory as ParserModel.HeadRulesSerializer;
+                return serializer.create(inputStream);
+            }
+
             return null;
         }
 

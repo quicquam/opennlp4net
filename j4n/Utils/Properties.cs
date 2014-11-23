@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using j4n.Interfaces;
 using j4n.IO.InputStream;
 using System.Collections.Generic;
@@ -12,21 +13,15 @@ namespace j4n.Utils
     {
         public void load(InputStream @in)
         {
-            using (var streamReader = new StreamReader(@in.Stream))
+            var lines = ReadLines(@in.InnerStream);
+            foreach (var line in lines)
             {
-                while (!streamReader.EndOfStream)
+                if (!line.StartsWith("#"))
                 {
-                    var line = streamReader.ReadLine();
-                    if (line != null)
+                    var parts = line.Split('=').ToList();
+                    if (parts.Count == 2)
                     {
-                        if (!line.StartsWith("#"))
-                        {
-                            var parts = line.Split('=').ToList();
-                            if (parts.Count == 2)
-                            {
-                                Add(parts[0], parts[1]);
-                            }
-                        }
+                        Add(parts[0], parts[1]);
                     }
                 }
             }
@@ -62,6 +57,18 @@ namespace j4n.Utils
                 val = defaultValue;
             }
             return val;
+        }
+
+        public IEnumerable<string> ReadLines(Stream stream)
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    yield return line;
+                }
+            }
         }
     }
 }

@@ -70,7 +70,8 @@ namespace opennlp.tools.chunker
         {
         }
 
-        public ChunkerModel(InputStream @in) : base(COMPONENT_NAME, @in)
+        public ChunkerModel(InputStream @in, long streamOffset = 0)
+            : base(COMPONENT_NAME, @in, streamOffset)
         {
         }
 

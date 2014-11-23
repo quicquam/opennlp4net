@@ -67,16 +67,16 @@ namespace opennlp.tools.parser
             }
         }
 
-        public class HeadRulesSerializer : ArtifactSerializer<opennlp.tools.parser.lang.en.HeadRules>
+        public class HeadRulesSerializer : ArtifactSerializer<lang.en.HeadRules>
         {
 
-            public virtual opennlp.tools.parser.lang.en.HeadRules create(InputStream @in)
+            public virtual lang.en.HeadRules create(InputStream @in)
             {
                 return
-                    new opennlp.tools.parser.lang.en.HeadRules(new BufferedReader(new InputStreamReader(@in, "UTF-8")));
+                    new lang.en.HeadRules(new BufferedReader(new InputStreamReader(@in, "UTF-8")));
             }
 
-            public virtual void serialize(opennlp.tools.parser.lang.en.HeadRules artifact, OutputStream @out)
+            public virtual void serialize(lang.en.HeadRules artifact, OutputStream @out)
             {
                 artifact.serialize(new OutputStreamWriter((FileOutputStream) @out, "UTF-8"));
             }
@@ -156,7 +156,8 @@ namespace opennlp.tools.parser
         {
         }
 
-        public ParserModel(InputStream @in) : base(COMPONENT_NAME, @in)
+        public ParserModel(InputStream @in, long streamOffset = 0)
+            : base(COMPONENT_NAME, @in, streamOffset)
         {
         }
 

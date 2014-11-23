@@ -127,6 +127,8 @@ namespace opennlp.tools.Tests
                     string.Format("Covered text is: " + tokens[nameSpans[i].Start] + " " + tokens[nameSpans[i].End - 1]);
                 var p = string.Format("Probability is: " + spanProbs[i]);
             }
+
+            modelInToken.close();
         }
 
         private void DumpObject(object value, string name, string fileName)

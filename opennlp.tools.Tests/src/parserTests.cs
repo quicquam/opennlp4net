@@ -35,6 +35,8 @@ namespace opennlp.tools.Tests
 
             var sentence = "The quick brown fox jumps over the lazy dog .";
             var topParses = StandAloneParserTool.parseLine(sentence, parser, 1);
+
+            modelIn.close();
         }
     }
 }
