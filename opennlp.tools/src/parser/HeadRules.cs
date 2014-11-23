@@ -22,7 +22,7 @@ namespace opennlp.tools.parser
     /// <summary>
     /// Interface for encoding the head rules associated with parsing.
     /// </summary>
-    public interface HeadRules
+    public abstract class HeadRules
     {
         /// <summary>
         /// Returns the head constituent for the specified constituents of the specified type.
@@ -30,12 +30,12 @@ namespace opennlp.tools.parser
         /// <param name="constituents"> The constituents which make up a constituent of the specified type. </param>
         /// <param name="type"> The type of a constituent which is made up of the specified constituents. </param>
         /// <returns> The constituent which is the head. </returns>
-        Parse getHead(Parse[] constituents, string type);
+        public abstract Parse getHead(Parse[] constituents, string type);
 
         /// <summary>
         /// Returns the set of punctuation tags.  Attachment decisions for these tags will not be modeled.
         /// </summary>
         /// <returns> the set of punctuation tags. </returns>
-        HashSet<string> PunctuationTags { get; }
+        public abstract HashSet<string> PunctuationTags { get; }
     }
 }

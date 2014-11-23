@@ -105,12 +105,12 @@ namespace opennlp.tools.parser.lang.en
             //punctSet.add(":");
         }
 
-        public virtual HashSet<string> PunctuationTags
+        public override HashSet<string> PunctuationTags
         {
             get { return punctSet; }
         }
 
-        public virtual Parse getHead(Parse[] constituents, string type)
+        public override Parse getHead(Parse[] constituents, string type)
         {
             if (constituents[0].Type == Parser.TOK_NODE)
             {
