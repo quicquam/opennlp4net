@@ -93,7 +93,6 @@ namespace opennlp.tools.util.model
 
         private void loadModel(InputStream @in, long streamOffset)
         {
-            long dataRead = 0;
             createBaseArtifactSerializers();
 
             using (var zip = new ZipInputStream(@in.InnerStream))
@@ -118,9 +117,15 @@ namespace opennlp.tools.util.model
                     else
                     {
                         var data = new byte[entry.UncompressedSize];
-                        dataRead = zip.Read(data, 0, (int)entry.UncompressedSize);
+                        zip.Read(data, 0, (int)entry.UncompressedSize);
                         var stream = new MemoryStream(data);
                         artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
+
+                        // entry.IsDirectory doesn't work, but a CompressionRatio less than zero
+                        // indicates a directory (no data, just headers), move the zip.Position back by 
+                        // the size of the directory record
+                        if (entry.CompressionRatio < 0)
+                            zip.Seek(-16, SeekOrigin.Current);
                     }
                 }
 
@@ -186,6 +191,11 @@ namespace opennlp.tools.util.model
             if (factory is ParserModel.HeadRulesSerializer)
             {
                 var serializer = factory as ParserModel.HeadRulesSerializer;
+                return serializer.create(inputStream);
+            }
+            if (factory is ParserModel.ChunkerModelSerializer)
+            {
+                var serializer = factory as ParserModel.ChunkerModelSerializer;
                 return serializer.create(inputStream);
             }
 
