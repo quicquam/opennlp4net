@@ -606,7 +606,7 @@ namespace opennlp.tools.parser.treeinsert
 
             // TODO: Remove cast for HeadRules
             return new ParserModel(languageCode, buildModel, checkModel, attachModel, posModel, chunkModel,
-                (opennlp.tools.parser.lang.en.HeadRules) rules, ParserType.TREEINSERT, manifestInfoEntries);
+                (opennlp.tools.parser.lang.en.HeadRules) rules, ParserTypeEnum.TREEINSERT, manifestInfoEntries);
         }
 
         public static ParserModel train(string languageCode, ObjectStream<Parse> parseSamples, HeadRules rules,

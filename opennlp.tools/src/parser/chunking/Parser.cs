@@ -351,7 +351,7 @@ namespace opennlp.tools.parser.chunking
 
             // TODO: Remove cast for HeadRules
             return new ParserModel(languageCode, buildModel, checkModel, posModel, chunkModel,
-                (opennlp.tools.parser.lang.en.HeadRules) rules, ParserType.CHUNKING, manifestInfoEntries);
+                (opennlp.tools.parser.lang.en.HeadRules) rules, ParserTypeEnum.CHUNKING, manifestInfoEntries);
         }
 
         /// @deprecated use <seealso cref="#train(String, ObjectStream, HeadRules, TrainingParameters)"/>

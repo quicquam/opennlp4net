@@ -100,23 +100,23 @@ namespace opennlp.tools.parser
 
         public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel,
             AbstractModel attachModel, POSModel parserTagger, ChunkerModel chunkerTagger,
-            opennlp.tools.parser.lang.en.HeadRules headRules, ParserType modelType,
+            opennlp.tools.parser.lang.en.HeadRules headRules, ParserTypeEnum modelType,
             IDictionary<string, string> manifestInfoEntries) : base(COMPONENT_NAME, languageCode, manifestInfoEntries)
         {
-            setManifestProperty(PARSER_TYPE, modelType.name);
+            setManifestProperty(PARSER_TYPE, modelType.ToString());
 
             artifactMap[BUILD_MODEL_ENTRY_NAME] = buildModel;
 
             artifactMap[CHECK_MODEL_ENTRY_NAME] = checkModel;
 
-            if (ParserType.CHUNKING.Equals(modelType))
+            if (modelType == ParserTypeEnum.CHUNKING)
             {
                 if (attachModel != null)
                 {
                     throw new System.ArgumentException("attachModel must be null for chunking parser!");
                 }
             }
-            else if (ParserType.TREEINSERT.Equals(modelType))
+            else if (modelType == ParserTypeEnum.TREEINSERT)
             {
                 if (attachModel == null)
                 {
@@ -140,7 +140,7 @@ namespace opennlp.tools.parser
 
         public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel,
             AbstractModel attachModel, POSModel parserTagger, ChunkerModel chunkerTagger,
-            opennlp.tools.parser.lang.en.HeadRules headRules, ParserType modelType)
+            opennlp.tools.parser.lang.en.HeadRules headRules, ParserTypeEnum modelType)
             : this(
                 languageCode, buildModel, checkModel, attachModel, parserTagger, chunkerTagger, headRules, modelType,
                 null)
@@ -149,7 +149,7 @@ namespace opennlp.tools.parser
 
         public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel,
             POSModel parserTagger, ChunkerModel chunkerTagger, opennlp.tools.parser.lang.en.HeadRules headRules,
-            ParserType type, IDictionary<string, string> manifestInfoEntries)
+            ParserTypeEnum type, IDictionary<string, string> manifestInfoEntries)
             : this(
                 languageCode, buildModel, checkModel, null, parserTagger, chunkerTagger, headRules, type,
                 manifestInfoEntries)
@@ -185,9 +185,9 @@ namespace opennlp.tools.parser
         {
         }
 
-        public virtual ParserType ParserType
+        public virtual ParserTypeEnum ParserType
         {
-            get { return ParserType.parse(getManifestProperty(PARSER_TYPE)); }
+            get { return parser.ParserType.parse(getManifestProperty(PARSER_TYPE)); }
         }
 
         public virtual AbstractModel BuildModel
@@ -254,32 +254,23 @@ namespace opennlp.tools.parser
                 throw new InvalidFormatException("Missing the build model!");
             }
 
-            ParserType modelType = ParserType;
-
-            if (modelType != null)
+            if (ParserType == ParserTypeEnum.CHUNKING)
             {
-                if (ParserType.CHUNKING.Equals(modelType))
+                if (artifactMap[ATTACH_MODEL_ENTRY_NAME] != null)
                 {
-                    if (artifactMap[ATTACH_MODEL_ENTRY_NAME] != null)
-                    {
-                        throw new InvalidFormatException("attachModel must be null for chunking parser!");
-                    }
+                    throw new InvalidFormatException("attachModel must be null for chunking parser!");
                 }
-                else if (ParserType.TREEINSERT.Equals(modelType))
+            }
+            else if (ParserType == ParserTypeEnum.TREEINSERT)
+            {
+                if (!(artifactMap[ATTACH_MODEL_ENTRY_NAME] is AbstractModel))
                 {
-                    if (!(artifactMap[ATTACH_MODEL_ENTRY_NAME] is AbstractModel))
-                    {
-                        throw new InvalidFormatException("attachModel must not be null!");
-                    }
-                }
-                else
-                {
-                    throw new InvalidFormatException("Unknown ParserType '" + modelType + "'!");
+                    throw new InvalidFormatException("attachModel must not be null!");
                 }
             }
             else
             {
-                throw new InvalidFormatException("Missing the parser type property!");
+                throw new InvalidFormatException("Unknown ParserType '" + ParserType + "'!");
             }
 
             if (!(artifactMap[CHECK_MODEL_ENTRY_NAME] is AbstractModel))

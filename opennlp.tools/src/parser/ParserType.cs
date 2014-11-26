@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -19,6 +20,7 @@
 
 namespace opennlp.tools.parser
 {
+    /*
     public sealed class ParserType
     {
         public static readonly ParserType CHUNKING = new ParserType("CHUNKING", InnerEnum.CHUNKING);
@@ -44,9 +46,10 @@ namespace opennlp.tools.parser
         private static int nextOrdinal = 0;
         public string name;
 
-        private ParserType(string chunking, InnerEnum innerEnum)
+        private ParserType(string name, InnerEnum innerEnum)
         {
-            throw new System.NotImplementedException();
+            nameValue = name;
+            innerEnumValue = innerEnum;
         }
 
         public static ParserType parse(string type)
@@ -95,6 +98,24 @@ namespace opennlp.tools.parser
                 }
             }
             throw new System.ArgumentException(name);
+        }
+    }
+    */
+    public enum ParserTypeEnum
+    {
+        CHUNKING,
+        TREEINSERT,
+        UNKNOWN
+    }
+    public static class ParserType
+    {
+        public static ParserTypeEnum parse(String type)
+        {
+            if (ParserTypeEnum.CHUNKING.ToString("g") == type)
+            {
+                return ParserTypeEnum.CHUNKING;
+            }
+            return ParserTypeEnum.TREEINSERT.ToString("g") == type ? ParserTypeEnum.TREEINSERT : ParserTypeEnum.UNKNOWN;
         }
     }
 }
