@@ -256,7 +256,7 @@ namespace opennlp.tools.parser
 
             if (ParserType == ParserTypeEnum.CHUNKING)
             {
-                if (artifactMap[ATTACH_MODEL_ENTRY_NAME] != null)
+                if (artifactMap.ContainsKey(ATTACH_MODEL_ENTRY_NAME))
                 {
                     throw new InvalidFormatException("attachModel must be null for chunking parser!");
                 }
