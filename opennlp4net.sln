@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opennlp.maxent", "opennlp.maxent\opennlp.maxent.csproj", "{162209CB-1ACC-4539-8CE7-055FB3D8469C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "j4n", "j4n\j4n.csproj", "{66194037-42FF-4DE7-B998-BA387370A440}"
@@ -14,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opennlp.tools.Tests", "opennlp.tools.Tests\opennlp.tools.Tests.csproj", "{146BB745-24F1-47F8-8179-FEDEDBDD0E14}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opennlp.console", "opennlp.console\opennlp.console.csproj", "{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "j4n.Zip", "j4n.ZipLib\j4n.Zip.csproj", "{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +42,6 @@ Global
 		{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
