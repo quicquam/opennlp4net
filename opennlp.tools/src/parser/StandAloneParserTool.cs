@@ -13,8 +13,8 @@ namespace opennlp.tools.parser
 
         public static Parse[] parseLine(string line, Parser parser, int numParses)
         {
-            line = untokenizedParentPattern1.matcher(line).replaceAll("$1 $2");
-            line = untokenizedParentPattern2.matcher(line).replaceAll("$1 $2");
+            //line = untokenizedParentPattern1.matcher(line).replaceAll("$1 $2");
+            //line = untokenizedParentPattern2.matcher(line).replaceAll("$1 $2");
             StringTokenizer str = new StringTokenizer(line);
             StringBuilder sb = new StringBuilder();
             IList<string> tokens = new List<string>();
