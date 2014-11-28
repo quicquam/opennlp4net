@@ -100,7 +100,7 @@ namespace opennlp.tools.parser
 
         public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel,
             AbstractModel attachModel, POSModel parserTagger, ChunkerModel chunkerTagger,
-            opennlp.tools.parser.lang.en.HeadRules headRules, ParserTypeEnum modelType,
+            opennlp.tools.parser.lang.en.HeadRules headRules, ParserType modelType,
             IDictionary<string, string> manifestInfoEntries) : base(COMPONENT_NAME, languageCode, manifestInfoEntries)
         {
             setManifestProperty(PARSER_TYPE, modelType.ToString());
@@ -109,14 +109,14 @@ namespace opennlp.tools.parser
 
             artifactMap[CHECK_MODEL_ENTRY_NAME] = checkModel;
 
-            if (modelType == ParserTypeEnum.CHUNKING)
+            if (modelType == parser.ParserType.CHUNKING)
             {
                 if (attachModel != null)
                 {
                     throw new System.ArgumentException("attachModel must be null for chunking parser!");
                 }
             }
-            else if (modelType == ParserTypeEnum.TREEINSERT)
+            else if (modelType == parser.ParserType.TREEINSERT)
             {
                 if (attachModel == null)
                 {
@@ -140,7 +140,7 @@ namespace opennlp.tools.parser
 
         public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel,
             AbstractModel attachModel, POSModel parserTagger, ChunkerModel chunkerTagger,
-            opennlp.tools.parser.lang.en.HeadRules headRules, ParserTypeEnum modelType)
+            opennlp.tools.parser.lang.en.HeadRules headRules, ParserType modelType)
             : this(
                 languageCode, buildModel, checkModel, attachModel, parserTagger, chunkerTagger, headRules, modelType,
                 null)
@@ -149,7 +149,7 @@ namespace opennlp.tools.parser
 
         public ParserModel(string languageCode, AbstractModel buildModel, AbstractModel checkModel,
             POSModel parserTagger, ChunkerModel chunkerTagger, opennlp.tools.parser.lang.en.HeadRules headRules,
-            ParserTypeEnum type, IDictionary<string, string> manifestInfoEntries)
+            ParserType type, IDictionary<string, string> manifestInfoEntries)
             : this(
                 languageCode, buildModel, checkModel, null, parserTagger, chunkerTagger, headRules, type,
                 manifestInfoEntries)
@@ -185,9 +185,9 @@ namespace opennlp.tools.parser
         {
         }
 
-        public virtual ParserTypeEnum ParserType
+        public virtual ParserType ParserType
         {
-            get { return parser.ParserType.parse(getManifestProperty(PARSER_TYPE)); }
+            get { return ParserTypeHelper.parse(getManifestProperty(PARSER_TYPE)); }
         }
 
         public virtual AbstractModel BuildModel
@@ -254,14 +254,14 @@ namespace opennlp.tools.parser
                 throw new InvalidFormatException("Missing the build model!");
             }
 
-            if (ParserType == ParserTypeEnum.CHUNKING)
+            if (ParserType == ParserType.CHUNKING)
             {
                 if (artifactMap.ContainsKey(ATTACH_MODEL_ENTRY_NAME))
                 {
                     throw new InvalidFormatException("attachModel must be null for chunking parser!");
                 }
             }
-            else if (ParserType == ParserTypeEnum.TREEINSERT)
+            else if (ParserType == ParserType.TREEINSERT)
             {
                 if (!(artifactMap[ATTACH_MODEL_ENTRY_NAME] is AbstractModel))
                 {

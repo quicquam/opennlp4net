@@ -101,21 +101,21 @@ namespace opennlp.tools.parser
         }
     }
     */
-    public enum ParserTypeEnum
+    public enum ParserType
     {
         CHUNKING,
         TREEINSERT,
         UNKNOWN
     }
-    public static class ParserType
+    public static class ParserTypeHelper
     {
-        public static ParserTypeEnum parse(String type)
+        public static ParserType parse(String type)
         {
-            if (ParserTypeEnum.CHUNKING.ToString("g") == type)
+            if (ParserType.CHUNKING.ToString("g") == type)
             {
-                return ParserTypeEnum.CHUNKING;
+                return ParserType.CHUNKING;
             }
-            return ParserTypeEnum.TREEINSERT.ToString("g") == type ? ParserTypeEnum.TREEINSERT : ParserTypeEnum.UNKNOWN;
+            return ParserType.TREEINSERT.ToString("g") == type ? ParserType.TREEINSERT : ParserType.UNKNOWN;
         }
     }
 }
