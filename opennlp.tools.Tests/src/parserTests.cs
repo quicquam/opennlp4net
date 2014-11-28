@@ -35,7 +35,6 @@ namespace opennlp.tools.Tests
             var parser = ParserFactory.create(model);
 
             const string sentence = "The quick brown fox jumps over the lazy dog .";
-            const string correctParse = "(TOP (NP (NP (DT The) (JJ quick) (JJ brown) (NN fox) (NNS jumps)) (PP (IN over) (NP (DT the) (JJ lazy) (NN dog))) (. .)))";
             var parseStrings = new List<string>();
             var sb = new StringBuilder();
             var parses = StandAloneParserTool.parseLine(sentence, parser, 5)
