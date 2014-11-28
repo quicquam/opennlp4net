@@ -77,16 +77,14 @@ namespace opennlp.tools.cmdline.parser
 		return mdict;
 	  }
 
-	  internal static ParserTypeHelper parseParserType(string typeAsString)
+	  internal static ParserType parseParserType(string typeAsString)
 	  {
-		ParserTypeHelper type = null;
-		if (typeAsString != null && typeAsString.Length > 0)
+		var type = ParserType.UNKNOWN;
+		if (!string.IsNullOrEmpty(typeAsString))
 		{
 		  type = ParserTypeHelper.parse(typeAsString);
-		  if (type == null)
-		  {
-			throw new TerminateToolException(1, "ParserType training parameter '" + typeAsString + "' is invalid!");
-		  }
+            if(type == ParserType.UNKNOWN)
+		        throw new TerminateToolException(1, "ParserType training parameter '" + typeAsString + "' is invalid!");		 
 		}
 
 		return type;
@@ -142,17 +140,17 @@ namespace opennlp.tools.cmdline.parser
 		  // TODO hard-coded language reference
 		  HeadRules rules = new opennlp.tools.parser.lang.en.HeadRules(new InputStreamReader(new FileInputStream(@params.HeadRules), @params.Encoding));
 
-		  ParserTypeHelper type = parseParserType(@params.ParserType);
+		  var type = parseParserType(@params.ParserType);
 		  if (@params.Fun.Value)
 		  {
 			  Parse.useFunctionTags(true);
 		  }
 
-		  if (ParserTypeHelper.CHUNKING.Equals(type))
+		  if (ParserType.CHUNKING == type)
 		  {
 			model = Parser.train(@params.Lang, sampleStream, rules, mlParams);
 		  }
-		  else if (ParserTypeHelper.TREEINSERT.Equals(type))
+		  else if (ParserType.TREEINSERT == type)
 		  {
 			model = opennlp.tools.parser.treeinsert.Parser.train(@params.Lang, sampleStream, rules, mlParams);
 		  }
