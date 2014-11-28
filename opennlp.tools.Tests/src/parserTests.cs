@@ -1,4 +1,5 @@
-﻿using j4n.IO.InputStream;
+﻿using System.Collections.Generic;
+using j4n.IO.InputStream;
 using NUnit.Framework;
 using opennlp.tools.parser;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace opennlp.tools.Tests
         }
 
         [Test]
-        public void TokenizeCanGetTokensArrayFromTestData()
+        public void ParserCanGetParsesArrayFromTestData()
         {
             InputStream modelIn = new FileInputStream(_modelFilePath);
 
@@ -35,13 +36,17 @@ namespace opennlp.tools.Tests
 
             const string sentence = "The quick brown fox jumps over the lazy dog .";
             const string correctParse = "(TOP (NP (NP (DT The) (JJ quick) (JJ brown) (NN fox) (NNS jumps)) (PP (IN over) (NP (DT the) (JJ lazy) (NN dog))) (. .)))";
+            var parseStrings = new List<string>();
             var sb = new StringBuilder();
-            var topParse = StandAloneParserTool.parseLine(sentence, parser, 1).FirstOrDefault();
-            if (topParse != null)
+            var parses = StandAloneParserTool.parseLine(sentence, parser, 5)
+                .OrderBy(y => y.TagSequenceProb)
+                .ToList();
+            foreach (var parse in parses)
             {
-                topParse.show(sb);
+                parse.show(sb);
+                parseStrings.Add(sb.ToString());
+                sb.Clear();
             }
-            Assert.AreEqual(correctParse, sb.ToString());
 
             modelIn.close();
         }

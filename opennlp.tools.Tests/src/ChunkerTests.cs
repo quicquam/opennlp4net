@@ -43,7 +43,7 @@ namespace opennlp.tools.Tests
         private string[] _pos;
 
         [Test]
-        public void TokenizeCanGetTokensArrayFromTestData()
+        public void ChunkerCanGetTokensArrayFromTestData()
         {
             InputStream modelIn = new FileInputStream(_modelFilePath);
 
