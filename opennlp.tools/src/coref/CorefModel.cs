@@ -19,6 +19,7 @@ using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using j4n.IO.Reader;
+using opennlp.tools.util.model;
 
 
 namespace opennlp.tools.coref
@@ -27,7 +28,6 @@ namespace opennlp.tools.coref
     using AbstractModel = opennlp.model.AbstractModel;
     using Dictionary = opennlp.tools.dictionary.Dictionary;
     using StringList = opennlp.tools.util.StringList;
-    using BaseModel = opennlp.tools.util.model.BaseModel<CorefModel>;
 
     public class CorefModel : BaseModel
     {

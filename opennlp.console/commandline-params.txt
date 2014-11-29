@@ -1,0 +1,51 @@
+        -abbDict path
+                abbreviation dictionary in XML format.				
+        -alphaNumOpt isAlphaNumOpt  (Tokenizer)
+                Optimization flag to skip alpha numeric tokens for further tokenization	
+        -params paramsFile
+                training parameters file.
+        -iterations num
+                number of training iterations, ignored if -params is used.
+        -cutoff num
+                minimal number of times a feature must be seen, ignored if -params is used.
+        -model modelFile
+                output model file.
+        -lang language
+                language which is being processed.
+        -data sampleData
+                data to be used, usually a file name.
+        -encoding charsetName
+                encoding for reading and writing text, if absent the system default is used.
+		-resources resourcesDir (NameFinder)
+                The resources directory
+        -type modelType (NameFinder) or one of maxent|perceptron|perceptron_sequence (POSTagger)
+                The type of the token name finder model
+        -featuregen featuregenFile (NameFinder)
+                The feature generator descriptor file	
+		-format formatName (POSTagger)
+				data format, might have its own parameters.				
+        -dict dictionaryPath (POSTagger)
+                The XML tag dictionary file
+        -ngram cutoff (POSTagger)
+                NGram cutoff. If not specified will not create ngram dictionary.
+		-headRules headRulesFile (Parser)
+				head rules file.
+		-parserType CHUNKING|TREEINSERT (Parser)
+				one of CHUNKING or TREEINSERT, default is CHUNKING.
+				
+
+Examples
+Training
+opennlp SentenceDetectorTrainer[.namefinder|.conllx|.pos] -model en-sent.bin -lang en -data en-sent.train -encoding UTF-8
+opennlp TokenizerTrainer[.namefinder|.conllx|.pos] -model en-token.bin -alphaNumOpt -lang en -data en-token.train -encoding UTF-8
+opennlp TokenNameFinderTrainer[.bionlp2004|.conll03|.conll02|.ad] -model en-ner-person.bin -lang en -data en-ner-person.train -encoding UTF-8
+opennlp DoccatTrainer -model en-doccat.bin -lang en -data en-doccat.train -encoding UTF-8
+opennlp POSTaggerTrainer[.conllx] -type maxent -model en-pos-maxent.bin -lang en -data en-pos.train -encoding UTF-8
+opennlp ChunkerTrainerME[.ad] -model en-chunker.bin -lang en -data en-chunker.train -encoding UTF-8
+opennlp ParserTrainer -model en-parser-chunking.bin -parserType CHUNKING -head-rules head_rules -lang en -data train.all -encoding UTF-8
+
+Evaluation
+opennlp SentenceDetectorEvaluator -model en-sent.bin -lang en -data en-sent.eval -encoding UTF-8
+opennlp TokenNameFinderEvaluator -model en-ner-person.bin -lang en -data en-ner-person.test -encoding UTF-8
+opennlp POSTaggerEvaluator -model pt.postagger.bin -lang pt -data pt.postagger.test -encoding utf-8
+opennlp ChunkerEvaluator -model en-chunker.bin -lang en -data en-chunker.eval -encoding UTF-8

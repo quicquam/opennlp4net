@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
+using opennlp.tools.util.model;
 
 
 namespace opennlp.tools.sentdetect
@@ -27,7 +28,6 @@ namespace opennlp.tools.sentdetect
     using GenericModelReader = opennlp.model.GenericModelReader;
     using Dictionary = opennlp.tools.dictionary.Dictionary;
     using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-    using BaseModel = opennlp.tools.util.model.BaseModel<SentenceModel>;
     using ModelUtil = opennlp.tools.util.model.ModelUtil;
 
     /// <summary>
@@ -84,7 +84,8 @@ namespace opennlp.tools.sentdetect
         {
         }
 
-        public SentenceModel(InputStream @in) : base(COMPONENT_NAME, @in)
+        public SentenceModel(InputStream @in, long streamOffset = 0)
+            : base(COMPONENT_NAME, @in, streamOffset)
         {
         }
 

@@ -32,7 +32,7 @@ namespace opennlp.tools.cmdline
 
 	using TrainUtil = opennlp.model.TrainUtil;
 	using TrainingParameters = opennlp.tools.util.TrainingParameters;
-	using BaseModel = opennlp.tools.util.model.BaseModel<AbstractModel>;
+	using BaseModel = opennlp.tools.util.model.BaseModel;
 
 	/// <summary>
 	/// Util class for the command line interface.

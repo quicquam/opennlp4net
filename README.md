@@ -12,7 +12,8 @@ the chunker
 
 the postagger
 
+the parser
 
-The parser does not work currently, neither does any functionality relating to training the models.
+The functionality relating to training the models does not work as yet.
 
  

@@ -32,7 +32,6 @@ namespace opennlp.tools.parser
     using POSModel = opennlp.tools.postag.POSModel;
     using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
     using opennlp.tools.util.model;
-    using BaseModel = opennlp.tools.util.model.BaseModel<ParserModel>;
     using UncloseableInputStream = opennlp.tools.util.model.UncloseableInputStream;
 
     /// <summary>
@@ -68,16 +67,16 @@ namespace opennlp.tools.parser
             }
         }
 
-        public class HeadRulesSerializer : ArtifactSerializer<opennlp.tools.parser.lang.en.HeadRules>
+        public class HeadRulesSerializer : ArtifactSerializer<lang.en.HeadRules>
         {
 
-            public virtual opennlp.tools.parser.lang.en.HeadRules create(InputStream @in)
+            public virtual lang.en.HeadRules create(InputStream @in)
             {
                 return
-                    new opennlp.tools.parser.lang.en.HeadRules(new BufferedReader(new InputStreamReader(@in, "UTF-8")));
+                    new lang.en.HeadRules(new BufferedReader(new InputStreamReader(@in, "UTF-8")));
             }
 
-            public virtual void serialize(opennlp.tools.parser.lang.en.HeadRules artifact, OutputStream @out)
+            public virtual void serialize(lang.en.HeadRules artifact, OutputStream @out)
             {
                 artifact.serialize(new OutputStreamWriter((FileOutputStream) @out, "UTF-8"));
             }
@@ -104,20 +103,20 @@ namespace opennlp.tools.parser
             opennlp.tools.parser.lang.en.HeadRules headRules, ParserType modelType,
             IDictionary<string, string> manifestInfoEntries) : base(COMPONENT_NAME, languageCode, manifestInfoEntries)
         {
-            setManifestProperty(PARSER_TYPE, modelType.name);
+            setManifestProperty(PARSER_TYPE, modelType.ToString());
 
             artifactMap[BUILD_MODEL_ENTRY_NAME] = buildModel;
 
             artifactMap[CHECK_MODEL_ENTRY_NAME] = checkModel;
 
-            if (ParserType.CHUNKING.Equals(modelType))
+            if (modelType == parser.ParserType.CHUNKING)
             {
                 if (attachModel != null)
                 {
                     throw new System.ArgumentException("attachModel must be null for chunking parser!");
                 }
             }
-            else if (ParserType.TREEINSERT.Equals(modelType))
+            else if (modelType == parser.ParserType.TREEINSERT)
             {
                 if (attachModel == null)
                 {
@@ -157,7 +156,8 @@ namespace opennlp.tools.parser
         {
         }
 
-        public ParserModel(InputStream @in) : base(COMPONENT_NAME, @in)
+        public ParserModel(InputStream @in, long streamOffset = 0)
+            : base(COMPONENT_NAME, @in, streamOffset)
         {
         }
 
@@ -173,9 +173,12 @@ namespace opennlp.tools.parser
         {
             base.createArtifactSerializers();
 
-            artifactSerializers.Add("postagger", new POSModelSerializer());
-            artifactSerializers.Add("chunker", new ChunkerModelSerializer());
-            artifactSerializers.Add("headrules", new HeadRulesSerializer());
+            if (!artifactSerializers.Contains("postagger"))
+                artifactSerializers.Add("postagger", new POSModelSerializer());
+            if (!artifactSerializers.Contains("chunker"))
+                artifactSerializers.Add("chunker", new ChunkerModelSerializer());
+            if (!artifactSerializers.Contains("headrules"))
+                artifactSerializers.Add("headrules", new HeadRulesSerializer());
         }
 
         protected internal void createArtifactSerializers(IDictionary<string, ArtifactSerializer<Object>> serializers)
@@ -184,7 +187,7 @@ namespace opennlp.tools.parser
 
         public virtual ParserType ParserType
         {
-            get { return ParserType.parse(getManifestProperty(PARSER_TYPE)); }
+            get { return ParserTypeHelper.parse(getManifestProperty(PARSER_TYPE)); }
         }
 
         public virtual AbstractModel BuildModel
@@ -251,32 +254,23 @@ namespace opennlp.tools.parser
                 throw new InvalidFormatException("Missing the build model!");
             }
 
-            ParserType modelType = ParserType;
-
-            if (modelType != null)
+            if (ParserType == ParserType.CHUNKING)
             {
-                if (ParserType.CHUNKING.Equals(modelType))
+                if (artifactMap.ContainsKey(ATTACH_MODEL_ENTRY_NAME))
                 {
-                    if (artifactMap[ATTACH_MODEL_ENTRY_NAME] != null)
-                    {
-                        throw new InvalidFormatException("attachModel must be null for chunking parser!");
-                    }
+                    throw new InvalidFormatException("attachModel must be null for chunking parser!");
                 }
-                else if (ParserType.TREEINSERT.Equals(modelType))
+            }
+            else if (ParserType == ParserType.TREEINSERT)
+            {
+                if (!(artifactMap[ATTACH_MODEL_ENTRY_NAME] is AbstractModel))
                 {
-                    if (!(artifactMap[ATTACH_MODEL_ENTRY_NAME] is AbstractModel))
-                    {
-                        throw new InvalidFormatException("attachModel must not be null!");
-                    }
-                }
-                else
-                {
-                    throw new InvalidFormatException("Unknown ParserType '" + modelType + "'!");
+                    throw new InvalidFormatException("attachModel must not be null!");
                 }
             }
             else
             {
-                throw new InvalidFormatException("Missing the parser type property!");
+                throw new InvalidFormatException("Unknown ParserType '" + ParserType + "'!");
             }
 
             if (!(artifactMap[CHECK_MODEL_ENTRY_NAME] is AbstractModel))

@@ -21,6 +21,7 @@ using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.parser;
 
 namespace opennlp.tools.cmdline.parser
 {
@@ -35,7 +36,6 @@ namespace opennlp.tools.cmdline.parser
 	using HeadRules = opennlp.tools.parser.HeadRules;
 	using Parse = opennlp.tools.parser.Parse;
 	using ParserModel = opennlp.tools.parser.ParserModel;
-	using ParserType = opennlp.tools.parser.ParserType;
 	using Parser = opennlp.tools.parser.chunking.Parser;
 	using opennlp.tools.util;
 	using ModelUtil = opennlp.tools.util.model.ModelUtil;
@@ -79,14 +79,12 @@ namespace opennlp.tools.cmdline.parser
 
 	  internal static ParserType parseParserType(string typeAsString)
 	  {
-		ParserType type = null;
-		if (typeAsString != null && typeAsString.Length > 0)
+		var type = ParserType.UNKNOWN;
+		if (!string.IsNullOrEmpty(typeAsString))
 		{
-		  type = ParserType.parse(typeAsString);
-		  if (type == null)
-		  {
-			throw new TerminateToolException(1, "ParserType training parameter '" + typeAsString + "' is invalid!");
-		  }
+		  type = ParserTypeHelper.parse(typeAsString);
+            if(type == ParserType.UNKNOWN)
+		        throw new TerminateToolException(1, "ParserType training parameter '" + typeAsString + "' is invalid!");		 
 		}
 
 		return type;
@@ -142,17 +140,17 @@ namespace opennlp.tools.cmdline.parser
 		  // TODO hard-coded language reference
 		  HeadRules rules = new opennlp.tools.parser.lang.en.HeadRules(new InputStreamReader(new FileInputStream(@params.HeadRules), @params.Encoding));
 
-		  ParserType type = parseParserType(@params.ParserType);
+		  var type = parseParserType(@params.ParserType);
 		  if (@params.Fun.Value)
 		  {
 			  Parse.useFunctionTags(true);
 		  }
 
-		  if (ParserType.CHUNKING.Equals(type))
+		  if (ParserType.CHUNKING == type)
 		  {
 			model = Parser.train(@params.Lang, sampleStream, rules, mlParams);
 		  }
-		  else if (ParserType.TREEINSERT.Equals(type))
+		  else if (ParserType.TREEINSERT == type)
 		  {
 			model = opennlp.tools.parser.treeinsert.Parser.train(@params.Lang, sampleStream, rules, mlParams);
 		  }

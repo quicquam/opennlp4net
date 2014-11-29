@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace j4n.IO.Reader
 {
@@ -7,7 +8,6 @@ namespace j4n.IO.Reader
     {
         public BufferedReader(Reader inputStreamReader) : base(inputStreamReader)
         {
-            throw new NotImplementedException();
         }
 
         public BufferedReader(FileReader inputStreamReader)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Ionic.Zip;
-using Ionic.Zlib;
 using j4n.Exceptions;
 using j4n.IO.File;
 using j4n.IO.InputStream;
@@ -15,7 +14,7 @@ using opennlp.tools.parser;
 
 namespace opennlp.tools.util.model
 {
-    public class BaseModel<T> : ArtifactProvider
+    public class BaseModel : ArtifactProvider
     {
         private static int MODEL_BUFFER_SIZE_LIMIT = Int32.MaxValue;
 
@@ -46,7 +45,7 @@ namespace opennlp.tools.util.model
         protected internal BaseToolFactory toolFactory;
         private bool isLoadedFromSerialized;
         private string componentName;
-        private Dictionary<string, sbyte[]> leftoverArtifacts;
+        private Dictionary<string, byte[]> leftoverArtifacts;
 
         private BaseModel(string componentName, bool isLoadedFromSerialized)
         {
@@ -66,7 +65,7 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
-        protected BaseModel(string componentName, InputStream @in)
+        protected BaseModel(string componentName, InputStream @in, long streamOffset)
             : this(componentName, true)
         {
             if (@in == null)
@@ -74,7 +73,7 @@ namespace opennlp.tools.util.model
                 throw new System.ArgumentException("in must not be null!");
             }
 
-            loadModel(@in);
+            loadModel(@in, streamOffset);
         }
 
         protected BaseModel(string componentName, Jfile languageCode)
@@ -92,15 +91,15 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
-        private void loadModel(InputStream @in)
+        private void loadModel(InputStream @in, long streamOffset)
         {
             createBaseArtifactSerializers();
 
-            using (var zip = new ZipInputStream(@in.Stream))
+            using (var zip = new ZipInputStream(@in.InnerStream))
             {
                 // will read it in two steps, first using the known factories, latter the
                 // unknown.
-                leftoverArtifacts = new Dictionary<string, sbyte[]>();
+                leftoverArtifacts = new Dictionary<string, byte[]>();
 
                 ZipEntry entry;
                 while ((entry = zip.GetNextEntry()) != null)
@@ -111,15 +110,22 @@ namespace opennlp.tools.util.model
                     if (factory == null)
                     {
                         /* TODO: find a better solution, that would consume less memory */
-                        //sbyte[] bytes = toByteArray(zip);
-                        //leftoverArtifacts[entry.FileName] = bytes;
+                        var data = new byte[entry.UncompressedSize];
+                        zip.Read(data, 0, data.Length);
+                        leftoverArtifacts[entry.FileName] = data;
                     }
                     else
                     {
                         var data = new byte[entry.UncompressedSize];
-                        zip.Read(data, 0, data.Length);
+                        zip.Read(data, 0, (int)entry.UncompressedSize);
                         var stream = new MemoryStream(data);
                         artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
+
+                        // entry.IsDirectory doesn't work, but a CompressionRatio less than zero
+                        // indicates a directory (no data, just headers), move the zip.Position back by 
+                        // the size of the directory record
+                        if (entry.CompressionRatio < 0)
+                            zip.Seek(-16, SeekOrigin.Current);
                     }
                 }
 
@@ -141,21 +147,22 @@ namespace opennlp.tools.util.model
                 Type factoryClass = DefaultFactory;
                 if (factoryClass != null)
                 {
-                    this.toolFactory = BaseToolFactory.create(factoryClass, this);
+                    this.toolFactory = BaseToolFactory.create(factoryClass);
                 }
             }
             else
             {
                 try
                 {
-                    this.toolFactory = BaseToolFactory.create(factoryName, this);
+                    this.toolFactory = BaseToolFactory.create(factoryName);
                 }
                 catch (InvalidFormatException e)
                 {
                     throw new System.ArgumentException(e.Message);
                 }
             }
-            this.toolFactory.init(this);
+            if(toolFactory != null)
+                this.toolFactory.init(this);
         }
 
 
@@ -181,7 +188,17 @@ namespace opennlp.tools.util.model
                 var serializer = factory as ParserModel.POSModelSerializer;
                 return serializer.create(inputStream);
             }
-            
+            if (factory is ParserModel.HeadRulesSerializer)
+            {
+                var serializer = factory as ParserModel.HeadRulesSerializer;
+                return serializer.create(inputStream);
+            }
+            if (factory is ParserModel.ChunkerModelSerializer)
+            {
+                var serializer = factory as ParserModel.ChunkerModelSerializer;
+                return serializer.create(inputStream);
+            }
+
             return null;
         }
 
@@ -342,7 +359,7 @@ namespace opennlp.tools.util.model
             {
                 try
                 {
-                    if (BaseToolFactory.create(factoryName, this) == null)
+                    if (BaseToolFactory.create(factoryName) == null)
                     {
                         throw new InvalidFormatException(
                             "Could not load an user extension specified by the model: "
@@ -382,11 +399,6 @@ namespace opennlp.tools.util.model
         public void serialize(FileOutputStream fileOutputStream)
         {
             throw new NotImplementedException();
-        }
-
-        private sbyte[] toByteArray(ZipInputStream stream)
-        {
-            return null;
         }
 
         protected internal virtual Type DefaultFactory

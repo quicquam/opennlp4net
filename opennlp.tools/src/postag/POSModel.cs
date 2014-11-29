@@ -28,7 +28,6 @@ namespace opennlp.tools.postag
     using BaseToolFactory = opennlp.tools.util.BaseToolFactory;
     using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
     using opennlp.tools.util.model;
-    using BaseModel = opennlp.tools.util.model.BaseModel<POSModel>;
 
     /// <summary>
     /// The <seealso cref="POSModel"/> is the model used
@@ -70,7 +69,8 @@ namespace opennlp.tools.postag
             checkArtifactMap();
         }
 
-        public POSModel(InputStream @in) : base(COMPONENT_NAME, @in)
+        public POSModel(InputStream @in, long streamOffset = 0)
+            : base(COMPONENT_NAME, @in, streamOffset)
         {
         }
 

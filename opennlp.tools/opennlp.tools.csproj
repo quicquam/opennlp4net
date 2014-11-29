@@ -188,7 +188,7 @@
     <Compile Include="src\parser\ParserEventTypeEnum.cs" />
     <Compile Include="src\parser\ParserFactory.cs" />
     <Compile Include="src\parser\ParserModel.cs" />
-    <Compile Include="src\parser\ParserType.cs" />
+    <Compile Include="src\parser\ParserTypeHelper.cs" />
     <Compile Include="src\parser\ParseSampleStream.cs" />
     <Compile Include="src\parser\PosSampleStream.cs" />
     <Compile Include="src\parser\StandAloneParserTool.cs" />

@@ -37,5 +37,30 @@ namespace opennlp.console
         [Option('e', "encoding", Required = false, HelpText = "encoding for reading and writing text, if absent the system default is used.")]
         public string EncodingName { get; set; }
 
+        // Options used by subset of tools
+        [Option('r', "resources", Required = false, HelpText = "The resources directory.")] // NameFinder & POSTagger
+        public string ResourcesDirectory { get; set; }
+
+        [Option('f', "featuregen", Required = false, HelpText = "The feature generator descriptor file.")] // NameFinder
+        public string FeatureGen { get; set; }
+
+        [Option('y', "type", Required = false, HelpText = "The type of the token name finder model.")] // NameFinder & POSTagger
+        public string Type { get; set; }
+
+        [Option('n', "formatname", Required = false, HelpText = "data format, might have its own parameters.")] // POSTagger
+        public string FormatName { get; set; }
+
+        [Option('x', "dictionarypath", Required = false, HelpText = "The XML tag dictionary file path.")] // POSTagger
+        public string DictionaryPath { get; set; }
+
+        [Option('g', "ngram", Required = false, HelpText = "NGram cutoff. If not specified will not create ngram dictionary.")] // Parser
+        public string NgramCutoff { get; set; }
+
+        [Option('h', "headrulesfile", Required = false, HelpText = "head rules file.")] // Parser
+        public string HeadRulesFile { get; set; }
+
+        [Option('s', "parsertype", Required = false, HelpText = "one of CHUNKING or TREEINSERT, default is CHUNKING.")] // Parser
+        public string ParserType { get; set; }
+
     }
 }

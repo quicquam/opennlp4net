@@ -1,7 +1,9 @@
-﻿using System;
-using NUnit.Framework;
+﻿using System.Collections.Generic;
 using j4n.IO.InputStream;
+using NUnit.Framework;
 using opennlp.tools.parser;
+using System.Linq;
+using System.Text;
 
 namespace opennlp.tools.Tests
 {
@@ -24,17 +26,28 @@ namespace opennlp.tools.Tests
         {
         }
 
-        [Ignore]
         [Test]
-        public void TokenizeCanGetTokensArrayFromTestData()
+        public void ParserCanGetParsesArrayFromTestData()
         {
             InputStream modelIn = new FileInputStream(_modelFilePath);
 
             var model = new ParserModel(modelIn);
             var parser = ParserFactory.create(model);
 
-            var sentence = "The quick brown fox jumps over the lazy dog .";
-            var topParses = StandAloneParserTool.parseLine(sentence, parser, 1);
+            const string sentence = "The quick brown fox jumps over the lazy dog .";
+            var parseStrings = new List<string>();
+            var sb = new StringBuilder();
+            var parses = StandAloneParserTool.parseLine(sentence, parser, 5)
+                .OrderBy(y => y.TagSequenceProb)
+                .ToList();
+            foreach (var parse in parses)
+            {
+                parse.show(sb);
+                parseStrings.Add(sb.ToString());
+                sb.Clear();
+            }
+
+            modelIn.close();
         }
     }
 }
