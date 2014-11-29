@@ -41,11 +41,11 @@ namespace opennlp.tools.cmdline
 		  {
 			if (this.GetType().Name.EndsWith("Tool", StringComparison.Ordinal))
 			{
-			  return this.GetType().SimpleName.Substring(0, this.GetType().SimpleName.length() - 4);
+			  return this.GetType().Name.Substring(0, this.GetType().Name.length() - 4);
 			}
 			else
 			{
-			  return this.GetType().SimpleName;
+			  return this.GetType().Name;
 			}
 		  }
 	  }

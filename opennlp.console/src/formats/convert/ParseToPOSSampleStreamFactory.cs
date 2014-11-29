@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
+using System;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats.convert
 {
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using opennlp.tools.formats;
 	using Parse = opennlp.tools.parser.Parse;
 	using POSSample = opennlp.tools.postag.POSSample;
@@ -38,12 +39,17 @@ namespace opennlp.tools.formats.convert
 	  {
 	  }
 
-	  public override ObjectStream<POSSample> create(string[] args)
+	    public override Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public override ObjectStream<POSSample> create(string[] args)
 	  {
 
-		ParseSampleStreamFactory.Parameters @params = ArgumentParser.parse(args, typeof(ParseSampleStreamFactory.Parameters));
+          ParseSampleStreamFactory.Parameters @params = ArgumentParser.parse<ParseSampleStreamFactory.Parameters>(args);
 
-		ObjectStream<Parse> parseSampleStream = StreamFactoryRegistry.getFactory(typeof(Parse), StreamFactoryRegistry.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(ParseSampleStreamFactory.Parameters)));
+		ObjectStream<Parse> parseSampleStream = StreamFactoryRegistry<Parse>.getFactory(typeof(Parse), StreamFactoryRegistry<POSSample>.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(ParseSampleStreamFactory.Parameters)));
 
 		return new ParseToPOSSampleStream(parseSampleStream);
 	  }

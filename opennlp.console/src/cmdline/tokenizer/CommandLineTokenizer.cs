@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.Reader;
+using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.tokenizer
 {
@@ -40,7 +41,7 @@ namespace opennlp.tools.cmdline.tokenizer
 	  internal void process()
 	  {
 
-		ObjectStream<string> untokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput));
+		ObjectStream<string> untokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
 
 		ObjectStream<string> tokenizedLineStream = new WhitespaceTokenStream(new TokenizerStream(tokenizer, untokenizedLineStream));
 

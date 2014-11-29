@@ -22,22 +22,20 @@ namespace opennlp.tools.cmdline
 
 	using opennlp.tools.util;
 
-	public interface ObjectStreamFactory
+	public interface ObjectStreamFactory<T>
 	{
 
 	    /// <summary>
 	    /// Returns interface with parameters description.
 	    /// </summary>
 	    /// <returns> interface with parameters description </returns>
-	    Type getParameters<P>();
+	    Type getParameters();
 
 	  /// <summary>
 	  /// Creates the <code>ObjectStream</code>.
 	  /// </summary>
 	  /// <param name="args"> arguments </param>
 	  /// <returns> ObjectStream instance </returns>
-	  ObjectStream<T> create<T>(string[] args);
-
-	    Type Parameters { get; set; }
+	  ObjectStream<T> create(string[] args);
 	}
 }

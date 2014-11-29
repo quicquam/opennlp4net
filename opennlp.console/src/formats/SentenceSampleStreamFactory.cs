@@ -15,15 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
 	using SentenceSampleStream = opennlp.tools.sentdetect.SentenceSampleStream;
@@ -38,20 +39,26 @@ namespace opennlp.tools.formats
 
 	  internal interface Parameters : BasicFormatParams
 	  {
+	      Jfile Data { get; set; }
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(SentenceSample), StreamFactoryRegistry.DEFAULT_FORMAT, new SentenceSampleStreamFactory(typeof(Parameters)));
+          StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), StreamFactoryRegistry<SentenceSample>.DEFAULT_FORMAT, new SentenceSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal SentenceSampleStreamFactory(Type @params) : base(@params)
+	  protected internal SentenceSampleStreamFactory(Type @params)
 	  {
 	  }
 
-	  public override ObjectStream<SentenceSample> create(string[] args)
+	    public Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public ObjectStream<SentenceSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		CmdLineUtil.checkInputFile("Data", @params.Data);
 		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);

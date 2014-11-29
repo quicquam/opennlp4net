@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
+using System;
+using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using CorefSample = opennlp.tools.coref.CorefSample;
 	using CorefSampleDataStream = opennlp.tools.coref.CorefSampleDataStream;
@@ -36,20 +38,26 @@ namespace opennlp.tools.formats
 
 	  internal interface Parameters : BasicFormatParams
 	  {
+	      Jfile Data { get; set; }
 	  }
 
-	  protected internal CorefSampleStreamFactory() : base(typeof(Parameters))
+	  protected internal CorefSampleStreamFactory()
 	  {
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(CorefSample), StreamFactoryRegistry.DEFAULT_FORMAT, new CorefSampleStreamFactory());
+          StreamFactoryRegistry<CorefSample>.registerFactory(typeof(CorefSample), StreamFactoryRegistry<CorefSample>.DEFAULT_FORMAT, new CorefSampleStreamFactory());
 	  }
 
-	  public override ObjectStream<CorefSample> create(string[] args)
+	    public Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public ObjectStream<CorefSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		CmdLineUtil.checkInputFile("Data", @params.Data);
 		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);

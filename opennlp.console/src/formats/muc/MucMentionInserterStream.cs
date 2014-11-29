@@ -17,6 +17,7 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using j4n.Serialization;
+using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.formats.muc
 {

@@ -203,7 +203,7 @@ namespace opennlp.tools.cmdline.namefind
 
 		if (@params.NameTypes != null)
 		{
-		  string[] nameTypes = @params.NameTypes.Split(",", true);
+		  string[] nameTypes = @params.NameTypes.Split(',');
 		  sampleStream = new NameSampleTypeFilter(nameTypes, sampleStream);
 		}
 

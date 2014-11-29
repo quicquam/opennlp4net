@@ -44,7 +44,7 @@ namespace opennlp.tools.formats.convert
 
 		try
 		{
-		  sbyte[] buffer = new sbyte[1024];
+		  var buffer = new sbyte[1024];
 		  int length;
 		  while ((length = @in.read(buffer, 0, buffer.Length)) > 0)
 		  {

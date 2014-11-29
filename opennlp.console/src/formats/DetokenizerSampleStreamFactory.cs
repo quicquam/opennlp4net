@@ -18,6 +18,7 @@
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
+using j4n.Serialization;
 
 namespace opennlp.tools.formats
 {
@@ -35,7 +36,7 @@ namespace opennlp.tools.formats
 	public abstract class DetokenizerSampleStreamFactory<T> : AbstractSampleStreamFactory<T>
 	{
 
-	  protected internal DetokenizerSampleStreamFactory(Type @params) : base(@params)
+	  protected internal DetokenizerSampleStreamFactory(Type @params)
 	  {
 	  }
 
@@ -50,5 +51,15 @@ namespace opennlp.tools.formats
 		  throw new TerminateToolException(-1, "IO error while loading detokenizer dict: " + e.Message, e);
 		}
 	  }
+
+	    public Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public ObjectStream<T> create(string[] args)
+	    {
+	        throw new NotImplementedException();
+	    }
 	}
 }

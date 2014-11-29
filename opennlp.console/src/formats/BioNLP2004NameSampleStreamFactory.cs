@@ -15,7 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
@@ -23,32 +25,32 @@ namespace opennlp.tools.formats
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using NameSample = opennlp.tools.namefind.NameSample;
 	using opennlp.tools.util;
 
-	public class BioNLP2004NameSampleStreamFactory : AbstractSampleStreamFactory
+    public class BioNLP2004NameSampleStreamFactory<NameSample> : AbstractSampleStreamFactory<NameSample>
 	{
 
 	  internal interface Parameters : BasicFormatParams
 	  {
 		string Types {get;}
+	      Jfile Data { get; set; }
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(NameSample), "bionlp2004", new BioNLP2004NameSampleStreamFactory(typeof(Parameters)));
+          StreamFactoryRegistry<NameSample>.registerFactory(typeof(NameSample), "bionlp2004", new BioNLP2004NameSampleStreamFactory<NameSample>(typeof(Parameters)));
 	  }
 
-	  protected internal BioNLP2004NameSampleStreamFactory(Type @params) : base(@params)
+	  protected internal BioNLP2004NameSampleStreamFactory(Type @params)
 	  {
 	  }
 
-	  public override ObjectStream<T> create<T>(string[] args)
+	  public ObjectStream<T> create<T>(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		int typesToGenerate = 0;
 
@@ -75,6 +77,16 @@ namespace opennlp.tools.formats
 
 		return new BioNLP2004NameSampleStream(CmdLineUtil.openInFile(@params.Data), typesToGenerate);
 	  }
+
+        public Type getParameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ObjectStream<NameSample> create(string[] args)
+        {
+            throw new NotImplementedException();
+        }
 	}
 
 }

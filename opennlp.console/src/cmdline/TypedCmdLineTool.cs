@@ -48,9 +48,9 @@ namespace opennlp.tools.cmdline
 	  /// </summary>
 	  /// <param name="format"> data format name </param>
 	  /// <returns> stream factory for the type of this tool for the format </returns>
-	  protected internal virtual ObjectStreamFactory getStreamFactory(string format)
+	  protected internal virtual ObjectStreamFactory<T> getStreamFactory(string format)
 	  {
-		ObjectStreamFactory factory = StreamFactoryRegistry.getFactory(type, format);
+		ObjectStreamFactory<T> factory = StreamFactoryRegistry<T>.getFactory(type, format);
 		if (null != factory)
 		{
 		  return factory;
@@ -71,7 +71,7 @@ namespace opennlp.tools.cmdline
 	  /// @param <A> A </param>
 	  protected internal virtual void validateAllArgs<A>(string[] args, Type argProxyInterface, string format)
 	  {
-		ObjectStreamFactory factory = getStreamFactory(format);
+		ObjectStreamFactory<T> factory = getStreamFactory(format);
 		string errMessage = ArgumentParser.validateArgumentsLoudly(args, argProxyInterface, factory.getParameters<A>());
 		if (null != errMessage)
 		{
@@ -83,7 +83,7 @@ namespace opennlp.tools.cmdline
 	  /// Validates arguments for a format processed by the <code>factory</code>. </summary>
 	  /// <param name="factory"> a stream factory </param>
 	  /// <param name="args"> arguments </param>
-	  protected internal virtual void validateFactoryArgs(ObjectStreamFactory factory, string[] args)
+	  protected internal virtual void validateFactoryArgs(ObjectStreamFactory<T> factory, string[] args)
 	  {
 		string errMessage = ArgumentParser.validateArgumentsLoudly(args, factory.Parameters);
 		if (null != errMessage)
@@ -94,7 +94,7 @@ namespace opennlp.tools.cmdline
 
 	  protected internal override string getBasicHelp<A>(params Type[] argProxyInterfaces)
 	  {
-		IDictionary<string, ObjectStreamFactory> factories = StreamFactoryRegistry.getFactories(type);
+		IDictionary<string, ObjectStreamFactory<T>> factories = StreamFactoryRegistry<T>.getFactories(type);
 
 		string formatsHelp = " ";
 		if (1 < factories.Count)
@@ -102,12 +102,12 @@ namespace opennlp.tools.cmdline
 		  StringBuilder formats = new StringBuilder();
 		  foreach (string format in factories.Keys)
 		  {
-			if (!StreamFactoryRegistry.DEFAULT_FORMAT.Equals(format))
+			if (!StreamFactoryRegistry<T>.DEFAULT_FORMAT.Equals(format))
 			{
 			  formats.Append(".").Append(format).Append("|");
 			}
 		  }
-		  formatsHelp = "[" + formats.Substring(0, formats.Length - 1) + "] ";
+		  formatsHelp = "[" + formats.ToString().Substring(0, formats.Length - 1) + "] ";
 		}
 
 		return "Usage: " + CLI.CMD + " " + Name + formatsHelp + ArgumentParser.createUsage(argProxyInterfaces);

@@ -16,9 +16,11 @@
  * limitations under the License.
  */
 using j4n.Exceptions;
+using j4n.IO.File;
 using j4n.IO.OutputStream;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
@@ -26,7 +28,6 @@ namespace opennlp.tools.formats
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using TerminateToolException = opennlp.tools.cmdline.TerminateToolException;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using POSSample = opennlp.tools.postag.POSSample;
@@ -43,20 +44,26 @@ namespace opennlp.tools.formats
 
 	  internal interface Parameters : BasicFormatParams
 	  {
+	      Jfile Data { get; set; }
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(POSSample), CONLLX_FORMAT, new ConllXPOSSampleStreamFactory(typeof(Parameters)));
+		StreamFactoryRegistry<POSSample>.registerFactory(typeof(POSSample), CONLLX_FORMAT, new ConllXPOSSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal ConllXPOSSampleStreamFactory(Type @params) : base(@params)
+	  protected internal ConllXPOSSampleStreamFactory(Type @params)
 	  {
 	  }
 
-	  public override ObjectStream<POSSample> create(string[] args)
+	    public Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public ObjectStream<POSSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		ObjectStream<string> lineStream;
 		try

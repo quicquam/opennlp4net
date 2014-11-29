@@ -18,6 +18,7 @@
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats.ad
 {
@@ -27,7 +28,6 @@ namespace opennlp.tools.formats.ad
 	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
 	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using opennlp.tools.formats;
 	using POSSample = opennlp.tools.postag.POSSample;
 	using opennlp.tools.util;
@@ -54,17 +54,22 @@ namespace opennlp.tools.formats.ad
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(POSSample), "ad", new ADPOSSampleStreamFactory(typeof(Parameters)));
+		StreamFactoryRegistry<POSSample>.registerFactory(typeof(POSSample), "ad", new ADPOSSampleStreamFactory(typeof(Parameters)));
 	  }
 
 	  protected internal ADPOSSampleStreamFactory(Type @params) : base(@params)
 	  {
 	  }
 
-	  public override ObjectStream<POSSample> create(string[] args)
+	    public override Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public override ObjectStream<POSSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		language = @params.Lang;
 

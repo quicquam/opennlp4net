@@ -15,15 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using TokenSample = opennlp.tools.tokenize.TokenSample;
 	using TokenSampleStream = opennlp.tools.tokenize.TokenSampleStream;
@@ -38,20 +39,26 @@ namespace opennlp.tools.formats
 
 	  internal interface Parameters : BasicFormatParams
 	  {
+	      Jfile Data { get; set; }
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(TokenSample), StreamFactoryRegistry.DEFAULT_FORMAT, new TokenSampleStreamFactory(typeof(Parameters)));
+		StreamFactoryRegistry<TokenSample>.registerFactory(typeof(TokenSample), StreamFactoryRegistry<TokenSample>.DEFAULT_FORMAT, new TokenSampleStreamFactory(typeof(Parameters)));
 	  }
 
 	  protected internal TokenSampleStreamFactory(Type @params) : base(@params)
 	  {
 	  }
 
-	  public override ObjectStream<TokenSample> create(string[] args)
+	    public override Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public override ObjectStream<TokenSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		CmdLineUtil.checkInputFile("Data", @params.Data);
 		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);

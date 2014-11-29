@@ -15,14 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using j4n.IO.File;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using TerminateToolException = opennlp.tools.cmdline.TerminateToolException;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using LanguageParams = opennlp.tools.cmdline.@params.LanguageParams;
@@ -37,21 +39,27 @@ namespace opennlp.tools.formats
 
 	  internal interface Parameters : BasicFormatParams, LanguageParams
 	  {
+	      Jfile Data { get; set; }
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(DocumentSample), "leipzig", new LeipzigDocumentSampleStreamFactory(typeof(Parameters)));
+          StreamFactoryRegistry<DocumentSample>.registerFactory(typeof(DocumentSample), "leipzig", new LeipzigDocumentSampleStreamFactory(typeof(Parameters)));
 	  }
 
 	  protected internal LeipzigDocumentSampleStreamFactory(Type @params) : base(@params)
 	  {
 	  }
 
-	  public override ObjectStream<DocumentSample> create(string[] args)
+	    public override Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public override ObjectStream<DocumentSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 		language = @params.Lang;
 
 		try

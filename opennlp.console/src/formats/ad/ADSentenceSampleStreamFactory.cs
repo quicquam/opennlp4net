@@ -28,7 +28,6 @@ namespace opennlp.tools.formats.ad
 	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
 	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using opennlp.tools.formats;
 	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
 	using opennlp.tools.util;
@@ -37,7 +36,7 @@ namespace opennlp.tools.formats.ad
 	/// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
-	public class ADSentenceSampleStreamFactory : LanguageSampleStreamFactory, ObjectStreamFactory
+    public class ADSentenceSampleStreamFactory : LanguageSampleStreamFactory<SentenceSample>, ObjectStreamFactory<SentenceSample>
 	{
 
 	  internal interface Parameters
@@ -53,17 +52,17 @@ namespace opennlp.tools.formats.ad
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(SentenceSample), "ad", new ADSentenceSampleStreamFactory(typeof(Parameters)));
+		StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), "ad", new ADSentenceSampleStreamFactory(typeof(Parameters)));
 	  }
 
 	  protected internal ADSentenceSampleStreamFactory(Type @params) : base(@params)
 	  {
 	  }
 
-      public override ObjectStream<T> create<T>(string[] args)
+      public  ObjectStream<T> create<T>(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		language = @params.Lang;
 
@@ -75,9 +74,20 @@ namespace opennlp.tools.formats.ad
 
 		ADSentenceSampleStream sentenceStream = new ADSentenceSampleStream(lineStream, includeTitle);
 
-		return sentenceStream;
+		//return sentenceStream; 
+
+          throw new NotImplementedException();
 	  }
 
+	    public override Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public override ObjectStream<SentenceSample> create(string[] args)
+	    {
+	        throw new NotImplementedException();
+	    }
 	}
 
 }

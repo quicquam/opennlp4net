@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+using System.Security.Cryptography.X509Certificates;
 using j4n.IO.File;
 
 namespace opennlp.tools.cmdline.@params
@@ -28,6 +29,5 @@ namespace opennlp.tools.cmdline.@params
 	public interface BasicFormatParams : EncodingParameter
 	{
 
-	  Jfile Data {get;}
 	}
 }

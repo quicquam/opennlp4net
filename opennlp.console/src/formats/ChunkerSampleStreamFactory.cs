@@ -15,8 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
@@ -25,7 +27,6 @@ namespace opennlp.tools.formats
 	using ChunkSampleStream = opennlp.tools.chunker.ChunkSampleStream;
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using opennlp.tools.util;
 	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
@@ -38,20 +39,26 @@ namespace opennlp.tools.formats
 
 	  internal interface Parameters : BasicFormatParams
 	  {
+	      Jfile Data { get; set; }
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(ChunkSample), StreamFactoryRegistry.DEFAULT_FORMAT, new ChunkerSampleStreamFactory(typeof(Parameters)));
+          StreamFactoryRegistry<ChunkSample>.registerFactory(typeof(ChunkSample), StreamFactoryRegistry<ChunkSample>.DEFAULT_FORMAT, new ChunkerSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal ChunkerSampleStreamFactory(Type @params) : base(@params)
+	  protected internal ChunkerSampleStreamFactory(Type @params)
 	  {
 	  }
 
-	  public override ObjectStream<ChunkSample> create(string[] args)
+	    public Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public ObjectStream<ChunkSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		CmdLineUtil.checkInputFile("Data", @params.Data);
 		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);

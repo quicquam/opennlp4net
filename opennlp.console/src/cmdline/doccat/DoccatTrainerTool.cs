@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+using System.IO;
+using j4n.IO.File;
+
 namespace opennlp.tools.cmdline.doccat
 {
 
@@ -55,7 +58,7 @@ namespace opennlp.tools.cmdline.doccat
 		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
 		}
 
-		File modelOutFile = @params.Model;
+		Jfile modelOutFile = @params.Model;
 
 		CmdLineUtil.checkOutputFile("document categorizer model", modelOutFile);
 

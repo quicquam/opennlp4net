@@ -12,5 +12,10 @@ namespace j4n.IO.File
         {
             throw new NotImplementedException();
         }
+
+        public static Charset forName(string utf)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

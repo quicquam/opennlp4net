@@ -19,12 +19,13 @@ using System.Collections.Generic;
  */
 using System.IO;
 using j4n.Exceptions;
+using opennlp.tools.namefind;
 
 namespace opennlp.tools.cmdline
 {
 
 
-	using BioNLP2004NameSampleStreamFactory = opennlp.tools.formats.BioNLP2004NameSampleStreamFactory;
+	using BioNLP2004NameSampleStreamFactory = opennlp.tools.formats.BioNLP2004NameSampleStreamFactory<NameSample>;
 	using ChunkerSampleStreamFactory = opennlp.tools.formats.ChunkerSampleStreamFactory;
 	using Conll02NameSampleStreamFactory = opennlp.tools.formats.Conll02NameSampleStreamFactory;
 	using Conll03NameSampleStreamFactory = opennlp.tools.formats.Conll03NameSampleStreamFactory;
@@ -58,10 +59,10 @@ namespace opennlp.tools.cmdline
 	/// <summary>
 	/// Registry for object stream factories.
 	/// </summary>
-	public sealed class StreamFactoryRegistry
+	public sealed class StreamFactoryRegistry<T>
 	{
 
-        private static readonly IDictionary<Type, IDictionary<string, ObjectStreamFactory>> registry = new Dictionary<Type, IDictionary<string, ObjectStreamFactory>>();
+        private static readonly IDictionary<Type, IDictionary<string, ObjectStreamFactory<T>>> registry = new Dictionary<Type, IDictionary<string, ObjectStreamFactory<T>>>();
 
 	  static StreamFactoryRegistry()
 	  {
@@ -119,13 +120,13 @@ namespace opennlp.tools.cmdline
 	  /// <param name="formatName">  name of the format </param>
 	  /// <param name="factory">     instance of the factory </param>
 	  /// <returns> true if the factory was successfully registered </returns>
-	  public static bool registerFactory(Type sampleClass, string formatName, ObjectStreamFactory factory)
+	  public static bool registerFactory(Type sampleClass, string formatName, ObjectStreamFactory<T> factory)
 	  {
 		bool result;
-		IDictionary<string, ObjectStreamFactory> formats = registry[sampleClass];
+		IDictionary<string, ObjectStreamFactory<T>> formats = registry[sampleClass];
 		if (null == formats)
 		{
-		  formats = new Dictionary<string, ObjectStreamFactory>();
+		  formats = new Dictionary<string, ObjectStreamFactory<T>>();
 		}
 		if (!formats.ContainsKey(formatName))
 		{
@@ -148,7 +149,7 @@ namespace opennlp.tools.cmdline
 	  /// <param name="formatName">  name of the format </param>
 	  public static void unregisterFactory(Type sampleClass, string formatName)
 	  {
-          IDictionary<string, ObjectStreamFactory> formats = registry[sampleClass];
+          IDictionary<string, ObjectStreamFactory<T>> formats = registry[sampleClass];
 		if (null != formats)
 		{
 		  if (formats.ContainsKey(formatName))
@@ -164,9 +165,9 @@ namespace opennlp.tools.cmdline
 	  /// <param name="sampleClass"> class of the objects, produced by the streams instantiated by the factory </param>
 	  /// <returns> formats mapped to factories </returns>
 
-	  public static IDictionary<string, ObjectStreamFactory> getFactories(Type sampleClass)
+	  public static IDictionary<string, ObjectStreamFactory<T>> getFactories(Type sampleClass)
 	  {
-		return (IDictionary<string, ObjectStreamFactory>)(object) registry[sampleClass];
+		return (IDictionary<string, ObjectStreamFactory<T>>)(object) registry[sampleClass];
 	  }
 
 	  /// <summary>
@@ -177,14 +178,14 @@ namespace opennlp.tools.cmdline
 	  /// <param name="formatName">  name of the format, if null, assumes OpenNLP format </param>
 	  /// <returns> factory instance </returns>
 
-      public static ObjectStreamFactory getFactory(Type sampleClass, string formatName)
+      public static ObjectStreamFactory<T> getFactory(Type sampleClass, string formatName)
 	  {
 		if (null == formatName)
 		{
 		  formatName = DEFAULT_FORMAT;
 		}
 
-		ObjectStreamFactory factory = registry.ContainsKey(sampleClass) ? registry[sampleClass][formatName] : null;
+		ObjectStreamFactory<T> factory = registry.ContainsKey(sampleClass) ? registry[sampleClass][formatName] : null;
 
 		if (factory != null)
 		{
@@ -201,7 +202,7 @@ namespace opennlp.tools.cmdline
 
 			try
 			{
-			    if (factoryClazz != null) return (ObjectStreamFactory) Activator.CreateInstance(factoryClazz);
+			    if (factoryClazz != null) return (ObjectStreamFactory<T>) Activator.CreateInstance(factoryClazz);
 			}
 			catch (InstantiationException)
 			{
@@ -218,6 +219,7 @@ namespace opennlp.tools.cmdline
 			return null;
 		  }
 		}
+	      return null;
 	  }
 
 	    public static void registerFactory(Type sampleClass, string formatName, ADSentenceSampleStreamFactory factory)

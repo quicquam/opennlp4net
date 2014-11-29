@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using DetokenizerParameter = opennlp.tools.cmdline.@params.DetokenizerParameter;
 	using POSToSentenceSampleStream = opennlp.tools.formats.convert.POSToSentenceSampleStream;
 	using POSSample = opennlp.tools.postag.POSSample;
@@ -41,18 +41,18 @@ namespace opennlp.tools.formats
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(SentenceSample), ConllXPOSSampleStreamFactory.CONLLX_FORMAT, new ConllXSentenceSampleStreamFactory(typeof(Parameters)));
+          StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), ConllXPOSSampleStreamFactory.CONLLX_FORMAT, new ConllXSentenceSampleStreamFactory(typeof(Parameters)));
 	  }
 
 	  protected internal ConllXSentenceSampleStreamFactory(Type @params) : base(@params)
 	  {
 	  }
 
-	  public override ObjectStream<SentenceSample> create(string[] args)
+	  public ObjectStream<SentenceSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
-		ObjectStream<POSSample> posSampleStream = StreamFactoryRegistry.getFactory(typeof(POSSample), ConllXPOSSampleStreamFactory.CONLLX_FORMAT).create(ArgumentParser.filter(args, typeof(ConllXPOSSampleStreamFactory.Parameters)));
+        ObjectStream<POSSample> posSampleStream = StreamFactoryRegistry<POSSample>.getFactory(typeof(POSSample), ConllXPOSSampleStreamFactory.CONLLX_FORMAT).create(ArgumentParser.filter(args, typeof(ConllXPOSSampleStreamFactory.Parameters)));
 		return new POSToSentenceSampleStream(createDetokenizer(@params), posSampleStream, 30);
 	  }
 	}

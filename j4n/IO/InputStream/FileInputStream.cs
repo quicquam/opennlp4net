@@ -14,5 +14,7 @@ namespace j4n.IO.InputStream
             : base(path)
         {
         }
+
+        public InputStream Channel { get; set; }
     }
 }

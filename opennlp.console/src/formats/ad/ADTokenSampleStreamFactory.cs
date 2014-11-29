@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats.ad
 {
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using DetokenizerParameter = opennlp.tools.cmdline.@params.DetokenizerParameter;
 	using opennlp.tools.formats;
 	using NameToTokenSampleStream = opennlp.tools.formats.convert.NameToTokenSampleStream;
@@ -41,18 +41,18 @@ namespace opennlp.tools.formats.ad
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(TokenSample), "ad", new ADTokenSampleStreamFactory(typeof(Parameters)));
+          StreamFactoryRegistry<TokenSample>.registerFactory(typeof(TokenSample), "ad", new ADTokenSampleStreamFactory(typeof(Parameters)));
 	  }
 
 	  protected internal ADTokenSampleStreamFactory(Type @params) : base(@params)
 	  {
 	  }
 
-	  public override ObjectStream<TokenSample> create(string[] args)
+	  public ObjectStream<TokenSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
-		ObjectStream<NameSample> samples = StreamFactoryRegistry.getFactory(typeof(NameSample), "ad").create(ArgumentParser.filter(args, typeof(ADNameSampleStreamFactory.Parameters)));
+        ObjectStream<NameSample> samples = StreamFactoryRegistry<NameSample>.getFactory(typeof(NameSample), "ad").create(ArgumentParser.filter(args, typeof(ADNameSampleStreamFactory.Parameters)));
 		return new NameToTokenSampleStream(createDetokenizer(@params), samples);
 	  }
 	}

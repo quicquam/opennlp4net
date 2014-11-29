@@ -1,6 +1,6 @@
 ﻿using System;
+using j4n.IO.File;
 using j4n.Serialization;
-
 /*
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,83 +15,91 @@ using j4n.Serialization;
  *  limitations under the License.
  *  under the License.
  */
+using opennlp.tools.namefind;
 
 namespace opennlp.tools.formats
 {
 
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
-	using TerminateToolException = opennlp.tools.cmdline.TerminateToolException;
-	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
-	using LANGUAGE = opennlp.tools.formats.Conll03NameSampleStream.LANGUAGE;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using opennlp.tools.util;
+    using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
+    using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
+    using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
+    using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry<NameSample>;
+    using TerminateToolException = opennlp.tools.cmdline.TerminateToolException;
+    using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
+    using LANGUAGE = opennlp.tools.formats.Conll03NameSampleStream.LANGUAGE;
+    using NameSample = opennlp.tools.namefind.NameSample;
+    using opennlp.tools.util;
 
-	public class Conll03NameSampleStreamFactory : LanguageSampleStreamFactory<NameSample>
-	{
-	    public interface Parameters : BasicFormatParams
-	  {
-		string Lang {get;}
+    public class Conll03NameSampleStreamFactory : LanguageSampleStreamFactory<NameSample>
+    {
+        public class Parameters : BasicFormatParams
+        {
+            public string Lang { get; private set; }
 
-		string Types {get;}
-	      object Data { get; set; }
-	  }
+            public string Types { get; set; }
+            public Jfile Data { get; set; }
+            public Charset Encoding { get; private set; }
+        }
 
-	  public static void registerFactory()
-	  {
-		StreamFactoryRegistry.registerFactory(typeof(NameSample), "conll03", new Conll03NameSampleStreamFactory(typeof(Parameters)));
-	  }
+        public static void registerFactory()
+        {
+            StreamFactoryRegistry.registerFactory(typeof(NameSample), "conll03", new Conll03NameSampleStreamFactory(typeof(Parameters)));
+        }
 
-	  protected internal Conll03NameSampleStreamFactory(Type @params) : base(@params)
-	  {
-	  }
+        protected internal Conll03NameSampleStreamFactory(Type @params)
+            : base(@params)
+        {
+        }
 
-	  public override ObjectStream<NameSample> create(string[] args)
-	  {
+        public override Type getParameters()
+        {
+            throw new NotImplementedException();
+        }
 
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+        public override ObjectStream<NameSample> create(string[] args)
+        {
 
-		// TODO: support the other languages with this CoNLL.
-		LANGUAGE lang;
-		if ("en".Equals(@params.Lang))
-		{
-		  lang = LANGUAGE.EN;
-		  language = @params.Lang;
-		}
-		else if ("de".Equals(@params.Lang))
-		{
-		  lang = LANGUAGE.DE;
-		  language = @params.Lang;
-		}
-		else
-		{
-		  throw new TerminateToolException(1, "Unsupported language: " + @params.Lang);
-		}
+            Parameters @params = ArgumentParser.parse<Parameters>(args);
 
-		int typesToGenerate = 0;
+            // TODO: support the other languages with this CoNLL.
+            LANGUAGE lang;
+            if ("en".Equals(@params.Lang))
+            {
+                lang = LANGUAGE.EN;
+                language = @params.Lang;
+            }
+            else if ("de".Equals(@params.Lang))
+            {
+                lang = LANGUAGE.DE;
+                language = @params.Lang;
+            }
+            else
+            {
+                throw new TerminateToolException(1, "Unsupported language: " + @params.Lang);
+            }
 
-		if (@params.Types.Contains("per"))
-		{
-		  typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_PERSON_ENTITIES;
-		}
-		if (@params.Types.Contains("org"))
-		{
-		  typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_ORGANIZATION_ENTITIES;
-		}
-		if (@params.Types.Contains("loc"))
-		{
-		  typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_LOCATION_ENTITIES;
-		}
-		if (@params.Types.Contains("misc"))
-		{
-		  typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_MISC_ENTITIES;
-		}
+            int typesToGenerate = 0;
+
+            if (@params.Types.Contains("per"))
+            {
+                typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_PERSON_ENTITIES;
+            }
+            if (@params.Types.Contains("org"))
+            {
+                typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_ORGANIZATION_ENTITIES;
+            }
+            if (@params.Types.Contains("loc"))
+            {
+                typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_LOCATION_ENTITIES;
+            }
+            if (@params.Types.Contains("misc"))
+            {
+                typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_MISC_ENTITIES;
+            }
 
 
-		return new Conll03NameSampleStream(lang, CmdLineUtil.openInFile(@params.Data), typesToGenerate);
-	  }
-	}
+            return new Conll03NameSampleStream(lang, CmdLineUtil.openInFile(@params.Data), typesToGenerate);
+        }
+    }
 
 }

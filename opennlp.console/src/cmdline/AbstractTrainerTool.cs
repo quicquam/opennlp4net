@@ -31,7 +31,7 @@ namespace opennlp.tools.cmdline
 
 	  protected internal P @params;
 	  protected internal TrainingParameters mlParams;
-	  protected internal ObjectStreamFactory factory;
+	  protected internal ObjectStreamFactory<T> factory;
 	  protected internal ObjectStream<T> sampleStream;
 
 	  /// <summary>

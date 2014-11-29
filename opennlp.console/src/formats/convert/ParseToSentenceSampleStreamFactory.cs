@@ -16,12 +16,12 @@
  */
 
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats.convert
 {
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using DetokenizerParameter = opennlp.tools.cmdline.@params.DetokenizerParameter;
 	using opennlp.tools.formats;
 	using Parse = opennlp.tools.parser.Parse;
@@ -42,18 +42,18 @@ namespace opennlp.tools.formats.convert
 	  {
 	  }
 
-	  public override ObjectStream<SentenceSample> create(string[] args)
+	  public ObjectStream<SentenceSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
-		ObjectStream<Parse> parseSampleStream = StreamFactoryRegistry.getFactory(typeof(Parse), StreamFactoryRegistry.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(ParseSampleStreamFactory.Parameters)));
+        ObjectStream<Parse> parseSampleStream = StreamFactoryRegistry<Parse>.getFactory(typeof(Parse), StreamFactoryRegistry<SentenceSample>.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(ParseSampleStreamFactory.Parameters)));
 
 		return new POSToSentenceSampleStream(createDetokenizer(@params), new ParseToPOSSampleStream(parseSampleStream), 30);
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(SentenceSample), "parse", new ParseToSentenceSampleStreamFactory());
+          StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), "parse", new ParseToSentenceSampleStreamFactory());
 	  }
 	}
 

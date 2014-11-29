@@ -18,6 +18,8 @@ using System.Text;
  * limitations under the License.
  */
 using j4n.Exceptions;
+using opennlp.tools.cmdline.@params;
+using opennlp.tools.formats;
 
 namespace opennlp.tools.cmdline
 {
@@ -541,6 +543,21 @@ namespace opennlp.tools.cmdline
               } */
 
         public static string[] filter(string[] args, Type p1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static T parse<T>(string[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static object parse(string[] args, Type paramsClass)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string validateArgumentsLoudly(string[] args, object parameters)
         {
             throw new NotImplementedException();
         }

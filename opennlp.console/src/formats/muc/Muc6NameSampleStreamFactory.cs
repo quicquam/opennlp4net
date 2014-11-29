@@ -17,6 +17,7 @@
  */
 using j4n.IO.File;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats.muc
 {
@@ -24,7 +25,6 @@ namespace opennlp.tools.formats.muc
 
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using TokenizerModelLoader = opennlp.tools.cmdline.tokenizer.TokenizerModelLoader;
 	using opennlp.tools.formats;
@@ -41,16 +41,22 @@ namespace opennlp.tools.formats.muc
 	  internal interface Parameters : BasicFormatParams
 	  {
 		Jfile TokenizerModel {get;}
+	      Jfile[] Data { get; set; }
 	  }
 
-	  protected internal Muc6NameSampleStreamFactory() : base(typeof(Parameters))
+	  protected internal Muc6NameSampleStreamFactory()
 	  {
 	  }
 
-	  public override ObjectStream<NameSample> create(string[] args)
+	    public Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public ObjectStream<NameSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		TokenizerModel tokenizerModel = (new TokenizerModelLoader()).load(@params.TokenizerModel);
 		Tokenizer tokenizer = new TokenizerME(tokenizerModel);
@@ -78,7 +84,7 @@ namespace opennlp.tools.formats.muc
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(NameSample), "muc6", new Muc6NameSampleStreamFactory());
+		StreamFactoryRegistry<NameSample>.registerFactory(typeof(NameSample), "muc6", new Muc6NameSampleStreamFactory());
 	  }
 	}
 

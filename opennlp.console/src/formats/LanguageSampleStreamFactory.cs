@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,34 +15,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.Serialization;
 
 namespace opennlp.tools.formats
 {
 
-	/// <summary>
-	/// Stream factory for those streams which carry language.
-	/// </summary>
-	public abstract class LanguageSampleStreamFactory : AbstractSampleStreamFactory
-	{
+    /// <summary>
+    /// Stream factory for those streams which carry language.
+    /// </summary>
+    public abstract class LanguageSampleStreamFactory<T> : AbstractSampleStreamFactory<T>
+    {
 
-	  protected internal string language;
+        protected internal string language;
 
-	    protected LanguageSampleStreamFactory(Type @params, string language) : base(@params)
-	    {
-	        this.language = language;
-	    }
+        protected LanguageSampleStreamFactory(Type @params, string language)
+        {
+            this.language = language;
+        }
 
-	    protected internal LanguageSampleStreamFactory(Type @params) : base(@params)
-	  {
-	  }
+        protected internal LanguageSampleStreamFactory(Type @params)
+        {
+        }
 
-	  public override string Lang
-	  {
-		  get
-		  {
-			return language;
-		  }
-	  }
-	}
+        public abstract Type getParameters();
+
+        public abstract ObjectStream<T> create(string[] args);       
+
+    }
 
 }

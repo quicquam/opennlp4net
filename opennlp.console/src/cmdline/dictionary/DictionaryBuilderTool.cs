@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
+using System.IO;
+using j4n.IO.File;
+using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
+using j4n.IO.Reader;
+
 namespace opennlp.tools.cmdline.dictionary
 {
 
@@ -48,8 +54,8 @@ namespace opennlp.tools.cmdline.dictionary
 	  {
 		Params @params = validateAndParseParams(args, typeof(Params));
 
-		File dictInFile = @params.InputFile;
-		File dictOutFile = @params.OutputFile;
+		Jfile dictInFile = @params.InputFile;
+		Jfile dictOutFile = @params.OutputFile;
 		Charset encoding = @params.Encoding;
 
 		CmdLineUtil.checkInputFile("dictionary input file", dictInFile);

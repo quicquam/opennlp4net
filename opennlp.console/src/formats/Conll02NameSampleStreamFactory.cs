@@ -15,7 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
 using j4n.Serialization;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.formats
 {
@@ -23,7 +25,6 @@ namespace opennlp.tools.formats
 	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
 	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry;
 	using TerminateToolException = opennlp.tools.cmdline.TerminateToolException;
 	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
 	using LANGUAGE = opennlp.tools.formats.Conll02NameSampleStream.LANGUAGE;
@@ -41,21 +42,27 @@ namespace opennlp.tools.formats
 		string Lang {get;}
 
 		string Types {get;}
+	      Jfile Data { get; set; }
 	  }
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(NameSample), "conll02", new Conll02NameSampleStreamFactory(typeof(Parameters)));
+		StreamFactoryRegistry<NameSample>.registerFactory(typeof(NameSample), "conll02", new Conll02NameSampleStreamFactory(typeof(Parameters)));
 	  }
 
 	  protected internal Conll02NameSampleStreamFactory(Type @params) : base(@params)
 	  {
 	  }
 
-	  public override ObjectStream<NameSample> create(string[] args)
+	    public override Type getParameters()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public override ObjectStream<NameSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse(args, typeof(Parameters));
+		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
 		LANGUAGE lang;
 		if ("nl".Equals(@params.Lang))
