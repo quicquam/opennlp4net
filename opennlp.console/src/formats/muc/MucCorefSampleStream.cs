@@ -15,6 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Linq;
 using j4n.Serialization;
 
 namespace opennlp.tools.formats.muc
@@ -53,7 +55,9 @@ namespace opennlp.tools.formats.muc
 
 		if (documents.Count > 0)
 		{
-		  return documents.Remove(0);
+		    var document = documents.ElementAt(0);
+            documents.RemoveAt(0);
+		  return document;
 		}
 		else
 		{

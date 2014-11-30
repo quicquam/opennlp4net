@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+using System.IO;
+
 namespace opennlp.tools.cmdline.coref
 {
 

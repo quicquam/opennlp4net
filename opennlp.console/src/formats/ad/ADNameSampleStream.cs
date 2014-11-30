@@ -16,10 +16,12 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Lang;
 using j4n.Serialization;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.formats.ad
 {
@@ -149,7 +151,7 @@ namespace opennlp.tools.formats.ad
 		harem["prednum"] = numeric;
 		harem["currency"] = numeric;
 
-		HAREM = Collections.unmodifiableMap(harem);
+		HAREM = harem;
 	  }
 
 	  private readonly ObjectStream<ADSentenceStream.Sentence> adSentenceStream;
@@ -280,7 +282,7 @@ namespace opennlp.tools.formats.ad
 		  if (c != null)
 		  {
 			string[] parts = whitespacePattern.Split(c);
-			sentence.AddRange(Arrays.asList(parts));
+			sentence.AddRange(parts);
 			alreadyAdded = true;
 		  }
 		  else
@@ -305,7 +307,7 @@ namespace opennlp.tools.formats.ad
 			  string[] lexemes = underlinePattern.Split(leaf.Lexeme);
 			  if (lexemes.Length > 1)
 			  {
-				 sentence.AddRange(Arrays.asList(lexemes).subList(0, lexemes.Length - 1));
+				 sentence.AddRange(lexemes.ToList().GetRange(0, lexemes.Length - 1));
 			  }
 			  leftContractionPart = lexemes[lexemes.Length - 1];
 			  return;
@@ -450,7 +452,7 @@ namespace opennlp.tools.formats.ad
 			@out.Add(tok);
 		  }
 		}
-		@out.AddRange(suffix);
+		@out.AddRange(suffix.ToList());
 		return @out;
 	  }
 

@@ -30,5 +30,10 @@ namespace j4n.IO.Reader
         {
             throw new NotImplementedException();
         }
+
+        public int read(char[] buffer, int p1, int p2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

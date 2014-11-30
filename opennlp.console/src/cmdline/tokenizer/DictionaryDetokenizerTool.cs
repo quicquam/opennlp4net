@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
+using j4n.IO.Reader;
+using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.tokenizer
 {
@@ -49,9 +51,9 @@ namespace opennlp.tools.cmdline.tokenizer
 		else
 		{
 
-		  Detokenizer detokenizer = new DictionaryDetokenizer((new DetokenizationDictionaryLoader()).load(new File(args[0])));
+		  Detokenizer detokenizer = new DictionaryDetokenizer((new DetokenizationDictionaryLoader()).load(new Jfile(args[0])));
 
-		  ObjectStream<string> tokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput));
+		  ObjectStream<string> tokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
 
 		  PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
 		  perfMon.start();

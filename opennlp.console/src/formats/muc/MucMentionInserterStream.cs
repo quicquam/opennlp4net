@@ -42,7 +42,7 @@ namespace opennlp.tools.formats.muc
 	public class MucMentionInserterStream : FilterObjectStream<RawCorefSample, CorefSample>
 	{
 
-	  private static HashSet<string> entitySet = new HashSet<string>(Arrays.asList(DefaultParse.NAME_TYPES));
+	  private static HashSet<string> entitySet = new HashSet<string>(DefaultParse.NAME_TYPES);
 
 	  private readonly MentionFinder mentionFinder;
 

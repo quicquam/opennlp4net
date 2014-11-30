@@ -41,7 +41,7 @@ namespace opennlp.tools.cmdline
 		  {
 			if (this.GetType().Name.EndsWith("Tool", StringComparison.Ordinal))
 			{
-			  return this.GetType().Name.Substring(0, this.GetType().Name.length() - 4);
+			  return this.GetType().Name.Substring(0, this.GetType().Name.Length - 4);
 			}
 			else
 			{

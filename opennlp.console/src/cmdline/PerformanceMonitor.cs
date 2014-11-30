@@ -198,6 +198,20 @@ namespace opennlp.tools.cmdline
 		@out.println("Total: " + counter + " " + unit);
 		@out.println("Runtime: " + timePassed / 1000d + "s");
 	  } */
-	}
+        internal void incrementCounter()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        internal void stopAndPrintFinalResult()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        internal void start()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }

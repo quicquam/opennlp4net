@@ -46,13 +46,13 @@ namespace opennlp.tools.cmdline.dictionary
 	  {
 		  get
 		  {
-			return getBasicHelp(typeof(Params));
+			return getBasicHelp<Dictionary>(typeof(Params));
 		  }
 	  }
 
 	  public override void run(string[] args)
 	  {
-		Params @params = validateAndParseParams(args, typeof(Params));
+		Params @params = validateAndParseParams<Params>(args, typeof(Params));
 
 		Jfile dictInFile = @params.InputFile;
 		Jfile dictOutFile = @params.OutputFile;

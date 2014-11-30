@@ -44,7 +44,7 @@ namespace opennlp.tools.cmdline
 	  private readonly int code;
 	  private readonly string message;
 
-	  public TerminateToolException(int code, string message, Exception t) : base(t)
+	  public TerminateToolException(int code, string message, Exception t) : base(message)
 	  {
 		this.code = code;
 		this.message = message;

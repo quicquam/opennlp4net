@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using j4n.IO.File;
+using j4n.IO.Reader;
+using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.postag
 {
@@ -57,7 +60,7 @@ namespace opennlp.tools.cmdline.postag
 		else
 		{
 
-		  POSModel model = (new POSModelLoader()).load(new File(args[0]));
+		  POSModel model = (new POSModelLoader()).load(new Jfile(args[0]));
 
 		  POSTaggerME tagger = new POSTaggerME(model);
 

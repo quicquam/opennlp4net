@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using j4n.IO.Reader;
 using j4n.Serialization;
 

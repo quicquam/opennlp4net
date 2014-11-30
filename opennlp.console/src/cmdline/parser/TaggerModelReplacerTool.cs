@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
 
 namespace opennlp.tools.cmdline.parser
 {
@@ -54,10 +54,10 @@ namespace opennlp.tools.cmdline.parser
 		else
 		{
 
-		  File parserModelInFile = new File(args[0]);
+          Jfile parserModelInFile = new Jfile(args[0]);
 		  ParserModel parserModel = (new ParserModelLoader()).load(parserModelInFile);
 
-		  File taggerModelInFile = new File(args[1]);
+          Jfile taggerModelInFile = new Jfile(args[1]);
 		  POSModel taggerModel = (new POSModelLoader()).load(taggerModelInFile);
 
 		  ParserModel updatedParserModel = parserModel.updateTaggerModel(taggerModel);

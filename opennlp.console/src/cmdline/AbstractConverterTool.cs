@@ -45,29 +45,29 @@ namespace opennlp.tools.cmdline
 	  {
 		  get
 		  {
-			IDictionary<string, ObjectStreamFactory> factories = StreamFactoryRegistry.getFactories(type);
+			IDictionary<string, ObjectStreamFactory<T>> factories = StreamFactoryRegistry<T>.getFactories(type);
 			StringBuilder help = new StringBuilder();
-			if (2 == factories.Keys.size()) //opennlp + foreign
+			if (2 == factories.Keys.Count) //opennlp + foreign
 			{
 			  foreach (string format in factories.Keys)
 			  {
-				if (!StreamFactoryRegistry.DEFAULT_FORMAT.Equals(format))
+				if (!StreamFactoryRegistry<T>.DEFAULT_FORMAT.Equals(format))
 				{
 				  help.Append(format);
 				}
 			  }
 			  return "converts " + help.ToString() + " data format to native OpenNLP format";
 			}
-			else if (2 < factories.Keys.size())
+			else if (2 < factories.Keys.Count)
 			{
 			  foreach (string format in factories.Keys)
 			  {
-				if (!StreamFactoryRegistry.DEFAULT_FORMAT.Equals(format))
+				if (!StreamFactoryRegistry<T>.DEFAULT_FORMAT.Equals(format))
 				{
 				  help.Append(format).Append(",");
 				}
 			  }
-			  return "converts foreign data formats (" + help.Substring(0, help.Length - 1) + ") to native OpenNLP format";
+			  return "converts foreign data formats (" + help.ToString().Substring(0, help.Length - 1) + ") to native OpenNLP format";
 			}
 			else
 			{

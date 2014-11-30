@@ -561,5 +561,10 @@ namespace opennlp.tools.cmdline
         {
             throw new NotImplementedException();
         }
+
+        public static string createUsage(Type paramsClass, Type getParameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

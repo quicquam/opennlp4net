@@ -15,8 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.IO.File;
 using j4n.Lang;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.formats.muc
 {
@@ -50,13 +52,13 @@ namespace opennlp.tools.formats.muc
 		types.Add("MONEY");
 		types.Add("PERCENT");
 
-		EXPECTED_TYPES = Collections.unmodifiableSet(types);
+		EXPECTED_TYPES = types;
 
 		HashSet<string> nameElements = new HashSet<string>();
 		nameElements.Add(ENTITY_ELEMENT_NAME);
 		nameElements.Add(TIME_ELEMENT_NAME);
 		nameElements.Add(NUM_ELEMENT_NAME);
-		NAME_ELEMENT_NAMES = Collections.unmodifiableSet(nameElements);
+		NAME_ELEMENT_NAMES = nameElements;
 	  }
 
 	  private readonly Tokenizer tokenizer;
@@ -98,7 +100,7 @@ namespace opennlp.tools.formats.muc
 			throw new InvalidFormatException("Unknown timex, numex or namex type: " + nameType + ", expected one of " + EXPECTED_TYPES);
 		  }
 
-		  incompleteNames.Add(new Span(text.Count, text.Count, nameType.ToLower(Locale.ENGLISH)));
+		  incompleteNames.Push(new Span(text.Count, text.Count, nameType.ToLower(Locale.ENGLISH)));
 		}
 	  }
 
@@ -107,7 +109,7 @@ namespace opennlp.tools.formats.muc
 		if (isInsideContentElement)
 		{
 		  string[] tokens = tokenizer.tokenize(chars.ToString());
-		  text.AddRange(Arrays.asList(tokens));
+		  text.AddRange(tokens);
 		}
 	  }
 

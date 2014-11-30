@@ -40,7 +40,7 @@ namespace opennlp.tools.formats.muc
 		contentElementNames.Add(MucElementNames.DD_ELEMENT);
 		contentElementNames.Add(MucElementNames.SENTENCE_ELEMENT);
 
-		CONTENT_ELEMENTS = Collections.unmodifiableSet(contentElementNames);
+		CONTENT_ELEMENTS = contentElementNames;
 	  }
 
 	  private MucElementNames()

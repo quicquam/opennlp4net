@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
 
 namespace opennlp.tools.cmdline.tokenizer
 {
@@ -50,7 +50,7 @@ namespace opennlp.tools.cmdline.tokenizer
 		else
 		{
 
-		  TokenizerModel model = (new TokenizerModelLoader()).load(new File(args[0]));
+		  TokenizerModel model = (new TokenizerModelLoader()).load(new Jfile(args[0]));
 
 		  CommandLineTokenizer tokenizer = new CommandLineTokenizer(new opennlp.tools.tokenize.TokenizerME(model));
 

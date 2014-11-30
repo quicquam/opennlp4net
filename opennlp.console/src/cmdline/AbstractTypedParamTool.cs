@@ -43,13 +43,13 @@ namespace opennlp.tools.cmdline
 
 	  public override string getHelp(string format)
 	  {
-		if ("".Equals(format) || StreamFactoryRegistry.DEFAULT_FORMAT.Equals(format))
+		if ("".Equals(format) || StreamFactoryRegistry<T>.DEFAULT_FORMAT.Equals(format))
 		{
-		  return getBasicHelp(paramsClass, StreamFactoryRegistry.getFactory(type, StreamFactoryRegistry.DEFAULT_FORMAT).getParameters<P>());
+		  return getBasicHelp<T>(paramsClass, StreamFactoryRegistry<T>.getFactory(type, StreamFactoryRegistry<T>.DEFAULT_FORMAT).getParameters());
 		}
 		else
 		{
-		  ObjectStreamFactory factory = StreamFactoryRegistry.getFactory(type, format);
+		  ObjectStreamFactory<T> factory = StreamFactoryRegistry<T>.getFactory(type, format);
 		  if (null == factory)
 		  {
 			throw new TerminateToolException(1, "Format " + format + " is not found.\n" + Help);

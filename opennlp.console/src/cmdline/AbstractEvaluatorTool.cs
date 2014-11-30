@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 using j4n.Serialization;
+using opennlp.tools.cmdline.dictionary;
 
 namespace opennlp.tools.cmdline
 {
@@ -45,7 +46,7 @@ namespace opennlp.tools.cmdline
 	  {
 		validateAllArgs(args, this.paramsClass, format);
 
-		@params = ArgumentParser.parse(ArgumentParser.filter(args, this.paramsClass), this.paramsClass);
+		@params = ArgumentParser.parse<T>(ArgumentParser.filter(args, this.paramsClass), this.paramsClass);
 
 		factory = getStreamFactory(format);
 		string[] fargs = ArgumentParser.filter(args, factory.Parameters);

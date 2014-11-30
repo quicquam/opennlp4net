@@ -362,7 +362,7 @@ namespace opennlp.tools.formats.ad
 			  Matcher bizarreLeafMatcher = bizarreLeafPattern.matcher(line);
 			if (bizarreLeafMatcher.matches())
 			{
-			  int level = bizarreLeafMatcher.group(1).length() + 1;
+			  int level = bizarreLeafMatcher.group(1).Length + 1;
 			  string syntacticTag = bizarreLeafMatcher.group(2);
 			  string lemma = bizarreLeafMatcher.group(3);
 			  string morphologicalTag = bizarreLeafMatcher.group(4);
