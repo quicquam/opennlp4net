@@ -92,6 +92,7 @@ namespace opennlp.tools.formats
 		{
 		  this.lineStream = new PlainTextByLineStream(@in, "UTF-8");
 		  // Commented Out MJJ 30/11/2014 last error line, TODO !
+          throw new NotImplementedException();
           //System.Out = new PrintStream(Console.OpenStandardOutput(), true, "UTF-8");
 		}
 		catch (UnsupportedEncodingException e)
