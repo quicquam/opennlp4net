@@ -234,6 +234,11 @@ namespace opennlp.tools.namefind
                 artifactSerializers.Add("featuregen", new ByteArraySerializer());
         }
 
+        public static IDictionary<string, ArtifactSerializer<TokenNameFinderModel>> createArtifactSerializers(bool isStatic)
+        {
+            throw new NotImplementedException();
+        }
+
         // TODO: Write test for this method
         public static bool isModelValid(MaxentModel model)
         {

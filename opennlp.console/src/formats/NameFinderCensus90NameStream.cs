@@ -96,11 +96,11 @@ namespace opennlp.tools.formats
 			// back to standard mixed case.
 			if ((parsed.Length > 2) && (parsed.StartsWith("MC", StringComparison.Ordinal)))
 			{
-			  name2 = parsed.Substring(0,1).ToUpper(locale) + parsed.Substring(1, 1).ToLower(locale) + parsed.Substring(2, 1).ToUpper(locale) + parsed.Substring(3).ToLower(locale);
+                name2 = parsed.Substring(0, 1).ToUpper(locale.GetCultureInfo()) + parsed.Substring(1, 1).ToLower(locale.GetCultureInfo()) + parsed.Substring(2, 1).ToUpper(locale.GetCultureInfo()) + parsed.Substring(3).ToLower(locale.GetCultureInfo());
 			}
 			else
 			{
-			  name2 = parsed.Substring(0,1).ToUpper(locale) + parsed.Substring(1).ToLower(locale);
+                name2 = parsed.Substring(0, 1).ToUpper(locale.GetCultureInfo()) + parsed.Substring(1).ToLower(locale.GetCultureInfo());
 			}
 			name = new StringList(new string[]{name2});
 		  }

@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Concurrency\AtomicInteger.cs" />
+    <Compile Include="Exceptions\AssertionErrorException.cs" />
     <Compile Include="Exceptions\ClassNotFoundException.cs" />
     <Compile Include="Exceptions\FileNotFoundException.cs" />
     <Compile Include="Exceptions\IllegalAccessException.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="IO\Reader\InputStreamReader.cs" />
     <Compile Include="IO\InputStream\ObjectInputStream.cs" />
     <Compile Include="IO\Reader\Reader.cs" />
+    <Compile Include="IO\Reader\StringReader.cs" />
     <Compile Include="IO\Writer\BufferedWriter.cs" />
     <Compile Include="IO\OutputStream\DataOutputStream.cs" />
     <Compile Include="IO\OutputStream\FileOutputStream.cs" />
@@ -103,7 +105,9 @@
     <Compile Include="Serialization\ObjectStream.cs" />
     <Compile Include="Utils\IterableAdapter.cs" />
     <Compile Include="Utils\DecimalFormat.cs" />
+    <Compile Include="Utils\MessageFormat.cs" />
     <Compile Include="Utils\Properties.cs" />
+    <Compile Include="Utils\StringAppendHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\Internal\" />

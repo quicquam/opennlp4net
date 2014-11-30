@@ -17,5 +17,10 @@ namespace j4n.IO.File
         {
             throw new NotImplementedException();
         }
+
+        public static Charset defaultCharset()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

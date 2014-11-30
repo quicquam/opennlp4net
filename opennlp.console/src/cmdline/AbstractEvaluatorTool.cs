@@ -44,12 +44,12 @@ namespace opennlp.tools.cmdline
 
 	  public override void run(string format, string[] args)
 	  {
-		validateAllArgs(args, this.paramsClass, format);
+		validateAllArgs<T>(args, this.paramsClass, format);
 
-		@params = ArgumentParser.parse<T>(ArgumentParser.filter(args, this.paramsClass), this.paramsClass);
+		@params = ArgumentParser.parse<P>(ArgumentParser.filter(args, this.paramsClass), this.paramsClass);
 
 		factory = getStreamFactory(format);
-		string[] fargs = ArgumentParser.filter(args, factory.Parameters);
+		string[] fargs = ArgumentParser.filter(args, factory.getParameters());
 		validateFactoryArgs(factory, fargs);
 		sampleStream = factory.create(fargs);
 	  }

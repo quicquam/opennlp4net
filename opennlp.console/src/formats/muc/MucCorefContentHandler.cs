@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using j4n.Lang;
 using opennlp.nonjava.helperclasses;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.formats.muc
 {
@@ -146,7 +147,7 @@ namespace opennlp.tools.formats.muc
 
 		  string[] tokens = tokenizer.tokenize(chars.ToString());
 
-		  text.AddRange(Arrays.asList(tokens));
+		  text.AddRange(tokens);
 		}
 	  }
 

@@ -16,6 +16,8 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Linq;
 using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.namefind
@@ -58,7 +60,7 @@ namespace opennlp.tools.cmdline.namefind
 
 		TokenNameFinderModel model = (new TokenNameFinderModelLoader()).load(@params.Model);
 
-		IList<EvaluationMonitor<NameSample>> listeners = new LinkedList<EvaluationMonitor<NameSample>>();
+		IList<EvaluationMonitor<NameSample>> listeners = new List<EvaluationMonitor<NameSample>>();
 		if (@params.Misclassified.Value)
 		{
 		  listeners.Add(new NameEvaluationErrorListener());
@@ -70,7 +72,7 @@ namespace opennlp.tools.cmdline.namefind
 		  listeners.Add(detailedFListener);
 		}
 
-		TokenNameFinderEvaluator evaluator = new TokenNameFinderEvaluator(new NameFinderME(model), listeners.ToArray());
+		TokenNameFinderEvaluator evaluator = new TokenNameFinderEvaluator(new NameFinderME(model), listeners.ToArray() as TokenNameFinderEvaluationMonitor[]);
 
 		PerformanceMonitor monitor = new PerformanceMonitor("sent");
 

@@ -56,7 +56,7 @@ namespace opennlp.tools.formats.convert
 
 	  public static void registerFactory()
 	  {
-		StreamFactoryRegistry.registerFactory(typeof(POSSample), "parse", new ParseToPOSSampleStreamFactory());
+          StreamFactoryRegistry<POSSample>.registerFactory(typeof(POSSample), "parse", new ParseToPOSSampleStreamFactory());
 	  }
 	}
 

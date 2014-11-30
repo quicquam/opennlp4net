@@ -1,9 +1,9 @@
 ﻿
 namespace opennlp.tools.nonjava.helperclasses
 {
-    internal static class RectangularArrays
+    public static class RectangularArrays
     {
-        internal static float[][] ReturnRectangularFloatArray(int Size1, int Size2)
+        public static float[][] ReturnRectangularFloatArray(int Size1, int Size2)
         {
             float[][] Array;
             if (Size1 > -1)
@@ -23,7 +23,7 @@ namespace opennlp.tools.nonjava.helperclasses
             return Array;
         }
 
-        internal static double[][] ReturnRectangularDoubleArray(int Size1, int Size2)
+        public static double[][] ReturnRectangularDoubleArray(int Size1, int Size2)
         {
             double[][] Array;
             if (Size1 > -1)
@@ -43,7 +43,7 @@ namespace opennlp.tools.nonjava.helperclasses
             return Array;
         }
 
-        internal static int[][][] ReturnRectangularIntArray(int Size1, int Size2, int Size3)
+        public static int[][][] ReturnRectangularIntArray(int Size1, int Size2, int Size3)
         {
             int[][][] Array;
             if (Size1 > -1)

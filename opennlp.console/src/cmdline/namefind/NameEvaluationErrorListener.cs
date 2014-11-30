@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+using System;
 using j4n.Interfaces;
 using j4n.IO.OutputStream;
 
@@ -35,9 +36,9 @@ namespace opennlp.tools.cmdline.namefind
 	{
 
 	  /// <summary>
-	  /// Creates a listener that will print to System.err
+	  /// Creates a listener that will print to Console.Error
 	  /// </summary>
-	  public NameEvaluationErrorListener() : base(System.err)
+	  public NameEvaluationErrorListener() : base(Console.Error)
 	  {
 	  }
 

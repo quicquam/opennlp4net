@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using j4n.IO.File;
 
 namespace opennlp.tools.cmdline.postag
 {
@@ -60,7 +61,7 @@ namespace opennlp.tools.cmdline.postag
 		base.run(format, args);
 
 		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, true);
-		if (mlParams != null && !TrainUtil.isValid(mlParams.Settings))
+		if (mlParams != null && !TrainUtil.isValid(mlParams.getSettings()))
 		{
 		  throw new TerminateToolException(1, "Training parameters file '" + @params.Params + "' is invalid!");
 		}
@@ -71,7 +72,7 @@ namespace opennlp.tools.cmdline.postag
 		  mlParams.put(TrainingParameters.ALGORITHM_PARAM, getModelType(@params.Type).ToString());
 		}
 
-		File modelOutFile = @params.Model;
+		Jfile modelOutFile = @params.Model;
 		CmdLineUtil.checkOutputFile("pos tagger model", modelOutFile);
 
 		Dictionary ngramDict = null;
@@ -167,7 +168,7 @@ namespace opennlp.tools.cmdline.postag
 
 	  internal static ModelType getModelType(string modelString)
 	  {
-		ModelType model;
+		ModelType model = ModelType.MAXENT;
 		if (modelString == null)
 		{
 		  modelString = "maxent";
@@ -185,10 +186,7 @@ namespace opennlp.tools.cmdline.postag
 		{
 		  model = ModelType.PERCEPTRON_SEQUENCE;
 		}
-		else
-		{
-		  model = null;
-		}
+
 		return model;
 	  }
 	}

@@ -1,7 +1,7 @@
 ﻿
 namespace opennlp.nonjava.helperclasses
 {
-    internal static class StringHelperClass
+    public static class StringHelperClass
     {
         //----------------------------------------------------------------------------------
         //	This method replaces the Java String.substring method when 'start' is a

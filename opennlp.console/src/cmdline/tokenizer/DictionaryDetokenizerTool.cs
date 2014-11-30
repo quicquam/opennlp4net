@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using j4n.IO.File;
 using j4n.IO.Reader;
 using j4n.Serialization;
@@ -55,7 +56,7 @@ namespace opennlp.tools.cmdline.tokenizer
 
 		  ObjectStream<string> tokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
+		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
 		  perfMon.start();
 
 		  try

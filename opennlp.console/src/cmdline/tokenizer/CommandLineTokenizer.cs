@@ -46,7 +46,7 @@ namespace opennlp.tools.cmdline.tokenizer
 
 		ObjectStream<string> tokenizedLineStream = new WhitespaceTokenStream(new TokenizerStream(tokenizer, untokenizedLineStream));
 
-		PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
+		PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
 		perfMon.start();
 
 		try

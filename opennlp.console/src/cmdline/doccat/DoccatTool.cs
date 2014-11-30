@@ -1,5 +1,4 @@
 ﻿using System;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using j4n.IO.File;
+using j4n.IO.Reader;
+using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.doccat
 {
@@ -58,13 +61,13 @@ namespace opennlp.tools.cmdline.doccat
 		else
 		{
 
-		  DoccatModel model = (new DoccatModelLoader()).load(new File(args[0]));
+		  DoccatModel model = (new DoccatModelLoader()).load(new Jfile(args[0]));
 
 		  DocumentCategorizerME doccat = new DocumentCategorizerME(model);
 
-		  ObjectStream<string> documentStream = new ParagraphStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput)));
+		  ObjectStream<string> documentStream = new ParagraphStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput())));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "doc");
+		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "doc");
 		  perfMon.start();
 
 		  try

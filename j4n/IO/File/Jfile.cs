@@ -52,5 +52,10 @@ namespace j4n.IO.File
         {
             throw new NotImplementedException();
         }
+
+        public Jfile[] listFiles(FileFilter fileFilter = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -19,6 +19,7 @@ using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Object;
 using j4n.Serialization;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.formats.ad
 {
@@ -140,12 +141,7 @@ namespace opennlp.tools.formats.ad
 		  {
 			tag += " " + leaf.MorphologicalTag;
 		  }
-		  tag = tag.replaceAll("\\s+", "=");
-
-		  if (tag == null)
-		  {
-			tag = lexeme;
-		  }
+		  tag = tag.Replace("\\s+", "=");
 
 		  if (expandME && lexeme.Contains("_"))
 		  {

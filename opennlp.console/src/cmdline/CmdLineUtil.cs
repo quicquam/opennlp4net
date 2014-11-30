@@ -220,7 +220,7 @@ namespace opennlp.tools.cmdline
 
 		long modelWritingDuration = DateTime.Now.Ticks - beginModelWritingTime;
 
-		//System.Error.printf("done (%.3fs)\n", modelWritingDuration / 1000d);
+		//Console.Erroror.printf("done (%.3fs)\n", modelWritingDuration / 1000d);
 
 		Console.Error.WriteLine();
 

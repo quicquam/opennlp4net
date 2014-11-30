@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -101,12 +102,12 @@ namespace opennlp.tools.cmdline.namefind
 		if (resourcePath != null)
 		{
 
-		  IDictionary<string, ArtifactSerializer> artifactSerializers = TokenNameFinderModel.createArtifactSerializers();
+          IDictionary<string, ArtifactSerializer<TokenNameFinderModel>> artifactSerializers = TokenNameFinderModel.createArtifactSerializers(true);
 
-		  File[] resourceFiles = resourcePath.listFiles();
+		  Jfile[] resourceFiles = resourcePath.listFiles();
 
 		  // TODO: Filter files, also files with start with a dot
-		  foreach (File resourceFile in resourceFiles)
+		  foreach (Jfile resourceFile in resourceFiles)
 		  {
 
 			// TODO: Move extension extracting code to method and
@@ -125,7 +126,7 @@ namespace opennlp.tools.cmdline.namefind
 			string ending = resourceName.Substring(lastDot + 1);
 
 			// lookup serializer from map
-			ArtifactSerializer serializer = artifactSerializers[ending];
+			ArtifactSerializer<TokenNameFinderModel> serializer = artifactSerializers[ending];
 
 			// TODO: Do different? For now just ignore ....
 			if (serializer == null)
@@ -171,7 +172,7 @@ namespace opennlp.tools.cmdline.namefind
 
 		if (resourceDirectory != null)
 		{
-		  File resourcePath = new File(resourceDirectory);
+		  Jfile resourcePath = new Jfile(resourceDirectory);
 		  return loadResources(resourcePath);
 		}
 
@@ -188,7 +189,7 @@ namespace opennlp.tools.cmdline.namefind
 		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
 		}
 
-		File modelOutFile = @params.Model;
+		Jfile modelOutFile = @params.Model;
 
 		sbyte[] featureGeneratorBytes = openFeatureGeneratorBytes(@params.Featuregen);
 

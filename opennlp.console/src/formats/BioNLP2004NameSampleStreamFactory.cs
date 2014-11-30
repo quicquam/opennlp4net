@@ -47,37 +47,6 @@ namespace opennlp.tools.formats
 	  {
 	  }
 
-	  public ObjectStream<T> create<T>(string[] args)
-	  {
-
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
-
-		int typesToGenerate = 0;
-
-		if (@params.Types.Contains("DNA"))
-		{
-		  typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_DNA_ENTITIES;
-		}
-		else if (@params.Types.Contains("protein"))
-		{
-		  typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_PROTEIN_ENTITIES;
-		}
-		else if (@params.Types.Contains("cell_type"))
-		{
-		  typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_CELLTYPE_ENTITIES;
-		}
-		else if (@params.Types.Contains("cell_line"))
-		{
-		  typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_CELLLINE_ENTITIES;
-		}
-		else if (@params.Types.Contains("RNA"))
-		{
-		  typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_RNA_ENTITIES;
-		}
-
-		return new BioNLP2004NameSampleStream(CmdLineUtil.openInFile(@params.Data), typesToGenerate);
-	  }
-
         public Type getParameters()
         {
             throw new NotImplementedException();
@@ -85,7 +54,32 @@ namespace opennlp.tools.formats
 
         public ObjectStream<NameSample> create(string[] args)
         {
-            throw new NotImplementedException();
+            Parameters @params = ArgumentParser.parse<Parameters>(args);
+
+            int typesToGenerate = 0;
+
+            if (@params.Types.Contains("DNA"))
+            {
+                typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_DNA_ENTITIES;
+            }
+            else if (@params.Types.Contains("protein"))
+            {
+                typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_PROTEIN_ENTITIES;
+            }
+            else if (@params.Types.Contains("cell_type"))
+            {
+                typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_CELLTYPE_ENTITIES;
+            }
+            else if (@params.Types.Contains("cell_line"))
+            {
+                typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_CELLLINE_ENTITIES;
+            }
+            else if (@params.Types.Contains("RNA"))
+            {
+                typesToGenerate = typesToGenerate | BioNLP2004NameSampleStream.GENERATE_RNA_ENTITIES;
+            }
+
+            return new BioNLP2004NameSampleStream(CmdLineUtil.openInFile(@params.Data), typesToGenerate) as ObjectStream<NameSample>;
         }
 	}
 

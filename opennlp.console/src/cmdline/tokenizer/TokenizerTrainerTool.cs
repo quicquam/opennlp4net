@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 
@@ -69,12 +70,12 @@ namespace opennlp.tools.cmdline.tokenizer
 
 		if (mlParams != null)
 		{
-		  if (!TrainUtil.isValid(mlParams.Settings))
+		  if (!TrainUtil.isValid(mlParams.getSettings()))
 		  {
 			throw new TerminateToolException(1, "Training parameters file '" + @params.Params + "' is invalid!");
 		  }
 
-		  if (TrainUtil.isSequenceTraining(mlParams.Settings))
+		  if (TrainUtil.isSequenceTraining(mlParams.getSettings()))
 		  {
 			throw new TerminateToolException(1, "Sequence training is not supported!");
 		  }
@@ -85,7 +86,7 @@ namespace opennlp.tools.cmdline.tokenizer
 		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
 		}
 
-		File modelOutFile = @params.Model;
+		Jfile modelOutFile = @params.Model;
 		CmdLineUtil.checkOutputFile("tokenizer model", modelOutFile);
 
 		TokenizerModel model;

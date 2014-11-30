@@ -59,9 +59,11 @@ namespace opennlp.tools.formats
 		  inputDirectoryList.Add(dir);
 		}
 
-		inputDirectories = Collections.unmodifiableList(inputDirectoryList);
-
-		directories.addAll(inputDirectories);
+		inputDirectories = inputDirectoryList;
+          foreach (var inputdir in inputDirectories)
+          {
+              directories.Push(inputdir);
+          }
 	  }
 
       public DirectorySampleStream(Jfile dir, FileFilter fileFilter, bool recursive)
@@ -110,15 +112,18 @@ namespace opennlp.tools.formats
 		}
 	  }
 
-	  public virtual void reset()
+	  public override void reset()
 	  {
 		directories.Clear();
 		textFiles.Clear();
+        foreach (var inputdir in inputDirectories)
+	      {
+	          directories.Push(inputdir);
+	      }
 
-		directories.addAll(inputDirectories);
 	  }
 
-	  public virtual void close()
+	  public override void close()
 	  {
 	  }
 	}

@@ -74,9 +74,9 @@ namespace opennlp.tools.cmdline
 
 	  static CLI()
 	  {
-		toolLookupMap = new LinkedHashMap<string, CmdLineTool>();
+		toolLookupMap = new Dictionary<string, CmdLineTool>();
 
-		IList<CmdLineTool> tools = new LinkedList<CmdLineTool>();
+		IList<CmdLineTool> tools = new List<CmdLineTool>();
 
 		// Document Categorizer
 		tools.Add(new DoccatTool());
@@ -142,8 +142,6 @@ namespace opennlp.tools.cmdline
 		{
 		  toolLookupMap[tool.Name] = tool;
 		}
-
-		toolLookupMap = Collections.unmodifiableMap(toolLookupMap);
 	  }
 
 	  /// <returns> a set which contains all tool names </returns>
@@ -151,7 +149,7 @@ namespace opennlp.tools.cmdline
 	  {
 		  get
 		  {
-			return toolLookupMap.Keys;
+              return new HashSet<string>(toolLookupMap.Keys);
 		  }
 	  }
 
@@ -265,7 +263,7 @@ namespace opennlp.tools.cmdline
 		  if (e.InnerException != null)
 		  {
 			Console.Error.WriteLine(e.InnerException.Message);
-			e.InnerException.printStackTrace(System.err);
+			e.InnerException.printStackTrace(Console.Error);
 		  }
 
 		  Environment.Exit(e.Code);

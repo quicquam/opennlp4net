@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -17,8 +18,11 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.IO.File;
+using j4n.IO.Reader;
 using j4n.Lang;
 using j4n.Object;
+using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.parser
 {
@@ -67,7 +71,7 @@ namespace opennlp.tools.cmdline.parser
 		  tokens.Add(tok);
 		  sb.Append(tok).Append(" ");
 		}
-		string text = sb.Substring(0, sb.Length - 1);
+		string text = sb.ToString().Substring(0, sb.Length - 1);
 		Parse p = new Parse(text, new Span(0, text.Length), AbstractBottomUpParser.INC_NODE, 0, 0);
 		int start = 0;
 		int i = 0;
@@ -99,7 +103,7 @@ namespace opennlp.tools.cmdline.parser
 		else
 		{
 
-		  ParserModel model = (new ParserModelLoader()).load(new File(args[args.Length - 1]));
+		  ParserModel model = (new ParserModelLoader()).load(new Jfile(args[args.Length - 1]));
 
 		  int? beamSize = CmdLineUtil.getIntParameter("-bs", args);
 		  if (beamSize == null)
@@ -128,9 +132,9 @@ namespace opennlp.tools.cmdline.parser
 
 		  opennlp.tools.parser.Parser parser = ParserFactory.create(model, beamSize.Value, advancePercentage.Value);
 
-		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput));
+		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
+		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
 		  perfMon.start();
 
 		  try

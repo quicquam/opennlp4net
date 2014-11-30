@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,8 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Linq;
 
 namespace opennlp.tools.cmdline.namefind
 {
@@ -64,7 +65,7 @@ namespace opennlp.tools.cmdline.namefind
 
 		IDictionary<string, object> resources = TokenNameFinderTrainerTool.loadResources(@params.Resources);
 
-		IList<EvaluationMonitor<NameSample>> listeners = new LinkedList<EvaluationMonitor<NameSample>>();
+		IList<EvaluationMonitor<NameSample>> listeners = new List<EvaluationMonitor<NameSample>>();
 		if (@params.Misclassified.Value)
 		{
 		  listeners.Add(new NameEvaluationErrorListener());
@@ -79,7 +80,7 @@ namespace opennlp.tools.cmdline.namefind
 		TokenNameFinderCrossValidator validator;
 		try
 		{
-		  validator = new TokenNameFinderCrossValidator(@params.Lang, @params.Type, mlParams, featureGeneratorBytes, resources, listeners.ToArray());
+		  validator = new TokenNameFinderCrossValidator(@params.Lang, @params.Type, mlParams, featureGeneratorBytes, resources, listeners.ToArray() as TokenNameFinderEvaluationMonitor[]);
 		  validator.evaluate(sampleStream, @params.Folds.Value);
 		}
 		catch (IOException e)

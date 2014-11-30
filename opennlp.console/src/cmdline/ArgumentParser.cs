@@ -562,7 +562,27 @@ namespace opennlp.tools.cmdline
             throw new NotImplementedException();
         }
 
+        public static string createUsage(Type[] argProxyInterfaces)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public static string createUsage(Type paramsClass)
+        {
+            throw new NotImplementedException();
+        }
+
         public static string createUsage(Type paramsClass, Type getParameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static T parse<T>(string[] args, Type paramsClass)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string validateArgumentsLoudly(string[] args, Type argProxyInterface, Type getParameters)
         {
             throw new NotImplementedException();
         }

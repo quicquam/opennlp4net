@@ -109,7 +109,7 @@ namespace opennlp.tools.formats
 			continue;
 		  }
 
-		  string[] fields = line.Split(" ", true);
+		  string[] fields = line.Split(' ');
 
 		  // For English: WORD  POS-TAG SC-TAG NE-TAG
 		  if (LANGUAGE.EN.Equals(lang) && (fields.Length == 4))
@@ -229,16 +229,19 @@ namespace opennlp.tools.formats
 		}
 	  }
 
-	  public virtual void reset()
+	  public override void reset()
 	  {
 		lineStream.reset();
 	  }
 
-	  public virtual void close()
+	  public override void close()
 	  {
 		lineStream.close();
 	  }
-
+      public Span extract(int start, int end, string s)
+      {
+          throw new NotImplementedException();
+      }
 	}
 
 }

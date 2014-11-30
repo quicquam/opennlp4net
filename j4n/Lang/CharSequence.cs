@@ -15,6 +15,8 @@ namespace j4n.Lang
             _innerstring = s;
         }
 
+        public int Length { get; set; }
+
         public int length()
         {
             return _innerstring.Length;
@@ -33,6 +35,11 @@ namespace j4n.Lang
         public override string ToString()
         {
             return _innerstring;
+        }
+
+        public void appendCodePoint(int i)
+        {
+            throw new NotImplementedException();
         }
     }
 }

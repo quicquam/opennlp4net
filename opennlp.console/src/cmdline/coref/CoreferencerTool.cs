@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,12 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Linq;
+using j4n.IO.Reader;
+using j4n.Serialization;
+using opennlp.tools.nonjava.extensions;
+using opennlp.tools.parser;
 
 namespace opennlp.tools.cmdline.coref
 {
@@ -136,9 +141,9 @@ namespace opennlp.tools.cmdline.coref
 			throw new TerminateToolException(-1, "Failed to load all coreferencer models!", e);
 		  }
 
-		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput));
+		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "parses");
+          PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "parses");
 		  perfMon.start();
 
 		  try
@@ -163,13 +168,13 @@ namespace opennlp.tools.cmdline.coref
 			  }
 			  else
 			  {
-				Parse p = Parse.parseParse(line);
+				Parse p = Parse.parseParse(line, (HeadRules)null);
 				parses.Add(p);
 				Mention[] extents = treebankLinker.MentionFinder.getMentions(new DefaultParse(p,sentenceNumber));
 				//construct new parses for mentions which don't have constituents.
 				for (int ei = 0,en = extents.Length;ei < en;ei++)
 				{
-				  //System.err.println("PennTreebankLiner.main: "+ei+" "+extents[ei]);
+				  //Console.Error.println("PennTreebankLiner.main: "+ei+" "+extents[ei]);
 
 				  if (extents[ei].Parse == null)
 				  {
@@ -180,7 +185,7 @@ namespace opennlp.tools.cmdline.coref
 				  }
 
 				}
-				document.AddRange(Arrays.asList(extents));
+				document.AddRange(extents);
 				sentenceNumber++;
 			  }
 

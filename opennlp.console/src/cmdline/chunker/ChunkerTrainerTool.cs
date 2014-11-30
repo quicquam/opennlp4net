@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+using System.IO;
+using j4n.IO.File;
+
 namespace opennlp.tools.cmdline.chunker
 {
 
@@ -64,7 +67,7 @@ namespace opennlp.tools.cmdline.chunker
 		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
 		}
 
-		File modelOutFile = @params.Model;
+		Jfile modelOutFile = @params.Model;
 		CmdLineUtil.checkOutputFile("sentence detector model", modelOutFile);
 
 		ChunkerModel model;

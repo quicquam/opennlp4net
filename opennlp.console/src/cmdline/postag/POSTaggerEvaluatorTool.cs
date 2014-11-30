@@ -15,7 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using j4n.IO.File;
+using j4n.IO.OutputStream;
+using FileNotFoundException = j4n.Exceptions.FileNotFoundException;
 
 namespace opennlp.tools.cmdline.postag
 {
@@ -63,7 +66,7 @@ namespace opennlp.tools.cmdline.postag
 		}
 
 		POSTaggerFineGrainedReportListener reportListener = null;
-		File reportFile = @params.ReportOutputFile;
+		Jfile reportFile = @params.ReportOutputFile;
 		OutputStream reportOutputStream = null;
 		if (reportFile != null)
 		{

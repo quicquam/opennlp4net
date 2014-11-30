@@ -180,7 +180,7 @@ namespace opennlp.tools.formats.ad
 		{
 			if (elements[i].Leaf)
 			{
-				bool isIntermediate = false;
+				bool intermediate = false;
 				string tag = phraseTag;
 				Leaf leaf = (Leaf) elements[i];
 
@@ -190,16 +190,16 @@ namespace opennlp.tools.formats.ad
 				  tag = localChunk;
 				}
 
-				if (isIntermediate(tags, target, tag) && (inherited || i > 0))
+                if (isIntermediate(tags, target, tag) && (inherited || i > 0))
 				{
-					  isIntermediate = true;
+					  intermediate = true;
 				}
 				if (!IncludePunctuations && leaf.FunctionalTag == null && (!(i + 1 < elements.Length && elements[i + 1].Leaf) || !(i > 0 && elements[i - 1].Leaf)))
 				{
-				  isIntermediate = false;
+				  intermediate = false;
 				  tag = OTHER;
 				}
-				processLeaf(leaf, isIntermediate, tag, sentence, tags, target);
+				processLeaf(leaf, intermediate, tag, sentence, tags, target);
 			}
 			else
 			{

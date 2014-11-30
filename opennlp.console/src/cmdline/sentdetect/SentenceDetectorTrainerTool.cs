@@ -71,7 +71,7 @@ namespace opennlp.tools.cmdline.sentdetect
 
 		if (mlParams != null)
 		{
-		  if (TrainUtil.isSequenceTraining(mlParams.Settings))
+		  if (TrainUtil.isSequenceTraining(mlParams.getSettings()))
 		  {
 			throw new TerminateToolException(1, "Sequence training is not supported!");
 		  }

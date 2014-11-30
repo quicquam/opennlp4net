@@ -54,7 +54,7 @@ namespace opennlp.tools.cmdline
 	  public virtual T load(Jfile modelFile)
 	  {
 
-		long beginModelLoadingTime = DateTimeHelperClass.CurrentUnixTimeMillis();
+		long beginModelLoadingTime = DateTime.Now.Ticks;
 
 		CmdLineUtil.checkInputFile(modelName + " model", modelFile);
 
@@ -92,9 +92,9 @@ namespace opennlp.tools.cmdline
 		  }
 		}
 
-		long modelLoadingDuration = DateTimeHelperClass.CurrentUnixTimeMillis() - beginModelLoadingTime;
+		long modelLoadingDuration = DateTime.Now.Ticks - beginModelLoadingTime;
 
-		System.err.printf("done (%.3fs)\n", modelLoadingDuration / 1000d);
+		Console.Error.WriteLine(string.Format("done (%.3fs)\n", modelLoadingDuration / 1000d));
 
 		return model;
 	  }

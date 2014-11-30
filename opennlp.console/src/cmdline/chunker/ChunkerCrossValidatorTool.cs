@@ -17,6 +17,7 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using System.IO;
+using System.Linq;
 
 namespace opennlp.tools.cmdline.chunker
 {
@@ -62,7 +63,7 @@ namespace opennlp.tools.cmdline.chunker
 		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
 		}
 
-		IList<EvaluationMonitor<ChunkSample>> listeners = new LinkedList<EvaluationMonitor<ChunkSample>>();
+		IList<EvaluationMonitor<ChunkSample>> listeners = new List<EvaluationMonitor<ChunkSample>>();
 		ChunkerDetailedFMeasureListener detailedFMeasureListener = null;
 		if (@params.Misclassified.Value)
 		{
@@ -80,7 +81,7 @@ namespace opennlp.tools.cmdline.chunker
 		{
 		  ChunkerFactory chunkerFactory = ChunkerFactory.create(@params.Factory);
 
-		  validator = new ChunkerCrossValidator(@params.Lang, mlParams, chunkerFactory, listeners.ToArray());
+          validator = new ChunkerCrossValidator(@params.Lang, mlParams, chunkerFactory, listeners.ToArray() as ChunkerEvaluationMonitor[]);
 		  validator.evaluate(sampleStream, @params.Folds.Value);
 		}
 		catch (IOException e)

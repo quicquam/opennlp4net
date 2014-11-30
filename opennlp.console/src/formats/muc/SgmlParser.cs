@@ -141,7 +141,7 @@ namespace opennlp.tools.formats.muc
 	  public virtual void parse(Reader @in, ContentHandler handler)
 	  {
 
-		StringBuilder buffer = new StringBuilder();
+        CharSequence buffer = new CharSequence("");
 
 		bool isInsideTag = false;
 		bool isStartTag = true;
@@ -160,7 +160,7 @@ namespace opennlp.tools.formats.muc
 
 			if (buffer.ToString().Trim().Length > 0)
 			{
-			  handler.characters(buffer.ToString().Trim());
+			  handler.characters(new CharSequence(buffer.ToString().Trim()));
 			}
 
 			buffer.Length = 0;

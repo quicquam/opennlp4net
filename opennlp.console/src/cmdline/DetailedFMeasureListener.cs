@@ -74,8 +74,8 @@ namespace opennlp.tools.cmdline
 		Span[] references = asSpanArray(reference);
 		Span[] predictions = asSpanArray(prediction);
 
-		HashSet<Span> refSet = new HashSet<Span>(Arrays.asList(references));
-		HashSet<Span> predSet = new HashSet<Span>(Arrays.asList(predictions));
+		HashSet<Span> refSet = new HashSet<Span>(references);
+		HashSet<Span> predSet = new HashSet<Span>(predictions);
 
 		foreach (Span @ref in refSet)
 		{
@@ -148,14 +148,17 @@ namespace opennlp.tools.cmdline
 		int found = generalStats.FalsePositives + tp;
 		ret.Append("Evaluated " + samples + " samples with " + generalStats.Target + " entities; found: " + found + " entities; correct: " + tp + ".\n");
 
-		ret.Append(string.format(locale, FORMAT, "TOTAL", zeroOrPositive(generalStats.PrecisionScore * 100), zeroOrPositive(generalStats.RecallScore * 100), zeroOrPositive(generalStats.FMeasure * 100)));
+		ret.Append(string.Format(locale.GetCultureInfo(), FORMAT, "TOTAL", zeroOrPositive(generalStats.PrecisionScore * 100), zeroOrPositive(generalStats.RecallScore * 100), zeroOrPositive(generalStats.FMeasure * 100)));
 		ret.Append("\n");
 		SortedSet<string> set = new SortedSet<string>(new F1Comparator(this));
-		set.addAll(statsForOutcome.Keys);
+	      foreach (var key in statsForOutcome.Keys)
+	      {
+	          set.Add(key);
+	      }
 		foreach (string type in set)
 		{
 
-		  ret.Append(string.format(locale, FORMAT_EXTRA, type, zeroOrPositive(statsForOutcome[type].PrecisionScore * 100), zeroOrPositive(statsForOutcome[type].RecallScore * 100), zeroOrPositive(statsForOutcome[type].FMeasure * 100), statsForOutcome[type].Target, statsForOutcome[type].TruePositives, statsForOutcome[type].FalsePositives));
+		  ret.Append(string.Format(locale.GetCultureInfo(), FORMAT_EXTRA, type, zeroOrPositive(statsForOutcome[type].PrecisionScore * 100), zeroOrPositive(statsForOutcome[type].RecallScore * 100), zeroOrPositive(statsForOutcome[type].FMeasure * 100), statsForOutcome[type].Target, statsForOutcome[type].TruePositives, statsForOutcome[type].FalsePositives));
 		  ret.Append("\n");
 		}
 

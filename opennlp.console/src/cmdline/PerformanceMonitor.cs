@@ -16,6 +16,7 @@
  */
 
 
+using System.IO;
 using j4n.Exceptions;
 using j4n.IO.OutputStream;
 
@@ -36,6 +37,16 @@ namespace opennlp.tools.cmdline
 	/// </summary>
 	public class PerformanceMonitor
 	{
+	    public PerformanceMonitor(TextWriter error, string sent)
+	    {
+	        throw new System.NotImplementedException();
+	    }
+
+	    public PerformanceMonitor(string error)
+	    {
+	        throw new System.NotImplementedException();
+	    }
+
 /*
 	  private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -198,6 +209,11 @@ namespace opennlp.tools.cmdline
 		@out.println("Total: " + counter + " " + unit);
 		@out.println("Runtime: " + timePassed / 1000d + "s");
 	  } */
+        internal void incrementCounter(int length)
+        {
+            throw new System.NotImplementedException();
+        }
+
         internal void incrementCounter()
         {
             throw new System.NotImplementedException();
@@ -212,6 +228,11 @@ namespace opennlp.tools.cmdline
         {
             throw new System.NotImplementedException();
         }
-    }
+
+	    public void startAndPrintThroughput()
+	    {
+	        throw new System.NotImplementedException();
+	    }
+	}
 
 }

@@ -64,9 +64,9 @@ namespace opennlp.tools.cmdline.postag
 
 		  POSTaggerME tagger = new POSTaggerME(model);
 
-		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput));
+		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
+		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
 		  perfMon.start();
 
 		  try

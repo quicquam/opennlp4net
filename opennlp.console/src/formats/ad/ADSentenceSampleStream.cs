@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -134,7 +135,7 @@ namespace opennlp.tools.formats.ad
 		string doc;
 		if (document.Length > 0)
 		{
-		  doc = document.Substring(0, document.Length - 1);
+		  doc = document.ToString().Substring(0, document.Length - 1);
 		}
 		else
 		{
@@ -150,7 +151,9 @@ namespace opennlp.tools.formats.ad
 		if (text.Length > 0)
 		{
 		  char lastChar = text[text.Length - 1];
-		  if (Arrays.binarySearch(ptEosCharacters, lastChar) >= 0)
+          // Original line commented out temporarily MJJ 30/11/2014 
+          // Arrays.binarySearch(ptEosCharacters, lastChar) >= 0
+		  if (true)
 		  {
 			return true;
 		  }

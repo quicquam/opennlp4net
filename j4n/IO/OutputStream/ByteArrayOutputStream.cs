@@ -28,5 +28,10 @@ namespace j4n.IO.OutputStream
         {
             throw new NotImplementedException();
         }
+
+        public void write(sbyte[] buffer, int i, int length)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

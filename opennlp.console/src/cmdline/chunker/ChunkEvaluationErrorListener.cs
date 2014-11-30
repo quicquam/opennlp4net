@@ -36,7 +36,7 @@ namespace opennlp.tools.cmdline.chunker
 	{
 
 	  /// <summary>
-	  /// Creates a listener that will print to System.err
+	  /// Creates a listener that will print to Console.Error
 	  /// </summary>
 	  public ChunkEvaluationErrorListener() : base(Console.Error)
 	  {

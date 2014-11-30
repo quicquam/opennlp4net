@@ -17,11 +17,13 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using System.Linq;
+using System.Text.RegularExpressions;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Lang;
 using j4n.Serialization;
 using opennlp.tools.nonjava.extensions;
+using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.formats.ad
 {
@@ -362,7 +364,7 @@ namespace opennlp.tools.formats.ad
 			if (error)
 			{
 	//           Maybe it is not the same NER, skip it.
-	//           System.err.println("Missing NER start for sentence [" + sentence
+	//           Console.Error.println("Missing NER start for sentence [" + sentence
 	//           + "] node [" + leaf + "]");
 			}
 		  }
@@ -476,7 +478,8 @@ namespace opennlp.tools.formats.ad
 		{
 		  return null;
 		}
-		string[] tag = tags.Split("\\s+", true);
+        var regex = new Regex("\\s+");
+	    string[] tag = regex.Split(tags);
 		foreach (string t in tag)
 		{
 		  Matcher matcher = tagPattern.matcher(t);

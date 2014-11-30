@@ -151,7 +151,7 @@ namespace opennlp.tools.formats.ad
 		elems["para+o"] = "pro";
 		elems["para+as"] = "pras";
 		elems["para+os"] = "pros";
-		CONTRACTIONS = Collections.unmodifiableMap(elems);
+		CONTRACTIONS = elems;
 	  }
 
 	  /// <summary>
@@ -172,7 +172,7 @@ namespace opennlp.tools.formats.ad
 		else
 		{
 		  StringBuilder sb = new StringBuilder();
-		  string[] parts = left.Split("_", true);
+		  string[] parts = left.Split('_');
 		  for (int i = 0; i < parts.Length - 1; i++)
 		  {
 			sb.Append(parts[i]).Append(" ");
@@ -186,7 +186,7 @@ namespace opennlp.tools.formats.ad
 
 		  if (right.Contains("_"))
 		  {
-			parts = right.Split("_", true);
+			parts = right.Split('_');
 
 			key = left + "+" + parts[0];
 			if (CONTRACTIONS.ContainsKey(key))

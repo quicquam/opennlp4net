@@ -16,8 +16,11 @@
  * limitations under the License.
  */
 using System.IO;
+using System.Linq;
+using System.Text;
 using j4n.Interfaces;
 using j4n.IO.OutputStream;
+using opennlp.tools.nonjava.extensions;
 
 namespace opennlp.tools.cmdline
 {
@@ -65,8 +68,8 @@ namespace opennlp.tools.cmdline
 	  // for namefinder, chunker...
 	  protected internal virtual void printError(Span[] references, Span[] predictions, T referenceSample, T predictedSample, string[] sentenceTokens)
 	  {
-		IList<Span> falseNegatives = new List<Span>();
-		IList<Span> falsePositives = new List<Span>();
+		List<Span> falseNegatives = new List<Span>();
+		List<Span> falsePositives = new List<Span>();
 
 		findErrors(references, predictions, falseNegatives, falsePositives);
 
@@ -161,7 +164,7 @@ namespace opennlp.tools.cmdline
 	  ///          false negative span </param>
 	  /// <param name="toks">
 	  ///          the document tokens </param>
-	  private void printErrors(IList<Span> falsePositives, IList<Span> falseNegatives, string[] toks)
+	  private void printErrors(List<Span> falsePositives, List<Span> falseNegatives, string[] toks)
 	  {
 		printStream.println("False positives: {");
 		printStream.println(print(falsePositives, toks));
@@ -178,9 +181,15 @@ namespace opennlp.tools.cmdline
 	  /// <param name="toks">
 	  ///          the tokens array </param>
 	  /// <returns> the spans as string </returns>
-	  private string print(IList<Span> spans, string[] toks)
+	  private string print(List<Span> spans, string[] toks)
 	  {
-		return Arrays.ToString(Span.spansToStrings(spans.ToArray(), toks));
+	    var retVal = new StringBuilder();
+	    var concatenation =  Span.spansToStrings(spans.ToArray(), toks);
+	      foreach (var c in concatenation)
+	      {
+              retVal.Append(c);
+	      }
+	      return retVal.ToString();
 	  }
 
 	  /// <summary>
@@ -209,8 +218,8 @@ namespace opennlp.tools.cmdline
 	  private void findErrors(Span[] references, Span[] predictions, IList<Span> falseNegatives, IList<Span> falsePositives)
 	  {
 
-		falseNegatives.AddRange(Arrays.asList(references));
-		falsePositives.AddRange(Arrays.asList(predictions));
+		falseNegatives.AddRange(references);
+		falsePositives.AddRange(predictions);
 
 		for (int referenceIndex = 0; referenceIndex < references.Length; referenceIndex++)
 		{

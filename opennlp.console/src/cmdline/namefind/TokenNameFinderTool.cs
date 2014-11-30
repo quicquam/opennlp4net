@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +16,11 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Linq;
+using j4n.IO.File;
+using j4n.IO.Reader;
+using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.namefind
 {
@@ -64,13 +68,13 @@ namespace opennlp.tools.cmdline.namefind
 
 		  for (int i = 0; i < nameFinders.Length; i++)
 		  {
-			TokenNameFinderModel model = (new TokenNameFinderModelLoader()).load(new File(args[i]));
+			TokenNameFinderModel model = (new TokenNameFinderModelLoader()).load(new Jfile(args[i]));
 			nameFinders[i] = new NameFinderME(model);
 		  }
 
-		  ObjectStream<string> untokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput));
+		  ObjectStream<string> untokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
+		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
 		  perfMon.start();
 
 		  try
@@ -95,7 +99,11 @@ namespace opennlp.tools.cmdline.namefind
 
 			  foreach (TokenNameFinder nameFinder in nameFinders)
 			  {
-				Collections.addAll(names, nameFinder.find(whitespaceTokenizerLine));
+			    var spans = nameFinder.find(whitespaceTokenizerLine);
+			      foreach (var span in spans)
+			      {
+                      names.Add(span);
+			      }				
 			  }
 
 			  // Simple way to drop intersecting spans, otherwise the

@@ -54,7 +54,7 @@ namespace opennlp.tools.cmdline
 		  {
 			throw new TerminateToolException(1, "Format " + format + " is not found.\n" + Help);
 		  }
-		  return "Usage: " + CLI.CMD + " " + Name + "." + format + " " + ArgumentParser.createUsage(paramsClass, factory.getParameters<P>());
+		  return "Usage: " + CLI.CMD + " " + Name + "." + format + " " + ArgumentParser.createUsage(paramsClass, factory.getParameters());
 		}
 	  }
 	}

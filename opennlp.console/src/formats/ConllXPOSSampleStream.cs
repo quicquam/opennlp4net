@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.IO.Reader;
 using j4n.Serialization;
 
@@ -80,7 +81,7 @@ namespace opennlp.tools.formats
 
 		   const int minNumberOfFields = 5;
 
-		   string[] parts = line.Split("\t", true);
+		   string[] parts = line.Split('\t');
 
 		   if (parts.Length >= minNumberOfFields)
 		   {

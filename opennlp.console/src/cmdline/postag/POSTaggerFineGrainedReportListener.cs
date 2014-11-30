@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -17,8 +18,9 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using j4n.Interfaces;
 using j4n.IO.OutputStream;
+using j4n.Utils;
+using opennlp.tools.nonjava.helperclasses;
 
 namespace opennlp.tools.cmdline.postag
 {
@@ -56,7 +58,7 @@ namespace opennlp.tools.cmdline.postag
 	  /// <summary>
 	  /// Creates a listener that will print to <seealso cref="System#err"/>
 	  /// </summary>
-	  public POSTaggerFineGrainedReportListener() : this(System.err)
+	  public POSTaggerFineGrainedReportListener() : this(new OutputStream(Console.Error))
 	  {
 		  if (!InstanceFieldsInitialized)
 		  {
@@ -254,7 +256,7 @@ namespace opennlp.tools.cmdline.postag
 	  {
 		// we dont want to print trivial cases (acc=1)
 		int initialIndex = 0;
-		string[] tags = tagset.toArray(new string[tagset.size()]);
+		string[] tags = tagset.ToArray();
 		StringBuilder sb = new StringBuilder();
 		int minColumnSize = int.MinValue;
 		string[][] matrix = RectangularArrays.ReturnRectangularStringArray(data.Length, data[0].Length);
@@ -279,9 +281,9 @@ namespace opennlp.tools.cmdline.postag
 		string headerFormat = "%" + (minColumnSize + 2) + "s "; // | 1234567 |
 		string cellFormat = "%" + (minColumnSize + 2) + "s "; // | 12345 |
 		string diagFormat = " %" + (minColumnSize + 2) + "s";
-		for (int i = initialIndex; i < tagset.size(); i++)
+		for (int i = initialIndex; i < tagset.Count; i++)
 		{
-		  sb.Append(string.format(headerFormat, generateAlphaLabel(i - initialIndex).Trim()));
+		  sb.Append(string.Format(headerFormat, generateAlphaLabel(i - initialIndex).Trim()));
 		}
 		sb.Append("| Accuracy | <-- classified as\n");
 		for (int i = initialIndex; i < data.Length; i++)
@@ -292,11 +294,11 @@ namespace opennlp.tools.cmdline.postag
 			if (i == j)
 			{
 			  string val = "<" + matrix[i][j] + ">";
-			  sb.Append(string.format(diagFormat, val));
+			  sb.Append(string.Format(diagFormat, val));
 			}
 			else
 			{
-			  sb.Append(string.format(cellFormat, matrix[i][j]));
+			  sb.Append(string.Format(cellFormat, matrix[i][j]));
 			}
 		  }
 		  sb.Append(string.Format("|   {0,-6} |   {1,3} = ", matrix[i][j], generateAlphaLabel(i - initialIndex))).Append(tags[i]);
@@ -308,12 +310,12 @@ namespace opennlp.tools.cmdline.postag
 	  private void printGeneralStatistics()
 	  {
 		printHeader("Evaluation summary");
-		printStream.append(string.Format("{0,21}: {1,6}", "Number of sentences", Convert.ToString(NumberOfSentences))).append("\n");
-		printStream.append(string.Format("{0,21}: {1,6}", "Min sentence size", MinSentenceSize)).append("\n");
-		printStream.append(string.Format("{0,21}: {1,6}", "Max sentence size", MaxSentenceSize)).append("\n");
-		printStream.append(string.Format("{0,21}: {1,6}", "Average sentence size", MessageFormat.format("{0,number,#.##}", AverageSentenceSize))).append("\n");
-		printStream.append(string.Format("{0,21}: {1,6}", "Tags count", NumberOfTags)).append("\n");
-		printStream.append(string.Format("{0,21}: {1,6}", "Accuracy", MessageFormat.format("{0,number,#.##%}", Accuracy))).append("\n");
+		printStream.append(string.Format("{0,21}: {1,6}", "Number of sentences\n", Convert.ToString(NumberOfSentences)));
+		printStream.append(string.Format("{0,21}: {1,6}", "Min sentence size\n", MinSentenceSize));
+		printStream.append(string.Format("{0,21}: {1,6}", "Max sentence size\n", MaxSentenceSize));
+		printStream.append(string.Format("{0,21}: {1,6}", "Average sentence size\n", MessageFormat.format("{0,number,#.##}", AverageSentenceSize)));
+		printStream.append(string.Format("{0,21}: {1,6}", "Tags count\n", NumberOfTags));
+		printStream.append(string.Format("{0,21}: {1,6}", "Accuracy\n", MessageFormat.format("{0,number,#.##%}", Accuracy)));
 		printFooter("Evaluation Corpus Statistics");
 	  }
 
@@ -341,7 +343,7 @@ namespace opennlp.tools.cmdline.postag
 		string format = "| %3s | %6s | %" + maxTokSize + "s |";
 
 		printLine(tableSize);
-		printStream.append(string.format(format, "Pos", "Count", "Token")).append("\n");
+		printStream.append(string.Format(format, "Pos", "Count", "Token\n"));
 		printLine(tableSize);
 
 		// get the first 20 errors
@@ -352,7 +354,7 @@ namespace opennlp.tools.cmdline.postag
 		  string tok = tokIterator.Current;
 		  int ocurrencies = getTokenFrequency(tok);
 
-		  printStream.append(string.format(format, count, ocurrencies, tok)).append("\n");
+		  printStream.append(string.Format("{0} {1} {2} {3}\n", format, count, ocurrencies, tok));
 		}
 		printLine(tableSize);
 		printFooter("Most frequent tokens");
@@ -382,7 +384,7 @@ namespace opennlp.tools.cmdline.postag
 		string format = "| %" + maxTokenSize + "s | %6s | %5s | %7s |\n";
 
 		printLine(tableSize);
-		printStream.append(string.format(format, "Token", "Errors", "Count", "% Err"));
+		printStream.append(string.Format(format, "Token", "Errors", "Count", "% Err"));
 		printLine(tableSize);
 
 		// get the first 20 errors
@@ -395,7 +397,7 @@ namespace opennlp.tools.cmdline.postag
 		  int errors = getTokenErrors(tok);
 		  string rate = MessageFormat.format("{0,number,#.##%}", (double) errors / ocurrencies);
 
-		  printStream.append(string.format(format, tok, errors, ocurrencies, rate));
+		  printStream.append(string.Format(format, tok, errors, ocurrencies, rate));
 		}
 		printLine(tableSize);
 		printFooter("Tokens with the highest number of errors");
@@ -423,7 +425,7 @@ namespace opennlp.tools.cmdline.postag
 		string format = "| %" + maxTagSize + "s | %6s | %6s | %-7s | %-9s | %-6s | %-9s |\n";
 
 		printLine(tableSize);
-		printStream.append(string.format(headerFormat, "Tag", "Errors", "Count", "% Err", "Precision", "Recall", "F-Measure"));
+		printStream.append(string.Format(headerFormat, "Tag", "Errors", "Count", "% Err", "Precision", "Recall", "F-Measure"));
 		printLine(tableSize);
 
 		IEnumerator<string> tagIterator = tags.GetEnumerator();
@@ -438,7 +440,7 @@ namespace opennlp.tools.cmdline.postag
 		  double r = getTagRecall(tag);
 		  double f = getTagFMeasure(tag);
 
-		  printStream.append(string.format(format, tag, errors, ocurrencies, rate, MessageFormat.format("{0,number,#.###}", p > 0 ? p : 0), MessageFormat.format("{0,number,#.###}", r > 0 ? r : 0), MessageFormat.format("{0,number,#.###}", f > 0 ? f : 0)));
+		  printStream.append(string.Format(format, tag, errors, ocurrencies, rate, MessageFormat.format("{0,number,#.###}", p > 0 ? p : 0), MessageFormat.format("{0,number,#.###}", r > 0 ? r : 0), MessageFormat.format("{0,number,#.###}", f > 0 ? f : 0)));
 		}
 		printLine(tableSize);
 
@@ -661,8 +663,7 @@ namespace opennlp.tools.cmdline.postag
 		internal virtual void updateTagFMeasure(string[] refs, string[] preds)
 		{
 		  // create a set with all tags
-		  HashSet<string> tags = new HashSet<string>(Arrays.asList(refs));
-		  tags.addAll(Arrays.asList(preds));
+          HashSet<string> tags = new HashSet<string>(preds);
 
 		  // create samples for each tag
 		  foreach (string tag in tags)
@@ -701,7 +702,7 @@ namespace opennlp.tools.cmdline.postag
 		{
 			get
 			{
-			  return this.tagOcurrencies.Keys.size();
+			  return this.tagOcurrencies.Keys.Count;
 			}
 		}
 
@@ -756,11 +757,14 @@ namespace opennlp.tools.cmdline.postag
 		{
 			get
 			{
-			  SortedSet<string> toks = new SortedSet<string>(new ComparatorAnonymousInnerClassHelper(this));
+			  var toks = new SortedSet<string>(new ComparatorAnonymousInnerClassHelper(this));
+
+			    foreach (var key in tokOcurrencies.Keys)
+			    {
+			        toks.Add(key);
+			    }
     
-			  toks.addAll(tokOcurrencies.Keys);
-    
-			  return Collections.unmodifiableSortedSet(toks);
+			  return toks;
 			}
 		}
 
@@ -801,7 +805,10 @@ namespace opennlp.tools.cmdline.postag
 			get
 			{
 			  SortedSet<string> toks = new SortedSet<string>(new ComparatorAnonymousInnerClassHelper2(this));
-			  toks.addAll(tokErrors.Keys);
+			    foreach (var key in tokErrors.Keys)
+			    {
+			        toks.Add(key);
+			    }
 			  return toks;
 			}
 		}
@@ -868,8 +875,11 @@ namespace opennlp.tools.cmdline.postag
 			get
 			{
 			  SortedSet<string> tags = new SortedSet<string>(new ComparatorAnonymousInnerClassHelper3(this));
-			  tags.addAll(tagErrors.Keys);
-			  return Collections.unmodifiableSortedSet(tags);
+			    foreach (var tagError in tagErrors.Keys)
+			    {
+			        tags.Add(tagError);
+			    }
+			  return tags;
 			}
 		}
 
@@ -937,7 +947,7 @@ namespace opennlp.tools.cmdline.postag
 		/// </summary>
 		internal virtual double[][] createConfusionMatrix(SortedSet<string> tagset, IDictionary<string, ConfusionMatrixLine> data)
 		{
-		  int size = tagset.size();
+		  int size = tagset.Count;
 		  double[][] matrix = RectangularArrays.ReturnRectangularDoubleArray(size, size + 1);
 		  int line = 0;
 		  foreach (string @ref in tagset)
@@ -958,15 +968,21 @@ namespace opennlp.tools.cmdline.postag
 
 		internal virtual SortedSet<string> getConfusionMatrixTagset(IDictionary<string, ConfusionMatrixLine> data)
 		{
-		  SortedSet<string> tags = new SortedSet<string>(new CategoryComparator(data));
-		  tags.addAll(data.Keys);
-		  IList<string> col = new LinkedList<string>();
+		  SortedSet<string> tags = new SortedSet<string>();
+		    foreach (var key in data.Keys)
+		    {
+		        tags.Add(key);
+		    }
+		  List<string> col = new List<string>();
 		  foreach (string t in tags)
 		  {
 			col.AddRange(data[t].line.Keys);
 		  }
-		  tags.addAll(col);
-		  return Collections.unmodifiableSortedSet(tags);
+          foreach (var c in col)
+          {
+              tags.Add(c);
+          }
+		  return tags;
 		}
 	  }
 

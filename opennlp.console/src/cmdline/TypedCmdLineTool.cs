@@ -72,7 +72,7 @@ namespace opennlp.tools.cmdline
 	  protected internal virtual void validateAllArgs<A>(string[] args, Type argProxyInterface, string format)
 	  {
 		ObjectStreamFactory<T> factory = getStreamFactory(format);
-		string errMessage = ArgumentParser.validateArgumentsLoudly(args, argProxyInterface, factory.getParameters<A>());
+		string errMessage = ArgumentParser.validateArgumentsLoudly(args, argProxyInterface, factory.getParameters());
 		if (null != errMessage)
 		{
 		  throw new TerminateToolException(1, errMessage + "\n" + getHelp(format));
@@ -85,10 +85,10 @@ namespace opennlp.tools.cmdline
 	  /// <param name="args"> arguments </param>
 	  protected internal virtual void validateFactoryArgs(ObjectStreamFactory<T> factory, string[] args)
 	  {
-		string errMessage = ArgumentParser.validateArgumentsLoudly(args, factory.Parameters);
+		string errMessage = ArgumentParser.validateArgumentsLoudly(args, factory.getParameters());
 		if (null != errMessage)
 		{
-		  throw new TerminateToolException(1, "Format parameters are invalid: " + errMessage + "\n" + "Usage: " + ArgumentParser.createUsage(factory.Parameters));
+		  throw new TerminateToolException(1, "Format parameters are invalid: " + errMessage + "\n" + "Usage: " + ArgumentParser.createUsage(factory.getParameters()));
 		}
 	  }
 

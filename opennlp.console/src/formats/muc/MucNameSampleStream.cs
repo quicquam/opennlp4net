@@ -15,6 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
+using j4n.IO.Reader;
 using j4n.Serialization;
 
 namespace opennlp.tools.formats.muc
@@ -58,7 +60,9 @@ namespace opennlp.tools.formats.muc
 
 		if (storedSamples.Count > 0)
 		{
-		  return storedSamples.Remove(0);
+		    var temp = storedSamples.ElementAt(0);
+             storedSamples.RemoveAt(0);
+		    return temp;
 		}
 		else
 		{

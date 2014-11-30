@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,6 +18,8 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using j4n.Exceptions;
+using j4n.Serialization;
 
 namespace opennlp.tools.cmdline
 {
@@ -71,7 +73,7 @@ namespace opennlp.tools.cmdline
 			}
 			else
 			{
-			  throw new AssertionError("There should be more than 1 factory registered for converter " + "tool");
+                throw new AssertionErrorException("There should be more than 1 factory registered for converter " + "tool");
 			}
 		  }
 	  }
@@ -85,16 +87,16 @@ namespace opennlp.tools.cmdline
 	  {
 		  get
 		  {
-			IDictionary<string, ObjectStreamFactory> factories = StreamFactoryRegistry.getFactories(type);
+			IDictionary<string, ObjectStreamFactory<T>> factories = StreamFactoryRegistry<T>.getFactories(type);
 			StringBuilder help = new StringBuilder("help|");
 			foreach (string formatName in factories.Keys)
 			{
-			  if (!StreamFactoryRegistry.DEFAULT_FORMAT.Equals(formatName))
+			  if (!StreamFactoryRegistry<T>.DEFAULT_FORMAT.Equals(formatName))
 			  {
 				help.Append(formatName).Append("|");
 			  }
 			}
-			return createHelpString(help.Substring(0, help.Length - 1), "[help|options...]");
+			return createHelpString(help.ToString().Substring(0, help.Length - 1), "[help|options...]");
 		  }
 	  }
 
@@ -112,19 +114,19 @@ namespace opennlp.tools.cmdline
 		else
 		{
 		  format = args[0];
-		  ObjectStreamFactory streamFactory = getStreamFactory(format);
+		  ObjectStreamFactory<T> streamFactory = getStreamFactory(format);
 
 		  string[] formatArgs = new string[args.Length - 1];
 		  Array.Copy(args, 1, formatArgs, 0, formatArgs.Length);
 
-		  string helpString = createHelpString(format, ArgumentParser.createUsage(streamFactory.Parameters));
+		  string helpString = createHelpString(format, ArgumentParser.createUsage(GetType(), streamFactory.getParameters()));
 		  if (0 == formatArgs.Length || (1 == formatArgs.Length && "help".Equals(formatArgs[0])))
 		  {
 			Console.WriteLine(helpString);
 			Environment.Exit(0);
 		  }
 
-		  string errorMessage = ArgumentParser.validateArgumentsLoudly(formatArgs, streamFactory.Parameters);
+		  string errorMessage = ArgumentParser.validateArgumentsLoudly(formatArgs, streamFactory.getParameters());
 		  if (null != errorMessage)
 		  {
 			throw new TerminateToolException(1, errorMessage + "\n" + helpString);

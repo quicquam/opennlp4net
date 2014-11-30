@@ -9,12 +9,12 @@ namespace j4n.Serialization
 {
     public class ObjectStream<T> : Stream
     {
-        public void reset()
+        public virtual void reset()
         {
             throw new NotImplementedException();
         }
 
-        public void close()
+        public virtual void close()
         {
             throw new NotImplementedException();
         }

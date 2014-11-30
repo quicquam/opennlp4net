@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 using System.IO;
+using j4n.IO.File;
+using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
 using j4n.Serialization;
 
 namespace opennlp.tools.cmdline.namefind
@@ -69,7 +72,7 @@ namespace opennlp.tools.cmdline.namefind
 	  {
 		  get
 		  {
-			return getBasicHelp(typeof(Parameters));
+              return getBasicHelp<Parameters>(typeof(Parameters));
 		  }
 	  }
 
@@ -101,10 +104,10 @@ namespace opennlp.tools.cmdline.namefind
 
 	  public override void run(string[] args)
 	  {
-		Parameters @params = validateAndParseParams(args, typeof(Parameters));
+		Parameters @params = validateAndParseParams<Parameters>(args, typeof(Parameters));
 
-		File testData = new File(@params.CensusData);
-		File dictOutFile = new File(@params.Dict);
+        Jfile testData = new Jfile(@params.CensusData);
+        Jfile dictOutFile = new Jfile(@params.Dict);
 
 		CmdLineUtil.checkInputFile("Name data", testData);
 		CmdLineUtil.checkOutputFile("Dictionary file", dictOutFile);

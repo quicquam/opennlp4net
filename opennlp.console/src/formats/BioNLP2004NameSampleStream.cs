@@ -16,6 +16,9 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
@@ -99,7 +102,8 @@ namespace opennlp.tools.formats
 			continue;
 		  }
 
-		  string[] fields = line.Split("\t", true);
+          var regex = new Regex("\t");
+          string[] fields = regex.Split(line);
 
 		  if (fields.Length == 2)
 		  {

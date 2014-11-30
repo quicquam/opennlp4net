@@ -19,9 +19,11 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Text.RegularExpressions;
 using j4n.IO.Reader;
 using j4n.Lang;
 using j4n.Serialization;
+using StringReader = j4n.IO.Reader.StringReader;
 
 namespace opennlp.tools.formats.ad
 {
@@ -190,7 +192,7 @@ namespace opennlp.tools.formats.ad
 
 			root.SyntacticTag = "ROOT";
 			root.Level = 0;
-			nodeStack.Add(root);
+			nodeStack.Push(root);
 
 
 			/* now we have to take care of the lastLevel. Every time it raises, we will add the
@@ -227,7 +229,7 @@ namespace opennlp.tools.formats.ad
 					Node peek = nodeStack.Peek();
 					if (element.level == 0) // add to the root
 					{
-					  nodeStack.firstElement().addElement(element);
+					  nodeStack.First().addElement(element);
 					}
 					else
 					{
@@ -244,11 +246,11 @@ namespace opennlp.tools.formats.ad
 						  index--;
 						  if (index > -1)
 						  {
-							peek = nodeStack.get(index);
+							peek = nodeStack.ElementAt(index);
 						  }
 						  else
 						  {
-							parent = nodeStack.firstElement();
+							parent = nodeStack.First();
 						  }
 						}
 					  }
@@ -291,8 +293,8 @@ namespace opennlp.tools.formats.ad
 
 		internal virtual string fixPunctuation(string text)
 		{
-		  text = text.replaceAll("\\»\\s+\\.", "».");
-		  text = text.replaceAll("\\»\\s+\\,", "»,");
+		  text = text.Replace("\\»\\s+\\.", "».");
+		  text = text.Replace("\\»\\s+\\,", "»,");
 		  return text;
 		}
 
@@ -310,7 +312,7 @@ namespace opennlp.tools.formats.ad
 		  Matcher nodeMatcher = nodePattern.matcher(line);
 		  if (nodeMatcher.matches())
 		  {
-			int level = nodeMatcher.group(1).length() + 1;
+			int level = nodeMatcher.group(1).Length + 1;
 			string syntacticTag = nodeMatcher.group(2);
 			Node node = new Node(this);
 			node.Level = level;
@@ -343,12 +345,12 @@ namespace opennlp.tools.formats.ad
 		  Matcher punctuationMatcher = punctuationPattern.matcher(line);
 		  if (punctuationMatcher.matches())
 		  {
-			int level = punctuationMatcher.group(1).length() + 1;
+			int level = punctuationMatcher.group(1).Length + 1;
 			string lexeme = punctuationMatcher.group(2);
-			Leaf leaf = new Leaf(this);
-			leaf.Level = level;
-			leaf.Lexeme = lexeme;
-			return leaf;
+			Leaf innerleaf = new Leaf(this);
+            innerleaf.Level = level;
+            innerleaf.Lexeme = lexeme;
+            return innerleaf;
 		  }
 
 		  // process the bizarre cases
@@ -367,50 +369,50 @@ namespace opennlp.tools.formats.ad
 			  string lemma = bizarreLeafMatcher.group(3);
 			  string morphologicalTag = bizarreLeafMatcher.group(4);
 			  string lexeme = bizarreLeafMatcher.group(5);
-			  Leaf leaf = new Leaf(this);
-			  leaf.Level = level;
-			  leaf.SyntacticTag = syntacticTag;
-			  leaf.MorphologicalTag = morphologicalTag;
-			  leaf.Lexeme = lexeme;
+			  Leaf innerleaf = new Leaf(this);
+              innerleaf.Level = level;
+              innerleaf.SyntacticTag = syntacticTag;
+              innerleaf.MorphologicalTag = morphologicalTag;
+              innerleaf.Lexeme = lexeme;
 			  if (lemma != null)
 			  {
 				if (lemma.Length > 2)
 				{
 				  lemma = lemma.Substring(1, lemma.Length - 1 - 1);
 				}
-				leaf.Lemma = lemma;
+                innerleaf.Lemma = lemma;
 			  }
 
-			  return leaf;
+              return innerleaf;
 			}
 			else
 			{
 				int level = line.LastIndexOf("=", StringComparison.Ordinal) + 1;
 				string lexeme = line.Substring(level + 1);
-
-				if (lexeme.matches("\\w.*?[\\.<>].*"))
+                var regex = new Regex("\\w.*?[\\.<>].*");
+                if (regex.IsMatch(lexeme))
 				{
 				  return null;
 				}
 
-				 Leaf leaf = new Leaf(this);
-			   leaf.Level = level + 1;
-			   leaf.SyntacticTag = "";
-			   leaf.MorphologicalTag = "";
-			   leaf.Lexeme = lexeme;
+                Leaf innerleaf = new Leaf(this);
+                innerleaf.Level = level + 1;
+                innerleaf.SyntacticTag = "";
+                innerleaf.MorphologicalTag = "";
+                innerleaf.Lexeme = lexeme;
 
-			   return leaf;
+                return innerleaf;
 			}
 		  }
 
 		  Console.Error.WriteLine("Couldn't parse leaf: " + line);
-		  Leaf leaf = new Leaf(this);
-		  leaf.Level = 1;
-		  leaf.SyntacticTag = "";
-		  leaf.MorphologicalTag = "";
-		  leaf.Lexeme = line;
+		  Leaf errorleaf = new Leaf(this);
+          errorleaf.Level = 1;
+          errorleaf.SyntacticTag = "";
+          errorleaf.MorphologicalTag = "";
+          errorleaf.Lexeme = line;
 
-		  return leaf;
+          return errorleaf;
 		}
 
 		/// <summary>

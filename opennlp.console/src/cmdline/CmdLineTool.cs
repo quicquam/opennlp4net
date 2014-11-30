@@ -60,7 +60,7 @@ namespace opennlp.tools.cmdline
 
 	  protected internal virtual string getBasicHelp<T>(Type argProxyInterface)
 	  {
-		return getBasicHelp(new Type[]{argProxyInterface});
+		return getBasicHelp<T>(new Type[]{argProxyInterface});
 	  }
 
 	  protected internal virtual string getBasicHelp<T>(params Type[] argProxyInterfaces)
@@ -81,7 +81,7 @@ namespace opennlp.tools.cmdline
 		{
 		  throw new TerminateToolException(1, errorMessage + "\n" + Help);
 		}
-		return ArgumentParser.parse(args, argProxyInterface);
+		return ArgumentParser.parse<T>(args, argProxyInterface);
 	  }
 
 	  /// <summary>

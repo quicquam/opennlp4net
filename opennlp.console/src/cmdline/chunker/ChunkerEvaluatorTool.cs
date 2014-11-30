@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
 using System.Linq;
 using j4n.Serialization;
 
@@ -59,7 +60,7 @@ namespace opennlp.tools.cmdline.chunker
 
 		ChunkerModel model = (new ChunkerModelLoader()).load(@params.Model);
 
-		IList<EvaluationMonitor<ChunkSample>> listeners = new LinkedList<EvaluationMonitor<ChunkSample>>();
+		IList<EvaluationMonitor<ChunkSample>> listeners = new List<EvaluationMonitor<ChunkSample>>();
 		ChunkerDetailedFMeasureListener detailedFMeasureListener = null;
 		if (@params.Misclassified.Value)
 		{
@@ -71,7 +72,7 @@ namespace opennlp.tools.cmdline.chunker
 		  listeners.Add(detailedFMeasureListener);
 		}
 
-		ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model, ChunkerME.DEFAULT_BEAM_SIZE), listeners.ToArray());
+        ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model, ChunkerME.DEFAULT_BEAM_SIZE), listeners.ToArray() as ChunkerEvaluationMonitor[]);
 
 		PerformanceMonitor monitor = new PerformanceMonitor("sent");
 

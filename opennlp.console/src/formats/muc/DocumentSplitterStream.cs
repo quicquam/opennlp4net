@@ -16,6 +16,7 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Linq;
 using j4n.Serialization;
 
 namespace opennlp.tools.formats.muc
@@ -81,7 +82,9 @@ namespace opennlp.tools.formats.muc
 
 		if (docs.Count > 0)
 		{
-		  return docs.Remove(0);
+		  var temp = docs.ElementAt(0);
+          docs.RemoveAt(0);
+		  return temp;
 		}
 		else
 		{
