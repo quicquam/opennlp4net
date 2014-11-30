@@ -4,7 +4,7 @@ namespace opennlp.console
 {
     public class Options
     {
-        [Option('t', "toolName", Required = true, HelpText = "the OpenNLP Tool to be invoked.")]
+        [Option("toolName", Required = true, HelpText = "the OpenNLP Tool to be invoked.")]
         public string ToolName { get; set; }
 
         [Option('i', "input", Required = false, HelpText = "the (source) input data.")]
