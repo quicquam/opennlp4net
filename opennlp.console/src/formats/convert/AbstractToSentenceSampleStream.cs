@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,19 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using System.Linq;
 using j4n.Serialization;
+using opennlp.tools.sentdetect;
+using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.convert
+namespace opennlp.console.formats.convert
 {
-
-
-	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
-	using Detokenizer = opennlp.tools.tokenize.Detokenizer;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	public abstract class AbstractToSentenceSampleStream<T> : FilterObjectStream<T, SentenceSample>
+    public abstract class AbstractToSentenceSampleStream<T> : FilterObjectStream<T, SentenceSample>
 	{
 
 	  private readonly Detokenizer detokenizer;

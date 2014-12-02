@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,14 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using j4n.IO.File;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
-
-	using TokenizerModel = opennlp.tools.tokenize.TokenizerModel;
-
-	public sealed class TokenizerMETool : BasicCmdLineTool
+    public sealed class TokenizerMETool : BasicCmdLineTool
 	{
 
 	  public override string ShortDescription

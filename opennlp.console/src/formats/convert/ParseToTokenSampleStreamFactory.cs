@@ -16,19 +16,14 @@
  */
 
 using j4n.Serialization;
-using opennlp.tools.cmdline;
+using opennlp.console.cmdline;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.parser;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.formats.convert
+namespace opennlp.console.formats.convert
 {
-
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using DetokenizerParameter = opennlp.tools.cmdline.@params.DetokenizerParameter;
-	using opennlp.tools.formats;
-	using Parse = opennlp.tools.parser.Parse;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public class ParseToTokenSampleStreamFactory : DetokenizerSampleStreamFactory<TokenSample>

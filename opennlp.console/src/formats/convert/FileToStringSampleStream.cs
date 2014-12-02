@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,19 +14,17 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.IO;
+using System.Text;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.convert
+namespace opennlp.console.formats.convert
 {
-
-
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	public class FileToStringSampleStream : FilterObjectStream<Jfile, string>
+    public class FileToStringSampleStream : FilterObjectStream<Jfile, string>
 	{
 
 	  private readonly Charset encoding;

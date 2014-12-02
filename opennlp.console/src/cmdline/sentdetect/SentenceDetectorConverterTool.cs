@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.sentdetect
+using opennlp.tools.sentdetect;
+
+namespace opennlp.console.cmdline.sentdetect
 {
-
-	using opennlp.tools.cmdline;
-	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
-
-	public class SentenceDetectorConverterTool : AbstractConverterTool<SentenceSample>
+    public class SentenceDetectorConverterTool : AbstractConverterTool<SentenceSample>
 	{
 
 	  public SentenceDetectorConverterTool() : base(typeof(SentenceSample))

@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.chunker
+using opennlp.tools.chunker;
+using opennlp.tools.util;
+
+namespace opennlp.console.cmdline.chunker
 {
-
-	using ChunkSample = opennlp.tools.chunker.ChunkSample;
-	using ChunkerEvaluationMonitor = opennlp.tools.chunker.ChunkerEvaluationMonitor;
-	using opennlp.tools.cmdline;
-	using Span = opennlp.tools.util.Span;
-
-	public class ChunkerDetailedFMeasureListener : DetailedFMeasureListener<ChunkSample>, ChunkerEvaluationMonitor
+    public class ChunkerDetailedFMeasureListener : DetailedFMeasureListener<ChunkSample>, ChunkerEvaluationMonitor
 	{
 
 	  protected internal override Span[] asSpanArray(ChunkSample sample)

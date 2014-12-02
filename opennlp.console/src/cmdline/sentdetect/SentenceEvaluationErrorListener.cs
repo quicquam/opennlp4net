@@ -16,18 +16,12 @@
  */
 
 using System;
-using j4n.Interfaces;
 using j4n.IO.OutputStream;
+using opennlp.tools.sentdetect;
 
-namespace opennlp.tools.cmdline.sentdetect
+namespace opennlp.console.cmdline.sentdetect
 {
-
-	using opennlp.tools.cmdline;
-	using SentenceDetectorEvaluationMonitor = opennlp.tools.sentdetect.SentenceDetectorEvaluationMonitor;
-	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
-	using opennlp.tools.util.eval;
-
-	/// <summary>
+    /// <summary>
 	/// A default implementation of <seealso cref="EvaluationMonitor"/> that prints
 	/// to an output stream.
 	/// 

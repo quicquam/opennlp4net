@@ -16,15 +16,11 @@
  */
 
 using j4n.IO.InputStream;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
-
-
-	using opennlp.tools.cmdline;
-	using TokenizerModel = opennlp.tools.tokenize.TokenizerModel;
-
-	/// <summary>
+    /// <summary>
 	/// Loads a Tokenizer Model for the command line tools.
 	/// <para>
 	/// <b>Note:</b> Do not use this class, internal use only!

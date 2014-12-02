@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,19 +14,17 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using j4n.Lang;
-using opennlp.nonjava.helperclasses;
 using opennlp.tools.nonjava.extensions;
+using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using Tokenizer = opennlp.tools.tokenize.Tokenizer;
-	using Span = opennlp.tools.util.Span;
-
-	// Note:
+    // Note:
 	// Take care for special @ sign handling (identifies a table or something else that should be ignored)
     public class MucCorefContentHandler : SgmlParser.ContentHandler
 	{

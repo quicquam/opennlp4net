@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,16 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using j4n.IO.File;
+using opennlp.console.cmdline.postag;
+using opennlp.tools.parser;
+using opennlp.tools.postag;
 
-namespace opennlp.tools.cmdline.parser
+namespace opennlp.console.cmdline.parser
 {
-
-	using POSModelLoader = opennlp.tools.cmdline.postag.POSModelLoader;
-	using ParserModel = opennlp.tools.parser.ParserModel;
-	using POSModel = opennlp.tools.postag.POSModel;
-
-	// user should train with the POS tool
+    // user should train with the POS tool
 	public sealed class TaggerModelReplacerTool : BasicCmdLineTool
 	{
 

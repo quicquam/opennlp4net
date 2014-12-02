@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,29 +14,21 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Lang;
 using j4n.Serialization;
+using opennlp.tools.namefind;
 using opennlp.tools.nonjava.extensions;
-using opennlp.nonjava.helperclasses;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.ad
+namespace opennlp.console.formats.ad
 {
-
-
-	using Sentence = opennlp.tools.formats.ad.ADSentenceStream.Sentence;
-	using Leaf = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
-	using Node = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
-	using TreeElement = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-	using Span = opennlp.tools.util.Span;
-
-	/// <summary>
+    /// <summary>
 	/// Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the
 	/// Portuguese NER training.
 	/// <para>
@@ -211,7 +201,7 @@ namespace opennlp.tools.formats.ad
 	  public virtual NameSample read()
 	  {
 
-		Sentence paragraph;
+		ADSentenceStream.Sentence paragraph;
 		// we should look for text here.
 		while ((paragraph = this.adSentenceStream.read()) != null)
 		{
@@ -224,7 +214,7 @@ namespace opennlp.tools.formats.ad
 			textID = currentTextID;
 		  }
 
-		  Node root = paragraph.Root;
+		  ADSentenceStream.SentenceParser.Node root = paragraph.Root;
 		  IList<string> sentence = new List<string>();
 		  IList<Span> names = new List<Span>();
 		  process(root, sentence, names);
@@ -243,19 +233,19 @@ namespace opennlp.tools.formats.ad
 	  ///          the sentence tokens we got so far </param>
 	  /// <param name="names">
 	  ///          the names we got so far </param>
-	  private void process(Node node, IList<string> sentence, IList<Span> names)
+	  private void process(ADSentenceStream.SentenceParser.Node node, IList<string> sentence, IList<Span> names)
 	  {
 		if (node != null)
 		{
-		  foreach (TreeElement element in node.Elements)
+		  foreach (ADSentenceStream.SentenceParser.TreeElement element in node.Elements)
 		  {
 			if (element.Leaf)
 			{
-			  processLeaf((Leaf) element, sentence, names);
+			  processLeaf((ADSentenceStream.SentenceParser.Leaf) element, sentence, names);
 			}
 			else
 			{
-			  process((Node) element, sentence, names);
+			  process((ADSentenceStream.SentenceParser.Node) element, sentence, names);
 			}
 		  }
 		}
@@ -270,7 +260,7 @@ namespace opennlp.tools.formats.ad
 	  ///          the sentence tokens we got so far </param>
 	  /// <param name="names">
 	  ///          the names we got so far </param>
-	  private void processLeaf(Leaf leaf, IList<string> sentence, IList<Span> names)
+	  private void processLeaf(ADSentenceStream.SentenceParser.Leaf leaf, IList<string> sentence, IList<Span> names)
 	  {
 
 		bool alreadyAdded = false;
@@ -527,7 +517,7 @@ namespace opennlp.tools.formats.ad
 	  private int textIdMeta2 = -1;
 	  private string textMeta2 = "";
 
-	  private int getTextID(Sentence paragraph)
+	  private int getTextID(ADSentenceStream.Sentence paragraph)
 	  {
 
 		string meta = paragraph.Metadata;

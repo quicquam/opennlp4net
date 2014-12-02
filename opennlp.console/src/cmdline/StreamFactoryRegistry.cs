@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -17,46 +14,20 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using System.IO;
+using System;
+using System.Collections.Generic;
 using j4n.Exceptions;
+using opennlp.console.formats;
+using opennlp.console.formats.ad;
+using opennlp.console.formats.convert;
+using opennlp.console.formats.muc;
 using opennlp.tools.namefind;
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
+    //	using ConstitParseSampleStreamFactory = opennlp.tools.formats.frenchtreebank.ConstitParseSampleStreamFactory;
 
-
-	using BioNLP2004NameSampleStreamFactory = opennlp.tools.formats.BioNLP2004NameSampleStreamFactory<NameSample>;
-	using ChunkerSampleStreamFactory = opennlp.tools.formats.ChunkerSampleStreamFactory;
-	using Conll02NameSampleStreamFactory = opennlp.tools.formats.Conll02NameSampleStreamFactory;
-	using Conll03NameSampleStreamFactory = opennlp.tools.formats.Conll03NameSampleStreamFactory;
-	using ConllXPOSSampleStreamFactory = opennlp.tools.formats.ConllXPOSSampleStreamFactory;
-	using ConllXSentenceSampleStreamFactory = opennlp.tools.formats.ConllXSentenceSampleStreamFactory;
-	using ConllXTokenSampleStreamFactory = opennlp.tools.formats.ConllXTokenSampleStreamFactory;
-	using CorefSampleStreamFactory = opennlp.tools.formats.CorefSampleStreamFactory;
-	using DocumentSampleStreamFactory = opennlp.tools.formats.DocumentSampleStreamFactory;
-	using LeipzigDocumentSampleStreamFactory = opennlp.tools.formats.LeipzigDocumentSampleStreamFactory;
-	using NameSampleDataStreamFactory = opennlp.tools.formats.NameSampleDataStreamFactory;
-	using ParseSampleStreamFactory = opennlp.tools.formats.ParseSampleStreamFactory;
-	using SentenceSampleStreamFactory = opennlp.tools.formats.SentenceSampleStreamFactory;
-	using TokenSampleStreamFactory = opennlp.tools.formats.TokenSampleStreamFactory;
-	using WordTagSampleStreamFactory = opennlp.tools.formats.WordTagSampleStreamFactory;
-	using ADChunkSampleStreamFactory = opennlp.tools.formats.ad.ADChunkSampleStreamFactory;
-	using ADNameSampleStreamFactory = opennlp.tools.formats.ad.ADNameSampleStreamFactory;
-	using ADPOSSampleStreamFactory = opennlp.tools.formats.ad.ADPOSSampleStreamFactory;
-	using ADSentenceSampleStreamFactory = opennlp.tools.formats.ad.ADSentenceSampleStreamFactory;
-	using ADTokenSampleStreamFactory = opennlp.tools.formats.ad.ADTokenSampleStreamFactory;
-	using NameToSentenceSampleStreamFactory = opennlp.tools.formats.convert.NameToSentenceSampleStreamFactory;
-	using NameToTokenSampleStreamFactory = opennlp.tools.formats.convert.NameToTokenSampleStreamFactory;
-	using POSToSentenceSampleStreamFactory = opennlp.tools.formats.convert.POSToSentenceSampleStreamFactory;
-	using POSToTokenSampleStreamFactory = opennlp.tools.formats.convert.POSToTokenSampleStreamFactory;
-	using ParseToPOSSampleStreamFactory = opennlp.tools.formats.convert.ParseToPOSSampleStreamFactory;
-	using ParseToSentenceSampleStreamFactory = opennlp.tools.formats.convert.ParseToSentenceSampleStreamFactory;
-	using ParseToTokenSampleStreamFactory = opennlp.tools.formats.convert.ParseToTokenSampleStreamFactory;
-//	using ConstitParseSampleStreamFactory = opennlp.tools.formats.frenchtreebank.ConstitParseSampleStreamFactory;
-	using Muc6FullParseCorefSampleStreamFactory = opennlp.tools.formats.muc.Muc6FullParseCorefSampleStreamFactory;
-	using Muc6NameSampleStreamFactory = opennlp.tools.formats.muc.Muc6NameSampleStreamFactory;
-
-	/// <summary>
+    /// <summary>
 	/// Registry for object stream factories.
 	/// </summary>
 	public sealed class StreamFactoryRegistry<T>
@@ -85,7 +56,7 @@ namespace opennlp.tools.cmdline
 		ParseToSentenceSampleStreamFactory.registerFactory();
 		ParseToTokenSampleStreamFactory.registerFactory();
 
-		BioNLP2004NameSampleStreamFactory.registerFactory();
+		BioNLP2004NameSampleStreamFactory<NameSample>.registerFactory();
 		Conll02NameSampleStreamFactory.registerFactory();
 		Conll03NameSampleStreamFactory.registerFactory();
 		ConllXPOSSampleStreamFactory.registerFactory();

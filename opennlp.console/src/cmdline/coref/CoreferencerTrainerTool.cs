@@ -16,17 +16,12 @@
  */
 
 using System.IO;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.coref;
 
-namespace opennlp.tools.cmdline.coref
+namespace opennlp.console.cmdline.coref
 {
-
-	using opennlp.tools.cmdline;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using TrainerToolParams = opennlp.tools.cmdline.coref.CoreferencerTrainerTool.TrainerToolParams;
-	using CorefSample = opennlp.tools.coref.CorefSample;
-	using CorefTrainer = opennlp.tools.coref.CorefTrainer;
-
-	public class CoreferencerTrainerTool : AbstractTrainerTool<CorefSample, TrainerToolParams>
+    public class CoreferencerTrainerTool : AbstractTrainerTool<CorefSample, CoreferencerTrainerTool.TrainerToolParams>
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams
 	  {

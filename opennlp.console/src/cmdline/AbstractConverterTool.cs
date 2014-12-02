@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -18,16 +14,16 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using j4n.Exceptions;
 using j4n.Serialization;
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
-
-
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// Base class for format conversion tools.
 	/// </summary>
 	/// @param <T> class of data sample the tool converts, for example {@link opennlp.tools.postag

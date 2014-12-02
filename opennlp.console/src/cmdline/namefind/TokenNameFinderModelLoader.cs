@@ -16,16 +16,11 @@
  */
 
 using j4n.IO.InputStream;
+using opennlp.tools.namefind;
 
-namespace opennlp.tools.cmdline.namefind
+namespace opennlp.console.cmdline.namefind
 {
-
-
-	using opennlp.tools.cmdline;
-	using TokenNameFinderModel = opennlp.tools.namefind.TokenNameFinderModel;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-
-	/// <summary>
+    /// <summary>
 	/// Loads a Token Name Finder Model for the command line tools.
 	/// <para>
 	/// <b>Note:</b> Do not use this class, internal use only!

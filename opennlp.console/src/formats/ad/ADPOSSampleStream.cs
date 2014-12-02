@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,25 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Object;
 using j4n.Serialization;
 using opennlp.tools.nonjava.extensions;
+using opennlp.tools.postag;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.ad
+namespace opennlp.console.formats.ad
 {
-
-
-	using Sentence = opennlp.tools.formats.ad.ADSentenceStream.Sentence;
-	using Leaf = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
-	using Node = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
-	using TreeElement = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
-	using POSSample = opennlp.tools.postag.POSSample;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public class ADPOSSampleStream : ObjectStream<POSSample>
@@ -94,10 +86,10 @@ namespace opennlp.tools.formats.ad
 
 	  public virtual POSSample read()
 	  {
-		Sentence paragraph;
+		ADSentenceStream.Sentence paragraph;
 		while ((paragraph = this.adSentenceStream.read()) != null)
 		{
-		  Node root = paragraph.Root;
+		  ADSentenceStream.SentenceParser.Node root = paragraph.Root;
 		  IList<string> sentence = new List<string>();
 		  IList<string> tags = new List<string>();
 		  process(root, sentence, tags);
@@ -107,25 +99,25 @@ namespace opennlp.tools.formats.ad
 		return null;
 	  }
 
-	  private void process(Node node, IList<string> sentence, IList<string> tags)
+	  private void process(ADSentenceStream.SentenceParser.Node node, IList<string> sentence, IList<string> tags)
 	  {
 		if (node != null)
 		{
-		  foreach (TreeElement element in node.Elements)
+		  foreach (ADSentenceStream.SentenceParser.TreeElement element in node.Elements)
 		  {
 			if (element.Leaf)
 			{
-			  processLeaf((Leaf) element, sentence, tags);
+			  processLeaf((ADSentenceStream.SentenceParser.Leaf) element, sentence, tags);
 			}
 			else
 			{
-			  process((Node) element, sentence, tags);
+			  process((ADSentenceStream.SentenceParser.Node) element, sentence, tags);
 			}
 		  }
 		}
 	  }
 
-	  private void processLeaf(Leaf leaf, IList<string> sentence, IList<string> tags)
+	  private void processLeaf(ADSentenceStream.SentenceParser.Leaf leaf, IList<string> sentence, IList<string> tags)
 	  {
 		if (leaf != null)
 		{

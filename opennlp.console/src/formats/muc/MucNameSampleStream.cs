@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,20 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using System.Linq;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.namefind;
+using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using Tokenizer = opennlp.tools.tokenize.Tokenizer;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	public class MucNameSampleStream : FilterObjectStream<string, NameSample>
+    public class MucNameSampleStream : FilterObjectStream<string, NameSample>
 	{
 
 	  private readonly Tokenizer tokenizer;

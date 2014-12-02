@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,23 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
-using opennlp.tools.cmdline;
+using opennlp.console.cmdline;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-	using TokenSampleStream = opennlp.tools.tokenize.TokenSampleStream;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	/// <summary>
+    /// <summary>
 	/// Factory producing OpenNLP <seealso cref="TokenSampleStream"/>s.
 	/// </summary>
 	public class TokenSampleStreamFactory : LanguageSampleStreamFactory<TokenSample>

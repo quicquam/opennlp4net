@@ -16,14 +16,11 @@
  */
 
 using j4n.IO.File;
+using opennlp.console.cmdline.@params;
 
-namespace opennlp.tools.cmdline.dictionary
+namespace opennlp.console.cmdline.dictionary
 {
-
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using EncodingParameter = opennlp.tools.cmdline.@params.EncodingParameter;
-
-	/// <summary>
+    /// <summary>
 	/// Params for Dictionary tools.
 	/// 
 	/// Note: Do not use this class, internal use only!

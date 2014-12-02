@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,16 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using j4n.IO.File;
 using j4n.Serialization;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// The directory sample stream scans a directory (recursively) for plain text
 	/// files and outputs each file as a String object.
 	/// </summary>

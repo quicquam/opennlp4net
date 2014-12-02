@@ -16,16 +16,11 @@
  */
 
 using j4n.IO.InputStream;
+using opennlp.tools.parser;
 
-namespace opennlp.tools.cmdline.parser
+namespace opennlp.console.cmdline.parser
 {
-
-
-	using opennlp.tools.cmdline;
-	using ParserModel = opennlp.tools.parser.ParserModel;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-
-	/// <summary>
+    /// <summary>
 	/// Loads a Parser Model for the command line tools.
 	/// <para>
 	/// <b>Note:</b> Do not use this class, internal use only!

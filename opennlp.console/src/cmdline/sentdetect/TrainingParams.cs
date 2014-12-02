@@ -16,15 +16,11 @@
  */
 
 using j4n.IO.File;
+using opennlp.console.cmdline.@params;
 
-namespace opennlp.tools.cmdline.sentdetect
+namespace opennlp.console.cmdline.sentdetect
 {
-
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using BasicTrainingParams = opennlp.tools.cmdline.@params.BasicTrainingParams;
-
-	/// <summary>
+    /// <summary>
 	/// TrainingParams for Sentence Detector.
 	/// 
 	/// Note: Do not use this class, internal use only!

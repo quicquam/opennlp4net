@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,21 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using j4n.Interfaces;
 using j4n.IO.OutputStream;
 using opennlp.tools.nonjava.extensions;
+using opennlp.tools.util;
+using opennlp.tools.util.eval;
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
-
-
-	using Span = opennlp.tools.util.Span;
-	using opennlp.tools.util.eval;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public abstract class EvaluationErrorPrinter<T> : EvaluationMonitor<T>

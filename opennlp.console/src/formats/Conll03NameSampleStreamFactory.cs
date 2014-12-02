@@ -1,7 +1,4 @@
-﻿using System;
-using j4n.IO.File;
-using j4n.Serialization;
-/*
+﻿/*
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -15,21 +12,15 @@ using j4n.Serialization;
  *  limitations under the License.
  *  under the License.
  */
+using System;
+using j4n.IO.File;
+using j4n.Serialization;
+using opennlp.console.cmdline;
+using opennlp.console.cmdline.@params;
 using opennlp.tools.namefind;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-    using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-    using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-    using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-    using StreamFactoryRegistry = opennlp.tools.cmdline.StreamFactoryRegistry<NameSample>;
-    using TerminateToolException = opennlp.tools.cmdline.TerminateToolException;
-    using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
-    using LANGUAGE = opennlp.tools.formats.Conll03NameSampleStream.LANGUAGE;
-    using NameSample = opennlp.tools.namefind.NameSample;
-    using opennlp.tools.util;
-
     public class Conll03NameSampleStreamFactory : LanguageSampleStreamFactory<NameSample>
     {
         public class Parameters : BasicFormatParams
@@ -43,7 +34,7 @@ namespace opennlp.tools.formats
 
         public static void registerFactory()
         {
-            StreamFactoryRegistry.registerFactory(typeof(NameSample), "conll03", new Conll03NameSampleStreamFactory(typeof(Parameters)));
+            StreamFactoryRegistry<NameSample>.registerFactory(typeof(NameSample), "conll03", new Conll03NameSampleStreamFactory(typeof(Parameters)));
         }
 
         protected internal Conll03NameSampleStreamFactory(Type @params)
@@ -62,15 +53,15 @@ namespace opennlp.tools.formats
             Parameters @params = ArgumentParser.parse<Parameters>(args);
 
             // TODO: support the other languages with this CoNLL.
-            LANGUAGE lang;
+            Conll03NameSampleStream.LANGUAGE lang;
             if ("en".Equals(@params.Lang))
             {
-                lang = LANGUAGE.EN;
+                lang = Conll03NameSampleStream.LANGUAGE.EN;
                 language = @params.Lang;
             }
             else if ("de".Equals(@params.Lang))
             {
-                lang = LANGUAGE.DE;
+                lang = Conll03NameSampleStream.LANGUAGE.DE;
                 language = @params.Lang;
             }
             else

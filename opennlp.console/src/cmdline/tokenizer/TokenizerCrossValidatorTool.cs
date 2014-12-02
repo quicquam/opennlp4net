@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,23 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.dictionary;
+using opennlp.tools.tokenize;
+using opennlp.tools.util.eval;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
-
-	using opennlp.tools.cmdline;
-	using CVParams = opennlp.tools.cmdline.@params.CVParams;
-	using CVToolParams = opennlp.tools.cmdline.tokenizer.TokenizerCrossValidatorTool.CVToolParams;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-	using TokenizerCrossValidator = opennlp.tools.tokenize.TokenizerCrossValidator;
-	using TokenizerEvaluationMonitor = opennlp.tools.tokenize.TokenizerEvaluationMonitor;
-	using TokenizerFactory = opennlp.tools.tokenize.TokenizerFactory;
-	using FMeasure = opennlp.tools.util.eval.FMeasure;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class TokenizerCrossValidatorTool : AbstractCrossValidatorTool<TokenSample, CVToolParams>
+    public sealed class TokenizerCrossValidatorTool : AbstractCrossValidatorTool<TokenSample, TokenizerCrossValidatorTool.CVToolParams>
 	{
 	    public interface CVToolParams : CVParams, TrainingParams
 	  {

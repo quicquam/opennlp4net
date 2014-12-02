@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.doccat
+using opennlp.tools.doccat;
+
+namespace opennlp.console.cmdline.doccat
 {
-
-	using opennlp.tools.cmdline;
-	using DocumentSample = opennlp.tools.doccat.DocumentSample;
-
-	public class DoccatConverterTool : AbstractConverterTool<DocumentSample>
+    public class DoccatConverterTool : AbstractConverterTool<DocumentSample>
 	{
 
 	  public DoccatConverterTool() : base(typeof(DocumentSample))

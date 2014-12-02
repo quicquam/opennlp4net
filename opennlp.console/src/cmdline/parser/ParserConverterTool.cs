@@ -14,13 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace opennlp.tools.cmdline.parser
+
+using opennlp.tools.parser;
+
+namespace opennlp.console.cmdline.parser
 {
-
-	using opennlp.tools.cmdline;
-	using Parse = opennlp.tools.parser.Parse;
-
-	public class ParserConverterTool : AbstractConverterTool<Parse>
+    public class ParserConverterTool : AbstractConverterTool<Parse>
 	{
 
 	  public ParserConverterTool() : base(typeof(Parse))

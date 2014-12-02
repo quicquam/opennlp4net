@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,19 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using j4n.Serialization;
+using opennlp.tools.namefind;
+using opennlp.tools.parser;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using TokenNameFinder = opennlp.tools.namefind.TokenNameFinder;
-	using Parse = opennlp.tools.parser.Parse;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-	using Span = opennlp.tools.util.Span;
-
-	/// <summary>
+    /// <summary>
 	/// Adds names to the Coref Sample Stream.
 	/// </summary>
 	public class NameFinderCorefEnhancerStream : FilterObjectStream<RawCorefSample, RawCorefSample>

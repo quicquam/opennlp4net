@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,22 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
+using opennlp.console.cmdline;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-	using TerminateToolException = opennlp.tools.cmdline.TerminateToolException;
-	using DetokenizerParameter = opennlp.tools.cmdline.@params.DetokenizerParameter;
-	using DetokenizationDictionary = opennlp.tools.tokenize.DetokenizationDictionary;
-	using Detokenizer = opennlp.tools.tokenize.Detokenizer;
-	using DictionaryDetokenizer = opennlp.tools.tokenize.DictionaryDetokenizer;
-
-
-	/// <summary>
+    /// <summary>
 	/// Base class for factories which need detokenizer.
 	/// </summary>
 	public abstract class DetokenizerSampleStreamFactory<T> : AbstractSampleStreamFactory<T>

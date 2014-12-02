@@ -16,18 +16,12 @@
  */
 
 using System;
-using j4n.Interfaces;
 using j4n.IO.OutputStream;
+using opennlp.tools.chunker;
 
-namespace opennlp.tools.cmdline.chunker
+namespace opennlp.console.cmdline.chunker
 {
-
-	using ChunkSample = opennlp.tools.chunker.ChunkSample;
-	using ChunkerEvaluationMonitor = opennlp.tools.chunker.ChunkerEvaluationMonitor;
-	using opennlp.tools.cmdline;
-	using opennlp.tools.util.eval;
-
-	/// <summary>
+    /// <summary>
 	/// A default implementation of <seealso cref="EvaluationMonitor"/> that prints
 	/// to an output stream.
 	/// 

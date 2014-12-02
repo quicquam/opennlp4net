@@ -17,20 +17,13 @@
 
 using System.IO;
 using j4n.IO.File;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.doccat;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.doccat
+namespace opennlp.console.cmdline.doccat
 {
-
-
-	using opennlp.tools.cmdline;
-	using TrainerToolParams = opennlp.tools.cmdline.doccat.DoccatTrainerTool.TrainerToolParams;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using DoccatModel = opennlp.tools.doccat.DoccatModel;
-	using DocumentCategorizerME = opennlp.tools.doccat.DocumentCategorizerME;
-	using DocumentSample = opennlp.tools.doccat.DocumentSample;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public class DoccatTrainerTool : AbstractTrainerTool<DocumentSample, TrainerToolParams>
+    public class DoccatTrainerTool : AbstractTrainerTool<DocumentSample, DoccatTrainerTool.TrainerToolParams>
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams
 	  {

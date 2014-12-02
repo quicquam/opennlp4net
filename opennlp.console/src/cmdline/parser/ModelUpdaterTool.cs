@@ -18,19 +18,12 @@
 using System.IO;
 using j4n.IO.File;
 using j4n.Serialization;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.parser;
 
-namespace opennlp.tools.cmdline.parser
+namespace opennlp.console.cmdline.parser
 {
-
-
-	using opennlp.tools.cmdline;
-	using opennlp.tools.cmdline;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using Parse = opennlp.tools.parser.Parse;
-	using ParserModel = opennlp.tools.parser.ParserModel;
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// Abstract base class for tools which update the parser model.
 	/// </summary>
 	public abstract class ModelUpdaterTool : AbstractTypedParamTool<Parse, ModelUpdaterTool.ModelUpdaterParams>

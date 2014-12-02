@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,27 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using j4n.IO.File;
 using j4n.Serialization;
-using opennlp.tools.cmdline;
+using opennlp.console.cmdline;
+using opennlp.console.cmdline.@params;
+using opennlp.console.cmdline.tokenizer;
+using opennlp.console.formats.convert;
+using opennlp.tools.namefind;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
-	using TokenizerModelLoader = opennlp.tools.cmdline.tokenizer.TokenizerModelLoader;
-	using opennlp.tools.formats;
-	using FileToStringSampleStream = opennlp.tools.formats.convert.FileToStringSampleStream;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using Tokenizer = opennlp.tools.tokenize.Tokenizer;
-	using TokenizerME = opennlp.tools.tokenize.TokenizerME;
-	using TokenizerModel = opennlp.tools.tokenize.TokenizerModel;
-	using opennlp.tools.util;
-
-	public class Muc6NameSampleStreamFactory : AbstractSampleStreamFactory<NameSample>
+    public class Muc6NameSampleStreamFactory : AbstractSampleStreamFactory<NameSample>
 	{
 
 	  internal interface Parameters : BasicFormatParams

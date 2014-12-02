@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,22 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
-
-
-	using Detokenizer = opennlp.tools.tokenize.Detokenizer;
-	using DictionaryDetokenizer = opennlp.tools.tokenize.DictionaryDetokenizer;
-	using WhitespaceTokenizer = opennlp.tools.tokenize.WhitespaceTokenizer;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	public sealed class DictionaryDetokenizerTool : BasicCmdLineTool
+    public sealed class DictionaryDetokenizerTool : BasicCmdLineTool
 	{
 
 	  public override string Help

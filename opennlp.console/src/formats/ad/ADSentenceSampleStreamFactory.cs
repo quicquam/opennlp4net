@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,25 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
-using opennlp.tools.cmdline;
+using opennlp.console.cmdline;
+using opennlp.tools.sentdetect;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.ad
+namespace opennlp.console.formats.ad
 {
-
-
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using opennlp.tools.formats;
-	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
     public class ADSentenceSampleStreamFactory : LanguageSampleStreamFactory<SentenceSample>, ObjectStreamFactory<SentenceSample>

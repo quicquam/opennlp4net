@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.postag
+using opennlp.tools.postag;
+
+namespace opennlp.console.cmdline.postag
 {
-
-	using opennlp.tools.cmdline;
-	using POSSample = opennlp.tools.postag.POSSample;
-
-	public class POSTaggerConverterTool : AbstractConverterTool<POSSample>
+    public class POSTaggerConverterTool : AbstractConverterTool<POSSample>
 	{
 
 	  public POSTaggerConverterTool() : base(typeof(POSSample))

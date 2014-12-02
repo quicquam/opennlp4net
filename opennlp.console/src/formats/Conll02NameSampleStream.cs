@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,25 +14,19 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
-using j4n.IO.OutputStream;
 using j4n.Serialization;
+using opennlp.tools.namefind;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-	using Span = opennlp.tools.util.Span;
-	using StringUtil = opennlp.tools.util.StringUtil;
-
-	/// <summary>
+    /// <summary>
 	/// Parser for the dutch and spanish ner training files of the CONLL 2002 shared task.
 	/// <para>
 	/// The dutch data has a -DOCSTART- tag to mark article boundaries,

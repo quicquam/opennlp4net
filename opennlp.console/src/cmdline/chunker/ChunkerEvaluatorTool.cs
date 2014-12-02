@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,27 +14,18 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using j4n.Serialization;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.chunker;
+using opennlp.tools.util.eval;
 
-namespace opennlp.tools.cmdline.chunker
+namespace opennlp.console.cmdline.chunker
 {
-
-
-	using ChunkSample = opennlp.tools.chunker.ChunkSample;
-	using ChunkerEvaluationMonitor = opennlp.tools.chunker.ChunkerEvaluationMonitor;
-	using ChunkerEvaluator = opennlp.tools.chunker.ChunkerEvaluator;
-	using ChunkerME = opennlp.tools.chunker.ChunkerME;
-	using ChunkerModel = opennlp.tools.chunker.ChunkerModel;
-	using opennlp.tools.cmdline;
-	using EvalToolParams = opennlp.tools.cmdline.chunker.ChunkerEvaluatorTool.EvalToolParams;
-	using DetailedFMeasureEvaluatorParams = opennlp.tools.cmdline.@params.DetailedFMeasureEvaluatorParams;
-	using EvaluatorParams = opennlp.tools.cmdline.@params.EvaluatorParams;
-	using opennlp.tools.util;
-	using opennlp.tools.util.eval;
-
-	public sealed class ChunkerEvaluatorTool : AbstractEvaluatorTool<ChunkSample, EvalToolParams>
+    public sealed class ChunkerEvaluatorTool : AbstractEvaluatorTool<ChunkSample, ChunkerEvaluatorTool.EvalToolParams>
 	{
 	    public interface EvalToolParams : EvaluatorParams, DetailedFMeasureEvaluatorParams
 	  {

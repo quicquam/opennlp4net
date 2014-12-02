@@ -16,15 +16,12 @@
  */
 
 using j4n.Serialization;
+using opennlp.tools.namefind;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.formats.convert
+namespace opennlp.console.formats.convert
 {
-
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using Detokenizer = opennlp.tools.tokenize.Detokenizer;
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public class NameToSentenceSampleStream : AbstractToSentenceSampleStream<NameSample>

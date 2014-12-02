@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,21 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using j4n.Serialization;
+using opennlp.model;
+using opennlp.tools.dictionary;
+using opennlp.tools.parser;
+using opennlp.tools.parser.chunking;
+using Parser = opennlp.tools.parser.chunking.Parser;
 
-namespace opennlp.tools.cmdline.parser
+namespace opennlp.console.cmdline.parser
 {
-
-	using AbstractModel = opennlp.model.AbstractModel;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using Parse = opennlp.tools.parser.Parse;
-	using ParserEventTypeEnum = opennlp.tools.parser.ParserEventTypeEnum;
-	using ParserModel = opennlp.tools.parser.ParserModel;
-	using Parser = opennlp.tools.parser.chunking.Parser;
-	using ParserEventStream = opennlp.tools.parser.chunking.ParserEventStream;
-	using opennlp.tools.util;
-
-	// trains a new check model ...
+    // trains a new check model ...
 	public sealed class CheckModelUpdaterTool : ModelUpdaterTool
 	{
 

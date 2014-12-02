@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.chunker
+using opennlp.tools.chunker;
+
+namespace opennlp.console.cmdline.chunker
 {
-
-	using ChunkSample = opennlp.tools.chunker.ChunkSample;
-	using opennlp.tools.cmdline;
-
-	/// <summary>
+    /// <summary>
 	/// Tool to convert multiple data formats into native OpenNLP chunker training
 	/// format.
 	/// </summary>

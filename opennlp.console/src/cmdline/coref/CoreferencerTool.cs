@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,30 +14,24 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.coref;
+using opennlp.tools.coref.mention;
 using opennlp.tools.nonjava.extensions;
 using opennlp.tools.parser;
+using opennlp.tools.util;
+using Parse = opennlp.tools.parser.Parse;
+using Parser = opennlp.tools.parser.chunking.Parser;
+using TreebankLinker = opennlp.tools.lang.english.TreebankLinker;
 
-namespace opennlp.tools.cmdline.coref
+namespace opennlp.console.cmdline.coref
 {
-
-
-	using DiscourseEntity = opennlp.tools.coref.DiscourseEntity;
-	using LinkerMode = opennlp.tools.coref.LinkerMode;
-	using DefaultParse = opennlp.tools.coref.mention.DefaultParse;
-	using Mention = opennlp.tools.coref.mention.Mention;
-	using MentionContext = opennlp.tools.coref.mention.MentionContext;
-	using TreebankLinker = opennlp.tools.lang.english.TreebankLinker;
-	using Parse = opennlp.tools.parser.Parse;
-	using Parser = opennlp.tools.parser.chunking.Parser;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-	using Span = opennlp.tools.util.Span;
-
-	public class CoreferencerTool : BasicCmdLineTool
+    public class CoreferencerTool : BasicCmdLineTool
 	{
 
 	  internal class CorefParse

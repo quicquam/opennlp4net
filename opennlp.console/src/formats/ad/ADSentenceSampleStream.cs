@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -18,24 +14,22 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Lang;
 using j4n.Serialization;
 using opennlp.nonjava.helperclasses;
+using opennlp.tools.sentdetect;
+using opennlp.tools.sentdetect.lang;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.ad
+namespace opennlp.console.formats.ad
 {
-
-
-	using Sentence = opennlp.tools.formats.ad.ADSentenceStream.Sentence;
-	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
-	using Factory = opennlp.tools.sentdetect.lang.Factory;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-	using Span = opennlp.tools.util.Span;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public class ADSentenceSampleStream : ObjectStream<SentenceSample>
@@ -47,7 +41,7 @@ namespace opennlp.tools.formats.ad
 	  private int para = -1;
 	  private bool isSameText;
 	  private bool isSamePara;
-	  private Sentence sent;
+	  private ADSentenceStream.Sentence sent;
 	  private bool isIncludeTitles = true;
 	  private bool isTitle;
 

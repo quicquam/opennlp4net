@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,24 +14,18 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.namefind;
+using opennlp.tools.util.eval;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.namefind
+namespace opennlp.console.cmdline.namefind
 {
-
-
-	using opennlp.tools.cmdline;
-	using CVToolParams = opennlp.tools.cmdline.namefind.TokenNameFinderCrossValidatorTool.CVToolParams;
-	using CVParams = opennlp.tools.cmdline.@params.CVParams;
-	using DetailedFMeasureEvaluatorParams = opennlp.tools.cmdline.@params.DetailedFMeasureEvaluatorParams;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using TokenNameFinderCrossValidator = opennlp.tools.namefind.TokenNameFinderCrossValidator;
-	using TokenNameFinderEvaluationMonitor = opennlp.tools.namefind.TokenNameFinderEvaluationMonitor;
-	using opennlp.tools.util.eval;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class TokenNameFinderCrossValidatorTool : AbstractCrossValidatorTool<NameSample, CVToolParams>
+    public sealed class TokenNameFinderCrossValidatorTool : AbstractCrossValidatorTool<NameSample, TokenNameFinderCrossValidatorTool.CVToolParams>
 	{
 	    public interface CVToolParams : TrainingParams, CVParams, DetailedFMeasureEvaluatorParams
 	  {

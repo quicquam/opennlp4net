@@ -17,10 +17,8 @@
 
 
 using System.IO;
-using j4n.Exceptions;
-using j4n.IO.OutputStream;
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
 
 

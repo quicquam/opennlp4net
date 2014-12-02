@@ -16,15 +16,11 @@
  */
 
 using j4n.IO.InputStream;
+using opennlp.tools.chunker;
 
-namespace opennlp.tools.cmdline.chunker
+namespace opennlp.console.cmdline.chunker
 {
-
-
-	using ChunkerModel = opennlp.tools.chunker.ChunkerModel;
-	using opennlp.tools.cmdline;
-
-	/// <summary>
+    /// <summary>
 	/// Loads a Chunker Model for the command line tools.
 	/// <para>
 	/// <b>Note:</b> Do not use this class, internal use only!

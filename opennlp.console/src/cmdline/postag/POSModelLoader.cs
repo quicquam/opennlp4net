@@ -16,16 +16,11 @@
  */
 
 using j4n.IO.InputStream;
+using opennlp.tools.postag;
 
-namespace opennlp.tools.cmdline.postag
+namespace opennlp.console.cmdline.postag
 {
-
-
-	using opennlp.tools.cmdline;
-	using POSModel = opennlp.tools.postag.POSModel;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-
-	/// <summary>
+    /// <summary>
 	/// Loads a POS Tagger Model for the command line tools.
 	/// <para>
 	/// <b>Note:</b> Do not use this class, internal use only!

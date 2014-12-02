@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,26 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.OutputStream;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.postag;
 using FileNotFoundException = j4n.Exceptions.FileNotFoundException;
 
-namespace opennlp.tools.cmdline.postag
+namespace opennlp.console.cmdline.postag
 {
-
-
-	using opennlp.tools.cmdline;
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using EvaluatorParams = opennlp.tools.cmdline.@params.EvaluatorParams;
-	using EvalToolParams = opennlp.tools.cmdline.postag.POSTaggerEvaluatorTool.EvalToolParams;
-	using POSEvaluator = opennlp.tools.postag.POSEvaluator;
-	using POSModel = opennlp.tools.postag.POSModel;
-	using POSSample = opennlp.tools.postag.POSSample;
-	using POSTaggerEvaluationMonitor = opennlp.tools.postag.POSTaggerEvaluationMonitor;
-
-	public sealed class POSTaggerEvaluatorTool : AbstractEvaluatorTool<POSSample, EvalToolParams>
+    public sealed class POSTaggerEvaluatorTool : AbstractEvaluatorTool<POSSample, POSTaggerEvaluatorTool.EvalToolParams>
 	{
 	    public interface EvalToolParams : EvaluatorParams
 	  {

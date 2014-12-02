@@ -20,14 +20,11 @@ using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using j4n.IO.Reader;
+using opennlp.tools.dictionary;
 
-namespace opennlp.tools.cmdline.dictionary
+namespace opennlp.console.cmdline.dictionary
 {
-
-
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-
-	public class DictionaryBuilderTool : BasicCmdLineTool
+    public class DictionaryBuilderTool : BasicCmdLineTool
 	{
 
 	  internal interface Params : DictionaryBuilderParams

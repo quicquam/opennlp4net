@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.coref
+using opennlp.tools.coref;
+
+namespace opennlp.console.cmdline.coref
 {
-
-	using opennlp.tools.cmdline;
-	using CorefSample = opennlp.tools.coref.CorefSample;
-
-	public class CoreferenceConverterTool : AbstractConverterTool<CorefSample>
+    public class CoreferenceConverterTool : AbstractConverterTool<CorefSample>
 	{
 
 	  public CoreferenceConverterTool() : base(typeof(CorefSample))

@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.console.cmdline.@params
 {
-
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-
-	/// <summary>
+    /// <summary>
 	/// Common training parameters.
 	/// 
 	/// Note: Do not use this class, internal use only!

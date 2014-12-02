@@ -16,15 +16,11 @@
  */
 
 using j4n.IO.InputStream;
+using opennlp.tools.doccat;
 
-namespace opennlp.tools.cmdline.doccat
+namespace opennlp.console.cmdline.doccat
 {
-
-
-	using opennlp.tools.cmdline;
-	using DoccatModel = opennlp.tools.doccat.DoccatModel;
-
-	/// <summary>
+    /// <summary>
 	/// Loads a Document Categorizer Model for the command line tools.
 	/// <para>
 	/// <b>Note:</b> Do not use this class, internal use only!

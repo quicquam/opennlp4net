@@ -18,23 +18,15 @@
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
+using opennlp.console.cmdline.@params;
+using opennlp.model;
+using opennlp.tools.dictionary;
+using opennlp.tools.sentdetect;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.sentdetect
+namespace opennlp.console.cmdline.sentdetect
 {
-
-
-	using TrainUtil = opennlp.model.TrainUtil;
-	using opennlp.tools.cmdline;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using TrainerToolParams = opennlp.tools.cmdline.sentdetect.SentenceDetectorTrainerTool.TrainerToolParams;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using SentenceDetectorFactory = opennlp.tools.sentdetect.SentenceDetectorFactory;
-	using SentenceDetectorME = opennlp.tools.sentdetect.SentenceDetectorME;
-	using SentenceModel = opennlp.tools.sentdetect.SentenceModel;
-	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class SentenceDetectorTrainerTool : AbstractTrainerTool<SentenceSample, TrainerToolParams>
+    public sealed class SentenceDetectorTrainerTool : AbstractTrainerTool<SentenceSample, SentenceDetectorTrainerTool.TrainerToolParams>
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams
 	  {

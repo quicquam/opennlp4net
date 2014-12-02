@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,18 +14,15 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using j4n.Serialization;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using opennlp.tools.util;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using opennlp.tools.util;
-
-	internal class DocumentSplitterStream : FilterObjectStream<string, string>
+    internal class DocumentSplitterStream : FilterObjectStream<string, string>
 	{
 
 	  private const string DOC_START_ELEMENT = "<DOC>";

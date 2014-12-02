@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,24 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.chunker;
+using opennlp.tools.postag;
+using opennlp.tools.util;
 
-namespace opennlp.tools.cmdline.chunker
+namespace opennlp.console.cmdline.chunker
 {
-
-
-	using ChunkSample = opennlp.tools.chunker.ChunkSample;
-	using ChunkerME = opennlp.tools.chunker.ChunkerME;
-	using ChunkerModel = opennlp.tools.chunker.ChunkerModel;
-	using POSSample = opennlp.tools.postag.POSSample;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	public class ChunkerMETool : BasicCmdLineTool
+    public class ChunkerMETool : BasicCmdLineTool
 	{
 
 	  public override string ShortDescription

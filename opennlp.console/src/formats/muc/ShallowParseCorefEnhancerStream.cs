@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,21 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using j4n.Serialization;
+using opennlp.tools.chunker;
+using opennlp.tools.parser;
+using opennlp.tools.postag;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using Chunker = opennlp.tools.chunker.Chunker;
-	using AbstractBottomUpParser = opennlp.tools.parser.AbstractBottomUpParser;
-	using Parse = opennlp.tools.parser.Parse;
-	using POSTagger = opennlp.tools.postag.POSTagger;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-	using Span = opennlp.tools.util.Span;
-
-	public class ShallowParseCorefEnhancerStream : FilterObjectStream<RawCorefSample, RawCorefSample>
+    public class ShallowParseCorefEnhancerStream : FilterObjectStream<RawCorefSample, RawCorefSample>
 	{
 
 	  private readonly POSTagger posTagger;

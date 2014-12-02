@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.namefind
+using opennlp.tools.namefind;
+
+namespace opennlp.console.cmdline.namefind
 {
-
-	using opennlp.tools.cmdline;
-	using NameSample = opennlp.tools.namefind.NameSample;
-
-	/// <summary>
+    /// <summary>
 	/// Tool to convert multiple data formats into native OpenNLP name finder training
 	/// format.
 	/// </summary>

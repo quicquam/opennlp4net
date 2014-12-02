@@ -16,15 +16,11 @@
  */
 
 using j4n.IO.File;
+using opennlp.console.cmdline.@params;
 
-namespace opennlp.tools.cmdline.postag
+namespace opennlp.console.cmdline.postag
 {
-
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using BasicTrainingParams = opennlp.tools.cmdline.@params.BasicTrainingParams;
-
-	/// <summary>
+    /// <summary>
 	/// TrainingParameters for Name Finder.
 	/// 
 	/// Note: Do not use this class, internal use only!

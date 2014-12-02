@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,21 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.sentdetect;
 
-namespace opennlp.tools.cmdline.sentdetect
+namespace opennlp.console.cmdline.sentdetect
 {
-
-	using opennlp.tools.cmdline;
-	using EvaluatorParams = opennlp.tools.cmdline.@params.EvaluatorParams;
-	using EvalToolParams = opennlp.tools.cmdline.sentdetect.SentenceDetectorEvaluatorTool.EvalToolParams;
-	using SentenceDetectorEvaluationMonitor = opennlp.tools.sentdetect.SentenceDetectorEvaluationMonitor;
-	using SentenceDetectorEvaluator = opennlp.tools.sentdetect.SentenceDetectorEvaluator;
-	using SentenceDetectorME = opennlp.tools.sentdetect.SentenceDetectorME;
-	using SentenceModel = opennlp.tools.sentdetect.SentenceModel;
-	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
-
-	public sealed class SentenceDetectorEvaluatorTool : AbstractEvaluatorTool<SentenceSample, EvalToolParams>
+    public sealed class SentenceDetectorEvaluatorTool : AbstractEvaluatorTool<SentenceSample, SentenceDetectorEvaluatorTool.EvalToolParams>
 	{
 	    public interface EvalToolParams : EvaluatorParams
 	  {

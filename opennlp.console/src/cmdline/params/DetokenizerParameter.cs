@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.console.cmdline.@params
 {
-
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-
-	public interface DetokenizerParameter
+    public interface DetokenizerParameter
 	{
 	  string Detokenizer {get;}
 	}

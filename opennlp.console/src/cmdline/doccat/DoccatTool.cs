@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,24 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.doccat;
+using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
-namespace opennlp.tools.cmdline.doccat
+namespace opennlp.console.cmdline.doccat
 {
-
-
-	using DoccatModel = opennlp.tools.doccat.DoccatModel;
-	using DocumentCategorizerME = opennlp.tools.doccat.DocumentCategorizerME;
-	using DocumentSample = opennlp.tools.doccat.DocumentSample;
-	using opennlp.tools.util;
-	using ParagraphStream = opennlp.tools.util.ParagraphStream;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-	using WhitespaceTokenizer = opennlp.tools.tokenize.WhitespaceTokenizer;
-
-	public class DoccatTool : BasicCmdLineTool
+    public class DoccatTool : BasicCmdLineTool
 	{
 
 	  public override string ShortDescription

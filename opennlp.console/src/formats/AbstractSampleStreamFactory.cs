@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,14 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using j4n.Serialization;
+using opennlp.console.cmdline;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-	using opennlp.tools.cmdline;
-
-	/// <summary>
+    /// <summary>
 	/// Base class for sample stream factories.
 	/// </summary>
 	public interface AbstractSampleStreamFactory<T> : ObjectStreamFactory<T>

@@ -16,17 +16,13 @@
  */
 
 using j4n.Serialization;
+using opennlp.tools.namefind;
+using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.convert
+namespace opennlp.console.formats.convert
 {
-
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using Detokenizer = opennlp.tools.tokenize.Detokenizer;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public class NameToTokenSampleStream : FilterObjectStream<NameSample, TokenSample>

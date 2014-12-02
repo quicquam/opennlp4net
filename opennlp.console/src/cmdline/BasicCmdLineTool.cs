@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
 
 	/// <summary>

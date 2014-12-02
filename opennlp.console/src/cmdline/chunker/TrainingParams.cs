@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.chunker
+using opennlp.console.cmdline.@params;
+
+namespace opennlp.console.cmdline.chunker
 {
-
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using BasicTrainingParams = opennlp.tools.cmdline.@params.BasicTrainingParams;
-
-	/// <summary>
+    /// <summary>
 	/// TrainingParams for Chunker.
 	/// 
 	/// Note: Do not use this class, internal use only!

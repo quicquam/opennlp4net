@@ -17,21 +17,13 @@
 
 using System.IO;
 using j4n.IO.File;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.chunker;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.chunker
+namespace opennlp.console.cmdline.chunker
 {
-
-
-	using ChunkSample = opennlp.tools.chunker.ChunkSample;
-	using ChunkerFactory = opennlp.tools.chunker.ChunkerFactory;
-	using ChunkerME = opennlp.tools.chunker.ChunkerME;
-	using ChunkerModel = opennlp.tools.chunker.ChunkerModel;
-	using opennlp.tools.cmdline;
-	using TrainerToolParams = opennlp.tools.cmdline.chunker.ChunkerTrainerTool.TrainerToolParams;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public class ChunkerTrainerTool : AbstractTrainerTool<ChunkSample, TrainerToolParams>
+    public class ChunkerTrainerTool : AbstractTrainerTool<ChunkSample, ChunkerTrainerTool.TrainerToolParams>
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams
 	  {

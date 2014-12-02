@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -16,26 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using opennlp.tools.parser;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using CorefMention = opennlp.tools.formats.muc.MucCorefContentHandler.CorefMention;
-	using Parse = opennlp.tools.parser.Parse;
-
-	/// <summary>
+    /// <summary>
 	/// A coreference sample as it is extracted from MUC style training data.
 	/// </summary>
 	public class RawCorefSample
 	{
 
 	  private IList<string[]> texts = new List<string[]>();
-	  private IList<CorefMention[]> mentions = new List<CorefMention[]>();
+	  private IList<MucCorefContentHandler.CorefMention[]> mentions = new List<MucCorefContentHandler.CorefMention[]>();
 
 	  private IList<Parse> parses;
 
-	  internal RawCorefSample(IList<string> texts, IList<CorefMention[]> mentions)
+	  internal RawCorefSample(IList<string> texts, IList<MucCorefContentHandler.CorefMention[]> mentions)
 	  {
 	  }
 
@@ -47,7 +42,7 @@ namespace opennlp.tools.formats.muc
 		  }
 	  }
 
-	  public virtual IList<CorefMention[]> Mentions
+	  public virtual IList<MucCorefContentHandler.CorefMention[]> Mentions
 	  {
 		  get
 		  {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -18,25 +14,21 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using j4n.IO.File;
 using j4n.IO.Reader;
 using j4n.Lang;
 using j4n.Object;
 using j4n.Serialization;
+using opennlp.tools.parser;
+using opennlp.tools.util;
 
-namespace opennlp.tools.cmdline.parser
+namespace opennlp.console.cmdline.parser
 {
-
-
-	using AbstractBottomUpParser = opennlp.tools.parser.AbstractBottomUpParser;
-	using Parse = opennlp.tools.parser.Parse;
-	using ParserFactory = opennlp.tools.parser.ParserFactory;
-	using ParserModel = opennlp.tools.parser.ParserModel;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-	using Span = opennlp.tools.util.Span;
-
-	public sealed class ParserTool : BasicCmdLineTool
+    public sealed class ParserTool : BasicCmdLineTool
 	{
 
 	  public override string ShortDescription

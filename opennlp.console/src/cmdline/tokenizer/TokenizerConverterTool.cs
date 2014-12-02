@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.tokenizer
+using opennlp.tools.tokenize;
+
+namespace opennlp.console.cmdline.tokenizer
 {
-
-	using opennlp.tools.cmdline;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-
-	public class TokenizerConverterTool : AbstractConverterTool<TokenSample>
+    public class TokenizerConverterTool : AbstractConverterTool<TokenSample>
 	{
 
 	  public TokenizerConverterTool() : base(typeof(TokenSample))

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,22 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using System.Linq;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.postag;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-
-	using POSSample = opennlp.tools.postag.POSSample;
-	using opennlp.tools.util;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using opennlp.tools.util;
-	using ParagraphStream = opennlp.tools.util.ParagraphStream;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	/// <summary>
+    /// <summary>
 	/// Parses the data from the CONLL 06 shared task into POS Samples.
 	/// <para>
 	/// More information about the data format can be found here:<br>

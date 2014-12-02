@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.coref
+using opennlp.console.cmdline.@params;
+
+namespace opennlp.console.cmdline.coref
 {
-
-	using BasicTrainingParams = opennlp.tools.cmdline.@params.BasicTrainingParams;
-
-	/// <summary>
+    /// <summary>
 	/// TrainingParameters for Name Finder.
 	/// 
 	/// Note: Do not use this class, internal use only!

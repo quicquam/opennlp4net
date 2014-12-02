@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
 
 

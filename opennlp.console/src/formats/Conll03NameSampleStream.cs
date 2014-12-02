@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -14,26 +12,23 @@ using System.Collections.Generic;
  *  limitations under the License.
  *  under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using j4n.Serialization;
+using opennlp.tools.namefind;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
 
 	//import static opennlp.tools.formats.Conll02NameSampleStream.extract;
-
-
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-	using Span = opennlp.tools.util.Span;
-	using StringUtil = opennlp.tools.util.StringUtil;
-
-	/// <summary>
+    
+    /// <summary>
 	/// An import stream which can parse the CONLL03 data.
 	/// </summary>
 	public class Conll03NameSampleStream : ObjectStream<NameSample>

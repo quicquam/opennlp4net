@@ -15,15 +15,9 @@
  * limitations under the License.
  */
 
-using System.Security.Cryptography.X509Certificates;
-using j4n.IO.File;
-
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.console.cmdline.@params
 {
-
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-
-	/// <summary>
+    /// <summary>
 	/// Common format parameters.
 	/// </summary>
 	public interface BasicFormatParams : EncodingParameter

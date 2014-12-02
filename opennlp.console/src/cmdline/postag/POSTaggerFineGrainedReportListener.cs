@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -18,21 +14,20 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using j4n.IO.OutputStream;
 using j4n.Utils;
 using opennlp.tools.nonjava.helperclasses;
+using opennlp.tools.postag;
+using opennlp.tools.util;
+using opennlp.tools.util.eval;
 
-namespace opennlp.tools.cmdline.postag
+namespace opennlp.console.cmdline.postag
 {
-
-
-	using POSSample = opennlp.tools.postag.POSSample;
-	using POSTaggerEvaluationMonitor = opennlp.tools.postag.POSTaggerEvaluationMonitor;
-	using Span = opennlp.tools.util.Span;
-	using FMeasure = opennlp.tools.util.eval.FMeasure;
-	using Mean = opennlp.tools.util.eval.Mean;
-
-	/// <summary>
+    /// <summary>
 	/// Generates a detailed report for the POS Tagger.
 	/// <para>
 	/// It is possible to use it from an API and access the statistics using the

@@ -19,21 +19,14 @@ using System;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
-using opennlp.tools.cmdline;
+using opennlp.console.cmdline;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.coref;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
-	using CorefSample = opennlp.tools.coref.CorefSample;
-	using CorefSampleDataStream = opennlp.tools.coref.CorefSampleDataStream;
-	using opennlp.tools.util;
-	using ParagraphStream = opennlp.tools.util.ParagraphStream;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	public class CorefSampleStreamFactory : AbstractSampleStreamFactory<CorefSample>
+    public class CorefSampleStreamFactory : AbstractSampleStreamFactory<CorefSample>
 	{
 
 	  internal interface Parameters : BasicFormatParams

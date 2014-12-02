@@ -18,6 +18,6 @@
 /// <summary>
 /// Experimental package related to converting various corpora to OpenNLP Format.
 /// </summary>
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
 }

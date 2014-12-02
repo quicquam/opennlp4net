@@ -18,22 +18,15 @@
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
+using opennlp.console.cmdline.@params;
+using opennlp.model;
+using opennlp.tools.dictionary;
+using opennlp.tools.tokenize;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
-
-
-	using TrainUtil = opennlp.model.TrainUtil;
-	using opennlp.tools.cmdline;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using TrainerToolParams = opennlp.tools.cmdline.tokenizer.TokenizerTrainerTool.TrainerToolParams;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-	using TokenizerFactory = opennlp.tools.tokenize.TokenizerFactory;
-	using TokenizerModel = opennlp.tools.tokenize.TokenizerModel;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class TokenizerTrainerTool : AbstractTrainerTool<TokenSample, TrainerToolParams>
+    public sealed class TokenizerTrainerTool : AbstractTrainerTool<TokenSample, TokenizerTrainerTool.TrainerToolParams>
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams
 	  {

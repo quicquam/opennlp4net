@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,26 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
-using j4n.Interfaces;
 using j4n.IO.File;
 using j4n.IO.OutputStream;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.postag;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.postag
+namespace opennlp.console.cmdline.postag
 {
-
-
-	using opennlp.tools.cmdline;
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using CVParams = opennlp.tools.cmdline.@params.CVParams;
-	using CVToolParams = opennlp.tools.cmdline.postag.POSTaggerCrossValidatorTool.CVToolParams;
-	using POSSample = opennlp.tools.postag.POSSample;
-	using POSTaggerCrossValidator = opennlp.tools.postag.POSTaggerCrossValidator;
-	using POSTaggerEvaluationMonitor = opennlp.tools.postag.POSTaggerEvaluationMonitor;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class POSTaggerCrossValidatorTool : AbstractCrossValidatorTool<POSSample, CVToolParams>
+    public sealed class POSTaggerCrossValidatorTool : AbstractCrossValidatorTool<POSSample, POSTaggerCrossValidatorTool.CVToolParams>
 	{
 	    public interface CVToolParams : CVParams, TrainingParams
 	  {

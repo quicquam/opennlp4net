@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,20 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
-
-	using opennlp.tools.cmdline;
-	using EvaluatorParams = opennlp.tools.cmdline.@params.EvaluatorParams;
-	using EvalToolParams = opennlp.tools.cmdline.tokenizer.TokenizerMEEvaluatorTool.EvalToolParams;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-	using TokenizerEvaluationMonitor = opennlp.tools.tokenize.TokenizerEvaluationMonitor;
-	using TokenizerEvaluator = opennlp.tools.tokenize.TokenizerEvaluator;
-	using TokenizerModel = opennlp.tools.tokenize.TokenizerModel;
-
-	public sealed class TokenizerMEEvaluatorTool : AbstractEvaluatorTool<TokenSample, EvalToolParams>
+    public sealed class TokenizerMEEvaluatorTool : AbstractEvaluatorTool<TokenSample, TokenizerMEEvaluatorTool.EvalToolParams>
 	{
 	    public interface EvalToolParams : EvaluatorParams
 	  {

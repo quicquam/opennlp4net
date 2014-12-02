@@ -16,18 +16,12 @@
  */
 
 using System;
-using j4n.Interfaces;
 using j4n.IO.OutputStream;
+using opennlp.tools.postag;
 
-namespace opennlp.tools.cmdline.postag
+namespace opennlp.console.cmdline.postag
 {
-
-	using opennlp.tools.cmdline;
-	using POSSample = opennlp.tools.postag.POSSample;
-	using POSTaggerEvaluationMonitor = opennlp.tools.postag.POSTaggerEvaluationMonitor;
-	using opennlp.tools.util.eval;
-
-	/// <summary>
+    /// <summary>
 	/// A default implementation of <seealso cref="EvaluationMonitor"/> that prints
 	/// to an output stream.
 	/// 

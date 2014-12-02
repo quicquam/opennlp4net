@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,25 +14,22 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.IO;
 using j4n.Exceptions;
-using j4n.Interfaces;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using opennlp.model;
 using opennlp.tools.nonjava.extensions;
+using opennlp.tools.util;
+using opennlp.tools.util.model;
 using FileNotFoundException = j4n.Exceptions.FileNotFoundException;
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
-
-
-	using TrainUtil = opennlp.model.TrainUtil;
-	using TrainingParameters = opennlp.tools.util.TrainingParameters;
-	using BaseModel = opennlp.tools.util.model.BaseModel;
-
-	/// <summary>
+    /// <summary>
 	/// Util class for the command line interface.
 	/// <para>
 	/// <b>Note:</b> Do not use this class, internal use only!

@@ -16,18 +16,12 @@
  */
 
 using System;
-using j4n.Interfaces;
 using j4n.IO.OutputStream;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
-
-	using opennlp.tools.cmdline;
-	using TokenSample = opennlp.tools.tokenize.TokenSample;
-	using TokenizerEvaluationMonitor = opennlp.tools.tokenize.TokenizerEvaluationMonitor;
-	using opennlp.tools.util.eval;
-
-	/// <summary>
+    /// <summary>
 	/// A default implementation of <seealso cref="EvaluationMonitor"/> that prints
 	/// to an output stream.
 	/// 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,17 +14,15 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
+using System.Text;
 using j4n.IO.Reader;
 using j4n.Lang;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using StringUtil = opennlp.tools.util.StringUtil;
-
-	/// <summary>
+    /// <summary>
 	/// SAX style SGML parser. 
 	/// <para>
 	/// Note:<br>

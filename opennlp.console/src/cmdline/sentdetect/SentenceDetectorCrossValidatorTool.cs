@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,23 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.dictionary;
+using opennlp.tools.sentdetect;
+using opennlp.tools.util.eval;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.sentdetect
+namespace opennlp.console.cmdline.sentdetect
 {
-
-	using opennlp.tools.cmdline;
-	using CVParams = opennlp.tools.cmdline.@params.CVParams;
-	using CVToolParams = opennlp.tools.cmdline.sentdetect.SentenceDetectorCrossValidatorTool.CVToolParams;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using SDCrossValidator = opennlp.tools.sentdetect.SDCrossValidator;
-	using SentenceDetectorEvaluationMonitor = opennlp.tools.sentdetect.SentenceDetectorEvaluationMonitor;
-	using SentenceDetectorFactory = opennlp.tools.sentdetect.SentenceDetectorFactory;
-	using SentenceSample = opennlp.tools.sentdetect.SentenceSample;
-	using FMeasure = opennlp.tools.util.eval.FMeasure;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class SentenceDetectorCrossValidatorTool : AbstractCrossValidatorTool<SentenceSample, CVToolParams>
+    public sealed class SentenceDetectorCrossValidatorTool : AbstractCrossValidatorTool<SentenceSample, SentenceDetectorCrossValidatorTool.CVToolParams>
 	{
 	    public interface CVToolParams : TrainingParams, CVParams
 	  {

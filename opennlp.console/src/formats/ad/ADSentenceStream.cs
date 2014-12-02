@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -19,21 +14,20 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using j4n.IO.Reader;
 using j4n.Lang;
 using j4n.Serialization;
+using opennlp.tools.util;
 using StringReader = j4n.IO.Reader.StringReader;
 
-namespace opennlp.tools.formats.ad
+namespace opennlp.console.formats.ad
 {
-
-
-	using Node = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// Stream filter which merges text lines into sentences, following the Arvores
 	/// Deitadas syntax.
 	/// <para>
@@ -55,7 +49,7 @@ namespace opennlp.tools.formats.ad
 	  {
 
 		internal string text;
-		internal Node root;
+		internal SentenceParser.Node root;
 		internal string metadata;
 
 		public const string META_LABEL_FINAL = "final";
@@ -73,7 +67,7 @@ namespace opennlp.tools.formats.ad
 		}
 
 
-		public virtual Node Root
+		public virtual SentenceParser.Node Root
 		{
 			get
 			{

@@ -17,19 +17,13 @@
 
 using System;
 using j4n.Serialization;
-using opennlp.tools.cmdline;
+using opennlp.console.cmdline;
+using opennlp.tools.parser;
+using opennlp.tools.postag;
 
-namespace opennlp.tools.formats.convert
+namespace opennlp.console.formats.convert
 {
-
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using opennlp.tools.formats;
-	using Parse = opennlp.tools.parser.Parse;
-	using POSSample = opennlp.tools.postag.POSSample;
-	using opennlp.tools.util;
-
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public class ParseToPOSSampleStreamFactory : LanguageSampleStreamFactory<POSSample>

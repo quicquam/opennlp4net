@@ -18,7 +18,7 @@ using System.Text;
  * limitations under the License.
  */
 
-namespace opennlp.tools.formats.ad
+namespace opennlp.console.formats.ad
 {
 
 

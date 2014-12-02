@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,35 +14,25 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using j4n.IO.File;
 using j4n.Serialization;
-using opennlp.tools.cmdline;
+using opennlp.console.cmdline;
+using opennlp.console.cmdline.namefind;
+using opennlp.console.cmdline.@params;
+using opennlp.console.cmdline.parser;
+using opennlp.console.cmdline.tokenizer;
+using opennlp.console.formats.convert;
+using opennlp.tools.coref;
+using opennlp.tools.namefind;
+using opennlp.tools.parser;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using TokenNameFinderModelLoader = opennlp.tools.cmdline.namefind.TokenNameFinderModelLoader;
-	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
-	using ParserModelLoader = opennlp.tools.cmdline.parser.ParserModelLoader;
-	using TokenizerModelLoader = opennlp.tools.cmdline.tokenizer.TokenizerModelLoader;
-	using CorefSample = opennlp.tools.coref.CorefSample;
-	using opennlp.tools.formats;
-	using FileToStringSampleStream = opennlp.tools.formats.convert.FileToStringSampleStream;
-	using NameFinderME = opennlp.tools.namefind.NameFinderME;
-	using TokenNameFinder = opennlp.tools.namefind.TokenNameFinder;
-	using Parser = opennlp.tools.parser.Parser;
-	using ParserFactory = opennlp.tools.parser.ParserFactory;
-	using ParserModel = opennlp.tools.parser.ParserModel;
-	using Tokenizer = opennlp.tools.tokenize.Tokenizer;
-	using TokenizerME = opennlp.tools.tokenize.TokenizerME;
-	using TokenizerModel = opennlp.tools.tokenize.TokenizerModel;
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// Factory creates a stream which can parse MUC 6 Coref data and outputs CorefSample
 	/// objects which are enhanced with a full parse and are suitable to train the Coreference component.
 	/// </summary>

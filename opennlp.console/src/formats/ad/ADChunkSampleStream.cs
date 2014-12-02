@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,24 +14,18 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Serialization;
+using opennlp.tools.chunker;
+using opennlp.tools.namefind;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.ad
+namespace opennlp.console.formats.ad
 {
-
-
-	using ChunkSample = opennlp.tools.chunker.ChunkSample;
-	using Sentence = opennlp.tools.formats.ad.ADSentenceStream.Sentence;
-	using Leaf = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
-	using Node = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
-	using TreeElement = opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	/// <summary>
+    /// <summary>
 	/// Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the
 	/// Portuguese Chunker training.
 	/// <para>
@@ -109,7 +101,7 @@ namespace opennlp.tools.formats.ad
 		public virtual ChunkSample read()
 		{
 
-			Sentence paragraph;
+			ADSentenceStream.Sentence paragraph;
 			while ((paragraph = this.adSentenceStream.read()) != null)
 			{
 
@@ -126,7 +118,7 @@ namespace opennlp.tools.formats.ad
 				}
 				else
 				{
-					Node root = paragraph.Root;
+					ADSentenceStream.SentenceParser.Node root = paragraph.Root;
 					IList<string> sentence = new List<string>();
 					IList<string> tags = new List<string>();
 					IList<string> target = new List<string>();
@@ -145,26 +137,26 @@ namespace opennlp.tools.formats.ad
 			return null;
 		}
 
-		protected internal virtual void processRoot(Node root, IList<string> sentence, IList<string> tags, IList<string> target)
+		protected internal virtual void processRoot(ADSentenceStream.SentenceParser.Node root, IList<string> sentence, IList<string> tags, IList<string> target)
 		{
 			if (root != null)
 			{
-				TreeElement[] elements = root.Elements;
+				ADSentenceStream.SentenceParser.TreeElement[] elements = root.Elements;
 				for (int i = 0; i < elements.Length; i++)
 				{
 					if (elements[i].Leaf)
 					{
-						processLeaf((Leaf) elements[i], false, OTHER, sentence, tags, target);
+						processLeaf((ADSentenceStream.SentenceParser.Leaf) elements[i], false, OTHER, sentence, tags, target);
 					}
 					else
 					{
-						processNode((Node) elements[i], sentence, tags, target, null);
+						processNode((ADSentenceStream.SentenceParser.Node) elements[i], sentence, tags, target, null);
 					}
 				}
 			}
 		}
 
-		private void processNode(Node node, IList<string> sentence, IList<string> tags, IList<string> target, string inheritedTag)
+		private void processNode(ADSentenceStream.SentenceParser.Node node, IList<string> sentence, IList<string> tags, IList<string> target, string inheritedTag)
 		{
 		string phraseTag = getChunkTag(node);
 
@@ -175,14 +167,14 @@ namespace opennlp.tools.formats.ad
 		  inherited = true;
 		}
 
-		TreeElement[] elements = node.Elements;
+		ADSentenceStream.SentenceParser.TreeElement[] elements = node.Elements;
 		for (int i = 0; i < elements.Length; i++)
 		{
 			if (elements[i].Leaf)
 			{
 				bool intermediate = false;
 				string tag = phraseTag;
-				Leaf leaf = (Leaf) elements[i];
+				ADSentenceStream.SentenceParser.Leaf leaf = (ADSentenceStream.SentenceParser.Leaf) elements[i];
 
 				string localChunk = getChunkTag(leaf);
 				if (localChunk != null && !tag.Equals(localChunk))
@@ -204,7 +196,7 @@ namespace opennlp.tools.formats.ad
 			else
 			{
 				int before = target.Count;
-				processNode((Node) elements[i], sentence, tags, target, phraseTag);
+				processNode((ADSentenceStream.SentenceParser.Node) elements[i], sentence, tags, target, phraseTag);
 
 				// if the child node was of a different type we should break the chunk sequence
 				for (int j = target.Count - 1; j >= before; j--)
@@ -220,7 +212,7 @@ namespace opennlp.tools.formats.ad
 		}
 
 
-	  protected internal virtual void processLeaf(Leaf leaf, bool isIntermediate, string phraseTag, IList<string> sentence, IList<string> tags, IList<string> target)
+	  protected internal virtual void processLeaf(ADSentenceStream.SentenceParser.Leaf leaf, bool isIntermediate, string phraseTag, IList<string> sentence, IList<string> tags, IList<string> target)
 	  {
 			string chunkTag;
 
@@ -282,7 +274,7 @@ namespace opennlp.tools.formats.ad
 		return t;
 	  }
 
-	  protected internal virtual string getChunkTag(Leaf leaf)
+	  protected internal virtual string getChunkTag(ADSentenceStream.SentenceParser.Leaf leaf)
 	  {
 		string tag = leaf.SyntacticTag;
 		if ("P".Equals(tag))
@@ -292,7 +284,7 @@ namespace opennlp.tools.formats.ad
 		return null;
 	  }
 
-	  protected internal virtual string getChunkTag(Node node)
+	  protected internal virtual string getChunkTag(ADSentenceStream.SentenceParser.Node node)
 	  {
 		string tag = node.SyntacticTag;
 

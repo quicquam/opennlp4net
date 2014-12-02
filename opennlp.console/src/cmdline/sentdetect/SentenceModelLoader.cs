@@ -16,16 +16,11 @@
  */
 
 using j4n.IO.InputStream;
+using opennlp.tools.sentdetect;
 
-namespace opennlp.tools.cmdline.sentdetect
+namespace opennlp.console.cmdline.sentdetect
 {
-
-
-	using opennlp.tools.cmdline;
-	using SentenceModel = opennlp.tools.sentdetect.SentenceModel;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-
-	/// <summary>
+    /// <summary>
 	/// Loads a Tokenizer Model for the command line tools.
 	/// <para>
 	/// <b>Note:</b> Do not use this class, internal use only!

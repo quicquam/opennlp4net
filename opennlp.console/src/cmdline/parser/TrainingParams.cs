@@ -16,15 +16,11 @@
  */
 
 using j4n.IO.File;
+using opennlp.console.cmdline.@params;
 
-namespace opennlp.tools.cmdline.parser
+namespace opennlp.console.cmdline.parser
 {
-
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using BasicTrainingParams = opennlp.tools.cmdline.@params.BasicTrainingParams;
-
-	/// <summary>
+    /// <summary>
 	/// TrainingParams for Parser.
 	/// 
 	/// Note: Do not use this class, internal use only!

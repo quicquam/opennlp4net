@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,32 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.Exceptions;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.console.cmdline.@params;
+using opennlp.model;
+using opennlp.tools.dictionary;
 using opennlp.tools.parser;
+using opennlp.tools.util.model;
+using Parser = opennlp.tools.parser.chunking.Parser;
 
-namespace opennlp.tools.cmdline.parser
+namespace opennlp.console.cmdline.parser
 {
-
-
-	using TrainUtil = opennlp.model.TrainUtil;
-	using opennlp.tools.cmdline;
-	using EncodingParameter = opennlp.tools.cmdline.@params.EncodingParameter;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using TrainerToolParams = opennlp.tools.cmdline.parser.ParserTrainerTool.TrainerToolParams;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using HeadRules = opennlp.tools.parser.HeadRules;
-	using Parse = opennlp.tools.parser.Parse;
-	using ParserModel = opennlp.tools.parser.ParserModel;
-	using Parser = opennlp.tools.parser.chunking.Parser;
-	using opennlp.tools.util;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class ParserTrainerTool : AbstractTrainerTool<Parse, TrainerToolParams>
+    public sealed class ParserTrainerTool : AbstractTrainerTool<Parse, ParserTrainerTool.TrainerToolParams>
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams, EncodingParameter
 	  {

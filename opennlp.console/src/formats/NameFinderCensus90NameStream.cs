@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -13,20 +12,15 @@
  *  limitations under the License.
  *  under the License.
  */
+using System;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.Serialization;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-	using StringList = opennlp.tools.util.StringList;
-	using StringUtil = opennlp.tools.util.StringUtil;
-
-	/// <summary>
+    /// <summary>
 	/// This class helps to read the US Census data from the files to build a
 	/// StringList for each dictionary entry in the name-finder dictionary.
 	/// The entries in the source file are as follows:

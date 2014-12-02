@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
 
 

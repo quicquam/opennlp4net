@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.doccat
+using opennlp.console.cmdline.@params;
+
+namespace opennlp.console.cmdline.doccat
 {
-
-	using BasicTrainingParams = opennlp.tools.cmdline.@params.BasicTrainingParams;
-
-	/// <summary>
+    /// <summary>
 	/// TrainingParams for DocCat.
 	/// 
 	/// Note: Do not use this class, internal use only!

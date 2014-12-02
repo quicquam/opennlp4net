@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,23 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using j4n.IO.File;
 using j4n.Serialization;
-using opennlp.tools.cmdline;
+using opennlp.console.cmdline;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.namefind;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-	using ArgumentParser = opennlp.tools.cmdline.ArgumentParser;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using CmdLineUtil = opennlp.tools.cmdline.CmdLineUtil;
-	using TerminateToolException = opennlp.tools.cmdline.TerminateToolException;
-	using BasicFormatParams = opennlp.tools.cmdline.@params.BasicFormatParams;
-	using LANGUAGE = opennlp.tools.formats.Conll02NameSampleStream.LANGUAGE;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public class Conll02NameSampleStreamFactory : LanguageSampleStreamFactory<NameSample>
@@ -64,15 +56,15 @@ namespace opennlp.tools.formats
 
 		Parameters @params = ArgumentParser.parse<Parameters>(args);
 
-		LANGUAGE lang;
+		Conll02NameSampleStream.LANGUAGE lang;
 		if ("nl".Equals(@params.Lang))
 		{
-		  lang = LANGUAGE.NL;
+		  lang = Conll02NameSampleStream.LANGUAGE.NL;
 		  language = @params.Lang;
 		}
 		else if ("es".Equals(@params.Lang))
 		{
-		  lang = LANGUAGE.ES;
+		  lang = Conll02NameSampleStream.LANGUAGE.ES;
 		  language = @params.Lang;
 		}
 		else

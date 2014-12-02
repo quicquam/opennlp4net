@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,27 +14,18 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using j4n.Serialization;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.namefind;
+using opennlp.tools.util.eval;
 
-namespace opennlp.tools.cmdline.namefind
+namespace opennlp.console.cmdline.namefind
 {
-
-
-	using opennlp.tools.cmdline;
-	using EvalToolParams = opennlp.tools.cmdline.namefind.TokenNameFinderEvaluatorTool.EvalToolParams;
-	using DetailedFMeasureEvaluatorParams = opennlp.tools.cmdline.@params.DetailedFMeasureEvaluatorParams;
-	using EvaluatorParams = opennlp.tools.cmdline.@params.EvaluatorParams;
-	using NameFinderME = opennlp.tools.namefind.NameFinderME;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using TokenNameFinderEvaluationMonitor = opennlp.tools.namefind.TokenNameFinderEvaluationMonitor;
-	using TokenNameFinderEvaluator = opennlp.tools.namefind.TokenNameFinderEvaluator;
-	using TokenNameFinderModel = opennlp.tools.namefind.TokenNameFinderModel;
-	using opennlp.tools.util;
-	using opennlp.tools.util.eval;
-
-	public sealed class TokenNameFinderEvaluatorTool : AbstractEvaluatorTool<NameSample, EvalToolParams>
+    public sealed class TokenNameFinderEvaluatorTool : AbstractEvaluatorTool<NameSample, TokenNameFinderEvaluatorTool.EvalToolParams>
 	{
 	    public interface EvalToolParams : EvaluatorParams, DetailedFMeasureEvaluatorParams
 	  {

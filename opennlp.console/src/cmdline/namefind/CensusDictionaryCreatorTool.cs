@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,24 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using j4n.Serialization;
+using opennlp.console.formats;
+using opennlp.tools.dictionary;
+using opennlp.tools.util;
 
-namespace opennlp.tools.cmdline.namefind
+namespace opennlp.console.cmdline.namefind
 {
-
-
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using NameFinderCensus90NameStream = opennlp.tools.formats.NameFinderCensus90NameStream;
-	using opennlp.tools.util;
-	using StringList = opennlp.tools.util.StringList;
-
-	/// <summary>
+    /// <summary>
 	/// This tool helps create a loadable dictionary for the {@code NameFinder},
 	/// from data collected from US Census data.
 	/// <para>

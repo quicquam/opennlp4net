@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -17,19 +14,18 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.IO;
+using System.Text;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
+using opennlp.tools.doccat;
+using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats
+namespace opennlp.console.formats
 {
-
-
-	using DocumentSample = opennlp.tools.doccat.DocumentSample;
-	using SimpleTokenizer = opennlp.tools.tokenize.SimpleTokenizer;
-	using opennlp.tools.util;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	/// <summary>
+    /// <summary>
 	/// Stream filter to produce document samples out of a Leipzig sentences.txt file.
 	/// In the Leipzig corpus the encoding of the various sentences.txt file is defined by
 	/// the language. The language must be specified to produce the category tags and is used

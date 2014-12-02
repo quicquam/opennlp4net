@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,15 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using j4n.Serialization;
+using opennlp.tools.util;
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
-
-	using opennlp.tools.util;
-	using TrainingParameters = opennlp.tools.util.TrainingParameters;
-
-	/// <summary>
+    /// <summary>
 	/// Base class for trainer tools.
 	/// </summary>
 	public class AbstractTrainerTool<T, P> : AbstractTypedParamTool<T, P>

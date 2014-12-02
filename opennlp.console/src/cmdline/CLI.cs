@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,55 +16,21 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using opennlp.console.cmdline.chunker;
+using opennlp.console.cmdline.coref;
+using opennlp.console.cmdline.dictionary;
+using opennlp.console.cmdline.doccat;
+using opennlp.console.cmdline.namefind;
+using opennlp.console.cmdline.parser;
+using opennlp.console.cmdline.postag;
+using opennlp.console.cmdline.sentdetect;
+using opennlp.console.cmdline.tokenizer;
+using Version = opennlp.tools.util.Version;
 
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
-
-
-	using ChunkerConverterTool = opennlp.tools.cmdline.chunker.ChunkerConverterTool;
-	using ChunkerCrossValidatorTool = opennlp.tools.cmdline.chunker.ChunkerCrossValidatorTool;
-	using ChunkerEvaluatorTool = opennlp.tools.cmdline.chunker.ChunkerEvaluatorTool;
-	using ChunkerMETool = opennlp.tools.cmdline.chunker.ChunkerMETool;
-	using ChunkerTrainerTool = opennlp.tools.cmdline.chunker.ChunkerTrainerTool;
-	using CoreferencerTool = opennlp.tools.cmdline.coref.CoreferencerTool;
-	using CoreferencerTrainerTool = opennlp.tools.cmdline.coref.CoreferencerTrainerTool;
-	using CoreferenceConverterTool = opennlp.tools.cmdline.coref.CoreferenceConverterTool;
-	using DictionaryBuilderTool = opennlp.tools.cmdline.dictionary.DictionaryBuilderTool;
-	using DoccatConverterTool = opennlp.tools.cmdline.doccat.DoccatConverterTool;
-	using DoccatTool = opennlp.tools.cmdline.doccat.DoccatTool;
-	using DoccatTrainerTool = opennlp.tools.cmdline.doccat.DoccatTrainerTool;
-	using CensusDictionaryCreatorTool = opennlp.tools.cmdline.namefind.CensusDictionaryCreatorTool;
-	using TokenNameFinderConverterTool = opennlp.tools.cmdline.namefind.TokenNameFinderConverterTool;
-	using TokenNameFinderCrossValidatorTool = opennlp.tools.cmdline.namefind.TokenNameFinderCrossValidatorTool;
-	using TokenNameFinderEvaluatorTool = opennlp.tools.cmdline.namefind.TokenNameFinderEvaluatorTool;
-	using TokenNameFinderTool = opennlp.tools.cmdline.namefind.TokenNameFinderTool;
-	using TokenNameFinderTrainerTool = opennlp.tools.cmdline.namefind.TokenNameFinderTrainerTool;
-	using BuildModelUpdaterTool = opennlp.tools.cmdline.parser.BuildModelUpdaterTool;
-	using CheckModelUpdaterTool = opennlp.tools.cmdline.parser.CheckModelUpdaterTool;
-	using ParserConverterTool = opennlp.tools.cmdline.parser.ParserConverterTool;
-	using ParserTool = opennlp.tools.cmdline.parser.ParserTool;
-	using ParserTrainerTool = opennlp.tools.cmdline.parser.ParserTrainerTool;
-	using TaggerModelReplacerTool = opennlp.tools.cmdline.parser.TaggerModelReplacerTool;
-	using POSTaggerConverterTool = opennlp.tools.cmdline.postag.POSTaggerConverterTool;
-	using POSTaggerCrossValidatorTool = opennlp.tools.cmdline.postag.POSTaggerCrossValidatorTool;
-	using POSTaggerEvaluatorTool = opennlp.tools.cmdline.postag.POSTaggerEvaluatorTool;
-	using POSTaggerTrainerTool = opennlp.tools.cmdline.postag.POSTaggerTrainerTool;
-	using SentenceDetectorConverterTool = opennlp.tools.cmdline.sentdetect.SentenceDetectorConverterTool;
-	using SentenceDetectorCrossValidatorTool = opennlp.tools.cmdline.sentdetect.SentenceDetectorCrossValidatorTool;
-	using SentenceDetectorEvaluatorTool = opennlp.tools.cmdline.sentdetect.SentenceDetectorEvaluatorTool;
-	using SentenceDetectorTool = opennlp.tools.cmdline.sentdetect.SentenceDetectorTool;
-	using SentenceDetectorTrainerTool = opennlp.tools.cmdline.sentdetect.SentenceDetectorTrainerTool;
-	using DictionaryDetokenizerTool = opennlp.tools.cmdline.tokenizer.DictionaryDetokenizerTool;
-	using SimpleTokenizerTool = opennlp.tools.cmdline.tokenizer.SimpleTokenizerTool;
-	using TokenizerConverterTool = opennlp.tools.cmdline.tokenizer.TokenizerConverterTool;
-	using TokenizerCrossValidatorTool = opennlp.tools.cmdline.tokenizer.TokenizerCrossValidatorTool;
-	using TokenizerMEEvaluatorTool = opennlp.tools.cmdline.tokenizer.TokenizerMEEvaluatorTool;
-	using TokenizerMETool = opennlp.tools.cmdline.tokenizer.TokenizerMETool;
-	using TokenizerTrainerTool = opennlp.tools.cmdline.tokenizer.TokenizerTrainerTool;
-	using Version = opennlp.tools.util.Version;
-
-	public sealed class CLI
+    public sealed class CLI
 	{
 
 	  public const string CMD = "opennlp";
@@ -112,7 +77,7 @@ namespace opennlp.tools.cmdline
 
 
 		// POS Tagger
-		tools.Add(new opennlp.tools.cmdline.postag.POSTaggerTool());
+		tools.Add(new POSTaggerTool());
 		tools.Add(new POSTaggerTrainerTool());
 		tools.Add(new POSTaggerEvaluatorTool());
 		tools.Add(new POSTaggerCrossValidatorTool());

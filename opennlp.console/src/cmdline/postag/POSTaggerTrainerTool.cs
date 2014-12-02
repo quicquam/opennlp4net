@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,30 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.IO.File;
+using opennlp.console.cmdline.@params;
+using opennlp.model;
+using opennlp.tools.dictionary;
+using opennlp.tools.postag;
+using opennlp.tools.util;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.postag
+namespace opennlp.console.cmdline.postag
 {
-
-
-	using TrainUtil = opennlp.model.TrainUtil;
-	using opennlp.tools.cmdline;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using TrainerToolParams = opennlp.tools.cmdline.postag.POSTaggerTrainerTool.TrainerToolParams;
-	using Dictionary = opennlp.tools.dictionary.Dictionary;
-	using MutableTagDictionary = opennlp.tools.postag.MutableTagDictionary;
-	using POSModel = opennlp.tools.postag.POSModel;
-	using POSSample = opennlp.tools.postag.POSSample;
-	using POSTaggerFactory = opennlp.tools.postag.POSTaggerFactory;
-	using POSTaggerME = opennlp.tools.postag.POSTaggerME;
-	using TagDictionary = opennlp.tools.postag.TagDictionary;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using TrainingParameters = opennlp.tools.util.TrainingParameters;
-	using ModelType = opennlp.tools.util.model.ModelType;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class POSTaggerTrainerTool : AbstractTrainerTool<POSSample, TrainerToolParams>
+    public sealed class POSTaggerTrainerTool : AbstractTrainerTool<POSSample, POSTaggerTrainerTool.TrainerToolParams>
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams
 	  {

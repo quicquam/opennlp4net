@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.namefind
+using opennlp.tools.namefind;
+using opennlp.tools.util;
+
+namespace opennlp.console.cmdline.namefind
 {
-
-	using opennlp.tools.cmdline;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using TokenNameFinderEvaluationMonitor = opennlp.tools.namefind.TokenNameFinderEvaluationMonitor;
-	using Span = opennlp.tools.util.Span;
-
-	public class TokenNameFinderDetailedFMeasureListener : DetailedFMeasureListener<NameSample>, TokenNameFinderEvaluationMonitor
+    public class TokenNameFinderDetailedFMeasureListener : DetailedFMeasureListener<NameSample>, TokenNameFinderEvaluationMonitor
 	{
 
 	  protected internal override Span[] asSpanArray(NameSample sample)

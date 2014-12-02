@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.console.cmdline.@params
 {
-
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-
-	public interface LanguageParams
+    public interface LanguageParams
 	{
 
 	  string Lang {get;}

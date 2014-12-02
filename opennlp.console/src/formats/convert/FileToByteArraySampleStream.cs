@@ -20,15 +20,11 @@ using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using j4n.Serialization;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.convert
+namespace opennlp.console.formats.convert
 {
-
-
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	public class FileToByteArraySampleStream : FilterObjectStream<Jfile, byte[]>
+    public class FileToByteArraySampleStream : FilterObjectStream<Jfile, byte[]>
 	{
 
 	  public FileToByteArraySampleStream(ObjectStream<Jfile> samples) : base(samples)

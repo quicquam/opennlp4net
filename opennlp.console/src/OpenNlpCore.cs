@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace opennlp.console
 {
@@ -20,6 +22,15 @@ namespace opennlp.console
             {
                 InitializeOutputStream();
             }
+        }
+
+        private void GetToolType()
+        {
+            var toolType = (from t in Assembly.GetExecutingAssembly().GetTypes()
+                    where t.IsClass
+                    && (t.Name == _options.ToolName 
+                    || t.Name == string.Format("{0}Tool",_options.ToolName))
+                    select t).First();
         }
 
         private void InitializeOutputStream()

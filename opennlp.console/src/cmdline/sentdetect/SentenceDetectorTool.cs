@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,22 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.Reader;
 using j4n.Serialization;
+using opennlp.tools.sentdetect;
+using opennlp.tools.util;
 
-namespace opennlp.tools.cmdline.sentdetect
+namespace opennlp.console.cmdline.sentdetect
 {
-
-
-	using SentenceDetectorME = opennlp.tools.sentdetect.SentenceDetectorME;
-	using SentenceModel = opennlp.tools.sentdetect.SentenceModel;
-	using opennlp.tools.util;
-	using ParagraphStream = opennlp.tools.util.ParagraphStream;
-	using PlainTextByLineStream = opennlp.tools.util.PlainTextByLineStream;
-
-	/// <summary>
+    /// <summary>
 	/// A sentence detector which uses a maxent model to predict the sentences.
 	/// </summary>
 	public sealed class SentenceDetectorTool : BasicCmdLineTool

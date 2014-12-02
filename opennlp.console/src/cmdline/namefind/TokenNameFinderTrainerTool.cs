@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,27 +14,19 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
+using opennlp.console.cmdline.@params;
+using opennlp.tools.namefind;
+using opennlp.tools.util;
+using opennlp.tools.util.model;
 
-namespace opennlp.tools.cmdline.namefind
+namespace opennlp.console.cmdline.namefind
 {
-
-
-	using opennlp.tools.cmdline;
-	using OptionalParameter = opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-	using ParameterDescription = opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-	using TrainerToolParams = opennlp.tools.cmdline.namefind.TokenNameFinderTrainerTool.TrainerToolParams;
-	using TrainingToolParams = opennlp.tools.cmdline.@params.TrainingToolParams;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using NameSampleTypeFilter = opennlp.tools.namefind.NameSampleTypeFilter;
-	using TokenNameFinderModel = opennlp.tools.namefind.TokenNameFinderModel;
-	using InvalidFormatException = opennlp.tools.util.InvalidFormatException;
-	using opennlp.tools.util.model;
-	using ModelUtil = opennlp.tools.util.model.ModelUtil;
-
-	public sealed class TokenNameFinderTrainerTool : AbstractTrainerTool<NameSample, TrainerToolParams>
+    public sealed class TokenNameFinderTrainerTool : AbstractTrainerTool<NameSample, TokenNameFinderTrainerTool.TrainerToolParams>
 	{
 	    public interface TrainerToolParams : TrainingParams, TrainingToolParams
 	  {

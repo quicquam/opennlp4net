@@ -16,18 +16,12 @@
  */
 
 using System;
-using j4n.Interfaces;
 using j4n.IO.OutputStream;
+using opennlp.tools.namefind;
 
-namespace opennlp.tools.cmdline.namefind
+namespace opennlp.console.cmdline.namefind
 {
-
-	using opennlp.tools.cmdline;
-	using NameSample = opennlp.tools.namefind.NameSample;
-	using TokenNameFinderEvaluationMonitor = opennlp.tools.namefind.TokenNameFinderEvaluationMonitor;
-	using opennlp.tools.util.eval;
-
-	/// <summary>
+    /// <summary>
 	/// A default implementation of <seealso cref="EvaluationMonitor"/> that prints
 	/// to an output stream.
 	/// 

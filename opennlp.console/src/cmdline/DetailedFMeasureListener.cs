@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,16 +14,15 @@ using System.Text;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
+using System.Text;
 using j4n.IO.File;
+using opennlp.tools.util;
+using opennlp.tools.util.eval;
 
-namespace opennlp.tools.cmdline
+namespace opennlp.console.cmdline
 {
-
-
-	using Span = opennlp.tools.util.Span;
-	using opennlp.tools.util.eval;
-
-	/// <summary>
+    /// <summary>
 	/// This listener will gather detailed information about the sample under evaluation and will
 	/// allow detailed FMeasure for each outcome.
 	/// <para>

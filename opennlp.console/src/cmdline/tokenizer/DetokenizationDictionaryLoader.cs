@@ -16,15 +16,11 @@
  */
 
 using j4n.IO.InputStream;
+using opennlp.tools.tokenize;
 
-namespace opennlp.tools.cmdline.tokenizer
+namespace opennlp.console.cmdline.tokenizer
 {
-
-
-	using opennlp.tools.cmdline;
-	using DetokenizationDictionary = opennlp.tools.tokenize.DetokenizationDictionary;
-
-	internal sealed class DetokenizationDictionaryLoader : ModelLoader<DetokenizationDictionary>
+    internal sealed class DetokenizationDictionaryLoader : ModelLoader<DetokenizationDictionary>
 	{
 
 	  internal DetokenizationDictionaryLoader() : base("detokenizer dictionary")

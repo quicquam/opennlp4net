@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,18 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System.Collections.Generic;
 using j4n.Serialization;
+using opennlp.tools.parser;
+using opennlp.tools.postag;
+using opennlp.tools.util;
 
-namespace opennlp.tools.formats.convert
+namespace opennlp.console.formats.convert
 {
-
-
-	using Parse = opennlp.tools.parser.Parse;
-	using POSSample = opennlp.tools.postag.POSSample;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-
-	/// <summary>
+    /// <summary>
 	/// <b>Note:</b> Do not use this class, internal use only!
 	/// </summary>
 	public class ParseToPOSSampleStream : FilterObjectStream<Parse, POSSample>

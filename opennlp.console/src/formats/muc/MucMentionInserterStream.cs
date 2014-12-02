@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,26 +14,17 @@ using System.Collections.Generic;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using j4n.Serialization;
-using opennlp.nonjava.helperclasses;
+using opennlp.tools.coref;
+using opennlp.tools.coref.mention;
+using opennlp.tools.util;
+using Parse = opennlp.tools.parser.Parse;
 
-namespace opennlp.tools.formats.muc
+namespace opennlp.console.formats.muc
 {
-
-
-	using CorefSample = opennlp.tools.coref.CorefSample;
-	using DefaultParse = opennlp.tools.coref.mention.DefaultParse;
-	using Mention = opennlp.tools.coref.mention.Mention;
-	using MentionFinder = opennlp.tools.coref.mention.MentionFinder;
-	using PTBHeadFinder = opennlp.tools.coref.mention.PTBHeadFinder;
-	using PTBMentionFinder = opennlp.tools.coref.mention.PTBMentionFinder;
-	using CorefMention = opennlp.tools.formats.muc.MucCorefContentHandler.CorefMention;
-	using Parse = opennlp.tools.parser.Parse;
-	using opennlp.tools.util;
-	using opennlp.tools.util;
-	using Span = opennlp.tools.util.Span;
-
-	/// <summary>
+    /// <summary>
 	/// The mention insert is responsible to insert the mentions from the training data
 	/// into the parse trees.
 	/// </summary>
@@ -52,7 +41,7 @@ namespace opennlp.tools.formats.muc
 		mentionFinder = PTBMentionFinder.getInstance(PTBHeadFinder.Instance);
 	  }
 
-	  private static Span getMinSpan(Parse p, CorefMention mention)
+	  private static Span getMinSpan(Parse p, MucCorefContentHandler.CorefMention mention)
 	  {
 		string min = mention.min;
 
@@ -139,12 +128,12 @@ namespace opennlp.tools.formats.muc
 
 		  IList<Parse> mentionParses = new List<Parse>();
 
-		  IList<CorefMention[]> allMentions = sample.Mentions;
+		  IList<MucCorefContentHandler.CorefMention[]> allMentions = sample.Mentions;
 		  IList<Parse> allParses = sample.Parses;
 
 		  for (int si = 0; si < allMentions.Count; si++)
 		  {
-			CorefMention[] mentions = allMentions[si];
+			MucCorefContentHandler.CorefMention[] mentions = allMentions[si];
 			Parse p = allParses[si];
 
 			foreach (Mention extent in mentionFinder.getMentions(new DefaultParse(p, si)))
@@ -159,7 +148,7 @@ namespace opennlp.tools.formats.muc
 
 			Parse[] tokens = p.TagNodes;
 
-			foreach (CorefMention mention in mentions)
+			foreach (MucCorefContentHandler.CorefMention mention in mentions)
 			{
 			  Span min = getMinSpan(p, mention);
 
