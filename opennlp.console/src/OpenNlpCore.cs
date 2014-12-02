@@ -24,9 +24,9 @@ namespace opennlp.console
             }
         }
 
-        private void GetToolType()
+        private Type GetToolType()
         {
-            var toolType = (from t in Assembly.GetExecutingAssembly().GetTypes()
+            return (from t in Assembly.GetExecutingAssembly().GetTypes()
                     where t.IsClass
                     && (t.Name == _options.ToolName 
                     || t.Name == string.Format("{0}Tool",_options.ToolName))
