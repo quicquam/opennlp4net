@@ -38,7 +38,7 @@ namespace opennlp.tools.tokenize
             this.input = input;
         }
 
-        public virtual TokenSample read()
+        public override TokenSample read()
         {
             string inputString = input.read();
 

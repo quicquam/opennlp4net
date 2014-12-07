@@ -71,6 +71,6 @@ namespace opennlp.tools.chunker
             {
                 return null;
             }
-        }
+        }        
     }
 }

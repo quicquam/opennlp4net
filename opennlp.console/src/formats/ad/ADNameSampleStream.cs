@@ -198,7 +198,7 @@ namespace opennlp.console.formats.ad
 
 	  internal int textID = -1;
 
-	  public virtual NameSample read()
+	  public override NameSample read()
 	  {
 
 		ADSentenceStream.Sentence paragraph;

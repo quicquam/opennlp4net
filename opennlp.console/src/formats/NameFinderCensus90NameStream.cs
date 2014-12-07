@@ -73,7 +73,7 @@ namespace opennlp.console.formats
 		this.lineStream = new PlainTextByLineStream(@in, this.encoding);
 	  }
 
-	  public virtual StringList read()
+	  public override StringList read()
 	  {
 		string line = lineStream.read();
 		StringList name = null;

@@ -17,6 +17,10 @@ namespace opennlp.tools.util.eval
         public class TrainingSampleStream : ObjectStream<T>
         {
             public ObjectStream<T> TestSampleStream { get; set; }
+            public override T read()
+            {
+                throw new System.NotImplementedException();
+            }
         }
 
         public TrainingSampleStream next()

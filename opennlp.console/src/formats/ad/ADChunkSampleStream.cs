@@ -98,7 +98,7 @@ namespace opennlp.console.formats.ad
 			}
 		}
 
-		public virtual ChunkSample read()
+		public override ChunkSample read()
 		{
 
 			ADSentenceStream.Sentence paragraph;

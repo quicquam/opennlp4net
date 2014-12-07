@@ -152,7 +152,7 @@ namespace opennlp.tools.namefind
                 this.monitor = monitor;
             }
 
-            public virtual NameSample read()
+            public override NameSample read()
             {
                 monitor.incrementCounter();
                 return sampleStream.read();

@@ -31,8 +31,6 @@ namespace opennlp.tools.util
     /// @param <T> the type of this stream </param>
     public abstract class FilterObjectStream<S, T> : ObjectStream<T>
     {
-        public abstract T read();
-
         protected internal readonly ObjectStream<S> samples;
 
         protected internal FilterObjectStream(ObjectStream<S> samples)

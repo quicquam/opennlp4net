@@ -90,7 +90,7 @@ namespace opennlp.console.formats.ad
 	  }
 
 	  // The Arvores Deitadas Corpus has information about texts and paragraphs.
-	  public virtual SentenceSample read()
+	  public override SentenceSample read()
 	  {
 
 		if (sent == null)

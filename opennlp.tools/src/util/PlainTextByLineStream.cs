@@ -71,12 +71,12 @@ namespace opennlp.tools.util
             throw new System.NotImplementedException();
         }
 
-        public virtual string read()
+        public override string read()
         {
             return @in.readLine();
         }
 
-        public virtual void reset()
+        public override void reset()
         {
             if (channel == null)
             {

@@ -67,7 +67,7 @@ namespace opennlp.console.formats
 	  {
 	  }
 
-      public virtual Jfile read()
+      public override Jfile read()
 	  {
 
 		while (textFiles.Count == 0 && directories.Count > 0)

@@ -117,18 +117,18 @@ namespace opennlp.console.cmdline.namefind
 		  }
 
 
-		  public virtual NameSample read()
+		  public override NameSample read()
 		  {
 			monitor.incrementCounter();
 			return outerInstance.sampleStream.read();
 		  }
 
-		  public virtual void reset()
+          public override void reset()
 		  {
 			outerInstance.sampleStream.reset();
 		  }
 
-		  public virtual void close()
+          public override void close()
 		  {
 			outerInstance.sampleStream.close();
 		  }

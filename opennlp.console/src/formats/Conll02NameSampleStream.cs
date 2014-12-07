@@ -125,7 +125,7 @@ namespace opennlp.console.formats
 	  }
 
 
-	  public virtual NameSample read()
+	  public override NameSample read()
 	  {
 
 		IList<string> sentence = new List<string>();

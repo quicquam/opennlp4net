@@ -117,7 +117,7 @@ namespace opennlp.console.cmdline.chunker
 		  }
 
 
-		  public virtual ChunkSample read()
+		  public override ChunkSample read()
 		  {
 			monitor.incrementCounter();
 			return outerInstance.sampleStream.read();

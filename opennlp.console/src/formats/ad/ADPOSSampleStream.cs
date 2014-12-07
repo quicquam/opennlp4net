@@ -84,7 +84,7 @@ namespace opennlp.console.formats.ad
 		}
 	  }
 
-	  public virtual POSSample read()
+	  public override POSSample read()
 	  {
 		ADSentenceStream.Sentence paragraph;
 		while ((paragraph = this.adSentenceStream.read()) != null)
