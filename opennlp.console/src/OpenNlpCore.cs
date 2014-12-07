@@ -30,14 +30,6 @@ namespace opennlp.console
                     if (_cmdLineTool != null)
                     {
                         _cmdLineTool.run(CreateCommandLineArguments());
-                        if (!string.IsNullOrEmpty(_options.InputFilename))
-                        {
-                            //InitializeInputStream();
-                        }
-                        if (!string.IsNullOrEmpty(_options.OutputFilename))
-                        {
-                            //InitializeOutputStream();
-                        }
                     }
                 }
             }
@@ -46,6 +38,12 @@ namespace opennlp.console
         private string[] CreateCommandLineArguments()
         {
             var argList = new List<string> {_options.ModelName};
+
+            if(!string.IsNullOrEmpty(_options.InputFilename))
+                argList.Add(_options.InputFilename);
+
+            if (!string.IsNullOrEmpty(_options.OutputFilename))
+                argList.Add(_options.OutputFilename);
             return argList.ToArray();
         }
 
@@ -56,30 +54,6 @@ namespace opennlp.console
                     where t.IsClass
                     && (t.Name == toolName)
                     select t).FirstOrDefault();
-        }
-
-        private void InitializeOutputStream()
-        {
-            try
-            {
-                _outputStream = new StreamWriter(_options.OutputFilename);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void InitializeInputStream()
-        {
-            try
-            {
-                _inputStream = new StreamReader(_options.InputFilename);
-            }
-            catch (Exception ex)
-            {
-                
-            }
         }
 
         public void Process()

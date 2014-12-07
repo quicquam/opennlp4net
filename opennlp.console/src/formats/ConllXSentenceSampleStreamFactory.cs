@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 using System;
-using j4n.Serialization;
 using opennlp.console.cmdline;
 using opennlp.console.cmdline.@params;
 using opennlp.console.formats.convert;
 using opennlp.tools.postag;
 using opennlp.tools.sentdetect;
+using opennlp.tools.util;
 
 namespace opennlp.console.formats
 {

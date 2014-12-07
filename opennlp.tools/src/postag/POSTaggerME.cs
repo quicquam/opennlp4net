@@ -20,7 +20,6 @@ using System.Text;
  */
 using j4n.Concurrency;
 using j4n.Object;
-using j4n.Serialization;
 
 
 namespace opennlp.tools.postag

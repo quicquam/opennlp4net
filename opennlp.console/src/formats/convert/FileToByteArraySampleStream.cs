@@ -19,7 +19,6 @@ using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
-using j4n.Serialization;
 using opennlp.tools.util;
 
 namespace opennlp.console.formats.convert

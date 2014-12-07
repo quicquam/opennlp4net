@@ -21,7 +21,6 @@ using System.Text.RegularExpressions;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Lang;
-using j4n.Serialization;
 using opennlp.tools.namefind;
 using opennlp.tools.nonjava.extensions;
 using opennlp.tools.util;

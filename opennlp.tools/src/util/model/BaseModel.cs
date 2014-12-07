@@ -248,7 +248,7 @@ namespace opennlp.tools.util.model
 
         private void finishLoadingArtifacts(InputStream @in)
         {
-            var zip = new ZipInputStream(@in.Stream);
+            var zip = new ZipInputStream(@in.GetStream());
 
             ZipEntry entry;
             while ((entry = zip.GetNextEntry()) != null)

@@ -17,7 +17,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using j4n.IO.Reader;
-using j4n.Serialization;
 using opennlp.tools.postag;
 using opennlp.tools.util;
 

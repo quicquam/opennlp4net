@@ -17,7 +17,6 @@
 using System;
 using j4n.IO.File;
 using j4n.IO.InputStream;
-using j4n.Serialization;
 using opennlp.console.cmdline;
 using opennlp.console.cmdline.@params;
 using opennlp.tools.sentdetect;

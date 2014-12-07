@@ -18,7 +18,6 @@ using System.Text;
  * limitations under the License.
  */
 using j4n.Lang;
-using j4n.Serialization;
 
 
 namespace opennlp.tools.sentdetect

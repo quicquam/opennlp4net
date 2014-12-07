@@ -16,10 +16,10 @@
  */
 
 using System;
-using j4n.Serialization;
 using opennlp.console.cmdline;
 using opennlp.tools.parser;
 using opennlp.tools.postag;
+using opennlp.tools.util;
 
 namespace opennlp.console.formats.convert
 {

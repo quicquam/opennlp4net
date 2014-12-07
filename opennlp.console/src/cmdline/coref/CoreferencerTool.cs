@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using j4n.IO.Reader;
-using j4n.Serialization;
 using opennlp.tools.coref;
 using opennlp.tools.coref.mention;
 using opennlp.tools.nonjava.extensions;

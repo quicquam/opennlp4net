@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
-using j4n.Serialization;
 using opennlp.tools.chunker;
 using opennlp.tools.namefind;
 using opennlp.tools.util;

@@ -104,7 +104,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\MessageDigest.cs" />
     <Compile Include="Security\UserFileAccessRights.cs" />
-    <Compile Include="Serialization\ObjectStream.cs" />
     <Compile Include="Utils\IterableAdapter.cs" />
     <Compile Include="Utils\DecimalFormat.cs" />
     <Compile Include="Utils\MessageFormat.cs" />

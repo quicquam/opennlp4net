@@ -16,9 +16,10 @@
  */
 using System;
 using System.IO;
+using System.Linq;
 using j4n.IO.File;
+using j4n.IO.InputStream;
 using j4n.IO.Reader;
-using j4n.Serialization;
 using opennlp.tools.sentdetect;
 using opennlp.tools.util;
 
@@ -54,7 +55,7 @@ namespace opennlp.console.cmdline.sentdetect
 	  public override void run(string[] args)
 	  {
 
-		if (args.Length != 1)
+		if (args.Length < 1)
 		{
 		  Console.WriteLine(Help);
 		}
@@ -65,7 +66,7 @@ namespace opennlp.console.cmdline.sentdetect
 
 		  SentenceDetectorME sdetector = new SentenceDetectorME(model);
 
-		  ObjectStream<string> paraStream = new ParagraphStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput())));
+		  ObjectStream<string> paraStream = new ParagraphStream(new PlainTextByLineStream(new InputStreamReader(GetInputStream(args))));
 
 //		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
 //		  perfMon.start();
@@ -96,6 +97,10 @@ namespace opennlp.console.cmdline.sentdetect
 //		  perfMon.stopAndPrintFinalResult();
 		}
 	  }
-	}
 
+      private InputStream GetInputStream(string[] args)
+      {
+          return args.Count() < 2 ? new InputStream(Console.OpenStandardInput()) : new InputStream(args[1]);
+      }
+	}
 }

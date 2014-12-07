@@ -17,9 +17,9 @@
 
 using System.IO;
 using j4n.IO.File;
-using j4n.Serialization;
 using opennlp.console.cmdline.@params;
 using opennlp.tools.parser;
+using opennlp.tools.util;
 
 namespace opennlp.console.cmdline.parser
 {

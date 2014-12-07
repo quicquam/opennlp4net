@@ -42,7 +42,7 @@ namespace j4n.IO.Reader
 
         public InputStreamReader(Stream stream)
         {
-            InnerStream = new InputStream.InputStream(stream);
+            StreamReader = new StreamReader(stream);
         }
     }
 }

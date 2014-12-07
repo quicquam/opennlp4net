@@ -18,9 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using j4n.Serialization;
 using opennlp.console.cmdline.@params;
 using opennlp.tools.namefind;
+using opennlp.tools.util;
 using opennlp.tools.util.eval;
 
 namespace opennlp.console.cmdline.namefind

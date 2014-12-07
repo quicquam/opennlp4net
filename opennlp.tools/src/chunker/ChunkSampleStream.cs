@@ -17,7 +17,6 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using System.Linq;
-using j4n.Serialization;
 
 namespace opennlp.tools.chunker
 {

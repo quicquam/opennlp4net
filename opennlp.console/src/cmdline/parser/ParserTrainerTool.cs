@@ -20,11 +20,11 @@ using j4n.Exceptions;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
-using j4n.Serialization;
 using opennlp.console.cmdline.@params;
 using opennlp.model;
 using opennlp.tools.dictionary;
 using opennlp.tools.parser;
+using opennlp.tools.util;
 using opennlp.tools.util.model;
 using Parser = opennlp.tools.parser.chunking.Parser;
 

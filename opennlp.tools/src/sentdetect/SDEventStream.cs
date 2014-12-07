@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 using j4n.Lang;
-using j4n.Serialization;
 using j4n.Utils;
 
 namespace opennlp.tools.sentdetect

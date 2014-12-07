@@ -18,10 +18,10 @@ using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
-using j4n.Serialization;
 using opennlp.console.cmdline;
 using opennlp.console.cmdline.@params;
 using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
 namespace opennlp.console.formats
 {

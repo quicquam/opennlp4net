@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 using System.Collections.Generic;
-using j4n.Serialization;
 using opennlp.tools.chunker;
 using opennlp.tools.parser;
 using opennlp.tools.postag;

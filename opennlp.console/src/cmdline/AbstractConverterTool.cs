@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using j4n.Exceptions;
-using j4n.Serialization;
+using opennlp.tools.util;
 
 namespace opennlp.console.cmdline
 {

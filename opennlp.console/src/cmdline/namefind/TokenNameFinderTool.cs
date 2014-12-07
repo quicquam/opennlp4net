@@ -20,7 +20,6 @@ using System.IO;
 using System.Linq;
 using j4n.IO.File;
 using j4n.IO.Reader;
-using j4n.Serialization;
 using opennlp.tools.namefind;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;

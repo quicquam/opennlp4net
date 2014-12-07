@@ -16,10 +16,10 @@
  */
 using System;
 using j4n.IO.File;
-using j4n.Serialization;
 using opennlp.console.cmdline;
 using opennlp.console.cmdline.@params;
 using opennlp.tools.namefind;
+using opennlp.tools.util;
 
 namespace opennlp.console.formats
 {

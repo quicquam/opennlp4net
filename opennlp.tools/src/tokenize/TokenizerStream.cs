@@ -16,8 +16,6 @@
  */
 
 
-using j4n.Serialization;
-
 namespace opennlp.tools.tokenize
 {
     using opennlp.tools.util;

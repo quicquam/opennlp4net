@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-using j4n.Serialization;
 using opennlp.tools.postag;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;

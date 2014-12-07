@@ -22,7 +22,6 @@ using j4n.IO.File;
 using j4n.IO.Reader;
 using j4n.Lang;
 using j4n.Object;
-using j4n.Serialization;
 using opennlp.tools.parser;
 using opennlp.tools.util;
 

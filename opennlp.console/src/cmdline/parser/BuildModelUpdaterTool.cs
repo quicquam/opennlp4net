@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 using System;
-using j4n.Serialization;
 using opennlp.model;
 using opennlp.tools.dictionary;
 using opennlp.tools.parser;
 using opennlp.tools.parser.chunking;
+using opennlp.tools.util;
 using Parser = opennlp.tools.parser.chunking.Parser;
 
 namespace opennlp.console.cmdline.parser

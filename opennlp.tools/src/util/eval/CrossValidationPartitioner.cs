@@ -1,6 +1,4 @@
-﻿using j4n.Serialization;
-
-namespace opennlp.tools.util.eval
+﻿namespace opennlp.tools.util.eval
 {
     public class CrossValidationPartitioner<T>
     {

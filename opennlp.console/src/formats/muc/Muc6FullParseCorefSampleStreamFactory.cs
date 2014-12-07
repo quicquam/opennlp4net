@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using j4n.IO.File;
-using j4n.Serialization;
 using opennlp.console.cmdline;
 using opennlp.console.cmdline.namefind;
 using opennlp.console.cmdline.@params;
@@ -29,6 +28,7 @@ using opennlp.tools.coref;
 using opennlp.tools.namefind;
 using opennlp.tools.parser;
 using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
 namespace opennlp.console.formats.muc
 {

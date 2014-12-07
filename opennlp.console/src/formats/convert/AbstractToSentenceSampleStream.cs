@@ -16,7 +16,6 @@
  */
 using System.Collections.Generic;
 using System.Linq;
-using j4n.Serialization;
 using opennlp.tools.sentdetect;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;

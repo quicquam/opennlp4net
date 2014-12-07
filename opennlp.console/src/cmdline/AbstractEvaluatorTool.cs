@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 using System;
-using j4n.Serialization;
+using opennlp.tools.util;
 
 namespace opennlp.console.cmdline
 {

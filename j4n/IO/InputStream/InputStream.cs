@@ -10,9 +10,9 @@ namespace j4n.IO.InputStream
         public readonly string Path;
         public readonly Stream InnerStream;
 
-        public Stream Stream
+        public Stream GetStream()
         {
-            get { return InnerStream; }
+            return InnerStream;
         }
 
         public InputStream(string path)

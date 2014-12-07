@@ -21,7 +21,6 @@ using System.Text;
 using j4n.Exceptions;
 using j4n.IO.InputStream;
 using j4n.Lang;
-using j4n.Serialization;
 using opennlp.nonjava.helperclasses;
 using opennlp.tools.sentdetect;
 using opennlp.tools.sentdetect.lang;

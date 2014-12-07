@@ -16,7 +16,6 @@
  */
 using System;
 using System.Collections.Generic;
-using j4n.Serialization;
 using opennlp.tools.coref;
 using opennlp.tools.coref.mention;
 using opennlp.tools.util;
