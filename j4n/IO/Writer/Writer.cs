@@ -30,6 +30,12 @@ namespace j4n.IO.Writer
             InnerStream.Write(bytes, 0, bytes.GetLength(0));
         }
 
+        public void writeLine(string str = "")
+        {
+            var bytes = GetBytes(str + Environment.NewLine);
+            InnerStream.Write(bytes, 0, bytes.GetLength(0));
+        }
+
         private byte[] GetBytes(string str)
         {
             var bytes = new byte[str.Length*sizeof (char)];

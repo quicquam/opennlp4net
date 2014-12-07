@@ -16,8 +16,10 @@
  */
 
 using System;
+using System.IO;
 using System.Linq;
 using j4n.IO.InputStream;
+using j4n.IO.OutputStream;
 
 namespace opennlp.console.cmdline
 {
@@ -41,5 +43,10 @@ namespace opennlp.console.cmdline
       {
           return args.Count() < 2 ? new InputStream(Console.OpenStandardInput()) : new InputStream(args[1]);
       }
+
+	    protected OutputStream GetOutputStream(string[] args)
+	    {
+            return args.Count() < 3 ? new OutputStream(Console.OpenStandardOutput()) : new OutputStream(new FileStream(args[2], FileMode.Create));
+        }
 	}
 }

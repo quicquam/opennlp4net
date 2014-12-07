@@ -53,7 +53,7 @@ namespace opennlp.console.cmdline.postag
 	  /// <summary>
 	  /// Creates a listener that will print to <seealso cref="System#err"/>
 	  /// </summary>
-	  public POSTaggerFineGrainedReportListener() : this(new OutputStream(Console.Error))
+	  public POSTaggerFineGrainedReportListener() : this(new OutputStream(Console.OpenStandardError()))
 	  {
 		  if (!InstanceFieldsInitialized)
 		  {

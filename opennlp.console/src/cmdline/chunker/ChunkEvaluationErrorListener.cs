@@ -32,7 +32,8 @@ namespace opennlp.console.cmdline.chunker
 	  /// <summary>
 	  /// Creates a listener that will print to Console.Error
 	  /// </summary>
-	  public ChunkEvaluationErrorListener() : base(Console.Error)
+        public ChunkEvaluationErrorListener()
+            : base(new OutputStream(Console.OpenStandardError()))
 	  {
 	  }
 

@@ -32,7 +32,8 @@ namespace opennlp.console.cmdline.sentdetect
 	  /// <summary>
 	  /// Creates a listener that will print to Console.Error
 	  /// </summary>
-	  public SentenceEvaluationErrorListener() : base(Console.Error)
+        public SentenceEvaluationErrorListener()
+            : base(new OutputStream(Console.OpenStandardError()))
 	  {
 	  }
 

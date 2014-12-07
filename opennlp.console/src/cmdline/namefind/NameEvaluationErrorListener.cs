@@ -32,7 +32,8 @@ namespace opennlp.console.cmdline.namefind
 	  /// <summary>
 	  /// Creates a listener that will print to Console.Error
 	  /// </summary>
-	  public NameEvaluationErrorListener() : base(Console.Error)
+        public NameEvaluationErrorListener()
+            : base(new OutputStream(Console.OpenStandardError()))
 	  {
 	  }
 

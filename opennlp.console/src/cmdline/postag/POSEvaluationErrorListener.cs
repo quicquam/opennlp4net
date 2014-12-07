@@ -32,7 +32,7 @@ namespace opennlp.console.cmdline.postag
 	  /// <summary>
 	  /// Creates a listener that will print to Console.Error
 	  /// </summary>
-	  public POSEvaluationErrorListener() : base(Console.Error)
+	  public POSEvaluationErrorListener() : base(new OutputStream(Console.OpenStandardError()))
 	  {
 	  }
 

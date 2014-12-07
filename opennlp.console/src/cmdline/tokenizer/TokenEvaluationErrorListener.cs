@@ -32,7 +32,8 @@ namespace opennlp.console.cmdline.tokenizer
 	  /// <summary>
 	  /// Creates a listener that will print to Console.Error
 	  /// </summary>
-	  public TokenEvaluationErrorListener() : base(Console.Error)
+        public TokenEvaluationErrorListener()
+            : base(new OutputStream(Console.OpenStandardError()))
 	  {
 	  }
 
