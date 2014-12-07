@@ -552,7 +552,7 @@ namespace opennlp.console.cmdline
             throw new NotImplementedException();
         }
 
-        public static string validateArgumentsLoudly(string[] args, object parameters)
+        public static string validateArgumentsLoudly(string[] args, Type parameters)
         {
             throw new NotImplementedException();
         }

@@ -16,7 +16,10 @@
  */
 
 
+using System;
 using System.IO;
+using j4n.Exceptions;
+using j4n.IO.OutputStream;
 
 namespace opennlp.console.cmdline
 {
@@ -35,26 +38,69 @@ namespace opennlp.console.cmdline
 	/// </summary>
 	public class PerformanceMonitor
 	{
-	    public PerformanceMonitor(TextWriter error, string sent)
+	    private TextWriter _textWriter;
+        private readonly string _unit;
+
+        private long _startTime = -1;
+
+        private int _counter;
+        
+        public PerformanceMonitor(TextWriter error, string unit)
+        {
+            _textWriter = error;
+            _unit = unit;
+        }
+
+	    public PerformanceMonitor(string unit)
 	    {
-	        throw new System.NotImplementedException();
+	        _textWriter = Console.Error;
+	        _unit = unit;
 	    }
 
-	    public PerformanceMonitor(string error)
-	    {
-	        throw new System.NotImplementedException();
-	    }
+        public virtual bool Started
+        {
+            get
+            {
+                return _startTime != -1;
+            }
+        }
+
+        public virtual void incrementCounter(int increment)
+        {
+
+            if (!Started)
+            {
+                throw new IllegalStateException("Must be started first!");
+            }
+
+            if (increment < 0)
+            {
+                throw new System.ArgumentException("increment must be zero or positive but was " + increment + "!");
+            }
+
+            _counter += increment;
+        }
+
+        public virtual void incrementCounter()
+        {
+            incrementCounter(1);
+        }
+
+        public virtual void start()
+        {
+
+            if (Started)
+            {
+                throw new IllegalStateException("Already started!");
+            }
+
+            _startTime = DateTime.Now.Ticks;
+        }
 
 /*
 	  private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-	  private readonly string unit;
-
 	  private ScheduledFuture beeperHandle;
-
-	  private volatile long startTime = -1;
-
-	  private volatile int counter;
 
 	  private readonly PrintStream @out;
 
@@ -66,46 +112,6 @@ namespace opennlp.console.cmdline
 
 	  public PerformanceMonitor(string unit) : this(System.out, unit)
 	  {
-	  }
-
-	  public virtual bool Started
-	  {
-		  get
-		  {
-			return startTime != -1;
-		  }
-	  }
-
-	  public virtual void incrementCounter(int increment)
-	  {
-
-		if (!Started)
-		{
-		  throw new IllegalStateException("Must be started first!");
-		}
-
-		if (increment < 0)
-		{
-		  throw new System.ArgumentException("increment must be zero or positive but was " + increment + "!");
-		}
-
-		counter += increment;
-	  }
-
-	  public virtual void incrementCounter()
-	  {
-		incrementCounter(1);
-	  }
-
-	  public virtual void start()
-	  {
-
-		if (Started)
-		{
-		  throw new IllegalStateException("Already started!");
-		}
-
-		startTime = DateTimeHelperClass.CurrentUnixTimeMillis();
 	  }
 
 
@@ -207,22 +213,8 @@ namespace opennlp.console.cmdline
 		@out.println("Total: " + counter + " " + unit);
 		@out.println("Runtime: " + timePassed / 1000d + "s");
 	  } */
-        internal void incrementCounter(int length)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        internal void incrementCounter()
-        {
-            throw new System.NotImplementedException();
-        }
-
+ 
         internal void stopAndPrintFinalResult()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        internal void start()
         {
             throw new System.NotImplementedException();
         }
