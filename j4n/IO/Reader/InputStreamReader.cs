@@ -7,42 +7,42 @@ namespace j4n.IO.Reader
     public class InputStreamReader : Reader
     {
         private string Encoding;
-        public InputStreamReader(BufferedInputStream bufferedInputStream)
-            : base(bufferedInputStream)
+        public InputStreamReader(InputStream.InputStream stream)
+            : base(stream)
         {
             Encoding = "UTF-8";
         }
 
-        public InputStreamReader(InputStream.InputStream bufferedInputStream, string encoding = null)
-            : base(bufferedInputStream)
+        public InputStreamReader(InputStream.InputStream stream, string encoding = null)
+            : base(stream)
         {
             Encoding = encoding;
         }
 
-        public InputStreamReader(FileInputStream bufferedInputStream, string encoding = null)
-            : base(bufferedInputStream)
+        public InputStreamReader(FileInputStream stream, string encoding = null)
+            : base(stream)
         {
             Encoding = encoding;
         }
 
-        public InputStreamReader(Stream bufferedInputStream, string encoding)
+        public InputStreamReader(Stream stream, string encoding)
         {
             throw new System.NotImplementedException();
         }
 
-        public InputStreamReader(FileInputStream bufferedInputStream, Charset encoding)
+        public InputStreamReader(FileInputStream stream, Charset encoding)
         {
             throw new System.NotImplementedException();
         }
 
-        public InputStreamReader(InputStream.InputStream bufferedInputStream, Charset encoding)
+        public InputStreamReader(InputStream.InputStream stream, Charset encoding)
         {
             throw new System.NotImplementedException();
         }
 
-        public InputStreamReader(Stream bufferedInputStream)
+        public InputStreamReader(Stream stream)
         {
-            throw new System.NotImplementedException();
+            InnerStream = new InputStream.InputStream(stream);
         }
     }
 }

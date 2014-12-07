@@ -67,8 +67,8 @@ namespace opennlp.console.cmdline.sentdetect
 
 		  ObjectStream<string> paraStream = new ParagraphStream(new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput())));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
-		  perfMon.start();
+//		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
+//		  perfMon.start();
 
 		  try
 		  {
@@ -82,7 +82,7 @@ namespace opennlp.console.cmdline.sentdetect
 				Console.WriteLine(sentence);
 			  }
 
-			  perfMon.incrementCounter(sents.Length);
+//			  perfMon.incrementCounter(sents.Length);
 
 			  Console.WriteLine();
 			}
@@ -92,7 +92,8 @@ namespace opennlp.console.cmdline.sentdetect
 			CmdLineUtil.handleStdinIoError(e);
 		  }
 
-		  perfMon.stopAndPrintFinalResult();
+		    Console.ReadLine();
+//		  perfMon.stopAndPrintFinalResult();
 		}
 	  }
 	}

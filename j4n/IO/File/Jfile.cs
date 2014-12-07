@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using j4n.Security;
 using Microsoft.Win32.SafeHandles;
 
 namespace j4n.IO.File
@@ -13,7 +14,6 @@ namespace j4n.IO.File
         public Jfile(string fileName, FileMode filemode = FileMode.Open)
         {
             Name = fileName;
-            FileStream = System.IO.File.Open(fileName, filemode);
         }
 
         public string Name { get; private set; }
@@ -40,17 +40,17 @@ namespace j4n.IO.File
 
         public bool exists()
         {
-            throw new NotImplementedException();
+            return System.IO.File.Exists(Name);
         }
 
         public bool canRead()
         {
-            throw new NotImplementedException();
+            return new UserFileAccessRights(Name).canRead();
         }
 
         public bool canWrite()
         {
-            throw new NotImplementedException();
+            return new UserFileAccessRights(Name).canWrite();
         }
 
         public Jfile[] listFiles(FileFilter fileFilter = null)

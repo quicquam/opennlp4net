@@ -16,7 +16,6 @@
         public BufferedInputStream(InputStream fileInputStream, int ioBufferSize)
             : base(fileInputStream)
         {
-            throw new System.NotImplementedException();
         }
     }
 }
