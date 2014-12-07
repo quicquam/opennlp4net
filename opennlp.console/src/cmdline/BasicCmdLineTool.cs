@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 
+using System;
+using System.Linq;
+using j4n.IO.InputStream;
+
 namespace opennlp.console.cmdline
 {
 
@@ -32,5 +36,10 @@ namespace opennlp.console.cmdline
 	  /// </summary>
 	  /// <param name="args"> arguments </param>
 	  public abstract void run(string[] args);
+
+      protected InputStream GetInputStream(string[] args)
+      {
+          return args.Count() < 2 ? new InputStream(Console.OpenStandardInput()) : new InputStream(args[1]);
+      }
 	}
 }

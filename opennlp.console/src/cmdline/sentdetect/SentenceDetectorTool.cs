@@ -97,10 +97,5 @@ namespace opennlp.console.cmdline.sentdetect
 //		  perfMon.stopAndPrintFinalResult();
 		}
 	  }
-
-      private InputStream GetInputStream(string[] args)
-      {
-          return args.Count() < 2 ? new InputStream(Console.OpenStandardInput()) : new InputStream(args[1]);
-      }
 	}
 }
