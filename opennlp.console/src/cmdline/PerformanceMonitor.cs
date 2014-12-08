@@ -19,7 +19,7 @@
 using System;
 using System.IO;
 using j4n.Exceptions;
-using j4n.IO.OutputStream;
+using System.Threading;
 
 namespace opennlp.console.cmdline
 {
@@ -97,132 +97,110 @@ namespace opennlp.console.cmdline
             _startTime = DateTime.Now.Ticks;
         }
 
-/*
-	  private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        public virtual void startAndPrintThroughput()
+        {
 
-	  private ScheduledFuture beeperHandle;
+            start();
 
-	  private readonly PrintStream @out;
+            var helper = new RunnableAnonymousInnerClassHelper(this);
 
-	  public PerformanceMonitor(PrintStream @out, string unit)
-	  {
-		this.@out = @out;
-		this.unit = unit;
-	  }
+            Thread thread = new Thread(new ThreadStart(helper.run));
+            thread.Start();
+        }
 
-	  public PerformanceMonitor(string unit) : this(System.out, unit)
-	  {
-	  }
+        private class RunnableAnonymousInnerClassHelper
+        {
+            private readonly PerformanceMonitor _outerInstance;
 
+            public RunnableAnonymousInnerClassHelper(PerformanceMonitor outerInstance)
+            {
+                _outerInstance = outerInstance;
+                _lastTimeStamp = outerInstance._startTime;
+                _lastCount = outerInstance._counter;
+            }
 
-	  public virtual void startAndPrintThroughput()
-	  {
+            private long _lastTimeStamp;
+            private int _lastCount;
 
-		start();
+            public virtual void run()
+            {
 
-		Runnable beeper = new RunnableAnonymousInnerClassHelper(this);
+                int deltaCount = _outerInstance._counter - _lastCount;
 
-	   beeperHandle = scheduler.scheduleAtFixedRate(beeper, 1, 1, TimeUnit.SECONDS);
-	  }
+                long timePassedSinceLastCount = DateTime.Now.Ticks - _lastTimeStamp;
 
-	  private class RunnableAnonymousInnerClassHelper : Runnable
-	  {
-		  private readonly PerformanceMonitor outerInstance;
+                double currentThroughput;
 
-		  public RunnableAnonymousInnerClassHelper(PerformanceMonitor outerInstance)
-		  {
-			  this.outerInstance = outerInstance;
-			  lastTimeStamp = outerInstance.startTime;
-			  lastCount = outerInstance.counter;
-		  }
+                if (timePassedSinceLastCount > 0)
+                {
+                    currentThroughput = deltaCount / ((double)timePassedSinceLastCount / 1000);
+                }
+                else
+                {
+                    currentThroughput = 0;
+                }
 
+                long totalTimePassed = DateTime.Now.Ticks - _outerInstance._startTime;
 
-		  private long lastTimeStamp;
-		  private int lastCount;
+                double averageThroughput;
+                if (totalTimePassed > 0)
+                {
+                    averageThroughput = _outerInstance._counter / (((double)totalTimePassed) / 1000);
+                }
+                else
+                {
+                    averageThroughput = 0;
+                }
 
-		  public virtual void run()
-		  {
+                _outerInstance._textWriter.WriteLine("current: {0} " + _outerInstance._unit + "/s avg: {1} " + _outerInstance._unit + "/s total: {2} " + _outerInstance._unit + "%n", currentThroughput, averageThroughput, _outerInstance._counter);
 
-			int deltaCount = outerInstance.counter - lastCount;
+                _lastTimeStamp = DateTime.Now.Ticks;
+                _lastCount = _outerInstance._counter;
+            }
+        }
 
-			long timePassedSinceLastCount = DateTimeHelperClass.CurrentUnixTimeMillis() - lastTimeStamp;
+        /*
+               public virtual void stopAndPrintFinalResult()
+              {
 
-			double currentThroughput;
+                if (!Started)
+                {
+                  throw new IllegalStateException("Must be started first!");
+                }
 
-			if (timePassedSinceLastCount > 0)
-			{
-			  currentThroughput = deltaCount / ((double) timePassedSinceLastCount / 1000);
-			}
-			else
-			{
-			  currentThroughput = 0;
-			}
+                if (beeperHandle != null)
+                {
+                  // yeah we have time to finish current
+                  // printing if there is one
+                  beeperHandle.cancel(false);
+                }
 
-			long totalTimePassed = DateTimeHelperClass.CurrentUnixTimeMillis() - outerInstance.startTime;
+                scheduler.shutdown();
 
-			double averageThroughput;
-			if (totalTimePassed > 0)
-			{
-			  averageThroughput = outerInstance.counter / (((double) totalTimePassed) / 1000);
-			}
-			else
-			{
-			  averageThroughput = 0;
-			}
+                long timePassed = DateTimeHelperClass.CurrentUnixTimeMillis() - startTime;
 
-			outerInstance.@out.printf("current: %.1f " + outerInstance.unit + "/s avg: %.1f " + outerInstance.unit + "/s total: %d " + outerInstance.unit + "%n", currentThroughput, averageThroughput, outerInstance.counter);
+                double average;
+                if (timePassed > 0)
+                {
+                  average = counter / (timePassed / 1000d);
+                }
+                else
+                {
+                  average = 0;
+                }
 
-			lastTimeStamp = DateTimeHelperClass.CurrentUnixTimeMillis();
-			lastCount = outerInstance.counter;
-		  }
-	  }
+                @out.println();
+                @out.println();
 
-	  public virtual void stopAndPrintFinalResult()
-	  {
+                @out.printf("Average: %.1f " + unit + "/s %n", average);
+                @out.println("Total: " + counter + " " + unit);
+                @out.println("Runtime: " + timePassed / 1000d + "s");
+              } */
 
-		if (!Started)
-		{
-		  throw new IllegalStateException("Must be started first!");
-		}
-
-		if (beeperHandle != null)
-		{
-		  // yeah we have time to finish current
-		  // printing if there is one
-		  beeperHandle.cancel(false);
-		}
-
-		scheduler.shutdown();
-
-		long timePassed = DateTimeHelperClass.CurrentUnixTimeMillis() - startTime;
-
-		double average;
-		if (timePassed > 0)
-		{
-		  average = counter / (timePassed / 1000d);
-		}
-		else
-		{
-		  average = 0;
-		}
-
-		@out.println();
-		@out.println();
-
-		@out.printf("Average: %.1f " + unit + "/s %n", average);
-		@out.println("Total: " + counter + " " + unit);
-		@out.println("Runtime: " + timePassed / 1000d + "s");
-	  } */
- 
         internal void stopAndPrintFinalResult()
         {
             throw new System.NotImplementedException();
         }
-
-	    public void startAndPrintThroughput()
-	    {
-	        throw new System.NotImplementedException();
-	    }
 	}
 
 }
