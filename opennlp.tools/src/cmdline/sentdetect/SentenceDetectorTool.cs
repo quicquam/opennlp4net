@@ -85,6 +85,7 @@ namespace opennlp.tools.cmdline.sentdetect
                 }
 
                 Console.ReadLine();
+                outputWriter.close();
 //		  perfMon.stopAndPrintFinalResult();
             }
         }

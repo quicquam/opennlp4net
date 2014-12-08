@@ -12,7 +12,7 @@ namespace opennlp.console
         private const string OpenNlpToolsAssemblyName = "opennlp.tools.dll";
         
         private readonly Options _options;
-        private BasicCmdLineTool _cmdLineTool;
+        private readonly BasicCmdLineTool _cmdLineTool;
 
         public OpenNlpCore(Options options)
         {
@@ -24,10 +24,6 @@ namespace opennlp.console
                 if (type != null)
                 {
                     _cmdLineTool = Activator.CreateInstance(type) as BasicCmdLineTool;
-                    if (_cmdLineTool != null)
-                    {
-                        _cmdLineTool.run(CreateCommandLineArguments());
-                    }
                 }
             }
         }
@@ -60,7 +56,10 @@ namespace opennlp.console
 
         public void Process()
         {
-
+            if (_cmdLineTool != null)
+            {
+                _cmdLineTool.run(CreateCommandLineArguments());
+            }
         }
     }
 }
