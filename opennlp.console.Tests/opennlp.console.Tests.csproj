@@ -48,6 +48,20 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\j4n\j4n.csproj">
+      <Project>{66194037-42ff-4de7-b998-ba387370a440}</Project>
+      <Name>j4n</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\opennlp.maxent\opennlp.maxent.csproj">
+      <Project>{162209cb-1acc-4539-8ce7-055fb3d8469c}</Project>
+      <Name>opennlp.maxent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\opennlp.tools\opennlp.tools.csproj">
+      <Project>{1b99d396-ba39-4390-a8f0-fea274470368}</Project>
+      <Name>opennlp.tools</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

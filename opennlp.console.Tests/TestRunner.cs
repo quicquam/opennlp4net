@@ -10,5 +10,9 @@ namespace opennlp.console.Tests
     [TestFixture]
     public class TestRunner
     {
+        [Test]
+        public void SentenceDetectToolLoadsInputRunsAndCreatesOutput()
+        {
+        }
     }
 }

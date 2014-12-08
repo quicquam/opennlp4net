@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using opennlp.console.cmdline;
+using opennlp.tools.cmdline;
 
 namespace opennlp.console
 {
     public class OpenNlpCore
     {
-        private Assembly _assembly;
+        private const string OpenNlpToolsAssemblyName = "opennlp.tools.dll";
         
         private readonly Options _options;
-        private StreamReader _inputStream = null;
-        private StreamWriter _outputStream = null;
-
         private BasicCmdLineTool _cmdLineTool;
 
         public OpenNlpCore(Options options)
         {
             _options = options;
-            _assembly = Assembly.GetExecutingAssembly();
-            if (_assembly != null && !string.IsNullOrEmpty(_options.ToolName))
+            var assembly = Assembly.LoadFrom(CreateAssembyPath());
+            if (assembly != null && !string.IsNullOrEmpty(_options.ToolName))
             {
-                var type = GetToolType();
+                var type = GetToolType(assembly);
                 if (type != null)
                 {
                     _cmdLineTool = Activator.CreateInstance(type) as BasicCmdLineTool;
@@ -33,6 +30,11 @@ namespace opennlp.console
                     }
                 }
             }
+        }
+
+        private static string CreateAssembyPath()
+        {
+            return string.Format("{0}\\{1}", Directory.GetCurrentDirectory(), OpenNlpToolsAssemblyName);
         }
 
         private string[] CreateCommandLineArguments()
@@ -47,10 +49,10 @@ namespace opennlp.console
             return argList.ToArray();
         }
 
-        private Type GetToolType()
+        private Type GetToolType(Assembly assembly)
         {
             var toolName = string.Format("{0}Tool", _options.ToolName);
-            return (from t in _assembly.GetTypes()
+            return (from t in assembly.GetTypes()
                     where t.IsClass
                     && (t.Name == toolName)
                     select t).FirstOrDefault();
