@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.Reader;
+using j4n.IO.Writer;
 using opennlp.tools.chunker;
 using opennlp.tools.postag;
 using opennlp.tools.util;
@@ -46,7 +47,7 @@ namespace opennlp.tools.cmdline.chunker
 
 	  public override void run(string[] args)
 	  {
-		if (args.Length != 1)
+		if (args.Length < 1)
 		{
 		  Console.WriteLine(Help);
 		}
@@ -56,10 +57,12 @@ namespace opennlp.tools.cmdline.chunker
 
 		  ChunkerME chunker = new ChunkerME(model, ChunkerME.DEFAULT_BEAM_SIZE);
 
-		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
+          ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(GetInputStream(args)));
 
-          PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
-		  perfMon.start();
+          var outputWriter = new OutputStreamWriter(GetOutputStream(args));
+
+    //      PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
+	//	  perfMon.start();
 
 		  try
 		  {
@@ -81,17 +84,21 @@ namespace opennlp.tools.cmdline.chunker
 
 			  string[] chunks = chunker.chunk(posSample.Sentence, posSample.Tags);
 
-			  Console.WriteLine((new ChunkSample(posSample.Sentence, posSample.Tags, chunks)).nicePrint());
+              outputWriter.writeLine((new ChunkSample(posSample.Sentence, posSample.Tags, chunks)).nicePrint());
 
-			  perfMon.incrementCounter();
+	//		  perfMon.incrementCounter();
+
+              outputWriter.writeLine();
 			}
 		  }
 		  catch (IOException e)
 		  {
 			CmdLineUtil.handleStdinIoError(e);
 		  }
+          Console.ReadLine();
+          outputWriter.close();
 
-		  perfMon.stopAndPrintFinalResult();
+//		  perfMon.stopAndPrintFinalResult();
 		}
 	  }
 	}

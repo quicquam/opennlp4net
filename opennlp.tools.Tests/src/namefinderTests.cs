@@ -15,7 +15,7 @@ namespace opennlp.tools.Tests
     public class namefinderTests
     {
         private const string ModelPath = @"..\..\models\";
-        private const string DataPath = @"..\..\data\";
+        private const string DataPath = @"..\..\input\";
         private string _nameFinderModelFilePath;
         private string _tokenModelPath;
         private string _testTextBlock;

@@ -48,6 +48,7 @@
     <Compile Include="src\parserTests.cs" />
     <Compile Include="src\postaggerTests.cs" />
     <Compile Include="src\sentdetectTests.cs" />
+    <Compile Include="src\ToolTests.cs" />
     <Compile Include="src\tokenizeTests.cs" />
     <Compile Include="utils\Dumper.cs" />
     <Compile Include="utils\FullDumper.cs" />

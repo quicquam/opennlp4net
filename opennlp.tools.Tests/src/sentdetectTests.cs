@@ -10,7 +10,7 @@ namespace opennlp.tools.Tests
     public class sentdetectTests
     {
         private const string ModelPath = @"..\..\models\";
-        private const string DataPath = @"..\..\data\";
+        private const string DataPath = @"..\..\input\";
         private string _modelFilePath;
         private string _testTextBlock;
 

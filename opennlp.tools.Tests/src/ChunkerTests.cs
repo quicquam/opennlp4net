@@ -37,7 +37,7 @@ namespace opennlp.tools.Tests
         }
 
         private const string ModelPath = @"..\..\models\";
-        private const string DataPath = @"..\..\data\";
+        private const string DataPath = @"..\..\input\";
         private string _modelFilePath;
         private string[] _sent;
         private string[] _pos;
