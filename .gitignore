@@ -86,3 +86,4 @@ DocProject/Help/html
 
 # Other
 *.zip
+opennlp.tools.Tests/data/*
