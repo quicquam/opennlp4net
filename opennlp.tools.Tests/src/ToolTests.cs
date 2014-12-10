@@ -22,7 +22,6 @@ namespace opennlp.tools.Tests
         private const string ParserFileBase = "en-parser-chunking";
         private const string PosTaggerFileBase = "en-pos-maxent";
         private const string SentenceDectectorFileBase = "en-sent";
-        private const string SimpleTokenizerFileBase = "en-simple-tok";
         private const string TaggerModelReplacerFileBase = "en-parser-chunking";
         private const string TaggerModelReplacerSecondFile = "en-pos-maxent.bin";
 

@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using j4n.IO.File;
 using j4n.IO.Reader;
+using j4n.IO.Writer;
 using opennlp.tools.namefind;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;
@@ -55,8 +56,8 @@ namespace opennlp.tools.cmdline.namefind
 		}
 		else
 		{
-
-		  NameFinderME[] nameFinders = new NameFinderME[args.Length];
+		    int modelcount = GetModelCount(args);
+            NameFinderME[] nameFinders = new NameFinderME[modelcount];
 
 		  for (int i = 0; i < nameFinders.Length; i++)
 		  {
@@ -64,10 +65,11 @@ namespace opennlp.tools.cmdline.namefind
 			nameFinders[i] = new NameFinderME(model);
 		  }
 
-		  ObjectStream<string> untokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
+          ObjectStream<string> untokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(GetInputStream(args)));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
-		  perfMon.start();
+          var outputWriter = new OutputStreamWriter(GetOutputStream(args));
+          //PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
+		  //perfMon.start();
 
 		  try
 		  {
@@ -104,19 +106,23 @@ namespace opennlp.tools.cmdline.namefind
 
 			  NameSample nameSample = new NameSample(whitespaceTokenizerLine, reducedNames, false);
 
-			  Console.WriteLine(nameSample.ToString());
+			  outputWriter.writeLine(nameSample.ToString());
 
-			  perfMon.incrementCounter();
+			  //perfMon.incrementCounter();
 			}
 		  }
 		  catch (IOException e)
 		  {
 			CmdLineUtil.handleStdinIoError(e);
 		  }
-
-		  perfMon.stopAndPrintFinalResult();
+          outputWriter.close();
+		  //perfMon.stopAndPrintFinalResult();
 		}
 	  }
-	}
 
+      private int GetModelCount(IEnumerable<string> args)
+      {
+          return args.Count(s => s.Contains(".bin"));
+      }
+	}
 }
