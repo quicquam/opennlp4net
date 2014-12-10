@@ -134,7 +134,7 @@ namespace opennlp.tools.Tests
         }
 
         [Test]
-        public void postaggerCanGetTagArrayFromTestData()
+        public void PostaggerCanGetTagArrayFromTestData()
         {
             var modelFilePath = string.Format("{0}{1}", ModelPath, "en-pos-maxent.bin");
             InputStream modelIn = new FileInputStream(modelFilePath);

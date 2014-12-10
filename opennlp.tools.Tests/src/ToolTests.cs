@@ -20,14 +20,14 @@ namespace opennlp.tools.Tests
         
         private const string ChunkerMeFileBase = "en-chunker";
         private const string ParserFileBase = "en-parser-chunking";
-        private const string PosTaggerFileBase = "en-pos-maxent.bin";
+        private const string PosTaggerFileBase = "en-pos-maxent";
         private const string SentenceDectectorFileBase = "en-sent";
-        private const string SimpleTokenizerFileBase = "en-sent";
+        private const string SimpleTokenizerFileBase = "en-simple-tok";
         private const string TaggerModelReplacerFileBase = "en-parser-chunking";
         private const string TaggerModelReplacerSecondFile = "en-pos-maxent.bin";
 
         private const string TokenizerMeFileBase = "en-token";
-        private const string TokenNameFinderFileBase = "en-ner-person.bin";
+        private const string TokenNameFinderFileBase = "en-ner-person";
 
         private List<string> GenerateModelFilenames(string toolFileBase)
         {
@@ -47,7 +47,6 @@ namespace opennlp.tools.Tests
             var output = File.ReadAllText(fileList[2], Encoding.Unicode);
         }
 
-        [Ignore]
         [Test]
         public void ParserToolLoadsInputRunsAndCreatesOutput()
         {
@@ -57,7 +56,6 @@ namespace opennlp.tools.Tests
             var output = File.ReadAllText(fileList[2], Encoding.Unicode);            
         }
 
-        [Ignore]
         [Test]
         public void POSTaggerToolLoadsInputRunsAndCreatesOutput()
         {
@@ -82,16 +80,6 @@ namespace opennlp.tools.Tests
 
         [Ignore]
         [Test]
-        public void SimpleTokenizerToolLoadsInputRunsAndCreatesOutput()
-        {
-            var simpleTokenizerTool = new SimpleTokenizerTool();
-            var fileList = GenerateModelFilenames(SimpleTokenizerFileBase);
-            simpleTokenizerTool.run(fileList.ToArray());
-            var output = File.ReadAllText(fileList[2], Encoding.Unicode);
-        }
-
-        [Ignore]
-        [Test]
         public void TaggerModelReplacerToolLoadsInputRunsAndCreatesOutput()
         {
             var taggerModelReplacerTool = new TaggerModelReplacerTool();
@@ -111,7 +99,6 @@ namespace opennlp.tools.Tests
             var output = File.ReadAllText(fileList[2], Encoding.Unicode);
         }
 
-        [Ignore]
         [Test]
         public void TokenNameFinderToolLoadsInputRunsAndCreatesOutput()
         {

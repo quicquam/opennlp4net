@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.Reader;
+using j4n.IO.Writer;
 using opennlp.tools.postag;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;
@@ -47,7 +48,7 @@ namespace opennlp.tools.cmdline.postag
 	  public override void run(string[] args)
 	  {
 
-		if (args.Length != 1)
+		if (args.Length < 1)
 		{
 		  Console.WriteLine(Help);
 		}
@@ -58,10 +59,11 @@ namespace opennlp.tools.cmdline.postag
 
 		  POSTaggerME tagger = new POSTaggerME(model);
 
-		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
+          ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(GetInputStream(args)));
+          var outputWriter = new OutputStreamWriter(GetOutputStream(args));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
-		  perfMon.start();
+		  //PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
+		  //perfMon.start();
 
 		  try
 		  {
@@ -73,17 +75,19 @@ namespace opennlp.tools.cmdline.postag
 			  string[] tags = tagger.tag(whitespaceTokenizerLine);
 
 			  POSSample sample = new POSSample(whitespaceTokenizerLine, tags);
-			  Console.WriteLine(sample.ToString());
+              outputWriter.writeLine(sample.ToString());
 
-			  perfMon.incrementCounter();
+			  //perfMon.incrementCounter();
 			}
 		  }
 		  catch (IOException e)
 		  {
 			CmdLineUtil.handleStdinIoError(e);
 		  }
+          Console.ReadLine();
+          outputWriter.close();
 
-		  perfMon.stopAndPrintFinalResult();
+		  //perfMon.stopAndPrintFinalResult();
 		}
 	  }
 	}

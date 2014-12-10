@@ -21,6 +21,7 @@ using System.IO;
 using System.Text;
 using j4n.IO.File;
 using j4n.IO.Reader;
+using j4n.IO.Writer;
 using j4n.Lang;
 using j4n.Object;
 using opennlp.tools.parser;
@@ -52,8 +53,6 @@ namespace opennlp.tools.cmdline.parser
 
 	  public static Parse[] parseLine(string line, opennlp.tools.parser.Parser parser, int numParses)
 	  {
-		line = untokenizedParenPattern1.matcher(line).replaceAll("$1 $2");
-		line = untokenizedParenPattern2.matcher(line).replaceAll("$1 $2");
 		StringTokenizer str = new StringTokenizer(line);
 		StringBuilder sb = new StringBuilder();
 		IList<string> tokens = new List<string>();
@@ -95,7 +94,7 @@ namespace opennlp.tools.cmdline.parser
 		else
 		{
 
-		  ParserModel model = (new ParserModelLoader()).load(new Jfile(args[args.Length - 1]));
+            ParserModel model = (new ParserModelLoader()).load(new Jfile(args[0]));
 
 		  int? beamSize = CmdLineUtil.getIntParameter("-bs", args);
 		  if (beamSize == null)
@@ -122,12 +121,14 @@ namespace opennlp.tools.cmdline.parser
 			advancePercentage = AbstractBottomUpParser.defaultAdvancePercentage;
 		  }
 
-		  opennlp.tools.parser.Parser parser = ParserFactory.create(model, beamSize.Value, advancePercentage.Value);
+		  Parser parser = ParserFactory.create(model, beamSize.Value, advancePercentage.Value);
 
-		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
+		  ObjectStream<string> lineStream = new PlainTextByLineStream(new InputStreamReader(GetInputStream(args)));
+          var outputWriter = new OutputStreamWriter(GetOutputStream(args));
 
-		  PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
-		  perfMon.start();
+
+		  //PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
+		  //perfMon.start();
 
 		  try
 		  {
@@ -136,7 +137,7 @@ namespace opennlp.tools.cmdline.parser
 			{
 			  if (line.Length == 0)
 			  {
-				Console.WriteLine();
+                  outputWriter.writeLine();
 			  }
 			  else
 			  {
@@ -146,12 +147,12 @@ namespace opennlp.tools.cmdline.parser
 				{
 				  if (showTopK)
 				  {
-					Console.Write(pi + " " + parses[pi].Prob + " ");
+                      outputWriter.write(pi + " " + parses[pi].Prob + " ");
 				  }
 
-				  parses[pi].show();
+				  parses[pi].show(outputWriter);
 
-				  perfMon.incrementCounter();
+				  //perfMon.incrementCounter();
 				}
 			  }
 			}
@@ -161,7 +162,10 @@ namespace opennlp.tools.cmdline.parser
 			CmdLineUtil.handleStdinIoError(e);
 		  }
 
-		  perfMon.stopAndPrintFinalResult();
+          Console.ReadLine();
+          outputWriter.close();
+
+		  //perfMon.stopAndPrintFinalResult();
 		}
 	  }
 	}
