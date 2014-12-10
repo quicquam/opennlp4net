@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opennlp.tools.Tests", "open
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opennlp.console", "opennlp.console\opennlp.console.csproj", "{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opennlp.console.Tests", "opennlp.console.Tests\opennlp.console.Tests.csproj", "{E978287B-609E-4ECE-9262-1A7FD7854C5F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E54503E9-E0DD-4A8C-8C47-EA1926EC13BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E978287B-609E-4ECE-9262-1A7FD7854C5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E978287B-609E-4ECE-9262-1A7FD7854C5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E978287B-609E-4ECE-9262-1A7FD7854C5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E978287B-609E-4ECE-9262-1A7FD7854C5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
