@@ -15,8 +15,9 @@ namespace j4n.Security
         
         public void update(byte[] buffer)
         {
-            _digestBuffer = new byte[_digestBuffer.GetLength(0) + buffer.GetLength(0)];
-            _offset += _hashAlgorithm.TransformBlock(buffer, _offset, buffer.GetLength(0), _digestBuffer, _offset);
+            var baselenth = _digestBuffer != null ? _digestBuffer.GetLength(0) : 0;
+            _digestBuffer = new byte[baselenth + buffer.GetLength(0)];
+            _offset += _hashAlgorithm.TransformBlock(buffer, 0, buffer.GetLength(0), _digestBuffer, _offset);
         }
 
         public static MessageDigest getInstance(string name)

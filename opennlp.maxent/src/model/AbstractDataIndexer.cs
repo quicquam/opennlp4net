@@ -167,7 +167,7 @@ namespace opennlp.model
         {
             foreach (string s in ec)
             {
-                int? i = counter[s];
+                int? i = counter.ContainsKey(s) ? counter[s] : null;
                 if (i == null)
                 {
                     counter[s] = 1;

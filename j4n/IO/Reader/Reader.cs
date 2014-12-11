@@ -25,7 +25,7 @@ namespace j4n.IO.Reader
 
         public void close()
         {
-            throw new NotImplementedException();
+            
         }
 
         public int read()

@@ -79,7 +79,7 @@ namespace opennlp.tools.util
 
         public override Event next()
         {
-            events.MoveNext();
+//            events.MoveNext();
             return events.Current;
         }
     }

@@ -38,7 +38,9 @@ namespace j4n.IO.File
         ~Jfile()
         {
             if (_deleteOnExit)
-                System.IO.File.Delete(Name);
+            {
+            }
+            //    System.IO.File.Delete(Name);
         }
 
         public void deleteOnExit()

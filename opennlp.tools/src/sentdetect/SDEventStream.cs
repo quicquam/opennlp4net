@@ -64,16 +64,6 @@ namespace opennlp.tools.sentdetect
             }
 
             return events.GetEnumerator();
-        }
-
-        public override bool hasNext()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Event next()
-        {
-            throw new System.NotImplementedException();
-        }
+        }        
     }
 }
