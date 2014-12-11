@@ -1,54 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
 
 namespace j4n.Security
 {
     public class MessageDigest
     {
-        public string update(sbyte[] buffer)
+        private byte[] _digestBuffer;
+        private int _offset;
+        private readonly HashAlgorithm _hashAlgorithm;
+        public MessageDigest(string name)
         {
-            throw new NotImplementedException();
+            _hashAlgorithm = name == "MD5" 
+                ? (HashAlgorithm) new MD5CryptoServiceProvider() : new SHA1Managed();
+        }
+        
+        public void update(byte[] buffer)
+        {
+            _digestBuffer = new byte[_digestBuffer.GetLength(0) + buffer.GetLength(0)];
+            _offset += _hashAlgorithm.TransformBlock(buffer, _offset, buffer.GetLength(0), _digestBuffer, _offset);
         }
 
-        public static MessageDigest getInstance(string instanceName)
+        public static MessageDigest getInstance(string name)
         {
-            throw new NotImplementedException();
+            return new MessageDigest(name);
         }
 
         public byte[] digest()
         {
-            throw new NotImplementedException();
-        }
-
-        // Create an md5 sum string of this string
-        static public string GetMd5Sum(string str)
-        {
-            // First we need to convert the string into bytes, which
-            // means using a text encoder.
-            Encoder enc = System.Text.Encoding.Unicode.GetEncoder();
-
-            // Create a buffer large enough to hold the string
-            byte[] unicodeText = new byte[str.Length * 2];
-            enc.GetBytes(str.ToCharArray(), 0, str.Length, unicodeText, 0, true);
-
-            // Now that we have a byte array we can ask the CSP to hash it
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] result = md5.ComputeHash(unicodeText);
-
-            // Build the final string by converting each byte
-            // into hex and appending it to a StringBuilder
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < result.Length; i++)
-            {
-                sb.Append(result[i].ToString("X2"));
-            }
-
-            // And return it
-            return sb.ToString();
+            return _hashAlgorithm.TransformFinalBlock(_digestBuffer, 0, _digestBuffer.GetLength(0));
         }
     }
 }

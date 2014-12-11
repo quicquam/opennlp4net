@@ -50,11 +50,10 @@ namespace opennlp.model
         private static string getStringParam(IDictionary<string, string> trainParams, string key, string defaultValue,
             IDictionary<string, string> reportMap)
         {
-            string valueString = trainParams[key];
-
-            if (valueString == null)
+            string valueString = defaultValue;
+            if (trainParams.ContainsKey(key))
             {
-                valueString = defaultValue;
+                valueString = trainParams[key] ?? defaultValue;
             }
 
             if (reportMap != null)

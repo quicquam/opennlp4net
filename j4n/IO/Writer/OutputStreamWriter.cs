@@ -16,9 +16,9 @@ namespace j4n.IO.Writer
             InnerStream = os.InnerStream;
         }
 
-        public OutputStreamWriter(FileOutputStream os, string utf8)
+        public OutputStreamWriter(FileOutputStream os, string encoding)
         {
-            throw new NotImplementedException();
+            InnerStream = os.InnerStream;
         }
     }
 }

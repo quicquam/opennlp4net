@@ -78,9 +78,14 @@ namespace opennlp.nonjava.helperclasses
             return GetSBytesForEncoding(System.Text.Encoding.UTF8, self);
         }
 
-        internal static sbyte[] GetBytes(this string self, string encoding)
+ /*       internal static sbyte[] GetBytes(this string self, string encoding)
         {
             return GetSBytesForEncoding(System.Text.Encoding.GetEncoding(encoding), self);
+        } */
+
+        internal static byte[] GetBytes(this string self, string encoding)
+        {
+            return System.Text.Encoding.GetEncoding(encoding).GetBytes(self);
         }
 
         private static sbyte[] GetSBytesForEncoding(System.Text.Encoding encoding, string s)

@@ -14,6 +14,12 @@ namespace j4n.IO.File
         public Jfile(string fileName, FileMode filemode = FileMode.Open)
         {
             Name = fileName;
+            SetAbsolutePath(fileName);
+        }
+
+        private void SetAbsolutePath(string fileName)
+        {
+            AbsolutePath = Path.IsPathRooted(fileName) ? fileName : string.Format("{0}\\{1}", Directory.GetCurrentDirectory(), fileName);
         }
 
         public string Name { get; private set; }
@@ -22,15 +28,22 @@ namespace j4n.IO.File
         public string AbsolutePath { get; set; }
         public Jfile AbsoluteFile { get; set; }
         public Jfile ParentFile { get; set; }
+        private bool _deleteOnExit = false;
 
         public static Jfile createTempFile(string events, object o)
         {
-            throw new NotImplementedException();
+           return new Jfile(Path.GetTempPath() + events + ".tmp");
+        }
+
+        ~Jfile()
+        {
+            if (_deleteOnExit)
+                System.IO.File.Delete(Name);
         }
 
         public void deleteOnExit()
         {
-            throw new NotImplementedException();
+            _deleteOnExit = true;
         }
 
         public void delete()
