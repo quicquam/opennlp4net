@@ -18,38 +18,53 @@
 using System;
 using System.IO;
 using j4n.IO.Reader;
+using j4n.IO.Writer;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;
 
 namespace opennlp.tools.cmdline.tokenizer
 {
-    internal sealed class CommandLineTokenizer
+    internal sealed class CommandLineTokenizer : BasicCmdLineTool
 	{
 
 	  private readonly Tokenizer tokenizer;
+      private string[] _args;
 
 	  internal CommandLineTokenizer(Tokenizer tokenizer)
 	  {
 		this.tokenizer = tokenizer;
 	  }
 
+      public override string Help
+      {
+          get { throw new NotImplementedException(); }
+      }
+
+      public override void run(string[] args)
+      {
+          _args = args;
+          process();
+      }
+
+
 	  internal void process()
 	  {
 
-		ObjectStream<string> untokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(Console.OpenStandardInput()));
+        ObjectStream<string> untokenizedLineStream = new PlainTextByLineStream(new InputStreamReader(GetInputStream(_args)));
 
 		ObjectStream<string> tokenizedLineStream = new WhitespaceTokenStream(new TokenizerStream(tokenizer, untokenizedLineStream));
 
-		PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
-		perfMon.start();
+        var outputWriter = new OutputStreamWriter(GetOutputStream(_args));
+        //PerformanceMonitor perfMon = new PerformanceMonitor(Console.Error, "sent");
+		//perfMon.start();
 
 		try
 		{
 		  string tokenizedLine;
 		  while ((tokenizedLine = tokenizedLineStream.read()) != null)
 		  {
-			Console.WriteLine(tokenizedLine);
-			perfMon.incrementCounter();
+              outputWriter.writeLine(tokenizedLine);
+			//perfMon.incrementCounter();
 		  }
 		}
 		catch (IOException e)
@@ -57,7 +72,8 @@ namespace opennlp.tools.cmdline.tokenizer
 		  CmdLineUtil.handleStdinIoError(e);
 		}
 
-		perfMon.stopAndPrintFinalResult();
+        outputWriter.close();
+		//perfMon.stopAndPrintFinalResult();
 	  }
 	}
 

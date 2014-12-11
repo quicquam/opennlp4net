@@ -42,7 +42,7 @@ namespace opennlp.tools.cmdline.tokenizer
 
 	  public override void run(string[] args)
 	  {
-		if (args.Length != 1)
+		if (args.Length < 1)
 		{
 		  Console.WriteLine(Help);
 		}
@@ -53,7 +53,7 @@ namespace opennlp.tools.cmdline.tokenizer
 
 		  CommandLineTokenizer tokenizer = new CommandLineTokenizer(new opennlp.tools.tokenize.TokenizerME(model));
 
-		  tokenizer.process();
+		  tokenizer.run(args);
 		}
 	  }
 	}

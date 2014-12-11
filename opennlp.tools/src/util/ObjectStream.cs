@@ -6,12 +6,10 @@ namespace opennlp.tools.util
     {
         public virtual void reset()
         {
-            throw new NotImplementedException();
         }
 
         public virtual void close()
         {
-            throw new NotImplementedException();
         }
 
         public abstract T read();

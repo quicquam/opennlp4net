@@ -6,23 +6,23 @@ namespace j4n.IO.Reader
 {
     public class InputStreamReader : Reader
     {
-        private string Encoding;
+        private Charset _charset;
         public InputStreamReader(InputStream.InputStream stream)
             : base(stream)
         {
-            Encoding = "UTF-8";
+            _charset = Charset.forName("UTF-8");
         }
 
         public InputStreamReader(InputStream.InputStream stream, string encoding = null)
             : base(stream)
         {
-            Encoding = encoding;
+            _charset = !string.IsNullOrEmpty(encoding) ? Charset.forName(encoding) : Charset.defaultCharset();
         }
 
         public InputStreamReader(FileInputStream stream, string encoding = null)
             : base(stream)
         {
-            Encoding = encoding;
+            _charset = !string.IsNullOrEmpty(encoding) ? Charset.forName(encoding) : Charset.defaultCharset();
         }
 
         public InputStreamReader(Stream stream, string encoding)
@@ -30,14 +30,16 @@ namespace j4n.IO.Reader
             throw new System.NotImplementedException();
         }
 
-        public InputStreamReader(FileInputStream stream, Charset encoding)
+        public InputStreamReader(FileInputStream stream, Charset charset)
+            :base(stream)
         {
-            throw new System.NotImplementedException();
+            _charset = charset;
         }
 
-        public InputStreamReader(InputStream.InputStream stream, Charset encoding)
+        public InputStreamReader(InputStream.InputStream stream, Charset charset)
+            : base(stream)
         {
-            throw new System.NotImplementedException();
+            _charset = charset;
         }
 
         public InputStreamReader(Stream stream)

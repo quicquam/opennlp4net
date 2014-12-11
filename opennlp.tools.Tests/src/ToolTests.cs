@@ -23,7 +23,7 @@ namespace opennlp.tools.Tests
         private const string PosTaggerFileBase = "en-pos-maxent";
         private const string SentenceDectectorFileBase = "en-sent";
         private const string TaggerModelReplacerFileBase = "en-parser-chunking";
-        private const string TaggerModelReplacerSecondFile = "en-pos-maxent.bin";
+        private const string TaggerModelReplacerSecondFile = "en-pos-maxent";
 
         private const string TokenizerMeFileBase = "en-token";
         private const string TokenNameFinderFileBase = "en-ner-person";
@@ -82,13 +82,15 @@ namespace opennlp.tools.Tests
         public void TaggerModelReplacerToolLoadsInputRunsAndCreatesOutput()
         {
             var taggerModelReplacerTool = new TaggerModelReplacerTool();
-            var fileList = GenerateModelFilenames(TaggerModelReplacerFileBase);
-            fileList.Add(string.Format("{0}{1}.bin", ModelPath, TaggerModelReplacerSecondFile));
+            var fileList = new List<string>
+            {
+                string.Format("{0}{1}.bin", ModelPath, TaggerModelReplacerFileBase),
+                string.Format("{0}{1}.bin", ModelPath, TaggerModelReplacerSecondFile)
+            };
             taggerModelReplacerTool.run(fileList.ToArray());
             var output = File.ReadAllText(fileList[2], Encoding.Unicode);            
         }
 
-        [Ignore]
         [Test]
         public void TokenizerMEToolLoadsInputRunsAndCreatesOutput()
         {

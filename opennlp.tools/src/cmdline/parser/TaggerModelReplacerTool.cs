@@ -46,7 +46,7 @@ namespace opennlp.tools.cmdline.parser
 	  public override void run(string[] args)
 	  {
 
-		if (args.Length != 2)
+		if (args.Length < 2)
 		{
 		  Console.WriteLine(Help);
 		}
