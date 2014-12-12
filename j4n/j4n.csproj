@@ -83,7 +83,6 @@
     <Compile Include="IO\Reader\InputStreamReader.cs" />
     <Compile Include="IO\InputStream\ObjectInputStream.cs" />
     <Compile Include="IO\Reader\Reader.cs" />
-    <Compile Include="IO\Reader\StringReader.cs" />
     <Compile Include="IO\Writer\BufferedWriter.cs" />
     <Compile Include="IO\OutputStream\DataOutputStream.cs" />
     <Compile Include="IO\OutputStream\FileOutputStream.cs" />

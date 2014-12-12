@@ -19,6 +19,7 @@ using System.Collections.Generic;
  * specific language governing permissions and limitations
  * under the License.
  */
+using System.Linq;
 using opennlp.nonjava.helperclasses;
 
 namespace opennlp.model
@@ -167,7 +168,7 @@ namespace opennlp.model
                 }
                 else
                 {
-                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + Arrays.asList(ev.Context));
+                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + ev.Context.ToList());
                 }
                 // recycle the TIntArrayList
                 indexedContext.Clear();

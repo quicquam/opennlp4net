@@ -68,6 +68,7 @@ namespace opennlp.model
         public FileEventStream(Jfile file)
         {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
+            reader.reset();
         }
 
         public override bool hasNext()

@@ -19,6 +19,7 @@ using System.Collections.Generic;
  * under the License.
  */
 using System.IO;
+using System.Linq;
 using j4n.IO.File;
 using j4n.IO.OutputStream;
 using j4n.IO.Writer;
@@ -188,7 +189,7 @@ namespace opennlp.model
                 }
                 else
                 {
-                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + Arrays.asList(ev.Context));
+                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + ev.Context.ToList());
                 }
                 // recycle the TIntArrayList
                 indexedContext.Clear();

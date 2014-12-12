@@ -16,6 +16,7 @@
  */
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using j4n.IO.Reader;
 using opennlp.tools.postag;

@@ -43,7 +43,7 @@ namespace opennlp.tools.Tests
             var chunkerMeTool = new ChunkerMETool();
             var fileList = GenerateModelFilenames(ChunkerMeFileBase);
             chunkerMeTool.run(fileList.ToArray());
-            var output = File.ReadAllText(fileList[2], Encoding.Unicode);
+            var output = File.ReadAllText(fileList[2], Encoding.Default);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace opennlp.tools.Tests
             var parserTool = new ParserTool();
             var fileList = GenerateModelFilenames(ParserFileBase);
             parserTool.run(fileList.ToArray());
-            var output = File.ReadAllText(fileList[2], Encoding.Unicode);            
+            var output = File.ReadAllText(fileList[2], Encoding.Default);            
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace opennlp.tools.Tests
             var posTaggerTool = new POSTaggerTool();
             var fileList = GenerateModelFilenames(PosTaggerFileBase);
             posTaggerTool.run(fileList.ToArray());
-            var output = File.ReadAllText(fileList[2], Encoding.Unicode);
+            var output = File.ReadAllText(fileList[2], Encoding.Default);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace opennlp.tools.Tests
             var sentenceDetectTool = new SentenceDetectorTool();
             var fileList = GenerateModelFilenames(SentenceDectectorFileBase);
             sentenceDetectTool.run(fileList.ToArray());
-            var lines = File.ReadAllLines(fileList[2], Encoding.Unicode);
+            var lines = File.ReadAllLines(fileList[2], Encoding.Default);
             foreach (var line in lines)
             {
                 ;
@@ -88,7 +88,7 @@ namespace opennlp.tools.Tests
                 string.Format("{0}{1}.bin", ModelPath, TaggerModelReplacerSecondFile)
             };
             taggerModelReplacerTool.run(fileList.ToArray());
-            var output = File.ReadAllText(fileList[2], Encoding.Unicode);            
+            var output = File.ReadAllText(fileList[2], Encoding.Default);            
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace opennlp.tools.Tests
             var tokenizerMeTool = new TokenizerMETool();
             var fileList = GenerateModelFilenames(TokenizerMeFileBase);
             tokenizerMeTool.run(fileList.ToArray());
-            var output = File.ReadAllText(fileList[2], Encoding.Unicode);
+            var output = File.ReadAllText(fileList[2], Encoding.Default);
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace opennlp.tools.Tests
             var tokenNameFinderTool = new TokenNameFinderTool();
             var fileList = GenerateModelFilenames(TokenNameFinderFileBase);
             tokenNameFinderTool.run(fileList.ToArray());
-            var output = File.ReadAllText(fileList[2], Encoding.Unicode);
+            var output = File.ReadAllText(fileList[2], Encoding.Default);
         }
     }
 }

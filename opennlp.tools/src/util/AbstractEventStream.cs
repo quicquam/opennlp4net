@@ -70,6 +70,7 @@ namespace opennlp.tools.util
                 while (!events.MoveNext() && (sample = samples.read()) != null)
                 {
                     events = createEvents(sample);
+                    events.Reset();
                 }
 
                 

@@ -16,6 +16,7 @@
  */
 
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using j4n.IO.Reader;
 using j4n.Lang;
@@ -135,7 +136,7 @@ namespace opennlp.tools.formats.muc
 		return attributes;
 	  }
 
-	  public virtual void parse(Reader @in, ContentHandler handler)
+	  public virtual void parse(StringReader @in, ContentHandler handler)
 	  {
 
         CharSequence buffer = new CharSequence("");
@@ -145,7 +146,7 @@ namespace opennlp.tools.formats.muc
 
 		int lastChar = -1;
 		int c;
-		while ((c = @in.read()) != -1)
+		while ((c = @in.Read()) != -1)
 		{
 
 		  if ('<' == c)

@@ -12,7 +12,7 @@ namespace j4n.IO.Reader
         
         public Reader(InputStream.InputStream stream)
         {
-            StreamReader = new StreamReader(stream.GetStream(), Encoding.Unicode);
+            StreamReader = new StreamReader(stream.GetStream(), Encoding.Default);
         }
 
         protected Reader(Reader reader)

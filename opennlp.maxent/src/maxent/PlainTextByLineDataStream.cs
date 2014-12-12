@@ -19,7 +19,6 @@ using System.IO;
  * under the License.
  */
 using j4n.IO.Reader;
-using StringReader = j4n.IO.Reader.StringReader;
 
 namespace opennlp.maxent
 {

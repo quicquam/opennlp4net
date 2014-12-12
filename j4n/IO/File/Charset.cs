@@ -27,8 +27,11 @@ namespace j4n.IO.File
                 case "ASCII":
                     encoding = new ASCIIEncoding();
                     break;
-                default:
+                case "Unicode":
                     encoding = new UnicodeEncoding();
+                    break;
+                default:
+                    encoding = new UTF8Encoding();
                     break;
             }
             return new Charset(encoding);
@@ -36,7 +39,7 @@ namespace j4n.IO.File
 
         public static Charset defaultCharset()
         {
-            return new Charset(new UnicodeEncoding());
+            return new Charset(new UTF8Encoding());
         }
     }
 }
