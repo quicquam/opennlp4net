@@ -67,16 +67,18 @@ namespace opennlp.model
         private static int getIntParam(IDictionary<string, string> trainParams, string key, int defaultValue,
             IDictionary<string, string> reportMap)
         {
-            string valueString = trainParams[key];
+            if (trainParams.ContainsKey(key))
+            {
+                string valueString = trainParams[key];
 
-            if (valueString != null)
-            {
-                return Convert.ToInt32(valueString);
+                if (valueString != null)
+                {
+                    return Convert.ToInt32(valueString);
+                }
             }
-            else
-            {
-                return defaultValue;
-            }
+ 
+            return defaultValue;
+ 
         }
 
         private static double getDoubleParam(IDictionary<string, string> trainParams, string key, double defaultValue,

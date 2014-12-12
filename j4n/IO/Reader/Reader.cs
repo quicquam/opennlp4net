@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using j4n.Interfaces;
 
 namespace j4n.IO.Reader
@@ -11,7 +12,7 @@ namespace j4n.IO.Reader
         
         public Reader(InputStream.InputStream stream)
         {
-            StreamReader = new StreamReader(stream.GetStream());
+            StreamReader = new StreamReader(stream.GetStream(), Encoding.Unicode);
         }
 
         protected Reader(Reader reader)

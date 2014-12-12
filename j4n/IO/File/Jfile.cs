@@ -50,7 +50,7 @@ namespace j4n.IO.File
 
         public void delete()
         {
-            throw new NotImplementedException();
+            
         }
 
         public bool exists()
