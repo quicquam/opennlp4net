@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using j4n.IO.File;
+﻿using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.OutputStream;
 using NUnit.Framework;
 using opennlp.tools.sentdetect;
 using opennlp.tools.util;
+using System;
 
 namespace opennlp.tools.Tests
 {
