@@ -157,7 +157,7 @@ namespace opennlp.tools.util.model
                         var data = new byte[entry.UncompressedSize];
                         zip.Read(data, 0, (int)entry.UncompressedSize);
                         var stream = new MemoryStream(data);
-                        artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
+                        artifactMap[entry.FileName] = CreateConcreteType(factory, new InputStream(stream));
 
                         // entry.IsDirectory doesn't work, but a CompressionRatio less than zero
                         // indicates a directory (no data, just headers), move the zip.Position back by 
@@ -203,8 +203,7 @@ namespace opennlp.tools.util.model
                 this.toolFactory.init(this);
         }
 
-
-        private object GetConcreteType(object factory, InputStream inputStream)
+        private object CreateConcreteType(object factory, InputStream inputStream)
         {
             if (factory is PropertiesSerializer)
             {
@@ -238,6 +237,24 @@ namespace opennlp.tools.util.model
             }
 
             return null;
+        }
+
+        private void PersistConcreteType(object factory, object artifact, ZipOutputStream zipOutputStream)
+        {
+            if (factory is PropertiesSerializer)
+            {
+                var serializer = factory as PropertiesSerializer;
+                var properties = artifact as Properties;
+                if(properties != null)
+                    serializer.serialize(properties, new OutputStream(zipOutputStream));
+            }
+            if (factory is GenericModelSerializer)
+            {
+                var serializer = factory as GenericModelSerializer;
+                var model = artifact as AbstractModel;
+                if (model != null)
+                    serializer.serialize(model, new OutputStream(zipOutputStream));
+            }
         }
 
         private string getEntryExtension(string entry)
@@ -309,7 +326,7 @@ namespace opennlp.tools.util.model
 
                 if (factory != null)
                 {
-                    artifactMap.Add(entryName, GetConcreteType(factory, @in));
+                    artifactMap.Add(entryName, CreateConcreteType(factory, @in));
                 }
                 else
                 {
@@ -436,7 +453,16 @@ namespace opennlp.tools.util.model
 
         public void serialize(FileOutputStream fileOutputStream)
         {
-            throw new NotImplementedException();
+            using (var zip = new ZipOutputStream(fileOutputStream.InnerStream))
+            {
+                foreach (KeyValuePair<string, object> kvp in artifactMap)
+                {
+                    string extension = getEntryExtension(kvp.Key);
+                    object artifact = artifactSerializers.GetValueObject(extension);
+                    zip.PutNextEntry(kvp.Key);
+                    PersistConcreteType(artifact, kvp.Value, zip);
+                }
+            }
         }
 
         protected internal virtual Type DefaultFactory

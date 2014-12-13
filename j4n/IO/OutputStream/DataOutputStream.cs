@@ -15,25 +15,5 @@ namespace j4n.IO.OutputStream
             : base(new FileStream("outputstream.out", FileMode.Create))
         {
         }
-
-        public void writeUTF(string s)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void writeInt(int i)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void writeDouble(double d)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void flush()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

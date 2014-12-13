@@ -101,11 +101,8 @@ namespace j4n.IO.InputStream
 
         public long readLong()
         {
-            var e = BitConverter.IsLittleEndian;
             var bytes = new byte[8];
             InnerStream.Read(bytes, 0, 8);
-            var v = BitConverter.ToUInt64(bytes, 0);
-            var ul = ReverseBytes(v);
             Array.Reverse(bytes);
             return BitConverter.ToInt64(bytes, 0);
         }
