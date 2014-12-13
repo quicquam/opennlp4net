@@ -155,7 +155,7 @@ namespace opennlp.tools.Tests
         [Test]
         public void SentdetectCanGetSentenceArrayFromTestData()
         {
-            var modelFilePath = string.Format("{0}{1}", ModelPath, "en-sent2.bin");
+            var modelFilePath = string.Format("{0}{1}", ModelPath, "en-sent.bin");
             using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-sent.in.txt")))
             {
                 var testTextBlock = sr.ReadToEnd();
