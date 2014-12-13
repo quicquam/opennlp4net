@@ -59,10 +59,48 @@ namespace opennlp.tools.util.model
             this.componentName = componentName;
         }
 
-        protected BaseModel(string componentName, string languageCode, IDictionary<string, string> manifestInfoEntries,
+        protected BaseModel(string componentName, string languageCode, IEnumerable<KeyValuePair<string, string>> manifestInfoEntries,
             BaseToolFactory factory)
         {
-            throw new NotImplementedException();
+
+            if (languageCode == null)
+                throw new IllegalArgumentException("languageCode must not be null!");
+
+            createBaseArtifactSerializers();
+
+            Properties manifest = new Properties();
+            manifest.setProperty(MANIFEST_VERSION_PROPERTY, "1.0");
+            manifest.setProperty(LANGUAGE_PROPERTY, languageCode);
+            manifest.setProperty(VERSION_PROPERTY, Version.currentVersion().ToString());
+            manifest.setProperty(TIMESTAMP_PROPERTY, DateTime.Now.Ticks.ToString());
+            manifest.setProperty(COMPONENT_NAME_PROPERTY, componentName);
+
+            if (manifestInfoEntries != null)
+            {
+                foreach (KeyValuePair<string, string> manifestInfoEntry in manifestInfoEntries)
+                {
+                    manifest.Add(manifestInfoEntry.Key, manifestInfoEntry.Value);
+                }
+            }
+
+            artifactMap.Add(MANIFEST_ENTRY, manifest);
+            finishedLoadingArtifacts = true;
+
+            if (factory != null)
+            {
+                setManifestProperty(FACTORY_NAME, factory.getClass().FullName);
+                foreach (KeyValuePair<string, object> keyValuePair in factory.createArtifactMap())
+                {
+                    artifactMap.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+
+                // new manifest entries
+                IDictionary<String, String> entries = factory.createManifestEntries();
+                foreach (KeyValuePair<string, string> keyValuePair in entries)
+                {
+                    setManifestProperty(keyValuePair.Key, keyValuePair.Value);
+                }
+            }
         }
 
         protected BaseModel(string componentName, InputStream @in, long streamOffset)

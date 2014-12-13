@@ -161,8 +161,9 @@ namespace opennlp.tools.parser.lang.en
                 }
                 return constituents[constituents.Length - 1].Head;
             }
-            else if ((hr = headRules[type]) != null)
+            else if (headRules.ContainsKey(type))
             {
+                hr = headRules[type];
                 string[] tags = hr.tags;
                 int cl = constituents.Length;
                 int tl = tags.Length;

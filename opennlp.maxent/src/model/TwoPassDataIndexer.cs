@@ -61,7 +61,7 @@ namespace opennlp.model
         public TwoPassDataIndexer(EventStream eventStream, int cutoff, bool sort)
         {
             IDictionary<string, int?> predicateIndex = new Dictionary<string, int?>();
-            IList<ComparableEvent> eventsToCompare;
+            List<ComparableEvent> eventsToCompare;
 
             Console.WriteLine("Indexing events using cutoff of " + cutoff + "\n");
 
@@ -143,11 +143,11 @@ namespace opennlp.model
             return eventCount;
         }
 
-        private IList<ComparableEvent> index(int numEvents, EventStream es, IDictionary<string, int?> predicateIndex)
+        private List<ComparableEvent> index(int numEvents, EventStream es, IDictionary<string, int?> predicateIndex)
         {
             IDictionary<string, int?> omap = new Dictionary<string, int?>();
             int outcomeCount = 0;
-            IList<ComparableEvent> eventsToCompare = new List<ComparableEvent>(numEvents);
+            List<ComparableEvent> eventsToCompare = new List<ComparableEvent>(numEvents);
             IList<int?> indexedContext = new List<int?>();
             while (es.hasNext())
             {

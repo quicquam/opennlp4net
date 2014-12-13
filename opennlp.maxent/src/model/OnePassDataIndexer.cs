@@ -59,7 +59,7 @@ namespace opennlp.model
         {
             IDictionary<string, int?> predicateIndex = new Dictionary<string, int?>();
             LinkedList<Event> events;
-            IList<ComparableEvent> eventsToCompare;
+            List<ComparableEvent> eventsToCompare;
 
             Console.WriteLine("Indexing events using cutoff of " + cutoff + "\n");
 
@@ -68,7 +68,7 @@ namespace opennlp.model
             Console.WriteLine("done. " + events.Count + " events");
 
             Console.Write("\tIndexing...  ");
-            eventsToCompare = index(events, predicateIndex) as IList<ComparableEvent>;
+            eventsToCompare = index(events, predicateIndex) as List<ComparableEvent>;
             // done with event list
             events = null;
             // done with predicates

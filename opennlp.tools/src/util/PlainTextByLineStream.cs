@@ -77,11 +77,7 @@ namespace opennlp.tools.util
 
         public override void reset()
         {
-            if (channel == null)
-            {
-                input.reset();
-            }
-            else
+            if(channel != null)
             {
                 channel.position(0);
                 input = new BufferedReader(Channels.newReader(channel, encoding));

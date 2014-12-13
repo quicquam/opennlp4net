@@ -47,7 +47,6 @@
     <Compile Include="nonjava\helperclasses\Arrays.cs" />
     <Compile Include="nonjava\helperclasses\DateTimeHelperClass.cs" />
     <Compile Include="nonjava\extensions\EnumeratorExtensions.cs" />
-    <Compile Include="nonjava\extensions\IListComparableEventExtensions.cs" />
     <Compile Include="nonjava\helperclasses\RectangularArrays.cs" />
     <Compile Include="src\maxent\BasicContextGenerator.cs" />
     <Compile Include="src\maxent\BasicEventStream.cs" />

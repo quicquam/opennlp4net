@@ -93,7 +93,7 @@ namespace opennlp.model
         /// <param name="eventsToCompare"> a <code>ComparableEvent[]</code> value </param>
         /// <returns> The number of unique events in the specified list.
         /// @since maxent 1.2.6 </returns>
-        protected internal virtual int sortAndMerge(IList<ComparableEvent> eventsToCompare, bool sort)
+        protected internal virtual int sortAndMerge(List<ComparableEvent> eventsToCompare, bool sort)
         {
             int numUniqueEvents = 1;
             numEvents = eventsToCompare.Count;

@@ -90,5 +90,10 @@ namespace opennlp.tools.util
         {
             throw new NotImplementedException();
         }
+
+        public Type getClass()
+        {
+            return GetType();
+        }
     }
 }

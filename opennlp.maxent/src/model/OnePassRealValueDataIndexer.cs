@@ -53,7 +53,7 @@ namespace opennlp.model
             get { return values; }
         }
 
-        protected internal override int sortAndMerge(IList<ComparableEvent> eventsToCompare, bool sort)
+        protected internal override int sortAndMerge(List<ComparableEvent> eventsToCompare, bool sort)
         {
             int numUniqueEvents = base.sortAndMerge(eventsToCompare, sort);
             values = new float[numUniqueEvents][];
