@@ -103,7 +103,7 @@ namespace opennlp.tools.util.model
             }
         }
 
-        protected BaseModel(string componentName, InputStream @in, long streamOffset)
+        protected BaseModel(string componentName, InputStream @in)
             : this(componentName, true)
         {
             if (@in == null)
@@ -111,7 +111,7 @@ namespace opennlp.tools.util.model
                 throw new System.ArgumentException("in must not be null!");
             }
 
-            loadModel(@in, streamOffset);
+            loadModel(@in);
         }
 
         protected BaseModel(string componentName, Jfile languageCode)
@@ -129,7 +129,7 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
-        private void loadModel(InputStream @in, long streamOffset)
+        private void loadModel(InputStream @in)
         {
             createBaseArtifactSerializers();
 

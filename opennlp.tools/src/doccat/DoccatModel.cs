@@ -41,8 +41,8 @@ namespace opennlp.tools.doccat
         {
         }
 
-        public DoccatModel(InputStream @in, long streamOffset = 0)
-            : base(COMPONENT_NAME, @in, streamOffset)
+        public DoccatModel(InputStream @in)
+            : base(COMPONENT_NAME, @in)
         {
         }
 
