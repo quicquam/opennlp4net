@@ -44,7 +44,7 @@ namespace opennlp.tools.util.model
 
         protected internal BaseToolFactory toolFactory;
         private bool isLoadedFromSerialized;
-        private string componentName;
+        private string _componentName;
         private Dictionary<string, byte[]> leftoverArtifacts;
 
         private BaseModel(string componentName, bool isLoadedFromSerialized)
@@ -53,16 +53,16 @@ namespace opennlp.tools.util.model
 
             if (componentName == null)
             {
-                throw new System.ArgumentException("componentName must not be null!");
+                throw new System.ArgumentException("_componentName must not be null!");
             }
 
-            this.componentName = componentName;
+            _componentName = componentName;
         }
 
         protected BaseModel(string componentName, string languageCode, IEnumerable<KeyValuePair<string, string>> manifestInfoEntries,
             BaseToolFactory factory)
         {
-
+            _componentName = componentName;
             if (languageCode == null)
                 throw new IllegalArgumentException("languageCode must not be null!");
 
@@ -382,8 +382,8 @@ namespace opennlp.tools.util.model
                 throw new InvalidFormatException("Missing " + COMPONENT_NAME_PROPERTY + " property in " +
                                                  MANIFEST_ENTRY + "!");
 
-            if (!getManifestProperty(COMPONENT_NAME_PROPERTY).Equals(componentName))
-                throw new InvalidFormatException("The " + componentName + " cannot load a model for the " +
+            if (!getManifestProperty(COMPONENT_NAME_PROPERTY).Equals(_componentName))
+                throw new InvalidFormatException("The " + _componentName + " cannot load a model for the " +
                                                  getManifestProperty(COMPONENT_NAME_PROPERTY) + "!");
 
             if (getManifestProperty(LANGUAGE_PROPERTY) == null)
