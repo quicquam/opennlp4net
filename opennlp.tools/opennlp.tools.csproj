@@ -322,6 +322,7 @@
     <Compile Include="src\namefind\TokenNameFinderFactory.cs" />
     <Compile Include="src\namefind\TokenNameFinderModel.cs" />
     <Compile Include="src\ngram\NGramModel.cs" />
+    <Compile Include="src\nonjava\cmdline\CmdlineParser.cs" />
     <Compile Include="src\nonjava\extensions\HashSetExtensionMethods.cs" />
     <Compile Include="src\nonjava\extensions\IListExtensionMethods.cs" />
     <Compile Include="src\nonjava\extensions\StackExtensionMethods.cs" />

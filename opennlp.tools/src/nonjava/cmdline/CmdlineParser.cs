@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace opennlp.console
+namespace opennlp.tools.nonjava.cmdline
 {
     public class CmdlineParser
     {
