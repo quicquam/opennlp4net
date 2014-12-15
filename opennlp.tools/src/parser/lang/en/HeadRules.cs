@@ -161,8 +161,9 @@ namespace opennlp.tools.parser.lang.en
                 }
                 return constituents[constituents.Length - 1].Head;
             }
-            else if ((hr = headRules[type]) != null)
+            else if (headRules.ContainsKey(type))
             {
+                hr = headRules[type];
                 string[] tags = hr.tags;
                 int cl = constituents.Length;
                 int tl = tags.Length;
@@ -202,23 +203,20 @@ namespace opennlp.tools.parser.lang.en
         {
             string line;
             headRules = new Dictionary<string, HeadRule>(30);
-            using (var sr = new StreamReader(str.InnerStream.Stream))
+            while ((line = str.readLine()) != null)
             {
-                while ((line = sr.ReadLine()) != null)
+                StringTokenizer st = new StringTokenizer(line);
+                string num = st.nextToken();
+                string type = st.nextToken();
+                string dir = st.nextToken();
+                string[] tags = new string[Convert.ToInt32(num) - 2];
+                int ti = 0;
+                while (st.hasMoreTokens())
                 {
-                    StringTokenizer st = new StringTokenizer(line);
-                    string num = st.nextToken();
-                    string type = st.nextToken();
-                    string dir = st.nextToken();
-                    string[] tags = new string[Convert.ToInt32(num) - 2];
-                    int ti = 0;
-                    while (st.hasMoreTokens())
-                    {
-                        tags[ti] = st.nextToken();
-                        ti++;
-                    }
-                    headRules[type] = new HeadRule(dir.Equals("1"), tags);
+                    tags[ti] = st.nextToken();
+                    ti++;
                 }
+                headRules[type] = new HeadRule(dir.Equals("1"), tags);
             }
         }
 

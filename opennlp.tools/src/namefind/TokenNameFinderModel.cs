@@ -122,8 +122,8 @@ namespace opennlp.tools.namefind
         {
         }
 
-        public TokenNameFinderModel(InputStream @in, long streamOffset = 0)
-            : base(COMPONENT_NAME, @in, streamOffset)
+        public TokenNameFinderModel(InputStream @in)
+            : base(COMPONENT_NAME, @in)
         {
         }
 
@@ -232,6 +232,11 @@ namespace opennlp.tools.namefind
             base.createArtifactSerializers();
             if (!artifactSerializers.Contains("featuregen"))
                 artifactSerializers.Add("featuregen", new ByteArraySerializer());
+        }
+
+        public static IDictionary<string, ArtifactSerializer<TokenNameFinderModel>> createArtifactSerializers(bool isStatic)
+        {
+            throw new NotImplementedException();
         }
 
         // TODO: Write test for this method

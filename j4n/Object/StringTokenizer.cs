@@ -38,8 +38,12 @@ namespace j4n.Object
 
         public string nextToken()
         {
-            var currentValue = _current.Value;
-            _current = _current.Next;
+            var currentValue = "";
+            if (_current != null)
+            {
+                currentValue = _current.Value;
+                _current = _current.Next;
+            }
             return currentValue;
         }
 

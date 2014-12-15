@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-using j4n.Serialization;
-
 namespace opennlp.tools.parser
 {
     using POSSample = opennlp.tools.postag.POSSample;

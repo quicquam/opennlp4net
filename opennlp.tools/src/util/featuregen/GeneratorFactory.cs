@@ -539,7 +539,7 @@ namespace opennlp.tools.util.featuregen
         {
             var xmlDescriptorDOM = new XmlDocument();
 
-            xmlDescriptorDOM.Load(xmlDescriptorIn.Stream);
+            xmlDescriptorDOM.Load(xmlDescriptorIn.GetStream());
 
             XmlElement generatorXmlElement = xmlDescriptorDOM.DocumentElement;
 

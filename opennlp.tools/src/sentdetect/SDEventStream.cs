@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 using j4n.Lang;
-using j4n.Serialization;
 using j4n.Utils;
 
 namespace opennlp.tools.sentdetect
@@ -65,16 +64,6 @@ namespace opennlp.tools.sentdetect
             }
 
             return events.GetEnumerator();
-        }
-
-        public override bool hasNext()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Event next()
-        {
-            throw new System.NotImplementedException();
-        }
+        }        
     }
 }

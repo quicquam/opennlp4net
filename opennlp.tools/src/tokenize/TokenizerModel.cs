@@ -114,8 +114,8 @@ namespace opennlp.tools.tokenize
         /// </param>
         /// <exception cref="IOException"> </exception>
         /// <exception cref="InvalidFormatException"> </exception>
-        public TokenizerModel(InputStream @in, long streamOffset = 0)
-            : base(COMPONENT_NAME, @in, streamOffset)
+        public TokenizerModel(InputStream @in)
+            : base(COMPONENT_NAME, @in)
         {
         }
 

@@ -44,7 +44,7 @@ namespace opennlp.tools.util.model
 
         protected internal BaseToolFactory toolFactory;
         private bool isLoadedFromSerialized;
-        private string componentName;
+        private string _componentName;
         private Dictionary<string, byte[]> leftoverArtifacts;
 
         private BaseModel(string componentName, bool isLoadedFromSerialized)
@@ -53,19 +53,57 @@ namespace opennlp.tools.util.model
 
             if (componentName == null)
             {
-                throw new System.ArgumentException("componentName must not be null!");
+                throw new System.ArgumentException("_componentName must not be null!");
             }
 
-            this.componentName = componentName;
+            _componentName = componentName;
         }
 
-        protected BaseModel(string componentName, string languageCode, IDictionary<string, string> manifestInfoEntries,
+        protected BaseModel(string componentName, string languageCode, IEnumerable<KeyValuePair<string, string>> manifestInfoEntries,
             BaseToolFactory factory)
         {
-            throw new NotImplementedException();
+            _componentName = componentName;
+            if (languageCode == null)
+                throw new IllegalArgumentException("languageCode must not be null!");
+
+            createBaseArtifactSerializers();
+
+            Properties manifest = new Properties();
+            manifest.setProperty(MANIFEST_VERSION_PROPERTY, "1.0");
+            manifest.setProperty(LANGUAGE_PROPERTY, languageCode);
+            manifest.setProperty(VERSION_PROPERTY, Version.currentVersion().ToString());
+            manifest.setProperty(TIMESTAMP_PROPERTY, DateTime.Now.Ticks.ToString());
+            manifest.setProperty(COMPONENT_NAME_PROPERTY, componentName);
+
+            if (manifestInfoEntries != null)
+            {
+                foreach (KeyValuePair<string, string> manifestInfoEntry in manifestInfoEntries)
+                {
+                    manifest.Add(manifestInfoEntry.Key, manifestInfoEntry.Value);
+                }
+            }
+
+            artifactMap.Add(MANIFEST_ENTRY, manifest);
+            finishedLoadingArtifacts = true;
+
+            if (factory != null)
+            {
+                setManifestProperty(FACTORY_NAME, factory.getClass().FullName);
+                foreach (KeyValuePair<string, object> keyValuePair in factory.createArtifactMap())
+                {
+                    artifactMap.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+
+                // new manifest entries
+                IDictionary<String, String> entries = factory.createManifestEntries();
+                foreach (KeyValuePair<string, string> keyValuePair in entries)
+                {
+                    setManifestProperty(keyValuePair.Key, keyValuePair.Value);
+                }
+            }
         }
 
-        protected BaseModel(string componentName, InputStream @in, long streamOffset)
+        protected BaseModel(string componentName, InputStream @in)
             : this(componentName, true)
         {
             if (@in == null)
@@ -73,7 +111,7 @@ namespace opennlp.tools.util.model
                 throw new System.ArgumentException("in must not be null!");
             }
 
-            loadModel(@in, streamOffset);
+            loadModel(@in);
         }
 
         protected BaseModel(string componentName, Jfile languageCode)
@@ -91,7 +129,7 @@ namespace opennlp.tools.util.model
             throw new NotImplementedException();
         }
 
-        private void loadModel(InputStream @in, long streamOffset)
+        private void loadModel(InputStream @in)
         {
             createBaseArtifactSerializers();
 
@@ -119,7 +157,7 @@ namespace opennlp.tools.util.model
                         var data = new byte[entry.UncompressedSize];
                         zip.Read(data, 0, (int)entry.UncompressedSize);
                         var stream = new MemoryStream(data);
-                        artifactMap[entry.FileName] = GetConcreteType(factory, new InputStream(stream));
+                        artifactMap[entry.FileName] = CreateConcreteType(factory, new InputStream(stream));
 
                         // entry.IsDirectory doesn't work, but a CompressionRatio less than zero
                         // indicates a directory (no data, just headers), move the zip.Position back by 
@@ -165,8 +203,7 @@ namespace opennlp.tools.util.model
                 this.toolFactory.init(this);
         }
 
-
-        private object GetConcreteType(object factory, InputStream inputStream)
+        private object CreateConcreteType(object factory, InputStream inputStream)
         {
             if (factory is PropertiesSerializer)
             {
@@ -200,6 +237,24 @@ namespace opennlp.tools.util.model
             }
 
             return null;
+        }
+
+        private void PersistConcreteType(object factory, object artifact, ZipOutputStream zipOutputStream)
+        {
+            if (factory is PropertiesSerializer)
+            {
+                var serializer = factory as PropertiesSerializer;
+                var properties = artifact as Properties;
+                if(properties != null)
+                    serializer.serialize(properties, new OutputStream(zipOutputStream));
+            }
+            if (factory is GenericModelSerializer)
+            {
+                var serializer = factory as GenericModelSerializer;
+                var model = artifact as AbstractModel;
+                if (model != null)
+                    serializer.serialize(model, new OutputStream(zipOutputStream));
+            }
         }
 
         private string getEntryExtension(string entry)
@@ -248,7 +303,7 @@ namespace opennlp.tools.util.model
 
         private void finishLoadingArtifacts(InputStream @in)
         {
-            var zip = new ZipInputStream(@in.Stream);
+            var zip = new ZipInputStream(@in.GetStream());
 
             ZipEntry entry;
             while ((entry = zip.GetNextEntry()) != null)
@@ -271,7 +326,7 @@ namespace opennlp.tools.util.model
 
                 if (factory != null)
                 {
-                    artifactMap.Add(entryName, GetConcreteType(factory, @in));
+                    artifactMap.Add(entryName, CreateConcreteType(factory, @in));
                 }
                 else
                 {
@@ -344,8 +399,8 @@ namespace opennlp.tools.util.model
                 throw new InvalidFormatException("Missing " + COMPONENT_NAME_PROPERTY + " property in " +
                                                  MANIFEST_ENTRY + "!");
 
-            if (!getManifestProperty(COMPONENT_NAME_PROPERTY).Equals(componentName))
-                throw new InvalidFormatException("The " + componentName + " cannot load a model for the " +
+            if (!getManifestProperty(COMPONENT_NAME_PROPERTY).Equals(_componentName))
+                throw new InvalidFormatException("The " + _componentName + " cannot load a model for the " +
                                                  getManifestProperty(COMPONENT_NAME_PROPERTY) + "!");
 
             if (getManifestProperty(LANGUAGE_PROPERTY) == null)
@@ -398,7 +453,16 @@ namespace opennlp.tools.util.model
 
         public void serialize(FileOutputStream fileOutputStream)
         {
-            throw new NotImplementedException();
+            using (var zip = new ZipOutputStream(fileOutputStream.InnerStream))
+            {
+                foreach (KeyValuePair<string, object> kvp in artifactMap)
+                {
+                    string extension = getEntryExtension(kvp.Key);
+                    object artifact = artifactSerializers.GetValueObject(extension);
+                    zip.PutNextEntry(kvp.Key);
+                    PersistConcreteType(artifact, kvp.Value, zip);
+                }
+            }
         }
 
         protected internal virtual Type DefaultFactory

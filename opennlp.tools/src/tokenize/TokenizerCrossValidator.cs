@@ -16,7 +16,6 @@
  */
 
 using System.IO;
-using j4n.Serialization;
 using opennlp.tools.util;
 
 namespace opennlp.tools.tokenize

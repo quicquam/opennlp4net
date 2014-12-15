@@ -18,7 +18,6 @@ using System.Collections.Generic;
  */
 using System.IO;
 using System.Linq;
-using j4n.Serialization;
 
 namespace opennlp.tools.chunker
 {

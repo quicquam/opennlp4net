@@ -1,5 +1,4 @@
 ﻿using System;
-using j4n.Serialization;
 using opennlp.tools.namefind;
 using opennlp.tools.sentdetect;
 using opennlp.tools.tokenize;

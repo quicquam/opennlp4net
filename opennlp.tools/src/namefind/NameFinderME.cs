@@ -20,7 +20,6 @@ using System.IO;
 using System.Linq;
 using j4n.IO.InputStream;
 using j4n.Lang;
-using j4n.Serialization;
 
 
 namespace opennlp.tools.namefind

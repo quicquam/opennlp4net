@@ -19,6 +19,7 @@ using System.Collections.Generic;
  * specific language governing permissions and limitations
  * under the License.
  */
+using System.Linq;
 using opennlp.nonjava.helperclasses;
 
 namespace opennlp.model
@@ -52,7 +53,7 @@ namespace opennlp.model
             get { return values; }
         }
 
-        protected internal override int sortAndMerge(IList<ComparableEvent> eventsToCompare, bool sort)
+        protected internal override int sortAndMerge(List<ComparableEvent> eventsToCompare, bool sort)
         {
             int numUniqueEvents = base.sortAndMerge(eventsToCompare, sort);
             values = new float[numUniqueEvents][];
@@ -120,7 +121,7 @@ namespace opennlp.model
                 }
                 else
                 {
-                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + Arrays.asList(ev.Context));
+                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + ev.Context.ToList());
                 }
                 //    recycle the TIntArrayList
                 indexedContext.Clear();

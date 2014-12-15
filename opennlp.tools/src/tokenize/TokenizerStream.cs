@@ -16,8 +16,6 @@
  */
 
 
-using j4n.Serialization;
-
 namespace opennlp.tools.tokenize
 {
     using opennlp.tools.util;
@@ -38,7 +36,7 @@ namespace opennlp.tools.tokenize
             this.input = input;
         }
 
-        public virtual TokenSample read()
+        public override TokenSample read()
         {
             string inputString = input.read();
 

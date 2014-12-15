@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 using System.IO;
-using j4n.Serialization;
 
 namespace opennlp.tools.chunker
 {

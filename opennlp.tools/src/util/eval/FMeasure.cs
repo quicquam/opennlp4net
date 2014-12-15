@@ -12,12 +12,12 @@
             throw new System.NotImplementedException();
         }
 
-        public string getFMeasure()
+        public double getFMeasure()
         {
             throw new System.NotImplementedException();
         }
 
-        public string RecallScore { get; set; }
-        public string PrecisionScore { get; set; }
+        public double RecallScore { get; set; }
+        public double PrecisionScore { get; set; }
     }
 }

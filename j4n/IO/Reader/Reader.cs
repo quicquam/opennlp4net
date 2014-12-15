@@ -1,20 +1,23 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using j4n.Interfaces;
 
 namespace j4n.IO.Reader
 {
     public class Reader : Closeable
     {
-        public InputStream.InputStream InnerStream;
+        protected StreamReader StreamReader;
+        
         public Reader(InputStream.InputStream stream)
         {
-            InnerStream = stream;
+            StreamReader = new StreamReader(stream.GetStream(), Encoding.Default);
         }
 
         protected Reader(Reader reader)
         {
-            InnerStream = reader.InnerStream;
+            StreamReader = reader.StreamReader;
         }
 
         public Reader()
@@ -23,10 +26,15 @@ namespace j4n.IO.Reader
 
         public void close()
         {
-            throw new NotImplementedException();
+            
         }
 
         public int read()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int read(char[] buffer, int offset, int count)
         {
             throw new NotImplementedException();
         }

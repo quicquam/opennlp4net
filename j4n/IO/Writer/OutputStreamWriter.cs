@@ -7,18 +7,19 @@ namespace j4n.IO.Writer
     public class OutputStreamWriter : Writer
     {
         public OutputStreamWriter(Stream os)
+            : base(os)
         {
             InnerStream = os;
         }
 
-        public OutputStreamWriter(OutputStream.OutputStream os)
+        public OutputStreamWriter(OutputStream.OutputStream os) 
+            : base(os.InnerStream)
         {
-            InnerStream = os.InnerStream;
         }
 
-        public OutputStreamWriter(FileOutputStream os, string utf8)
+        public OutputStreamWriter(FileOutputStream os, string encoding)
+            : base(os.InnerStream, encoding)
         {
-            throw new NotImplementedException();
         }
     }
 }

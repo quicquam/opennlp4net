@@ -15,7 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using j4n.Serialization;
 
 
 namespace opennlp.tools.util
@@ -71,6 +70,7 @@ namespace opennlp.tools.util
                 while (!events.MoveNext() && (sample = samples.read()) != null)
                 {
                     events = createEvents(sample);
+                    events.Reset();
                 }
 
                 
@@ -80,7 +80,7 @@ namespace opennlp.tools.util
 
         public override Event next()
         {
-            events.MoveNext();
+//            events.MoveNext();
             return events.Current;
         }
     }

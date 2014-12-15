@@ -17,7 +17,6 @@
  */
 using System.IO;
 using j4n.IO.File;
-using j4n.Serialization;
 
 namespace opennlp.tools.postag
 {

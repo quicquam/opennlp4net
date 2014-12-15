@@ -17,6 +17,16 @@ namespace j4n.IO.OutputStream
             InnerStream = stream;
         }
 
+        public OutputStream(TextWriter stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void flush()
+        {
+            InnerStream.Flush();
+        }
+
         public void close()
         {
             InnerStream.Close();

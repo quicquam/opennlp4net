@@ -40,7 +40,7 @@ namespace opennlp.model
             outcome = oc;
             if (values == null)
             {
-                Arrays.sort(pids);
+                Array.Sort(pids);
             }
             else
             {

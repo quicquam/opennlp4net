@@ -24,12 +24,12 @@ namespace opennlp.tools.util
 
         public virtual IDictionary<string, object> createArtifactMap()
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, object>();
         }
 
         public virtual IDictionary<string, string> createManifestEntries()
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, string>();
         }
 
         public static BaseToolFactory create(Type factoryClass)
@@ -89,6 +89,11 @@ namespace opennlp.tools.util
         protected IDictionary<string, ArtifactSerializer<object>> createArtifactSerializersMap()
         {
             throw new NotImplementedException();
+        }
+
+        public Type getClass()
+        {
+            return GetType();
         }
     }
 }

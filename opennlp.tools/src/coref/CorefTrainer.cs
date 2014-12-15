@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using j4n.Serialization;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more

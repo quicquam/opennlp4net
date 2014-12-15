@@ -43,5 +43,9 @@ namespace j4n.Lang
 
         public enum TextCase { CASE_INSENSITIVE, CASE_SENSITIVE };
 
+        public string[] Split(string lexemeStr)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

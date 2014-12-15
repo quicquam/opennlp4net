@@ -19,6 +19,7 @@ using System.Collections.Generic;
  * under the License.
  */
 using System.IO;
+using System.Linq;
 using j4n.IO.File;
 using j4n.IO.OutputStream;
 using j4n.IO.Writer;
@@ -60,7 +61,7 @@ namespace opennlp.model
         public TwoPassDataIndexer(EventStream eventStream, int cutoff, bool sort)
         {
             IDictionary<string, int?> predicateIndex = new Dictionary<string, int?>();
-            IList<ComparableEvent> eventsToCompare;
+            List<ComparableEvent> eventsToCompare;
 
             Console.WriteLine("Indexing events using cutoff of " + cutoff + "\n");
 
@@ -142,11 +143,11 @@ namespace opennlp.model
             return eventCount;
         }
 
-        private IList<ComparableEvent> index(int numEvents, EventStream es, IDictionary<string, int?> predicateIndex)
+        private List<ComparableEvent> index(int numEvents, EventStream es, IDictionary<string, int?> predicateIndex)
         {
             IDictionary<string, int?> omap = new Dictionary<string, int?>();
             int outcomeCount = 0;
-            IList<ComparableEvent> eventsToCompare = new List<ComparableEvent>(numEvents);
+            List<ComparableEvent> eventsToCompare = new List<ComparableEvent>(numEvents);
             IList<int?> indexedContext = new List<int?>();
             while (es.hasNext())
             {
@@ -188,7 +189,7 @@ namespace opennlp.model
                 }
                 else
                 {
-                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + Arrays.asList(ev.Context));
+                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + ev.Context.ToList());
                 }
                 // recycle the TIntArrayList
                 indexedContext.Clear();

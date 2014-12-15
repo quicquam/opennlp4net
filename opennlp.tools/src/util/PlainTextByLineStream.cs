@@ -19,7 +19,6 @@
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
-using j4n.Serialization;
 
 namespace opennlp.tools.util
 {
@@ -31,7 +30,7 @@ namespace opennlp.tools.util
         private readonly FileChannel channel;
         private readonly string encoding;
 
-        private BufferedReader @in;
+        private BufferedReader input;
 
         /// <summary>
         /// Initializes the current instance.
@@ -39,7 +38,7 @@ namespace opennlp.tools.util
         /// <param name="in"> </param>
         public PlainTextByLineStream(Reader @in)
         {
-            this.@in = new BufferedReader(@in);
+            this.input = new BufferedReader(@in);
             this.channel = null;
             this.encoding = null;
         }
@@ -59,7 +58,7 @@ namespace opennlp.tools.util
             this.channel = channel;
 
             // TODO: Why isn't reset called here ?
-            @in = new BufferedReader(Channels.newReader(channel, encoding));
+            input = new BufferedReader(Channels.newReader(channel, encoding));
         }
 
         public PlainTextByLineStream(FileChannel channel, Charset encoding) : this(channel, encoding.name())
@@ -68,32 +67,28 @@ namespace opennlp.tools.util
 
         public PlainTextByLineStream(InputStreamReader @in)
         {
-            throw new System.NotImplementedException();
+            input = new BufferedReader(@in);
         }
 
-        public virtual string read()
+        public override string read()
         {
-            return @in.readLine();
+            return input.readLine();
         }
 
-        public virtual void reset()
+        public override void reset()
         {
-            if (channel == null)
-            {
-                @in.reset();
-            }
-            else
+            if(channel != null)
             {
                 channel.position(0);
-                @in = new BufferedReader(Channels.newReader(channel, encoding));
+                input = new BufferedReader(Channels.newReader(channel, encoding));
             }
         }
 
-        public virtual void close()
+        public override void close()
         {
             if (channel == null)
             {
-                @in.close();
+                input.close();
             }
             else
             {

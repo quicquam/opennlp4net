@@ -29,7 +29,8 @@ namespace j4n.Utils
 
         public void store(OutputStream @out, string empty)
         {
-            throw new System.NotImplementedException();
+            var buffer = ToByteArray();
+            @out.InnerStream.Write(buffer, 0, buffer.GetLength(0));
         }
 
         public void setProperty(string key, string value)
@@ -69,6 +70,17 @@ namespace j4n.Utils
                     yield return line;
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return this.Aggregate("", (current, keyValuePair)
+                => current + (keyValuePair.Key + "=" + keyValuePair.Value + Environment.NewLine));
+        }
+
+        public byte[] ToByteArray()
+        {
+            return Encoding.UTF8.GetBytes(ToString());
         }
     }
 }

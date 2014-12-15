@@ -17,7 +17,7 @@
  */
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
-using j4n.Serialization;
+using opennlp.tools.util;
 using opennlp.tools.util.cmdline;
 
 
@@ -152,7 +152,7 @@ namespace opennlp.tools.namefind
                 this.monitor = monitor;
             }
 
-            public virtual NameSample read()
+            public override NameSample read()
             {
                 monitor.incrementCounter();
                 return sampleStream.read();

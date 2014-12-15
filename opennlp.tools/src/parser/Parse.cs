@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 /*
@@ -19,6 +20,7 @@ using System.Text;
  * limitations under the License.
  */
 using j4n.IO.Reader;
+using j4n.IO.Writer;
 using j4n.Lang;
 using opennlp.tools.nonjava.extensions;
 
@@ -384,6 +386,12 @@ namespace opennlp.tools.parser
             Console.WriteLine(sb);
         }
 
+        public virtual void show(OutputStreamWriter writer)
+        {
+            StringBuilder sb = new StringBuilder(text.Length * 4);
+            show(sb);
+            writer.writeLine(sb.ToString());
+        }
 
         /// <summary>
         /// Returns the probability associated with the pos-tag sequence assigned to this parse.

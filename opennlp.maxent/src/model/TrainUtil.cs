@@ -50,11 +50,10 @@ namespace opennlp.model
         private static string getStringParam(IDictionary<string, string> trainParams, string key, string defaultValue,
             IDictionary<string, string> reportMap)
         {
-            string valueString = trainParams[key];
-
-            if (valueString == null)
+            string valueString = defaultValue;
+            if (trainParams.ContainsKey(key))
             {
-                valueString = defaultValue;
+                valueString = trainParams[key] ?? defaultValue;
             }
 
             if (reportMap != null)
@@ -68,16 +67,18 @@ namespace opennlp.model
         private static int getIntParam(IDictionary<string, string> trainParams, string key, int defaultValue,
             IDictionary<string, string> reportMap)
         {
-            string valueString = trainParams[key];
+            if (trainParams.ContainsKey(key))
+            {
+                string valueString = trainParams[key];
 
-            if (valueString != null)
-            {
-                return Convert.ToInt32(valueString);
+                if (valueString != null)
+                {
+                    return Convert.ToInt32(valueString);
+                }
             }
-            else
-            {
-                return defaultValue;
-            }
+ 
+            return defaultValue;
+ 
         }
 
         private static double getDoubleParam(IDictionary<string, string> trainParams, string key, double defaultValue,
@@ -131,10 +132,13 @@ namespace opennlp.model
                     Convert.ToInt32(cutoffString);
                 }
 
-                string iterationsString = trainParams[ITERATIONS_PARAM];
-                if (iterationsString != null)
+                if (trainParams.ContainsKey(ITERATIONS_PARAM))
                 {
-                    Convert.ToInt32(iterationsString);
+                    string iterationsString = trainParams[ITERATIONS_PARAM];
+                    if (iterationsString != null)
+                    {
+                        int it = Convert.ToInt32(iterationsString);
+                    }
                 }
             }
             catch (NumberFormatException)
@@ -142,13 +146,16 @@ namespace opennlp.model
                 return false;
             }
 
-            string dataIndexer = trainParams[DATA_INDEXER_PARAM];
-
-            if (dataIndexer != null)
+            if (trainParams.ContainsKey(DATA_INDEXER_PARAM))
             {
-                if (!("OnePass".Equals(dataIndexer) || "TwoPass".Equals(dataIndexer)))
+                string dataIndexer = trainParams[DATA_INDEXER_PARAM];
+
+                if (dataIndexer != null)
                 {
-                    return false;
+                    if (!("OnePass".Equals(dataIndexer) || "TwoPass".Equals(dataIndexer)))
+                    {
+                        return false;
+                    }
                 }
             }
 

@@ -33,5 +33,10 @@ namespace j4n.IO.OutputStream
         {
             throw new NotImplementedException();
         }
+
+        public string append(string format)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

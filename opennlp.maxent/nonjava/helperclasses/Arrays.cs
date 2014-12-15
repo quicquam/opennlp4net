@@ -40,11 +40,6 @@ namespace opennlp.nonjava.helperclasses
             throw new System.NotImplementedException();
         }
 
-        public static string asList(string[] context)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public static decimal binarySearch(int[] outcomes, int outcome)
         {
             throw new System.NotImplementedException();

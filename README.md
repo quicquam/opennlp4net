@@ -14,6 +14,6 @@ the postagger
 
 the parser
 
-The functionality relating to training the models does not work as yet.
+Additionally the functionality relating to the SentenceDetectorME.train method also works and generates a model file compatible with OpenNLP. The website of this project is at http://www.quicquam.com
 
  

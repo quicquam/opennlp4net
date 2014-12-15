@@ -84,8 +84,8 @@ namespace opennlp.tools.sentdetect
         {
         }
 
-        public SentenceModel(InputStream @in, long streamOffset = 0)
-            : base(COMPONENT_NAME, @in, streamOffset)
+        public SentenceModel(InputStream @in)
+            : base(COMPONENT_NAME, @in)
         {
         }
 

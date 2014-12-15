@@ -19,7 +19,6 @@
 using System.IO;
 using j4n.IO.Reader;
 using j4n.Logging;
-using j4n.Serialization;
 
 namespace opennlp.tools.postag
 {

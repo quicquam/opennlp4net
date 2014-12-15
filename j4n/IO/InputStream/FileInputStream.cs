@@ -7,12 +7,13 @@ namespace j4n.IO.InputStream
         public FileInputStream(Jfile jfile)
             : base(jfile.Name)
         {
-            throw new System.NotImplementedException();
         }
 
         public FileInputStream(string path)
             : base(path)
         {
         }
+
+        public InputStream Channel { get; set; }
     }
 }

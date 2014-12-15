@@ -43,7 +43,8 @@ namespace opennlp.tools.util.model
 
         public static void writeModel(AbstractModel artifact, OutputStream @out)
         {
-            throw new System.NotImplementedException();
+            var modelWriter = new GenericModelWriter(artifact, new DataOutputStream(@out));
+            modelWriter.persist();
         }
 
         public static sbyte[] read(InputStream @in)

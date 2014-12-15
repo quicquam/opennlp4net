@@ -17,7 +17,6 @@ using System.Collections.Generic;
  * limitations under the License.
  */
 using j4n.IO.InputStream;
-using j4n.Serialization;
 using j4n.IO.Reader;
 
 namespace opennlp.tools.parser.chunking

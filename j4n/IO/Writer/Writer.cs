@@ -1,40 +1,47 @@
-﻿using System;
+﻿using j4n.Interfaces;
+using System;
 using System.IO;
-using j4n.Interfaces;
+using System.Text;
 
 namespace j4n.IO.Writer
 {
     public class Writer : Closeable, Flushable
     {
         public Stream InnerStream;
+        private readonly StreamWriter _streamWriter;
+
+        public Writer(Stream stream, string encoding = null)
+        {
+            InnerStream = stream;
+            var enc = encoding == "UTF-8" ? Encoding.UTF8 : Encoding.Default;
+            _streamWriter = new StreamWriter(stream, enc);
+        }
 
         public void close()
         {
+            _streamWriter.Flush();
             InnerStream.Close();
         }
 
         public void flush()
         {
+            _streamWriter.Flush();
             InnerStream.Flush();
         }
 
         public void write(string str)
         {
-            var bytes = GetBytes(str);
-            InnerStream.Write(bytes, 0, bytes.GetLength(0));
+            _streamWriter.Write(str);
         }
 
         public void write(char charValue)
         {
-            var bytes = BitConverter.GetBytes(charValue);
-            InnerStream.Write(bytes, 0, bytes.GetLength(0));
+            _streamWriter.Write(charValue);
         }
 
-        private byte[] GetBytes(string str)
+        public void writeLine(string str = "")
         {
-            var bytes = new byte[str.Length*sizeof (char)];
-            Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
+            _streamWriter.Write(str + Environment.NewLine);
         }
     }
 }

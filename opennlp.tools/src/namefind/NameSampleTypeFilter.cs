@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 using System.Linq;
-using j4n.Serialization;
 using opennlp.nonjava.helperclasses;
 
 namespace opennlp.tools.namefind

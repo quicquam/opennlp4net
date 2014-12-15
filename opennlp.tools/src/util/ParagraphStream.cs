@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using j4n.Serialization;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more

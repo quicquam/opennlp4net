@@ -69,8 +69,8 @@ namespace opennlp.tools.postag
             checkArtifactMap();
         }
 
-        public POSModel(InputStream @in, long streamOffset = 0)
-            : base(COMPONENT_NAME, @in, streamOffset)
+        public POSModel(InputStream @in)
+            : base(COMPONENT_NAME, @in)
         {
         }
 

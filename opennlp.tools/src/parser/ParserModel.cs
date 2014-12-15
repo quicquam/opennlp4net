@@ -156,8 +156,8 @@ namespace opennlp.tools.parser
         {
         }
 
-        public ParserModel(InputStream @in, long streamOffset = 0)
-            : base(COMPONENT_NAME, @in, streamOffset)
+        public ParserModel(InputStream @in)
+            : base(COMPONENT_NAME, @in)
         {
         }
 

@@ -19,6 +19,7 @@ using System.Collections.Generic;
  * specific language governing permissions and limitations
  * under the License.
  */
+using System.Linq;
 using opennlp.nonjava.helperclasses;
 
 namespace opennlp.model
@@ -58,7 +59,7 @@ namespace opennlp.model
         {
             IDictionary<string, int?> predicateIndex = new Dictionary<string, int?>();
             LinkedList<Event> events;
-            IList<ComparableEvent> eventsToCompare;
+            List<ComparableEvent> eventsToCompare;
 
             Console.WriteLine("Indexing events using cutoff of " + cutoff + "\n");
 
@@ -67,7 +68,7 @@ namespace opennlp.model
             Console.WriteLine("done. " + events.Count + " events");
 
             Console.Write("\tIndexing...  ");
-            eventsToCompare = index(events, predicateIndex) as IList<ComparableEvent>;
+            eventsToCompare = index(events, predicateIndex) as List<ComparableEvent>;
             // done with event list
             events = null;
             // done with predicates
@@ -167,7 +168,7 @@ namespace opennlp.model
                 }
                 else
                 {
-                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + Arrays.asList(ev.Context));
+                    Console.Error.WriteLine("Dropped event " + ev.Outcome + ":" + ev.Context.ToList());
                 }
                 // recycle the TIntArrayList
                 indexedContext.Clear();
