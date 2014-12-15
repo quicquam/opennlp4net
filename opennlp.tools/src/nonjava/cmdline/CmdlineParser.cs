@@ -5,6 +5,10 @@ namespace opennlp.tools.nonjava.cmdline
 {
     public class CmdlineParser
     {
+        public string ToolName { get; private set; }
+        public string InputFileName { get; private set; }
+        public string OutputFileName { get; private set; }
+        
         public Dictionary<string, string> Parse(string[] args)
         {
             return new Dictionary<string, string>();

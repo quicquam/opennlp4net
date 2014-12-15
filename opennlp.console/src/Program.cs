@@ -1,4 +1,5 @@
 ﻿using System;
+using opennlp.tools.nonjava.cmdline;
 
 namespace opennlp.console
 {
@@ -6,17 +7,18 @@ namespace opennlp.console
     {
         static void Main(string[] args)
         {
-            var options = new Options();
-            if (CommandLine.Parser.Default.ParseArguments(args, options))
+            var cmd = new CmdlineParser();
+            var parameters = cmd.Parse(args);
+            if (parameters != null)
             {
                 // consume Options instance properties
-                if (string.IsNullOrEmpty(options.ToolName))
+                if (!parameters.ContainsKey("toolName"))
                 {
                     Console.WriteLine("No toolName specified");
                 }
                 else
                 {
-                    var opennlpCore = new OpenNlpCore(options);
+                    var opennlpCore = new OpenNlpCore(parameters);
                     opennlpCore.Process();
                 }
             }

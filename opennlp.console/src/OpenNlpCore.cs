@@ -10,15 +10,15 @@ namespace opennlp.console
     public class OpenNlpCore
     {
         private const string OpenNlpToolsAssemblyName = "opennlp.tools.dll";
-        
-        private readonly Options _options;
+        private Dictionary<string, string> _parameters; 
+
         private readonly BasicCmdLineTool _cmdLineTool;
 
-        public OpenNlpCore(Options options)
+        public OpenNlpCore(Dictionary<string, string> parameters)
         {
-            _options = options;
+            _parameters = parameters;
             var assembly = Assembly.LoadFrom(CreateAssembyPath());
-            if (assembly != null && !string.IsNullOrEmpty(_options.ToolName))
+            if (assembly != null)
             {
                 var type = GetToolType(assembly);
                 if (type != null)
@@ -35,23 +35,30 @@ namespace opennlp.console
 
         private string[] CreateCommandLineArguments()
         {
-            var argList = new List<string> {_options.ModelName};
+            var argList = new List<string>();
+            if (!string.IsNullOrEmpty(GetParameter("model")))
+                argList.Add(GetParameter("model"));
 
-            if(!string.IsNullOrEmpty(_options.InputFilename))
-                argList.Add(_options.InputFilename);
+            if (!string.IsNullOrEmpty(GetParameter("input")))
+                argList.Add(GetParameter("input"));
 
-            if (!string.IsNullOrEmpty(_options.OutputFilename))
-                argList.Add(_options.OutputFilename);
+            if (!string.IsNullOrEmpty(GetParameter("output")))
+                argList.Add(GetParameter("output"));
             return argList.ToArray();
         }
 
         private Type GetToolType(Assembly assembly)
         {
-            var toolName = string.Format("{0}Tool", _options.ToolName);
+            var toolName = string.Format("{0}Tool", GetParameter("toolName"));
             return (from t in assembly.GetTypes()
                     where t.IsClass
                     && (t.Name == toolName)
                     select t).FirstOrDefault();
+        }
+
+        private string GetParameter(string key)
+        {
+            return _parameters.ContainsKey(key) ? _parameters[key] : "";
         }
 
         public void Process()
