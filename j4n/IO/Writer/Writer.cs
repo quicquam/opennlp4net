@@ -1,15 +1,14 @@
-﻿using System;
+﻿using j4n.Interfaces;
+using System;
 using System.IO;
 using System.Text;
-using j4n.Interfaces;
-using j4n.IO.OutputStream;
 
 namespace j4n.IO.Writer
 {
     public class Writer : Closeable, Flushable
     {
         public Stream InnerStream;
-        private StreamWriter _streamWriter;
+        private readonly StreamWriter _streamWriter;
 
         public Writer(Stream stream, string encoding = null)
         {
