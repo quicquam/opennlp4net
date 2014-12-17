@@ -10,10 +10,12 @@ namespace opennlp.tools.nonjava.cmdline
         public string ToolName { get; private set; }
         public string InputFileName { get; private set; }
         public string OutputFileName { get; private set; }
-        
-        public Dictionary<string, string> Parse(string[] args)
+        private CmdLineConstants _cmdLineConstants;
+
+        public Dictionary<string, object> Parse(string[] args)
         {
-            var parameters = new Dictionary<string, string>();
+            _cmdLineConstants = new CmdLineConstants();
+            var parameters = new Dictionary<string, object>();
             var toolName = FindToolName(args);
             if (!string.IsNullOrEmpty(toolName.Key))
             {
@@ -27,47 +29,56 @@ namespace opennlp.tools.nonjava.cmdline
             return parameters;
         }
 
-        private KeyValuePair<string, string> FindToolName(string[] args)
+        private KeyValuePair<string, object> FindToolName(string[] args)
         {
-            var names = new ToolNames();
-            var index = Array.IndexOf<string>(names.NameStrings, args[0]);
+            var index = Array.IndexOf<string>(_cmdLineConstants.ToolNames, args[0]);
             if (index != -1)
             {
-                return new KeyValuePair<string, string>("toolName", names.NameStrings[index]);
+                return new KeyValuePair<string, object>("toolName", _cmdLineConstants.ToolNames[index]);
             }
-            index = Array.IndexOf<string>(names.NameStrings, string.Format("{0}Tool",args[0]));
+            index = Array.IndexOf<string>(_cmdLineConstants.ToolNames, string.Format("{0}Tool", args[0]));
             if (index != -1)
             {
-                return new KeyValuePair<string, string>("toolName", string.Format("{0}Tool", names.NameStrings[index]));
+                return new KeyValuePair<string, object>("toolName", string.Format("{0}Tool", _cmdLineConstants.ToolNames[index]));
             }
-            return new KeyValuePair<string, string>();
+            return new KeyValuePair<string, object>();
         }
 
-        private KeyValuePair<string, string> FindModelName(string[] args)
+        private KeyValuePair<string, object> FindModelName(string[] args)
         {
             var index = Array.IndexOf<string>(args, "-model");
             if (index != -1 && index+1 < args.GetUpperBound(0))
             {
-                return new KeyValuePair<string, string>("model", args[index+1]);
+                return new KeyValuePair<string, object>("model", args[index + 1]);
             }
-            foreach (var s in args.Where(s => s.EndsWith(".bin")))
+            foreach (var s in args.First(s => s.EndsWith(".bin")))
             {
-                return new KeyValuePair<string, string>("model", s);
+                return new KeyValuePair<string, object>("model", s);
             }
-            return new KeyValuePair<string, string>();
+            return new KeyValuePair<string, object>();
         }
 
-        private KeyValuePair<string, string> FindOutputFileName(string[] args)
+        private KeyValuePair<string, object> FindOutputFileName(string[] args)
+        {
+            var inputFileName = FindPipedFile(">");
+            if (!string.IsNullOrEmpty(inputFileName))
+            {
+                return new KeyValuePair<string, object>("input", inputFileName);
+            }
+            return new KeyValuePair<string, object>();
+        }
+
+        private KeyValuePair<string, object> FindInputFileName(string[] args)
         {
             throw new NotImplementedException();
         }
 
-        private KeyValuePair<string, string> FindInputFileName(string[] args)
+        private List<KeyValuePair<string, object>> FindToolParameters(string[] args)
         {
             throw new NotImplementedException();
         }
 
-        private List<KeyValuePair<string, string>> FindToolParameters(string[] args)
+        private string FindPipedFile(string redirector)
         {
             throw new NotImplementedException();
         }

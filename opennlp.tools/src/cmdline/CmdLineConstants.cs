@@ -1,8 +1,8 @@
 ﻿namespace opennlp.tools.cmdline
 {
-    class ToolNames
+    class CmdLineConstants
     {
-        public readonly string[] NameStrings =
+        public readonly string[] ToolNames =
         {
             "Doccat",
             "DoccatTrainer",
