@@ -150,6 +150,7 @@
     <Compile Include="src\cmdline\tokenizer\TokenizerModelLoader.cs" />
     <Compile Include="src\cmdline\tokenizer\TokenizerTrainerTool.cs" />
     <Compile Include="src\cmdline\tokenizer\TrainingParams.cs" />
+    <Compile Include="src\cmdline\ToolNames.cs" />
     <Compile Include="src\cmdline\TypedCmdLineTool.cs" />
     <Compile Include="src\coref\AbstractLinker.cs" />
     <Compile Include="src\coref\CorefModel.cs" />

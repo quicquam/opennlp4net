@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using opennlp.tools.cmdline;
 
 namespace opennlp.tools.nonjava.cmdline
 {
@@ -11,17 +13,48 @@ namespace opennlp.tools.nonjava.cmdline
         
         public Dictionary<string, string> Parse(string[] args)
         {
-            return new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
+            var toolName = FindToolName(args);
+            if (!string.IsNullOrEmpty(toolName.Key))
+            {
+                parameters.Add(toolName.Key, toolName.Value);
+            }
+            var modelName = FindModelName(args);
+            if (!string.IsNullOrEmpty(modelName.Key))
+            {
+                parameters.Add(modelName.Key, modelName.Value);
+            }
+            return parameters;
         }
 
         private KeyValuePair<string, string> FindToolName(string[] args)
         {
-            throw new NotImplementedException();
+            var names = new ToolNames();
+            var index = Array.IndexOf<string>(names.NameStrings, args[0]);
+            if (index != -1)
+            {
+                return new KeyValuePair<string, string>("toolName", names.NameStrings[index]);
+            }
+            index = Array.IndexOf<string>(names.NameStrings, string.Format("{0}Tool",args[0]));
+            if (index != -1)
+            {
+                return new KeyValuePair<string, string>("toolName", string.Format("{0}Tool", names.NameStrings[index]));
+            }
+            return new KeyValuePair<string, string>();
         }
 
         private KeyValuePair<string, string> FindModelName(string[] args)
         {
-            throw  new NotImplementedException();
+            var index = Array.IndexOf<string>(args, "-model");
+            if (index != -1 && index+1 < args.GetUpperBound(0))
+            {
+                return new KeyValuePair<string, string>("model", args[index+1]);
+            }
+            foreach (var s in args.Where(s => s.EndsWith(".bin")))
+            {
+                return new KeyValuePair<string, string>("model", s);
+            }
+            return new KeyValuePair<string, string>();
         }
 
         private KeyValuePair<string, string> FindOutputFileName(string[] args)
