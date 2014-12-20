@@ -26,6 +26,26 @@ namespace opennlp.tools.nonjava.cmdline
             {
                 parameters.Add(modelName.Key, modelName.Value);
             }
+            var inputFileName = FindInputFileName(args);
+            if (!string.IsNullOrEmpty(inputFileName.Key))
+            {
+                parameters.Add(inputFileName.Key, inputFileName.Value);
+            }
+            var outputFileName = FindInputFileName(args);
+            if (!string.IsNullOrEmpty(outputFileName.Key))
+            {
+                parameters.Add(outputFileName.Key, outputFileName.Value);
+            }
+
+            var parameterList = FindToolParameters(args);
+            if (parameterList.Any())
+            {
+                foreach (var keyValuePair in parameterList)
+                {
+                    parameters.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+            }
+
             return parameters;
         }
 
@@ -60,7 +80,7 @@ namespace opennlp.tools.nonjava.cmdline
 
         private KeyValuePair<string, object> FindOutputFileName(string[] args)
         {
-            var inputFileName = FindPipedFile(">");
+            var inputFileName = FindPipedFile(">", args);
             if (!string.IsNullOrEmpty(inputFileName))
             {
                 return new KeyValuePair<string, object>("input", inputFileName);
@@ -70,17 +90,49 @@ namespace opennlp.tools.nonjava.cmdline
 
         private KeyValuePair<string, object> FindInputFileName(string[] args)
         {
-            throw new NotImplementedException();
+            var outputFileName = FindPipedFile("<", args);
+            if (!string.IsNullOrEmpty(outputFileName))
+            {
+                return new KeyValuePair<string, object>("output", outputFileName);
+            }
+            return new KeyValuePair<string, object>();
         }
 
         private List<KeyValuePair<string, object>> FindToolParameters(string[] args)
         {
-            throw new NotImplementedException();
+            var parameterList = new List<KeyValuePair<string, object>>();
+            for (var i = 1; i < args.Length; i++)
+            {
+                var s = args[i];
+                if (s.StartsWith("-") && i + 1 < args.Length)
+                {
+                    var key = s.Substring(1);
+                    var val = args[i + 1];
+                    parameterList.Add(new KeyValuePair<string, object>(key, val));
+                }
+            }
+            return parameterList;
         }
 
-        private string FindPipedFile(string redirector)
+        private string FindPipedFile(string redirector, string[] args)
         {
-            throw new NotImplementedException();
+            var filename = "";
+            for(var i = 1; i < args.Length; i++)
+            {
+                var s = args[i];
+                if (s.Contains(redirector))
+                {
+                    if (!s.EndsWith(redirector) && i+1 < args.Length)
+                    {
+                        filename = args[i + 1];
+                    }
+                    else
+                    {
+                        filename = s.Substring(1);
+                    }
+                }
+            }
+            return filename;
         }
     }
 }
