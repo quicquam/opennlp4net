@@ -31,7 +31,7 @@ namespace opennlp.tools.nonjava.cmdline
             {
                 parameters.Add(inputFileName.Key, inputFileName.Value);
             }
-            var outputFileName = FindInputFileName(args);
+            var outputFileName = FindOutputFileName(args);
             if (!string.IsNullOrEmpty(outputFileName.Key))
             {
                 parameters.Add(outputFileName.Key, outputFileName.Value);
@@ -71,7 +71,7 @@ namespace opennlp.tools.nonjava.cmdline
             {
                 return new KeyValuePair<string, object>("model", args[index + 1]);
             }
-            foreach (var s in args.First(s => s.EndsWith(".bin")))
+            foreach (var s in args.Where(s => s.EndsWith(".bin")))
             {
                 return new KeyValuePair<string, object>("model", s);
             }
@@ -122,7 +122,7 @@ namespace opennlp.tools.nonjava.cmdline
                 var s = args[i];
                 if (s.Contains(redirector))
                 {
-                    if (!s.EndsWith(redirector) && i+1 < args.Length)
+                    if (s.EndsWith(redirector) && i+1 < args.Length)
                     {
                         filename = args[i + 1];
                     }
