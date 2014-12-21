@@ -23,85 +23,57 @@ namespace opennlp.tools.nonjava.cmdline
         {
             _cmdLineConstants = new CmdLineConstants();
             var parameters = new Dictionary<string, object>();
-            var toolName = FindToolName(args);
-            if (!string.IsNullOrEmpty(toolName.Key))
-            {
-                parameters.Add(toolName.Key, toolName.Value);
-            }
-            var modelName = FindModelNameByPosition(args);
-            if (!string.IsNullOrEmpty(modelName.Key))
-            {
-                parameters.Add(modelName.Key, modelName.Value);
-            }
-            var inputFileName = FindInputFileName(args);
-            if (!string.IsNullOrEmpty(inputFileName.Key))
-            {
-                parameters.Add(inputFileName.Key, inputFileName.Value);
-            }
-            var outputFileName = FindOutputFileName(args);
-            if (!string.IsNullOrEmpty(outputFileName.Key))
-            {
-                parameters.Add(outputFileName.Key, outputFileName.Value);
-            }
-
-            var parameterList = FindToolParameters(args);
-            if (parameterList.Any())
-            {
-                foreach (var keyValuePair in parameterList)
-                {
-                    parameters.Add(keyValuePair.Key, keyValuePair.Value);
-                }
-            }
+            
+            FindToolName(args, parameters);
+            FindModelNameByPosition(args, parameters);
+            FindInputFileName(args, parameters);
+            FindOutputFileName(args, parameters);
+            FindToolParameters(args, parameters);
 
             return parameters;
         }
 
-        private KeyValuePair<string, object> FindToolName(string[] args)
+        private void FindToolName(string[] args, Dictionary<string, object> dictionary)
         {
             var index = Array.IndexOf(_cmdLineConstants.ToolNames, args[0]);
             if (index != -1)
             {
-                return new KeyValuePair<string, object>("toolName", _cmdLineConstants.ToolNames[index]);
+                dictionary.Add("tool", _cmdLineConstants.ToolNames[index]);
             }
             index = Array.IndexOf(_cmdLineConstants.ToolNames, string.Format("{0}Tool", args[0]));
             if (index != -1)
             {
-                return new KeyValuePair<string, object>("toolName", string.Format("{0}Tool", _cmdLineConstants.ToolNames[index]));
+                dictionary.Add("tool", string.Format("{0}Tool", _cmdLineConstants.ToolNames[index]));
             }
-            return new KeyValuePair<string, object>();
         }
 
-        private KeyValuePair<string, object> FindModelNameByPosition(string[] args)
+        private void FindModelNameByPosition(string[] args, Dictionary<string, object> dictionary)
         {
             if (args.Count() > 1 && args[1].EndsWith(".bin"))
             {
-                return new KeyValuePair<string, object>("model", args[1]);
+                dictionary.Add("model", args[1]);
             }
-
-            return new KeyValuePair<string, object>();
         }
 
-        private KeyValuePair<string, object> FindOutputFileName(string[] args)
+        private void FindOutputFileName(string[] args, Dictionary<string, object> dictionary)
         {
-            var inputFileName = FindPipedFile(">", args);
-            if (!string.IsNullOrEmpty(inputFileName))
-            {
-                return new KeyValuePair<string, object>("input", inputFileName);
-            }
-            return new KeyValuePair<string, object>();
-        }
-
-        private KeyValuePair<string, object> FindInputFileName(string[] args)
-        {
-            var outputFileName = FindPipedFile("<", args);
+            var outputFileName = FindPipedFile(">", args);
             if (!string.IsNullOrEmpty(outputFileName))
             {
-                return new KeyValuePair<string, object>("output", outputFileName);
-            }
-            return new KeyValuePair<string, object>();
+                dictionary.Add("output", outputFileName);
+            }          
         }
 
-        private List<KeyValuePair<string, object>> FindToolParameters(string[] args)
+        private void FindInputFileName(string[] args, Dictionary<string, object> dictionary)
+        {
+            var inputFileName = FindPipedFile("<", args);
+            if (!string.IsNullOrEmpty(inputFileName))
+            {
+                dictionary.Add("input", inputFileName);
+            }            
+        }
+
+        private void FindToolParameters(string[] args, Dictionary<string, object> dictionary)
         {
             var parameterList = new List<KeyValuePair<string, object>>();
             for (var i = 1; i < args.Length; i++)
@@ -114,7 +86,13 @@ namespace opennlp.tools.nonjava.cmdline
                     parameterList.Add(new KeyValuePair<string, object>(key, val));
                 }
             }
-            return parameterList;
+            if (parameterList.Any())
+            {
+                foreach (var keyValuePair in parameterList)
+                {
+                    dictionary.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+            }
         }
 
         private string FindPipedFile(string redirector, string[] args)
