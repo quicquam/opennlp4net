@@ -82,7 +82,15 @@ namespace opennlp.tools.nonjava.cmdline
                 if (s.StartsWith("-") && i + 1 < args.Length)
                 {
                     var key = s.Substring(1);
-                    var val = args[i + 1];
+                    object val;
+                    if (IsBinaryOption(key))
+                    {
+                        val = true;
+                    }
+                    else
+                    {
+                        val = args[i + 1];                        
+                    }
                     parameterList.Add(new KeyValuePair<string, object>(key, val));
                 }
             }
@@ -93,6 +101,11 @@ namespace opennlp.tools.nonjava.cmdline
                     dictionary.Add(keyValuePair.Key, keyValuePair.Value);
                 }
             }
+        }
+
+        private bool IsBinaryOption(string key)
+        {
+            return key == "alphaNumOpt";
         }
 
         private string FindPipedFile(string redirector, string[] args)
