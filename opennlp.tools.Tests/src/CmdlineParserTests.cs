@@ -67,7 +67,14 @@ namespace opennlp.tools.Tests
         [Test]
         public void CmdlineParserIdentifiesCorrectSentenceDetectTrainerExample()
         {
-            var argList = new List<string>() { "SentenceDetectorTrainer", "en-sent.bin", "-lang", "en", "-data", "en-sent.train", "-encoding", "UTF-8" };
+            var argList = new List<string>()
+            {
+                "SentenceDetectorTrainer",
+                "en-sent.bin",
+                "-lang", "en",
+                "-data", "en-sent.train",
+                "-encoding", "UTF-8"
+            };
             var cmdLineParser = new CmdlineParser();
             var paramDictionary = cmdLineParser.Parse(argList.ToArray());
             Assert.AreEqual(paramDictionary.Count, 5);
@@ -177,6 +184,13 @@ namespace opennlp.tools.Tests
             };
             var cmdLineParser = new CmdlineParser();
             var paramDictionary = cmdLineParser.Parse(argList.ToArray());
+            Assert.AreEqual(paramDictionary.Count, 6);
+            Assert.AreEqual(paramDictionary["tool"], "TokenizerTrainer");
+            Assert.AreEqual(paramDictionary["model"], "en-token.bin");
+            Assert.AreEqual(paramDictionary["alphaNumOpt"], true);
+            Assert.AreEqual(paramDictionary["lang"], "en");
+            Assert.AreEqual(paramDictionary["data"], "en-token.train");
+            Assert.AreEqual(paramDictionary["encoding"], "UTF-8");
         }
     }
 }
