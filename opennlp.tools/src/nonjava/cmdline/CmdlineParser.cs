@@ -12,6 +12,13 @@ namespace opennlp.tools.nonjava.cmdline
         public string OutputFileName { get; private set; }
         private CmdLineConstants _cmdLineConstants;
 
+        public CmdlineParser()
+        {
+            OutputFileName = string.Empty;
+            InputFileName = string.Empty;
+            ToolName = string.Empty;
+        }
+
         public Dictionary<string, object> Parse(string[] args)
         {
             _cmdLineConstants = new CmdLineConstants();
@@ -21,7 +28,7 @@ namespace opennlp.tools.nonjava.cmdline
             {
                 parameters.Add(toolName.Key, toolName.Value);
             }
-            var modelName = FindModelName(args);
+            var modelName = FindModelNameByPosition(args);
             if (!string.IsNullOrEmpty(modelName.Key))
             {
                 parameters.Add(modelName.Key, modelName.Value);
@@ -51,12 +58,12 @@ namespace opennlp.tools.nonjava.cmdline
 
         private KeyValuePair<string, object> FindToolName(string[] args)
         {
-            var index = Array.IndexOf<string>(_cmdLineConstants.ToolNames, args[0]);
+            var index = Array.IndexOf(_cmdLineConstants.ToolNames, args[0]);
             if (index != -1)
             {
                 return new KeyValuePair<string, object>("toolName", _cmdLineConstants.ToolNames[index]);
             }
-            index = Array.IndexOf<string>(_cmdLineConstants.ToolNames, string.Format("{0}Tool", args[0]));
+            index = Array.IndexOf(_cmdLineConstants.ToolNames, string.Format("{0}Tool", args[0]));
             if (index != -1)
             {
                 return new KeyValuePair<string, object>("toolName", string.Format("{0}Tool", _cmdLineConstants.ToolNames[index]));
@@ -64,17 +71,13 @@ namespace opennlp.tools.nonjava.cmdline
             return new KeyValuePair<string, object>();
         }
 
-        private KeyValuePair<string, object> FindModelName(string[] args)
+        private KeyValuePair<string, object> FindModelNameByPosition(string[] args)
         {
-            var index = Array.IndexOf<string>(args, "-model");
-            if (index != -1 && index+1 < args.GetUpperBound(0))
+            if (args.Count() > 1 && args[1].EndsWith(".bin"))
             {
-                return new KeyValuePair<string, object>("model", args[index + 1]);
+                return new KeyValuePair<string, object>("model", args[1]);
             }
-            foreach (var s in args.Where(s => s.EndsWith(".bin")))
-            {
-                return new KeyValuePair<string, object>("model", s);
-            }
+
             return new KeyValuePair<string, object>();
         }
 
