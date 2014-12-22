@@ -49,7 +49,7 @@ namespace opennlp.console
 
         private Type GetToolType(Assembly assembly)
         {
-            var toolName = string.Format("{0}Tool", GetParameter("toolName") as string);
+            var toolName = string.Format("{0}Tool", GetParameter("tool") as string);
             return (from t in assembly.GetTypes()
                     where t.IsClass
                     && (t.Name == toolName)
