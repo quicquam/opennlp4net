@@ -23,47 +23,36 @@ namespace opennlp.tools.Tests
         [Test]
         public void ChunkerCanGetTokensArrayFromTestData()
         {
-            var sent = new[]
+            using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-chunker.in.txt")))
             {
-                "Rockwell", "International", "Corp.", "'s",
-                "Tulsa", "unit", "said", "it", "signed", "a", "tentative", "agreement",
-                "extending", "its", "contract", "with", "Boeing", "Co.", "to",
-                "provide", "structural", "parts", "for", "Boeing", "'s", "747",
-                "jetliners", "."
-            };
+                string testTextBlock = sr.ReadToEnd();
+                POSSample posSample = POSSample.parse(testTextBlock);
 
-            var pos = new[]
-            {
-                "NNP", "NNP", "NNP", "POS", "NNP", "NN",
-                "VBD", "PRP", "VBD", "DT", "JJ", "NN", "VBG", "PRP$", "NN", "IN",
-                "NNP", "NNP", "TO", "VB", "JJ", "NNS", "IN", "NNP", "POS", "CD", "NNS",
-                "."
-            };
-
-            string modelFilePath = string.Format("{0}{1}", ModelPath, "en-chunker.bin");
+                string modelFilePath = string.Format("{0}{1}", ModelPath, "en-chunker.bin");
 
 
-            InputStream modelIn = new FileInputStream(modelFilePath);
+                InputStream modelIn = new FileInputStream(modelFilePath);
 
-            try
-            {
-                var model = new ChunkerModel(modelIn);
-                var chunker = new ChunkerME(model);
-                string[] tags = chunker.chunk(sent, pos);
-                double[] probs = chunker.probs();
-            }
-            catch (IOException e)
-            {
-                string s = e.StackTrace;
-            }
-            finally
-            {
                 try
                 {
-                    modelIn.close();
+                    var model = new ChunkerModel(modelIn);
+                    var chunker = new ChunkerME(model);
+                    string[] tags = chunker.chunk(posSample.Sentence, posSample.Tags);
+                    double[] probs = chunker.probs();
                 }
                 catch (IOException e)
                 {
+                    string s = e.StackTrace;
+                }
+                finally
+                {
+                    try
+                    {
+                        modelIn.close();
+                    }
+                    catch (IOException e)
+                    {
+                    }
                 }
             }
         }
@@ -105,7 +94,7 @@ namespace opennlp.tools.Tests
                     name += tokens[j] + " ";
                 }
 
-                name = name.TrimEnd(new[] {' '});
+                name = name.TrimEnd(new[] { ' ' });
                 nameList.Add(name);
             }
             Assert.AreEqual(5, nameSpans.Count());
@@ -151,7 +140,7 @@ namespace opennlp.tools.Tests
                     name += tokens[j] + " ";
                 }
 
-                name = name.TrimEnd(new[] {' '});
+                name = name.TrimEnd(new[] { ' ' });
                 nameList.Add(name);
             }
             Assert.AreEqual(4, nameSpans.Count());
@@ -170,20 +159,22 @@ namespace opennlp.tools.Tests
             var model = new ParserModel(modelIn);
             Parser parser = ParserFactory.create(model);
 
-            const string sentence = "The quick brown fox jumps over the lazy dog .";
-            var parseStrings = new List<string>();
-            var sb = new StringBuilder();
-            List<Parse> parses = StandAloneParserTool.parseLine(sentence, parser, 5)
-                .OrderBy(y => y.TagSequenceProb)
-                .ToList();
-            foreach (Parse parse in parses)
+            using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-parser-chunking.in.txt")))
             {
-                parse.show(sb);
-                parseStrings.Add(sb.ToString());
-                sb.Clear();
-            }
+                var parseStrings = new List<string>();
+                var sb = new StringBuilder();
+                List<Parse> parses = StandAloneParserTool.parseLine(sr.ReadToEnd(), parser, 5)
+                    .OrderBy(y => y.TagSequenceProb)
+                    .ToList();
+                foreach (Parse parse in parses)
+                {
+                    parse.show(sb);
+                    parseStrings.Add(sb.ToString());
+                    sb.Clear();
+                }
 
-            modelIn.close();
+                modelIn.close();
+            }
         }
 
         [Test]
@@ -191,18 +182,26 @@ namespace opennlp.tools.Tests
         {
             string modelFilePath = string.Format("{0}{1}", ModelPath, "en-pos-maxent.bin");
             InputStream modelIn = new FileInputStream(modelFilePath);
+
+
+            string tokenModelFilePath = string.Format("{0}{1}", ModelPath, "en-token.bin");
+            InputStream tokenModelIn = new FileInputStream(tokenModelFilePath);
+            var tokenModel = new TokenizerModel(tokenModelIn);
+
             var model = new POSModel(modelIn);
             var tagger = new POSTaggerME(model);
 
-            var sent = new[]
+            using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-pos-maxent.in.txt")))
             {
-                "Most", "large", "cities", "in", "the", "US", "had",
-                "morning", "and", "afternoon", "newspapers", "."
-            };
-            string[] tags = tagger.tag(sent);
-            double[] probs = tagger.probs();
-            Sequence[] topSequences = tagger.topKSequences(sent);
-            modelIn.close();
+                string testTextBlock = sr.ReadToEnd();
+                var tokenizer = new TokenizerME(tokenModel);
+                string[] tokens = tokenizer.tokenize(testTextBlock);
+
+                string[] tags = tagger.tag(tokens);
+                double[] probs = tagger.probs();
+                Sequence[] topSequences = tagger.topKSequences(tokens);
+                modelIn.close();
+            }
         }
 
         [Test]

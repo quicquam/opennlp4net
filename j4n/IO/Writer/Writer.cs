@@ -19,7 +19,6 @@ namespace j4n.IO.Writer
 
         public void close()
         {
-            _streamWriter.Flush();
             InnerStream.Close();
         }
 
