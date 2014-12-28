@@ -15,10 +15,11 @@ using opennlp.tools.util;
 namespace opennlp.tools.Tests
 {
     [TestFixture]
-    public class ApiTests
+    public class ApiTests : TestsBase
     {
         private const string ModelPath = @"..\..\data\models\";
         private const string InputPath = @"..\..\data\input\";
+        private const string VerifyPath = @"..\..\data\refoutput\";
 
         [Test]
         public void ChunkerCanGetTokensArrayFromTestData()
@@ -36,25 +37,13 @@ namespace opennlp.tools.Tests
                 var chunker = new ChunkerME(model);
 
                 var tags = chunker.chunk(posSample.Sentence, posSample.Tags);
-                
+                modelIn.close();
+               
+                var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-chunker.ref.out"));
+
                 Assert.AreEqual(45, tags.Count());
-
-                var verificationArray = new[]
-                {
-                    "B-NP", "I-NP", "I-NP", "B-NP", "I-NP", 
-                    "I-NP", "B-VP", "B-NP", "B-VP", "B-NP", 
-                    "I-NP", "I-NP", "B-VP", "B-NP", "I-NP", 
-                    "B-PP", "B-NP", "I-NP", "B-VP", "I-VP", 
-                    "B-NP", "I-NP", "B-PP", "B-NP", "B-NP", 
-                    "I-NP", "I-NP", "O", "B-NP", "B-VP", 
-                    "B-NP", "I-NP", "B-VP", "B-SBAR", "B-NP",
-                    "B-VP", "I-VP", "B-NP", "I-NP", "I-NP",
-                    "I-NP", "B-PP", "B-NP", "I-NP", "O"
-                };
-
                 Assert.AreEqual(verificationArray, tags);
 
-                modelIn.close();
             }
         }
 
@@ -99,7 +88,7 @@ namespace opennlp.tools.Tests
             modelInToken.close();
             modelIn.close();
 
-            var verificationArray = new[] { "America", "London", "New York", "London", "New York" };
+            var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-ner-location.ref.out"));
 
             Assert.AreEqual(5, nameSpans.Count());
             Assert.AreEqual(verificationArray, nameList.ToArray());
@@ -141,10 +130,15 @@ namespace opennlp.tools.Tests
                 name = name.TrimEnd(new[] { ' ' });
                 nameList.Add(name);
             }
-            Assert.AreEqual(4, nameSpans.Count());
 
             modelInToken.close();
             modelIn.close();
+
+            var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-ner-person.ref.out"));
+
+            Assert.AreEqual(4, nameSpans.Count());
+            Assert.AreEqual(verificationArray, nameList.ToArray());
+
         }
 
         [Test]
@@ -159,19 +153,15 @@ namespace opennlp.tools.Tests
 
             using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-parser-chunking.in.txt")))
             {
-                var parseStrings = new List<string>();
-                var sb = new StringBuilder();
-                List<Parse> parses = StandAloneParserTool.parseLine(sr.ReadToEnd(), parser, 5)
-                    .OrderBy(y => y.TagSequenceProb)
-                    .ToList();
-                foreach (Parse parse in parses)
-                {
-                    parse.show(sb);
-                    parseStrings.Add(sb.ToString());
-                    sb.Clear();
-                }
+                var parse = StandAloneParserTool.parseLine(sr.ReadToEnd(), parser, 1);
+                var parseAsString = new StringBuilder();
 
+                parse[0].show(parseAsString);
+ 
                 modelIn.close();
+
+                var verificationString = GetVerificationString(string.Format("{0}{1}", VerifyPath, "en-parser-chunking.ref.out"));
+                Assert.AreEqual(parseAsString.ToString(), verificationString);
             }
         }
 
@@ -180,7 +170,6 @@ namespace opennlp.tools.Tests
         {
             string modelFilePath = string.Format("{0}{1}", ModelPath, "en-pos-maxent.bin");
             InputStream modelIn = new FileInputStream(modelFilePath);
-
 
             string tokenModelFilePath = string.Format("{0}{1}", ModelPath, "en-token.bin");
             InputStream tokenModelIn = new FileInputStream(tokenModelFilePath);
@@ -198,7 +187,12 @@ namespace opennlp.tools.Tests
                 string[] tags = tagger.tag(tokens);
                 double[] probs = tagger.probs();
                 Sequence[] topSequences = tagger.topKSequences(tokens);
+
                 modelIn.close();
+
+                var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-pos-maxent.ref.out"));
+                Assert.AreEqual(topSequences[0].Outcomes.Count, verificationArray.Count());
+                Assert.AreEqual(topSequences[0].Outcomes, verificationArray);
             }
         }
 
@@ -215,8 +209,13 @@ namespace opennlp.tools.Tests
                 var model = new SentenceModel(modelIn);
                 var sd = new SentenceDetectorME(model);
                 string[] sentences = sd.sentDetect(testTextBlock);
-                Assert.AreEqual(sentences.Count(), 7);
                 modelIn.close();
+
+                var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-sent.ref.out"));
+
+                Assert.AreEqual(sentences.Count(), verificationArray.Count());
+                Assert.AreEqual(verificationArray, sentences);
+
             }
         }
 
@@ -233,8 +232,13 @@ namespace opennlp.tools.Tests
                 var model = new TokenizerModel(modelIn);
                 var tokenizer = new TokenizerME(model);
                 string[] tokens = tokenizer.tokenize(testTextBlock);
-                Assert.AreEqual(tokens.Count(), 217);
+
                 modelIn.close();
+
+                var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-token.ref.out"));
+
+                Assert.AreEqual(tokens.Count(), verificationArray.Count());
+                Assert.AreEqual(verificationArray, tokens);
             }
         }
     }
