@@ -30,30 +30,31 @@ namespace opennlp.tools.Tests
 
                 string modelFilePath = string.Format("{0}{1}", ModelPath, "en-chunker.bin");
 
-
                 InputStream modelIn = new FileInputStream(modelFilePath);
 
-                try
+                var model = new ChunkerModel(modelIn);
+                var chunker = new ChunkerME(model);
+
+                var tags = chunker.chunk(posSample.Sentence, posSample.Tags);
+                
+                Assert.AreEqual(45, tags.Count());
+
+                var verificationArray = new[]
                 {
-                    var model = new ChunkerModel(modelIn);
-                    var chunker = new ChunkerME(model);
-                    string[] tags = chunker.chunk(posSample.Sentence, posSample.Tags);
-                    double[] probs = chunker.probs();
-                }
-                catch (IOException e)
-                {
-                    string s = e.StackTrace;
-                }
-                finally
-                {
-                    try
-                    {
-                        modelIn.close();
-                    }
-                    catch (IOException e)
-                    {
-                    }
-                }
+                    "B-NP", "I-NP", "I-NP", "B-NP", "I-NP", 
+                    "I-NP", "B-VP", "B-NP", "B-VP", "B-NP", 
+                    "I-NP", "I-NP", "B-VP", "B-NP", "I-NP", 
+                    "B-PP", "B-NP", "I-NP", "B-VP", "I-VP", 
+                    "B-NP", "I-NP", "B-PP", "B-NP", "B-NP", 
+                    "I-NP", "I-NP", "O", "B-NP", "B-VP", 
+                    "B-NP", "I-NP", "B-VP", "B-SBAR", "B-NP",
+                    "B-VP", "I-VP", "B-NP", "I-NP", "I-NP",
+                    "I-NP", "B-PP", "B-NP", "I-NP", "O"
+                };
+
+                Assert.AreEqual(verificationArray, tags);
+
+                modelIn.close();
             }
         }
 
@@ -81,9 +82,6 @@ namespace opennlp.tools.Tests
 
             Span[] nameSpans = nameFinder.find(tokens);
 
-            //find probabilities for names
-            double[] spanProbs = nameFinder.probs(nameSpans);
-
             //3. print names
             var nameList = new List<string>();
             foreach (Span t in nameSpans)
@@ -97,10 +95,14 @@ namespace opennlp.tools.Tests
                 name = name.TrimEnd(new[] { ' ' });
                 nameList.Add(name);
             }
-            Assert.AreEqual(5, nameSpans.Count());
 
             modelInToken.close();
             modelIn.close();
+
+            var verificationArray = new[] { "America", "London", "New York", "London", "New York" };
+
+            Assert.AreEqual(5, nameSpans.Count());
+            Assert.AreEqual(verificationArray, nameList.ToArray());
         }
 
         [Test]
@@ -127,10 +129,6 @@ namespace opennlp.tools.Tests
 
             Span[] nameSpans = nameFinder.find(tokens);
 
-            //find probabilities for names
-            double[] spanProbs = nameFinder.probs(nameSpans);
-
-            //3. print names
             var nameList = new List<string>();
             foreach (Span t in nameSpans)
             {
