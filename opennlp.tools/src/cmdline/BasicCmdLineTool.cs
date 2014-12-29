@@ -46,7 +46,7 @@ namespace opennlp.tools.cmdline
 
 	    protected OutputStream GetOutputStream(string[] args)
 	    {
-            return args.Count() < 3 ? new OutputStream(Console.OpenStandardOutput()) : new OutputStream(new FileStream(args[2], FileMode.Create));
+            return args.Count() < 3 ? new OutputStream(Console.OpenStandardOutput()) : new OutputStream(new FileOutputStream(args[2]));
         }
 	}
 }

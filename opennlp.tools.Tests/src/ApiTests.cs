@@ -10,68 +10,48 @@ using opennlp.tools.parser;
 using opennlp.tools.postag;
 using opennlp.tools.sentdetect;
 using opennlp.tools.tokenize;
+using opennlp.tools.util;
 
 namespace opennlp.tools.Tests
 {
     [TestFixture]
-    public class ApiTests
+    public class ApiTests : TestsBase
     {
         private const string ModelPath = @"..\..\data\models\";
         private const string InputPath = @"..\..\data\input\";
+        private const string VerifyPath = @"..\..\data\refoutput\";
 
         [Test]
         public void ChunkerCanGetTokensArrayFromTestData()
         {
-            var sent = new[]
+            using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-chunker.in.txt")))
             {
-                "Rockwell", "International", "Corp.", "'s",
-                "Tulsa", "unit", "said", "it", "signed", "a", "tentative", "agreement",
-                "extending", "its", "contract", "with", "Boeing", "Co.", "to",
-                "provide", "structural", "parts", "for", "Boeing", "'s", "747",
-                "jetliners", "."
-            };
+                string testTextBlock = sr.ReadToEnd();
+                POSSample posSample = POSSample.parse(testTextBlock);
 
-            var pos = new[]
-            {
-                "NNP", "NNP", "NNP", "POS", "NNP", "NN",
-                "VBD", "PRP", "VBD", "DT", "JJ", "NN", "VBG", "PRP$", "NN", "IN",
-                "NNP", "NNP", "TO", "VB", "JJ", "NNS", "IN", "NNP", "POS", "CD", "NNS",
-                "."
-            };
+                string modelFilePath = string.Format("{0}{1}", ModelPath, "en-chunker.bin");
 
-            var modelFilePath = string.Format("{0}{1}", ModelPath, "en-chunker.bin");
+                InputStream modelIn = new FileInputStream(modelFilePath);
 
-
-            InputStream modelIn = new FileInputStream(modelFilePath);
-
-            try
-            {
                 var model = new ChunkerModel(modelIn);
                 var chunker = new ChunkerME(model);
-                var tags = chunker.chunk(sent, pos);
-                var probs = chunker.probs();
-            }
-            catch (IOException e)
-            {
-                string s = e.StackTrace;
-            }
-            finally
-            {
-                try
-                {
-                    modelIn.close();
-                }
-                catch (IOException e)
-                {
-                }
+
+                var tags = chunker.chunk(posSample.Sentence, posSample.Tags);
+                modelIn.close();
+               
+                var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-chunker.ref.out"));
+
+                Assert.AreEqual(45, tags.Count());
+                Assert.AreEqual(verificationArray, tags);
+
             }
         }
 
         [Test]
-        public void NamefinderCanGetNameArrayFromTestData()
+        public void NamefinderLocationCanGetNameArrayFromTestData()
         {
-            var nameFinderModelFilePath = string.Format("{0}{1}", ModelPath, "en-ner-person.bin");
-            var tokenModelPath = string.Format("{0}{1}", ModelPath, "en-token.bin");
+            string nameFinderModelFilePath = string.Format("{0}{1}", ModelPath, "en-ner-location.bin");
+            string tokenModelPath = string.Format("{0}{1}", ModelPath, "en-token.bin");
 
             InputStream modelIn = new FileInputStream(nameFinderModelFilePath);
 
@@ -80,113 +60,186 @@ namespace opennlp.tools.Tests
 
             //1. convert sentence into tokens
             var modelInToken = new FileInputStream(tokenModelPath);
-            TokenizerModel modelToken = new TokenizerModel(modelInToken);
+            var modelToken = new TokenizerModel(modelInToken);
             Tokenizer tokenizer = new TokenizerME(modelToken);
-            var tokens = tokenizer.tokenize("Why is Jack London so famous?");
+            string testTextBlock;
+            using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-ner-location.in.txt")))
+            {
+                testTextBlock = sr.ReadToEnd();
+            }
+            string[] tokens = tokenizer.tokenize(testTextBlock);
 
-
-            var nameSpans = nameFinder.find(tokens);
-
-            //find probabilities for names
-            double[] spanProbs = nameFinder.probs(nameSpans);
+            Span[] nameSpans = nameFinder.find(tokens);
 
             //3. print names
-            for (int i = 0; i < nameSpans.Length; i++)
+            var nameList = new List<string>();
+            foreach (Span t in nameSpans)
             {
-                var s = string.Format("Span: " + nameSpans[i].ToString());
-                var c =
-                    string.Format("Covered text is: " + tokens[nameSpans[i].Start] + " " +
-                                  tokens[nameSpans[i].End - 1]);
-                var p = string.Format("Probability is: " + spanProbs[i]);
+                string name = "";
+                for (int j = t.Start; j < t.End; j++)
+                {
+                    name += tokens[j] + " ";
+                }
+
+                name = name.TrimEnd(new[] { ' ' });
+                nameList.Add(name);
             }
-            Assert.AreEqual(1, nameSpans.Count());
-            Assert.AreEqual(2, nameSpans[0].Start);
-            Assert.AreEqual(4, nameSpans[0].End);
 
             modelInToken.close();
             modelIn.close();
+
+            var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-ner-location.ref.out"));
+
+            Assert.AreEqual(5, nameSpans.Count());
+            Assert.AreEqual(verificationArray, nameList.ToArray());
+        }
+
+        [Test]
+        public void NamefinderPersonCanGetNameArrayFromTestData()
+        {
+            string nameFinderModelFilePath = string.Format("{0}{1}", ModelPath, "en-ner-person.bin");
+            string tokenModelPath = string.Format("{0}{1}", ModelPath, "en-token.bin");
+
+            InputStream modelIn = new FileInputStream(nameFinderModelFilePath);
+
+            var model = new TokenNameFinderModel(modelIn);
+            var nameFinder = new NameFinderME(model);
+
+            //1. convert sentence into tokens
+            var modelInToken = new FileInputStream(tokenModelPath);
+            var modelToken = new TokenizerModel(modelInToken);
+            Tokenizer tokenizer = new TokenizerME(modelToken);
+            string testTextBlock;
+            using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-ner-person.in.txt")))
+            {
+                testTextBlock = sr.ReadToEnd();
+            }
+            string[] tokens = tokenizer.tokenize(testTextBlock);
+
+            Span[] nameSpans = nameFinder.find(tokens);
+
+            var nameList = new List<string>();
+            foreach (Span t in nameSpans)
+            {
+                string name = "";
+                for (int j = t.Start; j < t.End; j++)
+                {
+                    name += tokens[j] + " ";
+                }
+
+                name = name.TrimEnd(new[] { ' ' });
+                nameList.Add(name);
+            }
+
+            modelInToken.close();
+            modelIn.close();
+
+            var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-ner-person.ref.out"));
+
+            Assert.AreEqual(4, nameSpans.Count());
+            Assert.AreEqual(verificationArray, nameList.ToArray());
+
         }
 
         [Test]
         public void ParserCanGetParsesArrayFromTestData()
         {
-            var modelFilePath = string.Format("{0}{1}", ModelPath, "en-parser-chunking.bin");
+            string modelFilePath = string.Format("{0}{1}", ModelPath, "en-parser-chunking.bin");
 
             InputStream modelIn = new FileInputStream(modelFilePath);
 
             var model = new ParserModel(modelIn);
-            var parser = ParserFactory.create(model);
+            Parser parser = ParserFactory.create(model);
 
-            const string sentence = "The quick brown fox jumps over the lazy dog .";
-            var parseStrings = new List<string>();
-            var sb = new StringBuilder();
-            var parses = StandAloneParserTool.parseLine(sentence, parser, 5)
-                .OrderBy(y => y.TagSequenceProb)
-                .ToList();
-            foreach (var parse in parses)
+            using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-parser-chunking.in.txt")))
             {
-                parse.show(sb);
-                parseStrings.Add(sb.ToString());
-                sb.Clear();
-            }
+                var parse = StandAloneParserTool.parseLine(sr.ReadToEnd(), parser, 1);
+                var parseAsString = new StringBuilder();
 
-            modelIn.close();
+                parse[0].show(parseAsString);
+ 
+                modelIn.close();
+
+                var verificationString = GetVerificationString(string.Format("{0}{1}", VerifyPath, "en-parser-chunking.ref.out"));
+                Assert.AreEqual(parseAsString.ToString(), verificationString);
+            }
         }
 
         [Test]
         public void PostaggerCanGetTagArrayFromTestData()
         {
-            var modelFilePath = string.Format("{0}{1}", ModelPath, "en-pos-maxent.bin");
+            string modelFilePath = string.Format("{0}{1}", ModelPath, "en-pos-maxent.bin");
             InputStream modelIn = new FileInputStream(modelFilePath);
+
+            string tokenModelFilePath = string.Format("{0}{1}", ModelPath, "en-token.bin");
+            InputStream tokenModelIn = new FileInputStream(tokenModelFilePath);
+            var tokenModel = new TokenizerModel(tokenModelIn);
+
             var model = new POSModel(modelIn);
             var tagger = new POSTaggerME(model);
 
-            var sent = new[]
+            using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-pos-maxent.in.txt")))
             {
-                "Most", "large", "cities", "in", "the", "US", "had",
-                "morning", "and", "afternoon", "newspapers", "."
-            };
-            var tags = tagger.tag(sent);
-            var probs = tagger.probs();
-            var topSequences = tagger.topKSequences(sent);
-            modelIn.close();
+                string testTextBlock = sr.ReadToEnd();
+                var tokenizer = new TokenizerME(tokenModel);
+                string[] tokens = tokenizer.tokenize(testTextBlock);
+
+                string[] tags = tagger.tag(tokens);
+                double[] probs = tagger.probs();
+                Sequence[] topSequences = tagger.topKSequences(tokens);
+
+                modelIn.close();
+
+                var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-pos-maxent.ref.out"));
+                Assert.AreEqual(topSequences[0].Outcomes.Count, verificationArray.Count());
+                Assert.AreEqual(topSequences[0].Outcomes, verificationArray);
+            }
         }
 
         [Test]
         public void SentdetectCanGetSentenceArrayFromTestData()
         {
-            var modelFilePath = string.Format("{0}{1}", ModelPath, "en-sent.bin");
+            string modelFilePath = string.Format("{0}{1}", ModelPath, "en-sent.bin");
             using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-sent.in.txt")))
             {
-                var testTextBlock = sr.ReadToEnd();
+                string testTextBlock = sr.ReadToEnd();
 
                 InputStream modelIn = new FileInputStream(modelFilePath);
 
                 var model = new SentenceModel(modelIn);
                 var sd = new SentenceDetectorME(model);
-                var sentences = sd.sentDetect(testTextBlock);
-                Assert.AreEqual(sentences.Count(), 7);
+                string[] sentences = sd.sentDetect(testTextBlock);
                 modelIn.close();
+
+                var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-sent.ref.out"));
+
+                Assert.AreEqual(sentences.Count(), verificationArray.Count());
+                Assert.AreEqual(verificationArray, sentences);
+
             }
         }
 
         [Test]
         public void TokenizeCanGetTokensArrayFromTestData()
         {
-            var modelFilePath = string.Format("{0}{1}", ModelPath, "en-token.bin");
+            string modelFilePath = string.Format("{0}{1}", ModelPath, "en-token.bin");
             using (var sr = new StreamReader(string.Format("{0}{1}", InputPath, "en-sent.in.txt")))
             {
-                var testTextBlock = sr.ReadToEnd();
+                string testTextBlock = sr.ReadToEnd();
 
                 InputStream modelIn = new FileInputStream(modelFilePath);
 
                 var model = new TokenizerModel(modelIn);
                 var tokenizer = new TokenizerME(model);
-                var tokens = tokenizer.tokenize(testTextBlock);
-                Assert.AreEqual(tokens.Count(), 217);
+                string[] tokens = tokenizer.tokenize(testTextBlock);
+
                 modelIn.close();
+
+                var verificationArray = GetVerificationStrings(string.Format("{0}{1}", VerifyPath, "en-token.ref.out"));
+
+                Assert.AreEqual(tokens.Count(), verificationArray.Count());
+                Assert.AreEqual(verificationArray, tokens);
             }
         }
     }
 }
-

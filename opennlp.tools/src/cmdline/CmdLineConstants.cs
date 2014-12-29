@@ -1,0 +1,50 @@
+﻿namespace opennlp.tools.cmdline
+{
+    class CmdLineConstants
+    {
+        public readonly string[] ToolNames =
+        {
+            "Doccat",
+            "DoccatTrainer",
+            "DoccatConverter",
+            "DictionaryBuilder",
+            "SimpleTokenizer",
+            "TokenizerME",
+            "TokenizerTrainer",
+            "TokenizerMEEvaluator",
+            "TokenizerCrossValidator",
+            "TokenizerConverter",
+            "DictionaryDetokenizer",
+            "SentenceDetector",
+            "SentenceDetectorTrainer",
+            "SentenceDetectorEvaluator",
+            "SentenceDetectorCrossValidator",
+            "SentenceDetectorConverter",
+            "TokenNameFinder",
+            "TokenNameFinderTrainer",
+            "TokenNameFinderEvaluator",
+            "TokenNameFinderCrossValidator",
+            "TokenNameFinderConverter",
+            "CensusDictionaryCreator",
+            "POSTagger",
+            "POSTaggerTrainer",
+            "POSTaggerEvaluator",
+            "POSTaggerCrossValidator",
+            "POSTaggerConverter",
+            "ChunkerME",
+            "ChunkerTrainer",
+            "ChunkerEvaluator",
+            "ChunkerCrossValidator",
+            "ChunkerConverter",
+            "Parser",
+            "ParserTrainer",
+            "ParserConverter",
+            "BuildModelUpdater",
+            "CheckModelUpdater",
+            "TaggerModelReplacer",
+            "Coreferencer",
+            "CoreferencerTrainer",
+            "CoreferenceConverter"
+        };
+    }
+}

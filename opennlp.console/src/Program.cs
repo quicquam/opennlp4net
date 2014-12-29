@@ -12,9 +12,9 @@ namespace opennlp.console
             if (parameters != null)
             {
                 // consume Options instance properties
-                if (!parameters.ContainsKey("toolName"))
+                if (!parameters.ContainsKey("tool"))
                 {
-                    Console.WriteLine("No toolName specified");
+                    Console.WriteLine("No tool specified");
                 }
                 else
                 {

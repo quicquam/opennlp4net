@@ -22,6 +22,11 @@ namespace j4n.IO.OutputStream
             throw new NotImplementedException();
         }
 
+        ~OutputStream()
+        {
+            InnerStream.Close();
+        }
+
         public void flush()
         {
             InnerStream.Flush();
