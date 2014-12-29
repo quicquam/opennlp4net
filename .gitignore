@@ -89,3 +89,4 @@ DocProject/Help/html
 
 opennlp.tools.Tests/data/output/*
 opennlp.tools.Tests/data/models/out/*
+opennlp.maxent/obj/*
