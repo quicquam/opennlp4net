@@ -95,7 +95,7 @@ namespace opennlp.tools.cmdline
 	  public static bool registerFactory(Type sampleClass, string formatName, ObjectStreamFactory<T> factory)
 	  {
 		bool result;
-		IDictionary<string, ObjectStreamFactory<T>> formats = registry[sampleClass];
+		IDictionary<string, ObjectStreamFactory<T>> formats = registry.ContainsKey(sampleClass) ? registry[sampleClass] : null;
 		if (null == formats)
 		{
 		  formats = new Dictionary<string, ObjectStreamFactory<T>>();
@@ -193,10 +193,5 @@ namespace opennlp.tools.cmdline
 		}
 	      return null;
 	  }
-
-	    public static void registerFactory(Type sampleClass, string formatName, ADSentenceSampleStreamFactory factory)
-	    {
-	        throw new NotImplementedException();
-	    }
 	}
 }
