@@ -28,7 +28,8 @@ namespace opennlp.tools.cmdline.sentdetect
 	  public class EvalToolParams : EvaluatorParams
 	  {
 	      public Jfile Model { get; private set; }
-	      public bool? Misclassified { get; private set; }
+          [OptionalAttribute]
+          public bool? Misclassified { get; private set; }
 	  }
 
 	  public SentenceDetectorEvaluatorTool() : base(typeof(SentenceSample), typeof(EvalToolParams))

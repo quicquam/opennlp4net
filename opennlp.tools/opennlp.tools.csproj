@@ -108,7 +108,7 @@
     <Compile Include="src\cmdline\parameters\EncodingParameter.cs" />
     <Compile Include="src\cmdline\parameters\EvaluatorParams.cs" />
     <Compile Include="src\cmdline\parameters\LanguageParams.cs" />
-    <Compile Include="src\cmdline\parameters\ParameterAttribute.cs" />
+    <Compile Include="src\cmdline\parameters\OptionalAttribute.cs" />
     <Compile Include="src\cmdline\parameters\TrainingToolParams.cs" />
     <Compile Include="src\cmdline\parser\BuildModelUpdaterTool.cs" />
     <Compile Include="src\cmdline\parser\CheckModelUpdaterTool.cs" />

@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace opennlp.tools.cmdline
 {
@@ -591,25 +592,22 @@ namespace opennlp.tools.cmdline
             int argumentCount = 0;
             List<String> parameters = args.ToList();
 
-            foreach (var i in argProxyInterface.GetInterfaces())
+            foreach (var m in argProxyInterface.GetMembers())
             {
-                foreach (var method in i.GetMethods())
-                {
-                    var paramName = CmdLineUtil.StandardizeMethodName(method.Name);
+                    var paramName = CmdLineUtil.StandardizeMethodName(m.Name);
                     int paramIndex = CmdLineUtil.getParameterIndex(paramName, args);
                     String valueString = CmdLineUtil.getParameter(paramName, args);
                     if (valueString == null)
                     {
-                        var optionalParam = method.GetParameters().Where(x => x.Name == valueString);
-                        if (optionalParam == null)
+                        if (!m.CustomAttributes.All(x => x.AttributeType.IsDefined(typeof (OptionalAttribute), false)))
                         {
                             if (-1 < paramIndex)
                             {
-                                return "Missing mandatory parameter value: " + method.Name;
+                                return "Missing mandatory parameter value: " + paramName;
                             }
                             else
                             {
-                                return "Missing mandatory parameter: " + method.Name;
+                                return "Missing mandatory parameter: " + paramName;
                             }
                         }
                         else
@@ -623,7 +621,6 @@ namespace opennlp.tools.cmdline
                         parameters.Remove(valueString);
                         argumentCount++;
                     }
-                }
             }
 
             if (args.Length / 2 > argumentCount)

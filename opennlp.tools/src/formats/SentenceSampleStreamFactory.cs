@@ -26,40 +26,43 @@ using opennlp.tools.util;
 namespace opennlp.tools.formats
 {
     /// <summary>
-	/// Factory producing OpenNLP <seealso cref="SentenceSampleStream"/>s.
-	/// </summary>
-	public class SentenceSampleStreamFactory : AbstractSampleStreamFactory<SentenceSample>
-	{
+    /// Factory producing OpenNLP <seealso cref="SentenceSampleStream"/>s.
+    /// </summary>
+    public class SentenceSampleStreamFactory : AbstractSampleStreamFactory<SentenceSample>
+    {
 
-	  internal interface Parameters : BasicFormatParams
-	  {
-	      Jfile Data { get; set; }
-	  }
+        internal class Parameters : BasicFormatParams
+        {
+            public Jfile Data { get; set; }
+            public Charset Encoding { get; private set; }
+        }
 
-	  public static void registerFactory()
-	  {
-          StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), StreamFactoryRegistry<SentenceSample>.DEFAULT_FORMAT, new SentenceSampleStreamFactory(typeof(Parameters)));
-	  }
+        private Parameters _parms = new Parameters();
 
-	  protected internal SentenceSampleStreamFactory(Type parameters)
-	  {
-	  }
+        public static void registerFactory()
+        {
+            StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), StreamFactoryRegistry<SentenceSample>.DEFAULT_FORMAT, new SentenceSampleStreamFactory(typeof(Parameters)));
+        }
 
-	    public Type getParameters()
-	    {
-	        throw new NotImplementedException();
-	    }
+        protected internal SentenceSampleStreamFactory(Type parameters)
+        {
+        }
 
-	    public ObjectStream<SentenceSample> create(string[] args)
-	  {
-		Parameters parameters = ArgumentParser.parse<Parameters>(args);
+        public Type getParameters()
+        {
+            return _parms.GetType();
+        }
 
-		CmdLineUtil.checkInputFile("Data", parameters.Data);
-		FileInputStream sampleDataIn = CmdLineUtil.openInFile(parameters.Data);
+        public ObjectStream<SentenceSample> create(string[] args)
+        {
+            _parms = ArgumentParser.parse<Parameters>(args);
 
-		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, parameters.Encoding);
+            CmdLineUtil.checkInputFile("Data", _parms.Data);
+            FileInputStream sampleDataIn = CmdLineUtil.openInFile(_parms.Data);
 
-		return new SentenceSampleStream(lineStream);
-	  }
-	}
+            ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, _parms.Encoding);
+
+            return new SentenceSampleStream(lineStream);
+        }
+    }
 }
