@@ -16,7 +16,7 @@
  */
 
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.parser;
 using opennlp.tools.sentdetect;
 using opennlp.tools.util;
@@ -39,11 +39,11 @@ namespace opennlp.tools.formats.convert
 
 	  public ObjectStream<SentenceSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
         ObjectStream<Parse> parseSampleStream = StreamFactoryRegistry<Parse>.getFactory(typeof(Parse), StreamFactoryRegistry<SentenceSample>.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(ParseSampleStreamFactory.Parameters)));
 
-		return new POSToSentenceSampleStream(createDetokenizer(@params), new ParseToPOSSampleStream(parseSampleStream), 30);
+		return new POSToSentenceSampleStream(createDetokenizer(parameters), new ParseToPOSSampleStream(parseSampleStream), 30);
 	  }
 
 	  public static void registerFactory()

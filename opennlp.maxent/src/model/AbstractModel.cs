@@ -54,24 +54,24 @@ namespace opennlp.model
         /// The type of the model. </summary>
         protected internal ModelTypeEnum modelType;
 
-        public AbstractModel(Context[] @params, string[] predLabels, IndexHashTable<string> pmap, string[] outcomeNames)
+        public AbstractModel(Context[] parameters, string[] predLabels, IndexHashTable<string> pmap, string[] outcomeNames)
         {
             this.pmap = pmap;
             this.outcomeNames = outcomeNames;
-            this.evalParams = new EvalParameters(@params, outcomeNames.Length);
+            this.evalParams = new EvalParameters(parameters, outcomeNames.Length);
         }
 
-        public AbstractModel(Context[] @params, string[] predLabels, string[] outcomeNames)
+        public AbstractModel(Context[] parameters, string[] predLabels, string[] outcomeNames)
         {
             init(predLabels, outcomeNames);
-            this.evalParams = new EvalParameters(@params, outcomeNames.Length);
+            this.evalParams = new EvalParameters(parameters, outcomeNames.Length);
         }
 
-        public AbstractModel(Context[] @params, string[] predLabels, string[] outcomeNames, int correctionConstant,
+        public AbstractModel(Context[] parameters, string[] predLabels, string[] outcomeNames, int correctionConstant,
             double correctionParam)
         {
             init(predLabels, outcomeNames);
-            this.evalParams = new EvalParameters(@params, correctionParam, correctionConstant, outcomeNames.Length);
+            this.evalParams = new EvalParameters(parameters, correctionParam, correctionConstant, outcomeNames.Length);
         }
 
         private void init(string[] predLabels, string[] outcomeNames)

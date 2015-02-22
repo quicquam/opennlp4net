@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using j4n.IO.File;
 using opennlp.model;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.dictionary;
 using opennlp.tools.postag;
 using opennlp.tools.util;
@@ -49,24 +49,24 @@ namespace opennlp.tools.cmdline.postag
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, true);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, true);
 		if (mlParams != null && !TrainUtil.isValid(mlParams.getSettings()))
 		{
-		  throw new TerminateToolException(1, "Training parameters file '" + @params.Params + "' is invalid!");
+		  throw new TerminateToolException(1, "Training parameters file '" + parameters.Params + "' is invalid!");
 		}
 
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
-		  mlParams.put(TrainingParameters.ALGORITHM_PARAM, getModelType(@params.Type).ToString());
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
+		  mlParams.put(TrainingParameters.ALGORITHM_PARAM, getModelType(parameters.Type).ToString());
 		}
 
-		Jfile modelOutFile = @params.Model;
+		Jfile modelOutFile = parameters.Model;
 		CmdLineUtil.checkOutputFile("pos tagger model", modelOutFile);
 
 		Dictionary ngramDict = null;
 
-		int? ngramCutoff = @params.Ngram;
+		int? ngramCutoff = parameters.Ngram;
 
 		if (ngramCutoff != null)
 		{
@@ -86,18 +86,18 @@ namespace opennlp.tools.cmdline.postag
 		POSTaggerFactory postaggerFactory = null;
 		try
 		{
-		  postaggerFactory = POSTaggerFactory.create(@params.Factory, ngramDict, null);
+		  postaggerFactory = POSTaggerFactory.create(parameters.Factory, ngramDict, null);
 		}
 		catch (InvalidFormatException e)
 		{
 		  throw new TerminateToolException(-1, e.Message, e);
 		}
 
-		if (@params.Dict != null)
+		if (parameters.Dict != null)
 		{
 		  try
 		  {
-			postaggerFactory.TagDictionary = postaggerFactory.createTagDictionary(@params.Dict);
+			postaggerFactory.TagDictionary = postaggerFactory.createTagDictionary(parameters.Dict);
 		  }
 		  catch (IOException e)
 		  {
@@ -105,7 +105,7 @@ namespace opennlp.tools.cmdline.postag
 		  }
 		}
 
-		if (@params.TagDictCutoff != null)
+		if (parameters.TagDictCutoff != null)
 		{
 		  try
 		  {
@@ -117,7 +117,7 @@ namespace opennlp.tools.cmdline.postag
 			}
 			if (dict is MutableTagDictionary)
 			{
-			  POSTaggerME.populatePOSDictionary(sampleStream, (MutableTagDictionary)dict, @params.TagDictCutoff.Value);
+			  POSTaggerME.populatePOSDictionary(sampleStream, (MutableTagDictionary)dict, parameters.TagDictCutoff.Value);
 			}
 			else
 			{
@@ -134,7 +134,7 @@ namespace opennlp.tools.cmdline.postag
 		POSModel model;
 		try
 		{
-		  model = POSTaggerME.train(@params.Lang, sampleStream, mlParams, postaggerFactory);
+		  model = POSTaggerME.train(parameters.Lang, sampleStream, mlParams, postaggerFactory);
 		}
 		catch (IOException e)
 		{

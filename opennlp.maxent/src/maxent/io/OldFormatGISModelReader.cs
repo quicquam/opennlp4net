@@ -61,7 +61,7 @@ namespace opennlp.maxent.io
 
         protected new Context[] GetParameters(int[][] outcomePatterns)
         {
-            Context[] @params = new Context[NUM_PREDS];
+            Context[] parameters = new Context[NUM_PREDS];
             int pid = 0;
             for (int i = 0; i < outcomePatterns.Length; i++)
             {
@@ -79,11 +79,11 @@ namespace opennlp.maxent.io
                     {
                         contextParameters[k - 1] = readDouble();
                     }
-                    @params[pid] = new Context(outcomePattern, contextParameters);
+                    parameters[pid] = new Context(outcomePattern, contextParameters);
                     pid++;
                 }
             }
-            return @params;
+            return parameters;
         }
 
         /// <summary>

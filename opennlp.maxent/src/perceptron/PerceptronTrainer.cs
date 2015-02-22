@@ -202,17 +202,17 @@ namespace opennlp.perceptron
 
             /// <summary>
             /// Stores the estimated parameter value of each predicate during iteration. </summary>
-            MutableContext[] @params = new MutableContext[numPreds];
+            MutableContext[] parameters = new MutableContext[numPreds];
             for (int pi = 0; pi < numPreds; pi++)
             {
-                @params[pi] = new MutableContext(allOutcomesPattern, new double[numOutcomes]);
+                parameters[pi] = new MutableContext(allOutcomesPattern, new double[numOutcomes]);
                 for (int aoi = 0; aoi < numOutcomes; aoi++)
                 {
-                    @params[pi].setParameter(aoi, 0.0);
+                    parameters[pi].setParameter(aoi, 0.0);
                 }
             }
 
-            EvalParameters evalParams = new EvalParameters(@params, numOutcomes);
+            EvalParameters evalParams = new EvalParameters(parameters, numOutcomes);
 
             /// <summary>
             /// Stores the sum of parameter values of each predicate over many iterations. </summary>
@@ -282,13 +282,13 @@ namespace opennlp.perceptron
                                 int pi = contexts[ei][ci];
                                 if (values == null)
                                 {
-                                    @params[pi].updateParameter(targetOutcome, stepsize);
-                                    @params[pi].updateParameter(maxOutcome, -stepsize);
+                                    parameters[pi].updateParameter(targetOutcome, stepsize);
+                                    parameters[pi].updateParameter(maxOutcome, -stepsize);
                                 }
                                 else
                                 {
-                                    @params[pi].updateParameter(targetOutcome, stepsize*values[ei][ci]);
-                                    @params[pi].updateParameter(maxOutcome, -stepsize*values[ei][ci]);
+                                    parameters[pi].updateParameter(targetOutcome, stepsize*values[ei][ci]);
+                                    parameters[pi].updateParameter(maxOutcome, -stepsize*values[ei][ci]);
                                 }
                             }
                         }
@@ -332,7 +332,7 @@ namespace opennlp.perceptron
                     {
                         for (int aoi = 0; aoi < numOutcomes; aoi++)
                         {
-                            summedParams[pi].updateParameter(aoi, @params[pi].Parameters[aoi]);
+                            summedParams[pi].updateParameter(aoi, parameters[pi].Parameters[aoi]);
                         }
                     }
                 }
@@ -372,7 +372,7 @@ namespace opennlp.perceptron
             }
             else
             {
-                return @params;
+                return parameters;
             }
         }
 

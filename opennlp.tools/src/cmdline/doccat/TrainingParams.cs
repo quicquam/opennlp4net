@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 
 namespace opennlp.tools.cmdline.doccat
 {

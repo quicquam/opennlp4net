@@ -17,15 +17,18 @@
 
 using System;
 using System.IO;
-using opennlp.tools.cmdline.@params;
+using j4n.IO.File;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.sentdetect;
 
 namespace opennlp.tools.cmdline.sentdetect
 {
     public sealed class SentenceDetectorEvaluatorTool : AbstractEvaluatorTool<SentenceSample, SentenceDetectorEvaluatorTool.EvalToolParams>
 	{
-	    public interface EvalToolParams : EvaluatorParams
+	  public class EvalToolParams : EvaluatorParams
 	  {
+	      public Jfile Model { get; private set; }
+	      public bool? Misclassified { get; private set; }
 	  }
 
 	  public SentenceDetectorEvaluatorTool() : base(typeof(SentenceSample), typeof(EvalToolParams))
@@ -44,10 +47,10 @@ namespace opennlp.tools.cmdline.sentdetect
 	  {
 		base.run(format, args);
 
-		SentenceModel model = (new SentenceModelLoader()).load(@params.Model);
+		SentenceModel model = (new SentenceModelLoader()).load(parameters.Model);
 
 		SentenceDetectorEvaluationMonitor errorListener = null;
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  errorListener = new SentenceEvaluationErrorListener();
 		}

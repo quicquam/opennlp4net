@@ -17,7 +17,7 @@
 
 using System.IO;
 using j4n.IO.File;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.parser;
 using opennlp.tools.util;
 
@@ -40,10 +40,10 @@ namespace opennlp.tools.cmdline.parser
 
 	  public sealed override void run(string format, string[] args)
 	  {
-          ModelUpdaterParams @params = validateAndParseParams<ModelUpdaterParams>(ArgumentParser.filter(args, typeof(ModelUpdaterParams)), typeof(ModelUpdaterParams));
+          ModelUpdaterParams parameters = validateAndParseParams<ModelUpdaterParams>(ArgumentParser.filter(args, typeof(ModelUpdaterParams)), typeof(ModelUpdaterParams));
 
 		// Load model to be updated
-		Jfile modelFile = @params.Model;
+		Jfile modelFile = parameters.Model;
 		ParserModel originalParserModel = (new ParserModelLoader()).load(modelFile);
 
 		ObjectStreamFactory<Parse> factory = getStreamFactory(format);
@@ -54,7 +54,7 @@ namespace opennlp.tools.cmdline.parser
 		ParserModel updatedParserModel;
 		try
 		{
-		  updatedParserModel = trainAndUpdate(originalParserModel, sampleStream, @params);
+		  updatedParserModel = trainAndUpdate(originalParserModel, sampleStream, parameters);
 		}
 		catch (IOException e)
 		{

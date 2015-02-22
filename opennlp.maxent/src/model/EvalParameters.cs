@@ -29,7 +29,7 @@ namespace opennlp.model
         /// Mapping between outcomes and paramater values for each context. 
         /// The integer representation of the context can be found using <code>pmap</code>.
         /// </summary>
-        private Context[] @params;
+        private Context[] parameters;
 
         /// <summary>
         /// The number of outcomes being predicted. </summary>
@@ -55,16 +55,16 @@ namespace opennlp.model
         /// <param name="correctionParam"> The correction paramter. </param>
         /// <param name="correctionConstant"> The correction constant. </param>
         /// <param name="numOutcomes"> The number of outcomes. </param>
-        public EvalParameters(Context[] @params, double correctionParam, double correctionConstant, int numOutcomes)
+        public EvalParameters(Context[] parameters, double correctionParam, double correctionConstant, int numOutcomes)
         {
-            this.@params = @params;
+            this.parameters = parameters;
             this.correctionParam = correctionParam;
             this.numOutcomes = numOutcomes;
             this.correctionConstant = correctionConstant;
             this.constantInverse = 1.0/correctionConstant;
         }
 
-        public EvalParameters(Context[] @params, int numOutcomes) : this(@params, 0, 0, numOutcomes)
+        public EvalParameters(Context[] parameters, int numOutcomes) : this(parameters, 0, 0, numOutcomes)
         {
         }
 
@@ -74,7 +74,7 @@ namespace opennlp.model
 
         public virtual Context[] Params
         {
-            get { return @params; }
+            get { return parameters; }
         }
 
         /* (non-Javadoc)

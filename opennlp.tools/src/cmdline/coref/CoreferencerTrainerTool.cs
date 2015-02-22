@@ -16,7 +16,7 @@
  */
 
 using System.IO;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.coref;
 
 namespace opennlp.tools.cmdline.coref
@@ -38,7 +38,7 @@ namespace opennlp.tools.cmdline.coref
 
 		try
 		{
-		  CorefTrainer.train(@params.Model.ToString(), sampleStream, true, true);
+		  CorefTrainer.train(parameters.Model.ToString(), sampleStream, true, true);
 		}
 		catch (IOException e)
 		{

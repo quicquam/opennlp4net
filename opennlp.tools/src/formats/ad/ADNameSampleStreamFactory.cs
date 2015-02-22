@@ -52,7 +52,7 @@ namespace opennlp.tools.formats.ad
 		StreamFactoryRegistry<NameSample>.registerFactory(typeof(NameSample), "ad", new ADNameSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal ADNameSampleStreamFactory(Type @params) : base(@params)
+	  protected internal ADNameSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
@@ -64,15 +64,15 @@ namespace opennlp.tools.formats.ad
 	    public override ObjectStream<NameSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
-		language = @params.Lang;
+		language = parameters.Lang;
 
-		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);
+		FileInputStream sampleDataIn = CmdLineUtil.openInFile(parameters.Data);
 
-		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, @params.Encoding);
+		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, parameters.Encoding);
 
-		return new ADNameSampleStream(lineStream, @params.SplitHyphenatedTokens.Value);
+		return new ADNameSampleStream(lineStream, parameters.SplitHyphenatedTokens.Value);
 	  }
 	}
 

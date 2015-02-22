@@ -16,7 +16,7 @@
  */
 
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.parser;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;
@@ -39,11 +39,11 @@ namespace opennlp.tools.formats.convert
 
 	  public  ObjectStream<TokenSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
         ObjectStream<Parse> parseSampleStream = StreamFactoryRegistry<Parse>.getFactory(typeof(Parse), StreamFactoryRegistry<TokenSample>.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(WordTagSampleStreamFactory.Parameters)));
 
-		return (new POSToTokenSampleStream(createDetokenizer(@params), new ParseToPOSSampleStream(parseSampleStream)));
+		return (new POSToTokenSampleStream(createDetokenizer(parameters), new ParseToPOSSampleStream(parseSampleStream)));
 	  }
 
 	  public static void registerFactory()

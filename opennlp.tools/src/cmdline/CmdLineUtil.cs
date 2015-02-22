@@ -245,6 +245,15 @@ namespace opennlp.tools.cmdline
 		return -1;
 	  }
 
+      public static string StandardizeMethodName(string param)
+      {
+          if(param.StartsWith("get_"))
+          {
+              param = "-" + param.Substring("get_".Length).ToLowerInvariant();
+          }
+          return param;
+      }
+
 	  /// <summary>
 	  /// Retrieves the specified parameter from the given arguments.
 	  /// </summary>
@@ -348,7 +357,7 @@ namespace opennlp.tools.cmdline
 	  public static TrainingParameters loadTrainingParameters(string paramFile, bool supportSequenceTraining)
 	  {
 
-		TrainingParameters @params = null;
+		TrainingParameters parameters = null;
 
 		if (paramFile != null)
 		{
@@ -360,7 +369,7 @@ namespace opennlp.tools.cmdline
 		  {
 			paramsIn = new FileInputStream(new Jfile(paramFile));
 
-			@params = new TrainingParameters(paramsIn);
+			parameters = new TrainingParameters(paramsIn);
 		  }
 		  catch (IOException e)
 		  {
@@ -381,18 +390,18 @@ namespace opennlp.tools.cmdline
 			}
 		  }
 
-          if (!TrainUtil.isValid(@params.getSettings()))
+          if (!TrainUtil.isValid(parameters.getSettings()))
 		  {
 			throw new TerminateToolException(1, "Training parameters file '" + paramFile + "' is invalid!");
 		  }
 
-		  if (!supportSequenceTraining && TrainUtil.isSequenceTraining(@params.getSettings()))
+		  if (!supportSequenceTraining && TrainUtil.isSequenceTraining(parameters.getSettings()))
 		  {
 			throw new TerminateToolException(1, "Sequence training is not supported!");
 		  }
 		}
 
-		return @params;
+		return parameters;
 	  }
 	}
 

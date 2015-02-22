@@ -35,8 +35,8 @@ namespace opennlp.tools.parser.chunking
 
         public virtual string[] getContext(object o)
         {
-            object[] @params = (object[]) o;
-            return getContext((Parse[]) @params[0], (string) @params[1], (int) @params[2], (int) @params[3]);
+            object[] parameters = (object[]) o;
+            return getContext((Parse[]) parameters[0], (string) parameters[1], (int) parameters[2], (int) parameters[3]);
         }
 
         /// <summary>

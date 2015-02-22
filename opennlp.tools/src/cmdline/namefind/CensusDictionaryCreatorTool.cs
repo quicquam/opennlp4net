@@ -98,16 +98,16 @@ namespace opennlp.tools.cmdline.namefind
 
 	  public override void run(string[] args)
 	  {
-		Parameters @params = validateAndParseParams<Parameters>(args, typeof(Parameters));
+		Parameters parameters = validateAndParseParams<Parameters>(args, typeof(Parameters));
 
-        Jfile testData = new Jfile(@params.CensusData);
-        Jfile dictOutFile = new Jfile(@params.Dict);
+        Jfile testData = new Jfile(parameters.CensusData);
+        Jfile dictOutFile = new Jfile(parameters.Dict);
 
 		CmdLineUtil.checkInputFile("Name data", testData);
 		CmdLineUtil.checkOutputFile("Dictionary file", dictOutFile);
 
 		FileInputStream sampleDataIn = CmdLineUtil.openInFile(testData);
-		ObjectStream<StringList> sampleStream = new NameFinderCensus90NameStream(sampleDataIn, Charset.forName(@params.Encoding));
+		ObjectStream<StringList> sampleStream = new NameFinderCensus90NameStream(sampleDataIn, Charset.forName(parameters.Encoding));
 
 		Dictionary mDictionary;
 		try

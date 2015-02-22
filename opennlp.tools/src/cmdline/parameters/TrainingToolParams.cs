@@ -17,20 +17,17 @@
 
 using j4n.IO.File;
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.tools.cmdline.parameters
 {
     /// <summary>
-	/// Common evaluation parameters.
+	/// Common training parameters.
 	/// 
 	/// Note: Do not use this class, internal use only!
 	/// </summary>
-	public interface EvaluatorParams
+	public interface TrainingToolParams : BasicTrainingParams
 	{
 
 	  Jfile Model {get;}
-
-	  bool? Misclassified {get;}
-
 	}
 
 }

@@ -33,22 +33,22 @@ namespace opennlp.perceptron
 
     public class PerceptronModel : AbstractModel
     {
-        public PerceptronModel(Context[] @params, string[] predLabels, IndexHashTable<string> pmap,
-            string[] outcomeNames) : base(@params, predLabels, pmap, outcomeNames)
+        public PerceptronModel(Context[] parameters, string[] predLabels, IndexHashTable<string> pmap,
+            string[] outcomeNames) : base(parameters, predLabels, pmap, outcomeNames)
         {
             modelType = ModelTypeEnum.Perceptron;
         }
 
         /// @deprecated use the constructor with the <seealso cref="IndexHashTable"/> instead! 
         [Obsolete("use the constructor with the <seealso cref=\"opennlp.model.IndexHashTable\"/> instead!")]
-        public PerceptronModel(Context[] @params, string[] predLabels, IDictionary<string, int?> pmap,
-            string[] outcomeNames) : base(@params, predLabels, outcomeNames)
+        public PerceptronModel(Context[] parameters, string[] predLabels, IDictionary<string, int?> pmap,
+            string[] outcomeNames) : base(parameters, predLabels, outcomeNames)
         {
             modelType = ModelTypeEnum.Perceptron;
         }
 
-        public PerceptronModel(Context[] @params, string[] predLabels, string[] outcomeNames)
-            : base(@params, predLabels, outcomeNames)
+        public PerceptronModel(Context[] parameters, string[] predLabels, string[] outcomeNames)
+            : base(parameters, predLabels, outcomeNames)
         {
             modelType = ModelTypeEnum.Perceptron;
         }
@@ -87,7 +87,7 @@ namespace opennlp.perceptron
 
         public static double[] eval(int[] context, float[] values, double[] prior, EvalParameters model, bool normalize)
         {
-            Context[] @params = model.Params;
+            Context[] parameters = model.Params;
             double[] activeParameters;
             int[] activeOutcomes;
             double value = 1;
@@ -95,7 +95,7 @@ namespace opennlp.perceptron
             {
                 if (context[ci] >= 0)
                 {
-                    Context predParams = @params[context[ci]];
+                    Context predParams = parameters[context[ci]];
                     activeOutcomes = predParams.Outcomes;
                     activeParameters = predParams.Parameters;
                     if (values != null)

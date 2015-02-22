@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using j4n.IO.File;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.doccat;
 using opennlp.tools.util;
 
@@ -41,7 +41,7 @@ namespace opennlp.tools.formats
           StreamFactoryRegistry<DocumentSample>.registerFactory(typeof(DocumentSample), "leipzig", new LeipzigDocumentSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal LeipzigDocumentSampleStreamFactory(Type @params) : base(@params)
+	  protected internal LeipzigDocumentSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
@@ -53,12 +53,12 @@ namespace opennlp.tools.formats
 	    public override ObjectStream<DocumentSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
-		language = @params.Lang;
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
+		language = parameters.Lang;
 
 		try
 		{
-		  return new LeipzigDoccatSampleStream(@params.Lang, 20, CmdLineUtil.openInFile(@params.Data));
+		  return new LeipzigDoccatSampleStream(parameters.Lang, 20, CmdLineUtil.openInFile(parameters.Data));
 		}
 		catch (IOException e)
 		{

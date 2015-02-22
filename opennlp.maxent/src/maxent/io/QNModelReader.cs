@@ -51,9 +51,9 @@ namespace opennlp.maxent.io
         {
             string[] predNames = GetPredicates();
             string[] outcomeNames = GetOutcomes();
-            Context[] @params = Parameters;
+            Context[] cParameters = Parameters;
             double[] parameters = DoubleArrayParams;
-            return new QNModel(predNames, outcomeNames, @params, parameters);
+            return new QNModel(predNames, outcomeNames, cParameters, parameters);
         }
 
         private double[] DoubleArrayParams
@@ -89,15 +89,15 @@ namespace opennlp.maxent.io
             get
             {
                 int numContext = readInt();
-                Context[] @params = new Context[numContext];
+                Context[] cParameters = new Context[numContext];
 
                 for (int i = 0; i < numContext; i++)
                 {
                     int[] outcomePattern = IntArrayParams;
                     double[] parameters = DoubleArrayParams;
-                    @params[i] = new Context(outcomePattern, parameters);
+                    cParameters[i] = new Context(outcomePattern, parameters);
                 }
-                return @params;
+                return cParameters;
             }
         }
     }

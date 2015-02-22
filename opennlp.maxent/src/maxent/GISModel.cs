@@ -52,9 +52,9 @@ namespace opennlp.maxent
         ///          The maximum number of active features which occur in an event. </param>
         /// <param name="correctionParam">
         ///          The parameter associated with the correction feature. </param>
-        public GISModel(Context[] @params, string[] predLabels, string[] outcomeNames, int correctionConstant,
+        public GISModel(Context[] parameters, string[] predLabels, string[] outcomeNames, int correctionConstant,
             double correctionParam)
-            : this(@params, predLabels, outcomeNames, correctionConstant, correctionParam, new UniformPrior())
+            : this(parameters, predLabels, outcomeNames, correctionConstant, correctionParam, new UniformPrior())
         {
         }
 
@@ -74,9 +74,9 @@ namespace opennlp.maxent
         ///          The parameter associated with the correction feature. </param>
         /// <param name="prior">
         ///          The prior to be used with this model. </param>
-        public GISModel(Context[] @params, string[] predLabels, string[] outcomeNames, int correctionConstant,
+        public GISModel(Context[] parameters, string[] predLabels, string[] outcomeNames, int correctionConstant,
             double correctionParam, Prior prior)
-            : base(@params, predLabels, outcomeNames, correctionConstant, correctionParam)
+            : base(parameters, predLabels, outcomeNames, correctionConstant, correctionParam)
         {
             this.prior = prior;
             prior.setLabels(outcomeNames, predLabels);
@@ -174,7 +174,7 @@ namespace opennlp.maxent
         ///         method getOutcome(int i). </returns>
         public static double[] eval(int[] context, float[] values, double[] prior, EvalParameters model)
         {
-            Context[] @params = model.Params;
+            Context[] parameters = model.Params;
             int[] numfeats = new int[model.NumOutcomes];
             int[] activeOutcomes;
             double[] activeParameters;
@@ -183,7 +183,7 @@ namespace opennlp.maxent
             {
                 if (context[ci] >= 0)
                 {
-                    Context predParams = @params[context[ci]];
+                    Context predParams = parameters[context[ci]];
                     activeOutcomes = predParams.Outcomes;
                     activeParameters = predParams.Parameters;
                     if (values != null)

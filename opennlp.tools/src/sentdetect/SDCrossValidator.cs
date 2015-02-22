@@ -31,7 +31,7 @@ namespace opennlp.tools.sentdetect
     {
         private readonly string languageCode;
 
-        private readonly TrainingParameters @params;
+        private readonly TrainingParameters parameters;
 
         private FMeasure fmeasure = new FMeasure();
 
@@ -39,11 +39,11 @@ namespace opennlp.tools.sentdetect
 
         private SentenceDetectorFactory sdFactory;
 
-        public SDCrossValidator(string languageCode, TrainingParameters @params, SentenceDetectorFactory sdFactory,
+        public SDCrossValidator(string languageCode, TrainingParameters parameters, SentenceDetectorFactory sdFactory,
             params SentenceDetectorEvaluationMonitor[] listeners)
         {
             this.languageCode = languageCode;
-            this.@params = @params;
+            this.parameters = parameters;
             this.listeners = listeners;
             this.sdFactory = sdFactory;
         }
@@ -59,8 +59,8 @@ namespace opennlp.tools.sentdetect
         /// @deprecated Use
         ///             <seealso cref="#SDCrossValidator(String, TrainingParameters, SentenceDetectorFactory, SentenceDetectorEvaluationMonitor...)"/>
         ///             and pass in a <seealso cref="SentenceDetectorFactory"/>. 
-        public SDCrossValidator(string languageCode, TrainingParameters @params)
-            : this(languageCode, @params, new SentenceDetectorFactory(languageCode, true, null, null))
+        public SDCrossValidator(string languageCode, TrainingParameters parameters)
+            : this(languageCode, parameters, new SentenceDetectorFactory(languageCode, true, null, null))
         {
         }
 
@@ -79,9 +79,9 @@ namespace opennlp.tools.sentdetect
         /// @deprecated use
         ///             <seealso cref="#SDCrossValidator(String, TrainingParameters, Dictionary, SentenceDetectorEvaluationMonitor...)"/>
         ///             instead and pass in a TrainingParameters object. 
-        public SDCrossValidator(string languageCode, TrainingParameters @params,
+        public SDCrossValidator(string languageCode, TrainingParameters parameters,
             params SentenceDetectorEvaluationMonitor[] listeners)
-            : this(languageCode, @params, new SentenceDetectorFactory(languageCode, true, null, null), listeners)
+            : this(languageCode, parameters, new SentenceDetectorFactory(languageCode, true, null, null), listeners)
         {
         }
 
@@ -112,7 +112,7 @@ namespace opennlp.tools.sentdetect
 
                 SentenceModel model;
 
-                model = SentenceDetectorME.train(languageCode, trainingSampleStream, sdFactory, @params);
+                model = SentenceDetectorME.train(languageCode, trainingSampleStream, sdFactory, parameters);
 
                 // do testing
                 SentenceDetectorEvaluator evaluator = new SentenceDetectorEvaluator(new SentenceDetectorME(model),

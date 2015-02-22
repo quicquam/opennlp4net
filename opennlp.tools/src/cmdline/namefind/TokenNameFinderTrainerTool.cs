@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.namefind;
 using opennlp.tools.util;
 using opennlp.tools.util.model;
@@ -174,35 +174,35 @@ namespace opennlp.tools.cmdline.namefind
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
-		Jfile modelOutFile = @params.Model;
+		Jfile modelOutFile = parameters.Model;
 
-		sbyte[] featureGeneratorBytes = openFeatureGeneratorBytes(@params.Featuregen);
+		sbyte[] featureGeneratorBytes = openFeatureGeneratorBytes(parameters.Featuregen);
 
 
 		// TODO: Support Custom resources:
 		//       Must be loaded into memory, or written to tmp file until descriptor 
 		//       is loaded which defines parses when model is loaded
 
-		IDictionary<string, object> resources = loadResources(@params.Resources);
+		IDictionary<string, object> resources = loadResources(parameters.Resources);
 
 		CmdLineUtil.checkOutputFile("name finder model", modelOutFile);
 
-		if (@params.NameTypes != null)
+		if (parameters.NameTypes != null)
 		{
-		  string[] nameTypes = @params.NameTypes.Split(',');
+		  string[] nameTypes = parameters.NameTypes.Split(',');
 		  sampleStream = new NameSampleTypeFilter(nameTypes, sampleStream);
 		}
 
 		TokenNameFinderModel model;
 		try
 		{
-		  model = opennlp.tools.namefind.NameFinderME.train(@params.Lang, @params.Type, sampleStream, mlParams, featureGeneratorBytes, resources);
+		  model = opennlp.tools.namefind.NameFinderME.train(parameters.Lang, parameters.Type, sampleStream, mlParams, featureGeneratorBytes, resources);
 		}
 		catch (IOException e)
 		{

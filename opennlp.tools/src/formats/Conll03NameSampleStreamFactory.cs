@@ -16,7 +16,7 @@
 using System;
 using j4n.IO.File;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.namefind;
 using opennlp.tools.util;
 
@@ -38,8 +38,8 @@ namespace opennlp.tools.formats
             StreamFactoryRegistry<NameSample>.registerFactory(typeof(NameSample), "conll03", new Conll03NameSampleStreamFactory(typeof(Parameters)));
         }
 
-        protected internal Conll03NameSampleStreamFactory(Type @params)
-            : base(@params)
+        protected internal Conll03NameSampleStreamFactory(Type parameters)
+            : base(parameters)
         {
         }
 
@@ -51,46 +51,46 @@ namespace opennlp.tools.formats
         public override ObjectStream<NameSample> create(string[] args)
         {
 
-            Parameters @params = ArgumentParser.parse<Parameters>(args);
+            Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
             // TODO: support the other languages with this CoNLL.
             Conll03NameSampleStream.LANGUAGE lang;
-            if ("en".Equals(@params.Lang))
+            if ("en".Equals(parameters.Lang))
             {
                 lang = Conll03NameSampleStream.LANGUAGE.EN;
-                language = @params.Lang;
+                language = parameters.Lang;
             }
-            else if ("de".Equals(@params.Lang))
+            else if ("de".Equals(parameters.Lang))
             {
                 lang = Conll03NameSampleStream.LANGUAGE.DE;
-                language = @params.Lang;
+                language = parameters.Lang;
             }
             else
             {
-                throw new TerminateToolException(1, "Unsupported language: " + @params.Lang);
+                throw new TerminateToolException(1, "Unsupported language: " + parameters.Lang);
             }
 
             int typesToGenerate = 0;
 
-            if (@params.Types.Contains("per"))
+            if (parameters.Types.Contains("per"))
             {
                 typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_PERSON_ENTITIES;
             }
-            if (@params.Types.Contains("org"))
+            if (parameters.Types.Contains("org"))
             {
                 typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_ORGANIZATION_ENTITIES;
             }
-            if (@params.Types.Contains("loc"))
+            if (parameters.Types.Contains("loc"))
             {
                 typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_LOCATION_ENTITIES;
             }
-            if (@params.Types.Contains("misc"))
+            if (parameters.Types.Contains("misc"))
             {
                 typesToGenerate = typesToGenerate | Conll02NameSampleStream.GENERATE_MISC_ENTITIES;
             }
 
 
-            return new Conll03NameSampleStream(lang, CmdLineUtil.openInFile(@params.Data), typesToGenerate);
+            return new Conll03NameSampleStream(lang, CmdLineUtil.openInFile(parameters.Data), typesToGenerate);
         }
     }
 

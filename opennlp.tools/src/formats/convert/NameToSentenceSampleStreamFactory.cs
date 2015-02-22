@@ -17,7 +17,7 @@
 
 using System;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.namefind;
 using opennlp.tools.sentdetect;
 using opennlp.tools.util;
@@ -39,16 +39,16 @@ namespace opennlp.tools.formats.convert
           StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), "namefinder", new NameToSentenceSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal NameToSentenceSampleStreamFactory(Type @params) : base(@params)
+	  protected internal NameToSentenceSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
 	  public ObjectStream<SentenceSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
         ObjectStream<NameSample> nameSampleStream = StreamFactoryRegistry<NameSample>.getFactory(typeof(NameSample), StreamFactoryRegistry<NameSample>.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(NameSampleDataStreamFactory.Parameters)));
-		return new NameToSentenceSampleStream(createDetokenizer(@params), nameSampleStream, 30);
+		return new NameToSentenceSampleStream(createDetokenizer(parameters), nameSampleStream, 30);
 	  }
 	}
 

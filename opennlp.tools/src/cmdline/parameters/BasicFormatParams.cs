@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.tools.cmdline.parameters
 {
-    public interface LanguageParams
+    /// <summary>
+	/// Common format parameters.
+	/// </summary>
+	public interface BasicFormatParams : EncodingParameter
 	{
 
-	  string Lang {get;}
-
 	}
-
 }

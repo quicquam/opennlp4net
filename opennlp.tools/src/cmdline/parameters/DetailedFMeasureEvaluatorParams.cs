@@ -15,13 +15,18 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.tools.cmdline.parameters
 {
     /// <summary>
-	/// Common format parameters.
+	/// EvaluatorParams for Chunker.
+	/// 
+	/// Note: Do not use this class, internal use only!
 	/// </summary>
-	public interface BasicFormatParams : EncodingParameter
+	public interface DetailedFMeasureEvaluatorParams
 	{
 
+	  bool? DetailedF {get;}
+
 	}
+
 }

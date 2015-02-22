@@ -611,19 +611,19 @@ namespace opennlp.tools.parser.treeinsert
         public static ParserModel train(string languageCode, ObjectStream<Parse> parseSamples, HeadRules rules,
             int iterations, int cut)
         {
-            TrainingParameters @params = new TrainingParameters();
-            @params.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+            TrainingParameters parameters = new TrainingParameters();
+            parameters.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
 
-            @params.put("tagger", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-            @params.put("tagger", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-            @params.put("chunker", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-            @params.put("chunker", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-            @params.put("check", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-            @params.put("check", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-            @params.put("build", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
-            @params.put("build", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+            parameters.put("tagger", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+            parameters.put("tagger", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+            parameters.put("chunker", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+            parameters.put("chunker", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+            parameters.put("check", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+            parameters.put("check", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+            parameters.put("build", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cut));
+            parameters.put("build", TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
 
-            return train(languageCode, parseSamples, rules, @params);
+            return train(languageCode, parseSamples, rules, parameters);
         }
 
         [Obsolete]

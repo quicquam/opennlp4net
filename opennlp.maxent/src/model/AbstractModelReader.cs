@@ -170,7 +170,7 @@ namespace opennlp.model
         /// <exception cref="java.io.IOException"> when the model file does not match the outcome patterns or can not be read. </exception>
         protected Context[] GetParameters(int[][] outcomePatterns)
         {
-            Context[] @params = new Context[NUM_PREDS];
+            Context[] parameters = new Context[NUM_PREDS];
             int pid = 0;
             for (int i = 0; i < outcomePatterns.Length; i++)
             {
@@ -189,11 +189,11 @@ namespace opennlp.model
                     {
                         contextParameters[k - 1] = readDouble();
                     }
-                    @params[pid] = new Context(outcomePattern, contextParameters);
+                    parameters[pid] = new Context(outcomePattern, contextParameters);
                     pid++;
                 }
             }
-            return @params;
+            return parameters;
         }
     }
 }

@@ -17,17 +17,19 @@
 
 using j4n.IO.File;
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.tools.cmdline.parameters
 {
     /// <summary>
-	/// Encoding parameter. The DEFAULT_CHARSET is handled by ArgumentParser.Parse().
+	/// Common evaluation parameters.
 	/// 
 	/// Note: Do not use this class, internal use only!
 	/// </summary>
-	public interface EncodingParameter
+	public interface EvaluatorParams
 	{
 
-	  Charset Encoding {get;}
+	  Jfile Model {get;}
+
+	  bool? Misclassified {get;}
 
 	}
 

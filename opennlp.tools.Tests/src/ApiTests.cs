@@ -114,7 +114,7 @@ namespace opennlp.tools.Tests
             {
                 testTextBlock = sr.ReadToEnd();
             }
-            string[] tokens = tokenizer.tokenize(testTextBlock);
+            string[] tokens = tokenizer.tokenize("Bleak House was written by Charles Dickens, while he lived at Tavistock House.");
 
             Span[] nameSpans = nameFinder.find(tokens);
 

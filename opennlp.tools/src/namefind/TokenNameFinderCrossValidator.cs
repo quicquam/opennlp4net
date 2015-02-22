@@ -160,7 +160,7 @@ namespace opennlp.tools.namefind
         }
 
         private readonly string languageCode;
-        private readonly TrainingParameters @params;
+        private readonly TrainingParameters parameters;
         private readonly string type;
         private readonly sbyte[] featureGeneratorBytes;
         private readonly IDictionary<string, object> resources;
@@ -209,7 +209,7 @@ namespace opennlp.tools.namefind
             this.languageCode = languageCode;
             this.type = type;
 
-            this.@params = ModelUtil.createTrainingParameters(iterations, cutoff);
+            this.parameters = ModelUtil.createTrainingParameters(iterations, cutoff);
             this.featureGeneratorBytes = null;
             this.resources = new Dictionary<string, object>();
         }
@@ -243,7 +243,7 @@ namespace opennlp.tools.namefind
             this.featureGeneratorBytes = featureGeneratorBytes;
             this.resources = resources;
 
-            this.@params = ModelUtil.createTrainingParameters(iterations, cutoff);
+            this.parameters = ModelUtil.createTrainingParameters(iterations, cutoff);
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace opennlp.tools.namefind
             this.featureGeneratorBytes = featureGeneratorBytes;
             this.resources = resources;
 
-            this.@params = trainParams;
+            this.parameters = trainParams;
 
             this.listeners = listeners;
         }
@@ -296,7 +296,7 @@ namespace opennlp.tools.namefind
                     partitioner.next();
 
                 TokenNameFinderModel model = opennlp.tools.namefind.NameFinderME.train(languageCode, type,
-                    new DocumentToNameSampleStream(this, trainingSampleStream), @params, featureGeneratorBytes,
+                    new DocumentToNameSampleStream(this, trainingSampleStream), parameters, featureGeneratorBytes,
                     resources);
 
                 // do testing

@@ -19,7 +19,7 @@ using System;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.sentdetect;
 using opennlp.tools.util;
 
@@ -41,7 +41,7 @@ namespace opennlp.tools.formats
           StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), StreamFactoryRegistry<SentenceSample>.DEFAULT_FORMAT, new SentenceSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal SentenceSampleStreamFactory(Type @params)
+	  protected internal SentenceSampleStreamFactory(Type parameters)
 	  {
 	  }
 
@@ -52,12 +52,12 @@ namespace opennlp.tools.formats
 
 	    public ObjectStream<SentenceSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
-		CmdLineUtil.checkInputFile("Data", @params.Data);
-		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);
+		CmdLineUtil.checkInputFile("Data", parameters.Data);
+		FileInputStream sampleDataIn = CmdLineUtil.openInFile(parameters.Data);
 
-		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, @params.Encoding);
+		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, parameters.Encoding);
 
 		return new SentenceSampleStream(lineStream);
 	  }

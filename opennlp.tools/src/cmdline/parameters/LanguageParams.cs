@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.tools.cmdline.parameters
 {
-    public interface DetokenizerParameter
+    public interface LanguageParams
 	{
-	  string Detokenizer {get;}
+
+	  string Lang {get;}
+
 	}
 
 }

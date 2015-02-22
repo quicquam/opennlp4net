@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.namefind;
 using opennlp.tools.util.eval;
 using opennlp.tools.util.model;
@@ -48,23 +48,23 @@ namespace opennlp.tools.cmdline.namefind
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
-		sbyte[] featureGeneratorBytes = TokenNameFinderTrainerTool.openFeatureGeneratorBytes(@params.Featuregen);
+		sbyte[] featureGeneratorBytes = TokenNameFinderTrainerTool.openFeatureGeneratorBytes(parameters.Featuregen);
 
-		IDictionary<string, object> resources = TokenNameFinderTrainerTool.loadResources(@params.Resources);
+		IDictionary<string, object> resources = TokenNameFinderTrainerTool.loadResources(parameters.Resources);
 
 		IList<EvaluationMonitor<NameSample>> listeners = new List<EvaluationMonitor<NameSample>>();
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  listeners.Add(new NameEvaluationErrorListener());
 		}
 		TokenNameFinderDetailedFMeasureListener detailedFListener = null;
-		if (@params.DetailedF.Value)
+		if (parameters.DetailedF.Value)
 		{
 		  detailedFListener = new TokenNameFinderDetailedFMeasureListener();
 		  listeners.Add(detailedFListener);
@@ -73,8 +73,8 @@ namespace opennlp.tools.cmdline.namefind
 		TokenNameFinderCrossValidator validator;
 		try
 		{
-		  validator = new TokenNameFinderCrossValidator(@params.Lang, @params.Type, mlParams, featureGeneratorBytes, resources, listeners.ToArray() as TokenNameFinderEvaluationMonitor[]);
-		  validator.evaluate(sampleStream, @params.Folds.Value);
+		  validator = new TokenNameFinderCrossValidator(parameters.Lang, parameters.Type, mlParams, featureGeneratorBytes, resources, listeners.ToArray() as TokenNameFinderEvaluationMonitor[]);
+		  validator.evaluate(sampleStream, parameters.Folds.Value);
 		}
 		catch (IOException e)
 		{

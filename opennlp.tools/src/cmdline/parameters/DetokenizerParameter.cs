@@ -15,21 +15,11 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.tools.cmdline.parameters
 {
-    /// <summary>
-	/// Common training parameters.
-	/// 
-	/// Note: Do not use this class, internal use only!
-	/// </summary>
-	public interface BasicTrainingParams : LanguageParams
+    public interface DetokenizerParameter
 	{
-
-	  int? Iterations {get;}
-
-	  int? Cutoff {get;}
-
-	  string Params {get;}
+	  string Detokenizer {get;}
 	}
 
 }

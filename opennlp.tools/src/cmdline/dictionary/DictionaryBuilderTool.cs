@@ -49,11 +49,11 @@ namespace opennlp.tools.cmdline.dictionary
 
 	  public override void run(string[] args)
 	  {
-		Params @params = validateAndParseParams<Params>(args, typeof(Params));
+		Params parameters = validateAndParseParams<Params>(args, typeof(Params));
 
-		Jfile dictInFile = @params.InputFile;
-		Jfile dictOutFile = @params.OutputFile;
-		Charset encoding = @params.Encoding;
+		Jfile dictInFile = parameters.InputFile;
+		Jfile dictOutFile = parameters.OutputFile;
+		Charset encoding = parameters.Encoding;
 
 		CmdLineUtil.checkInputFile("dictionary input file", dictInFile);
 		CmdLineUtil.checkOutputFile("dictionary output file", dictOutFile);

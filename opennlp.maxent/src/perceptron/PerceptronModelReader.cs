@@ -67,9 +67,9 @@ namespace opennlp.perceptron
             string[] outcomeLabels = GetOutcomes();
             int[][] outcomePatterns = GetOutcomePatterns();
             string[] predLabels = GetPredicates();
-            Context[] @params = GetParameters(outcomePatterns);
+            Context[] parameters = GetParameters(outcomePatterns);
 
-            return new PerceptronModel(@params, predLabels, outcomeLabels);
+            return new PerceptronModel(parameters, predLabels, outcomeLabels);
         }
 
         public override void checkModelType()

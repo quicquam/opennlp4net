@@ -29,12 +29,12 @@ namespace opennlp.tools.formats
 
         protected internal string language;
 
-        protected LanguageSampleStreamFactory(Type @params, string language)
+        protected LanguageSampleStreamFactory(Type parameters, string language)
         {
             this.language = language;
         }
 
-        protected internal LanguageSampleStreamFactory(Type @params)
+        protected internal LanguageSampleStreamFactory(Type parameters)
         {
         }
 

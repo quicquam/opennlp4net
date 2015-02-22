@@ -79,7 +79,7 @@ namespace opennlp.perceptron
 
         /// <summary>
         /// Stores the estimated parameter value of each predicate during iteration. </summary>
-        private MutableContext[] @params;
+        private MutableContext[] parameters;
 
         private bool useAverage;
         private int[][][] updates;
@@ -133,7 +133,7 @@ namespace opennlp.perceptron
             display("\t  Number of Predicates: " + numPreds + "\n");
 
 
-            @params = new MutableContext[numPreds];
+            parameters = new MutableContext[numPreds];
             if (useAverage)
             {
                 averageParams = new MutableContext[numPreds];
@@ -147,14 +147,14 @@ namespace opennlp.perceptron
 
             for (int pi = 0; pi < numPreds; pi++)
             {
-                @params[pi] = new MutableContext(allOutcomesPattern, new double[numOutcomes]);
+                parameters[pi] = new MutableContext(allOutcomesPattern, new double[numOutcomes]);
                 if (useAverage)
                 {
                     averageParams[pi] = new MutableContext(allOutcomesPattern, new double[numOutcomes]);
                 }
                 for (int aoi = 0; aoi < numOutcomes; aoi++)
                 {
-                    @params[pi].setParameter(aoi, 0.0);
+                    parameters[pi].setParameter(aoi, 0.0);
                     if (useAverage)
                     {
                         averageParams[pi].setParameter(aoi, 0.0);
@@ -182,7 +182,7 @@ namespace opennlp.perceptron
             }
             else
             {
-                return new PerceptronModel(@params, updatedPredLabels, outcomeLabels);
+                return new PerceptronModel(parameters, updatedPredLabels, outcomeLabels);
             }
         }
 
@@ -211,7 +211,7 @@ namespace opennlp.perceptron
             }
             else
             {
-                trainingStats(@params);
+                trainingStats(parameters);
             }
         }
 
@@ -234,7 +234,7 @@ namespace opennlp.perceptron
             {
                 featureCounts[oi] = new Dictionary<string, float?>();
             }
-            PerceptronModel model = new PerceptronModel(@params, predLabels, pmap, outcomeLabels);
+            PerceptronModel model = new PerceptronModel(parameters, predLabels, pmap, outcomeLabels);
             foreach (Sequence<Event> sequence in sequenceStream)
             {
                 Event[] taggerEvents = sequenceStream.updateContext(sequence, model);
@@ -325,7 +325,7 @@ namespace opennlp.perceptron
                             if (pi != -1)
                             {
                                 //System.err.println(si+" "+outcomeLabels[oi]+" "+feature+" "+featureCounts[oi].get(feature));
-                                @params[pi].updateParameter(oi, (double) featureCounts[oi][feature]);
+                                parameters[pi].updateParameter(oi, (double) featureCounts[oi][feature]);
                                 if (useAverage)
                                 {
                                     if (updates[pi][oi][VALUE] != 0)
@@ -337,14 +337,14 @@ namespace opennlp.perceptron
                                         //System.err.println("p avp["+pi+"]."+oi+"="+averageParams[pi].getParameters()[oi]);
                                     }
                                     //System.err.println("p updates["+pi+"]["+oi+"]=("+updates[pi][oi][ITER]+","+updates[pi][oi][EVENT]+","+updates[pi][oi][VALUE]+") + ("+iteration+","+oei+","+params[pi].getParameters()[oi]+") -> "+averageParams[pi].getParameters()[oi]);
-                                    updates[pi][oi][VALUE] = (int) @params[pi].Parameters[oi];
+                                    updates[pi][oi][VALUE] = (int) parameters[pi].Parameters[oi];
                                     updates[pi][oi][ITER] = iteration;
                                     updates[pi][oi][EVENT] = si;
                                 }
                             }
                         }
                     }
-                    model = new PerceptronModel(@params, predLabels, pmap, outcomeLabels);
+                    model = new PerceptronModel(parameters, predLabels, pmap, outcomeLabels);
                 }
                 si++;
             }
@@ -375,14 +375,14 @@ namespace opennlp.perceptron
             display(". (" + numCorrect + "/" + numEvents + ") " + ((double) numCorrect/numEvents) + "\n");
         }
 
-        private void trainingStats(MutableContext[] @params)
+        private void trainingStats(MutableContext[] parameters)
         {
             int numCorrect = 0;
             int oei = 0;
             foreach (Sequence<Event> sequence in sequenceStream)
             {
                 Event[] taggerEvents = sequenceStream.updateContext(sequence,
-                    new PerceptronModel(@params, predLabels, pmap, outcomeLabels));
+                    new PerceptronModel(parameters, predLabels, pmap, outcomeLabels));
                 for (int ei = 0; ei < taggerEvents.Length; ei++,oei++)
                 {
                     int max = (int) omap[taggerEvents[ei].Outcome];

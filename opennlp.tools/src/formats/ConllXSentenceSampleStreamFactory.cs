@@ -17,7 +17,7 @@
 
 using System;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.formats.convert;
 using opennlp.tools.postag;
 using opennlp.tools.sentdetect;
@@ -41,16 +41,16 @@ namespace opennlp.tools.formats
           StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), ConllXPOSSampleStreamFactory.CONLLX_FORMAT, new ConllXSentenceSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal ConllXSentenceSampleStreamFactory(Type @params) : base(@params)
+	  protected internal ConllXSentenceSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
 	  public ObjectStream<SentenceSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
         ObjectStream<POSSample> posSampleStream = StreamFactoryRegistry<POSSample>.getFactory(typeof(POSSample), ConllXPOSSampleStreamFactory.CONLLX_FORMAT).create(ArgumentParser.filter(args, typeof(ConllXPOSSampleStreamFactory.Parameters)));
-		return new POSToSentenceSampleStream(createDetokenizer(@params), posSampleStream, 30);
+		return new POSToSentenceSampleStream(createDetokenizer(parameters), posSampleStream, 30);
 	  }
 	}
 

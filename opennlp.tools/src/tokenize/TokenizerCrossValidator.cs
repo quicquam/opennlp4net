@@ -28,16 +28,16 @@ namespace opennlp.tools.tokenize
 
     public class TokenizerCrossValidator
     {
-        private readonly TrainingParameters @params;
+        private readonly TrainingParameters parameters;
 
         private FMeasure fmeasure = new FMeasure();
         private TokenizerEvaluationMonitor[] listeners;
         private readonly TokenizerFactory factory;
 
-        public TokenizerCrossValidator(TrainingParameters @params, TokenizerFactory factory,
+        public TokenizerCrossValidator(TrainingParameters parameters, TokenizerFactory factory,
             params TokenizerEvaluationMonitor[] listeners)
         {
-            this.@params = @params;
+            this.parameters = parameters;
             this.listeners = listeners;
             this.factory = factory;
         }
@@ -46,8 +46,8 @@ namespace opennlp.tools.tokenize
         ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
         ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
         public TokenizerCrossValidator(string language, Dictionary abbreviations, bool alphaNumericOptimization,
-            TrainingParameters @params, params TokenizerEvaluationMonitor[] listeners)
-            : this(@params, new TokenizerFactory(language, abbreviations, alphaNumericOptimization, null), listeners)
+            TrainingParameters parameters, params TokenizerEvaluationMonitor[] listeners)
+            : this(parameters, new TokenizerFactory(language, abbreviations, alphaNumericOptimization, null), listeners)
         {
         }
 
@@ -70,9 +70,9 @@ namespace opennlp.tools.tokenize
         /// @deprecated use
         ///             <seealso cref="#TokenizerCrossValidator(TrainingParameters, TokenizerFactory, TokenizerEvaluationMonitor...)"/>
         ///             instead and pass in a <seealso cref="TokenizerFactory"/> 
-        public TokenizerCrossValidator(string language, bool alphaNumericOptimization, TrainingParameters @params,
+        public TokenizerCrossValidator(string language, bool alphaNumericOptimization, TrainingParameters parameters,
             params TokenizerEvaluationMonitor[] listeners)
-            : this(language, null, alphaNumericOptimization, @params, listeners)
+            : this(language, null, alphaNumericOptimization, parameters, listeners)
         {
         }
 
@@ -98,7 +98,7 @@ namespace opennlp.tools.tokenize
                 // Maybe throws IOException if temporary file handling fails ...
                 TokenizerModel model;
 
-                model = TokenizerME.train(trainingSampleStream, this.factory, @params);
+                model = TokenizerME.train(trainingSampleStream, this.factory, parameters);
 
                 TokenizerEvaluator evaluator = new TokenizerEvaluator(new TokenizerME(model), listeners);
 

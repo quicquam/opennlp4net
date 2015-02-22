@@ -31,7 +31,7 @@ namespace opennlp.tools.cmdline
 	  /// </summary>
 	  /// <param name="sampleType"> class of the template parameter </param>
 	  /// <param name="params">     interface with parameters </param>
-	  protected internal AbstractCrossValidatorTool(Type sampleType, Type @params) : base(sampleType, @params)
+	  protected internal AbstractCrossValidatorTool(Type sampleType, Type parameters) : base(sampleType, parameters)
 	  {
 	  }
 	}

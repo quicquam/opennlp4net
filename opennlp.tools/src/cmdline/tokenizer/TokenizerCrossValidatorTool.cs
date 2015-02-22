@@ -17,7 +17,7 @@
 
 using System;
 using System.IO;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.dictionary;
 using opennlp.tools.tokenize;
 using opennlp.tools.util.eval;
@@ -47,28 +47,28 @@ namespace opennlp.tools.cmdline.tokenizer
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
 		TokenizerCrossValidator validator;
 
 		TokenizerEvaluationMonitor listener = null;
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  listener = new TokenEvaluationErrorListener();
 		}
 
 		try
 		{
-		  Dictionary dict = TokenizerTrainerTool.loadDict(@params.AbbDict);
+		  Dictionary dict = TokenizerTrainerTool.loadDict(parameters.AbbDict);
 
-		  TokenizerFactory tokFactory = TokenizerFactory.create(@params.Factory, @params.Lang, dict, @params.AlphaNumOpt.Value, null);
+		  TokenizerFactory tokFactory = TokenizerFactory.create(parameters.Factory, parameters.Lang, dict, parameters.AlphaNumOpt.Value, null);
 		  validator = new TokenizerCrossValidator(mlParams, tokFactory, listener);
 
-		  validator.evaluate(sampleStream, @params.Folds.Value);
+		  validator.evaluate(sampleStream, parameters.Folds.Value);
 		}
 		catch (IOException e)
 		{

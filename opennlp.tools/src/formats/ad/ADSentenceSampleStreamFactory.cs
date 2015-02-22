@@ -46,22 +46,22 @@ namespace opennlp.tools.formats.ad
 		StreamFactoryRegistry<SentenceSample>.registerFactory(typeof(SentenceSample), "ad", new ADSentenceSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal ADSentenceSampleStreamFactory(Type @params) : base(@params)
+	  protected internal ADSentenceSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
       public  ObjectStream<T> create<T>(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
-		language = @params.Lang;
+		language = parameters.Lang;
 
-		bool includeTitle = @params.IncludeTitles.Value;
+		bool includeTitle = parameters.IncludeTitles.Value;
 
-		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);
+		FileInputStream sampleDataIn = CmdLineUtil.openInFile(parameters.Data);
 
-		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, @params.Encoding);
+		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, parameters.Encoding);
 
 		ADSentenceSampleStream sentenceStream = new ADSentenceSampleStream(lineStream, includeTitle);
 

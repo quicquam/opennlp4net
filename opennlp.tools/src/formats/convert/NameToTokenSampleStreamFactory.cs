@@ -17,7 +17,7 @@
 
 using System;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.namefind;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;
@@ -39,16 +39,16 @@ namespace opennlp.tools.formats.convert
 		StreamFactoryRegistry<TokenSample>.registerFactory(typeof(TokenSample), "namefinder", new NameToTokenSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal NameToTokenSampleStreamFactory(Type @params) : base(@params)
+	  protected internal NameToTokenSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
 	  public  ObjectStream<TokenSample> create(string[] args)
 	  {
-          Parameters @params = ArgumentParser.parse<Parameters>(args);
+          Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
           ObjectStream<NameSample> nameSampleStream = StreamFactoryRegistry<NameSample>.getFactory(typeof(NameSample), StreamFactoryRegistry<NameSample>.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(NameSampleDataStreamFactory.Parameters)));
-		return new NameToTokenSampleStream(createDetokenizer(@params), nameSampleStream);
+		return new NameToTokenSampleStream(createDetokenizer(parameters), nameSampleStream);
 	  }
 	}
 

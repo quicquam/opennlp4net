@@ -41,7 +41,7 @@ namespace opennlp.tools.formats.convert
 	    public override ObjectStream<POSSample> create(string[] args)
 	  {
 
-          ParseSampleStreamFactory.Parameters @params = ArgumentParser.parse<ParseSampleStreamFactory.Parameters>(args);
+          ParseSampleStreamFactory.Parameters parameters = ArgumentParser.parse<ParseSampleStreamFactory.Parameters>(args);
 
 		ObjectStream<Parse> parseSampleStream = StreamFactoryRegistry<Parse>.getFactory(typeof(Parse), StreamFactoryRegistry<POSSample>.DEFAULT_FORMAT).create(ArgumentParser.filter(args, typeof(ParseSampleStreamFactory.Parameters)));
 

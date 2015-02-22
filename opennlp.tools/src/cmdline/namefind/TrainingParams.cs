@@ -16,7 +16,7 @@
  */
 
 using j4n.IO.File;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 
 namespace opennlp.tools.cmdline.namefind
 {

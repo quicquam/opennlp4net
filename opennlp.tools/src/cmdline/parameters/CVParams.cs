@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-using j4n.IO.File;
-
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.tools.cmdline.parameters
 {
     /// <summary>
-	/// Common training parameters.
+	/// Common cross validator parameters.
 	/// 
 	/// Note: Do not use this class, internal use only!
 	/// </summary>
-	public interface TrainingToolParams : BasicTrainingParams
+	public interface CVParams
 	{
 
-	  Jfile Model {get;}
+	  bool? Misclassified {get;}
+
+	  int? Folds {get;}
+
 	}
 
 }

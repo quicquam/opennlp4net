@@ -582,11 +582,11 @@ namespace opennlp.tools.parser
         /// <param name="params"> can contain a cutoff, the minimum number of entries required for the
         ///        n-gram to be saved as part of the dictionary. </param>
         /// <returns> A dictionary object. </returns>
-        public static Dictionary buildDictionary(ObjectStream<Parse> data, HeadRules rules, TrainingParameters @params)
+        public static Dictionary buildDictionary(ObjectStream<Parse> data, HeadRules rules, TrainingParameters parameters)
         {
             int cutoff = 5;
 
-            string cutoffString = @params.getSettings("dict")[TrainingParameters.CUTOFF_PARAM];
+            string cutoffString = parameters.getSettings("dict")[TrainingParameters.CUTOFF_PARAM];
 
             if (cutoffString != null)
             {
@@ -691,10 +691,10 @@ namespace opennlp.tools.parser
         /// <returns> A dictionary object. </returns>
         public static Dictionary buildDictionary(ObjectStream<Parse> data, HeadRules rules, int cutoff)
         {
-            TrainingParameters @params = new TrainingParameters();
-            @params.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
+            TrainingParameters parameters = new TrainingParameters();
+            parameters.put("dict", TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
 
-            return buildDictionary(data, rules, @params);
+            return buildDictionary(data, rules, parameters);
         }
     }
 }

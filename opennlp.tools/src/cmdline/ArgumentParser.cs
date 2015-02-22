@@ -16,6 +16,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace opennlp.tools.cmdline
 {
@@ -39,24 +41,24 @@ namespace opennlp.tools.cmdline
     public class ArgumentParser
     {
 
-	  public class OptionalParameter : System.Attribute
-	  {
-		  private readonly ArgumentParser outerInstance;
+        public class OptionalParameter : System.Attribute
+        {
+            private readonly ArgumentParser outerInstance;
 
-		  public OptionalParameter(ArgumentParser outerInstance)
-		  {
-			  this.outerInstance = outerInstance;
-		  }
+            public OptionalParameter(ArgumentParser outerInstance)
+            {
+                this.outerInstance = outerInstance;
+            }
 
-		public const string DEFAULT_CHARSET = "DEFAULT_CHARSET";
-		public string defaultValue = "";
-	  }
+            public const string DEFAULT_CHARSET = "DEFAULT_CHARSET";
+            public string defaultValue = "";
+        }
 
-	  public class ParameterDescription : System.Attribute
-	  {
-		public string valueName ;
-		public string description = "";
-	  }
+        public class ParameterDescription : System.Attribute
+        {
+            public string valueName;
+            public string description = "";
+        }
         /*
               private interface ArgumentFactory
               {
@@ -562,7 +564,7 @@ namespace opennlp.tools.cmdline
         {
             throw new NotImplementedException();
         }
-        
+
         public static string createUsage(Type paramsClass)
         {
             throw new NotImplementedException();
@@ -580,7 +582,56 @@ namespace opennlp.tools.cmdline
 
         public static string validateArgumentsLoudly(string[] args, Type argProxyInterface, Type getParameters)
         {
-            throw new NotImplementedException();
+            // number of parameters must be always be even
+            if (args.Length % 2 != 0)
+            {
+                return "Number of parameters must be always be even";
+            }
+
+            int argumentCount = 0;
+            List<String> parameters = args.ToList();
+
+            foreach (var i in argProxyInterface.GetInterfaces())
+            {
+                foreach (var method in i.GetMethods())
+                {
+                    var paramName = CmdLineUtil.StandardizeMethodName(method.Name);
+                    int paramIndex = CmdLineUtil.getParameterIndex(paramName, args);
+                    String valueString = CmdLineUtil.getParameter(paramName, args);
+                    if (valueString == null)
+                    {
+                        var optionalParam = method.GetParameters().Where(x => x.Name == valueString);
+                        if (optionalParam == null)
+                        {
+                            if (-1 < paramIndex)
+                            {
+                                return "Missing mandatory parameter value: " + method.Name;
+                            }
+                            else
+                            {
+                                return "Missing mandatory parameter: " + method.Name;
+                            }
+                        }
+                        else
+                        {
+                            parameters.Remove(("-" + paramName));
+                        }
+                    }
+                    else
+                    {
+                        parameters.Remove(paramName);
+                        parameters.Remove(valueString);
+                        argumentCount++;
+                    }
+                }
+            }
+
+            if (args.Length / 2 > argumentCount)
+            {
+                return "Unrecognized parameters encountered: " + parameters.ToString();
+            }
+
+            return null;
         }
     }
 }

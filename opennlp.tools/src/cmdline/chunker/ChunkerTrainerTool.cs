@@ -18,7 +18,7 @@
 using System.IO;
 using j4n.IO.File;
 using opennlp.tools.chunker;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.util.model;
 
 namespace opennlp.tools.cmdline.chunker
@@ -53,20 +53,20 @@ namespace opennlp.tools.cmdline.chunker
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
-		Jfile modelOutFile = @params.Model;
+		Jfile modelOutFile = parameters.Model;
 		CmdLineUtil.checkOutputFile("sentence detector model", modelOutFile);
 
 		ChunkerModel model;
 		try
 		{
-		  ChunkerFactory chunkerFactory = ChunkerFactory.create(@params.Factory);
-		  model = ChunkerME.train(@params.Lang, sampleStream, mlParams, chunkerFactory);
+		  ChunkerFactory chunkerFactory = ChunkerFactory.create(parameters.Factory);
+		  model = ChunkerME.train(parameters.Lang, sampleStream, mlParams, chunkerFactory);
 		}
 		catch (IOException e)
 		{

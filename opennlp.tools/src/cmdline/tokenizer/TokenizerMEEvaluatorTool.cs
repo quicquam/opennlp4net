@@ -17,15 +17,18 @@
 
 using System;
 using System.IO;
-using opennlp.tools.cmdline.@params;
+using j4n.IO.File;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.tokenize;
 
 namespace opennlp.tools.cmdline.tokenizer
 {
     public sealed class TokenizerMEEvaluatorTool : AbstractEvaluatorTool<TokenSample, TokenizerMEEvaluatorTool.EvalToolParams>
 	{
-	    public interface EvalToolParams : EvaluatorParams
+	  public class EvalToolParams : EvaluatorParams
 	  {
+	      public Jfile Model { get; private set; }
+	      public bool? Misclassified { get; private set; }
 	  }
 
 	  public TokenizerMEEvaluatorTool() : base(typeof(TokenSample), typeof(EvalToolParams))
@@ -44,10 +47,10 @@ namespace opennlp.tools.cmdline.tokenizer
 	  {
 		base.run(format, args);
 
-		TokenizerModel model = (new TokenizerModelLoader()).load(@params.Model);
+		TokenizerModel model = (new TokenizerModelLoader()).load(parameters.Model);
 
 		TokenizerEvaluationMonitor misclassifiedListener = null;
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  misclassifiedListener = new TokenEvaluationErrorListener();
 		}

@@ -20,7 +20,7 @@ using j4n.Exceptions;
 using j4n.IO.File;
 using j4n.IO.Reader;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.postag;
 using opennlp.tools.util;
 
@@ -44,7 +44,7 @@ namespace opennlp.tools.formats
 		StreamFactoryRegistry<POSSample>.registerFactory(typeof(POSSample), CONLLX_FORMAT, new ConllXPOSSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal ConllXPOSSampleStreamFactory(Type @params)
+	  protected internal ConllXPOSSampleStreamFactory(Type parameters)
 	  {
 	  }
 
@@ -55,12 +55,12 @@ namespace opennlp.tools.formats
 
 	    public ObjectStream<POSSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
 		ObjectStream<string> lineStream;
 		try
 		{
-		  lineStream = new PlainTextByLineStream(new InputStreamReader(CmdLineUtil.openInFile(@params.Data), "UTF-8"));
+		  lineStream = new PlainTextByLineStream(new InputStreamReader(CmdLineUtil.openInFile(parameters.Data), "UTF-8"));
 		  //Console.Out = new PrintStream(System.out, true, "UTF-8");
 
 		  return new ConllXPOSSampleStream(lineStream);

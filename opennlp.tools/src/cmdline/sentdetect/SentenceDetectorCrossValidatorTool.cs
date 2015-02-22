@@ -17,7 +17,7 @@
 
 using System;
 using System.IO;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.dictionary;
 using opennlp.tools.sentdetect;
 using opennlp.tools.util.eval;
@@ -47,33 +47,33 @@ namespace opennlp.tools.cmdline.sentdetect
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
 		SDCrossValidator validator;
 
 		SentenceDetectorEvaluationMonitor errorListener = null;
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  errorListener = new SentenceEvaluationErrorListener();
 		}
 
 		char[] eos = null;
-		if (@params.EosChars != null)
+		if (parameters.EosChars != null)
 		{
-		  eos = @params.EosChars.ToCharArray();
+		  eos = parameters.EosChars.ToCharArray();
 		}
 
 		try
 		{
-		  Dictionary abbreviations = SentenceDetectorTrainerTool.loadDict(@params.AbbDict);
-		  SentenceDetectorFactory sdFactory = SentenceDetectorFactory.create(@params.Factory, @params.Lang, true, abbreviations, eos);
-		  validator = new SDCrossValidator(@params.Lang, mlParams, sdFactory, errorListener);
+		  Dictionary abbreviations = SentenceDetectorTrainerTool.loadDict(parameters.AbbDict);
+		  SentenceDetectorFactory sdFactory = SentenceDetectorFactory.create(parameters.Factory, parameters.Lang, true, abbreviations, eos);
+		  validator = new SDCrossValidator(parameters.Lang, mlParams, sdFactory, errorListener);
 
-		  validator.evaluate(sampleStream, @params.Folds.Value);
+		  validator.evaluate(sampleStream, parameters.Folds.Value);
 		}
 		catch (IOException e)
 		{

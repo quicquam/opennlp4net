@@ -135,7 +135,7 @@ namespace opennlp.maxent
         /// <summary>
         /// Stores the estimated parameter value of each predicate during iteration
         /// </summary>
-        private MutableContext[] @params;
+        private MutableContext[] parameters;
 
         /// <summary>
         /// Stores the expected values of the features based on the current models 
@@ -334,7 +334,7 @@ namespace opennlp.maxent
             // the way the model's expectations are approximated in the
             // implementation, this is cancelled out when we compute the next
             // iteration of a parameter, making the extra divisions wasteful.
-            @params = new MutableContext[numPreds];
+            parameters = new MutableContext[numPreds];
             for (int i = 0; i < modelExpects.Length; i++)
             {
                 modelExpects[i] = new MutableContext[numPreds];
@@ -345,7 +345,7 @@ namespace opennlp.maxent
             // is only needed during training, and the correction feature is not necessary.
             // For compatibility reasons the model contains form now on a correction constant of 1, 
             // and a correction param 0.
-            evalParams = new EvalParameters(@params, 0, 1, numOutcomes);
+            evalParams = new EvalParameters(parameters, 0, 1, numOutcomes);
             int[] activeOutcomes = new int[numOutcomes];
             int[] outcomePattern;
             int[] allOutcomesPattern = new int[numOutcomes];
@@ -385,7 +385,7 @@ namespace opennlp.maxent
                         }
                     }
                 }
-                @params[pi] = new MutableContext(outcomePattern, new double[numActiveOutcomes]);
+                parameters[pi] = new MutableContext(outcomePattern, new double[numActiveOutcomes]);
                 for (int i = 0; i < modelExpects.Length; i++)
                 {
                     modelExpects[i][pi] = new MutableContext(outcomePattern, new double[numActiveOutcomes]);
@@ -394,7 +394,7 @@ namespace opennlp.maxent
                 for (int aoi = 0; aoi < numActiveOutcomes; aoi++)
                 {
                     int oi = outcomePattern[aoi];
-                    @params[pi].setParameter(aoi, 0.0);
+                    parameters[pi].setParameter(aoi, 0.0);
                     foreach (MutableContext[] modelExpect in modelExpects)
                     {
                         modelExpect[pi].setParameter(aoi, 0.0);
@@ -430,7 +430,7 @@ namespace opennlp.maxent
             /// <summary>
             ///************* Create and return the model ***************** </summary>
             // To be compatible with old models the correction constant is always 1
-            return new GISModel(@params, predLabels, outcomeLabels, 1, evalParams.CorrectionParam);
+            return new GISModel(parameters, predLabels, outcomeLabels, 1, evalParams.CorrectionParam);
         }
 
         /* Estimate and return the model parameters. */
@@ -480,7 +480,7 @@ namespace opennlp.maxent
         //modeled on implementation in  Zhang Le's maxent kit
         private double gaussianUpdate(int predicate, int oid, int n, double correctionConstant)
         {
-            double param = @params[predicate].Parameters[oid];
+            double param = parameters[predicate].Parameters[oid];
             double x0 = 0.0;
             double modelValue = modelExpects[0][predicate].Parameters[oid];
             double observedValue = observedExpects[predicate].Parameters[oid];
@@ -706,7 +706,7 @@ namespace opennlp.maxent
 		// merge the results of the two computations
 		for (int pi = 0; pi < numPreds; pi++)
 		{
-		  int[] activeOutcomes = @params[pi].Outcomes;
+		  int[] activeOutcomes = parameters[pi].Outcomes;
 
 		  for (int aoi = 0;aoi < activeOutcomes.Length;aoi++)
 		  {
@@ -724,12 +724,12 @@ namespace opennlp.maxent
 		{
 		  double[] observed = observedExpects[pi].Parameters;
 		  double[] model = modelExpects[0][pi].Parameters;
-		  int[] activeOutcomes = @params[pi].Outcomes;
+		  int[] activeOutcomes = parameters[pi].Outcomes;
 		  for (int aoi = 0;aoi < activeOutcomes.Length;aoi++)
 		  {
 			if (useGaussianSmoothing)
 			{
-			  @params[pi].updateParameter(aoi,gaussianUpdate(pi,aoi,numEvents,correctionConstant));
+			  parameters[pi].updateParameter(aoi,gaussianUpdate(pi,aoi,numEvents,correctionConstant));
 			}
 			else
 			{
@@ -738,7 +738,7 @@ namespace opennlp.maxent
 				Console.Error.WriteLine("Model expects == 0 for " + predLabels[pi] + " " + outcomeLabels[aoi]);
 			  }
 			  //params[pi].updateParameter(aoi,(Math.log(observed[aoi]) - Math.log(model[aoi])));
-			  @params[pi].updateParameter(aoi,((Math.Log(observed[aoi]) - Math.Log(model[aoi])) / correctionConstant));
+			  parameters[pi].updateParameter(aoi,((Math.Log(observed[aoi]) - Math.Log(model[aoi])) / correctionConstant));
 			}
 
 			foreach (MutableContext[] modelExpect in modelExpects)

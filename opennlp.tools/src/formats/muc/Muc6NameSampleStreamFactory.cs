@@ -18,7 +18,7 @@
 using System;
 using j4n.IO.File;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.cmdline.tokenizer;
 using opennlp.tools.formats.convert;
 using opennlp.tools.namefind;
@@ -48,12 +48,12 @@ namespace opennlp.tools.formats.muc
 	    public ObjectStream<NameSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
-		TokenizerModel tokenizerModel = (new TokenizerModelLoader()).load(@params.TokenizerModel);
+		TokenizerModel tokenizerModel = (new TokenizerModelLoader()).load(parameters.TokenizerModel);
 		Tokenizer tokenizer = new TokenizerME(tokenizerModel);
 
-		ObjectStream<string> mucDocStream = new FileToStringSampleStream(new DirectorySampleStream(@params.Data, new FileFilterAnonymousInnerClassHelper(this), false), Charset.forName("UTF-8"));
+		ObjectStream<string> mucDocStream = new FileToStringSampleStream(new DirectorySampleStream(parameters.Data, new FileFilterAnonymousInnerClassHelper(this), false), Charset.forName("UTF-8"));
 
 		return new MucNameSampleStream(tokenizer, mucDocStream);
 	  }

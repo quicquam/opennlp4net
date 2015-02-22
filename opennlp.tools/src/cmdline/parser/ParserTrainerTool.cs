@@ -22,7 +22,7 @@ using j4n.IO.File;
 using j4n.IO.InputStream;
 using j4n.IO.Reader;
 using opennlp.model;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.dictionary;
 using opennlp.tools.parser;
 using opennlp.tools.util;
@@ -86,7 +86,7 @@ namespace opennlp.tools.cmdline.parser
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, true);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, true);
 
 		if (mlParams != null)
 		{
@@ -118,10 +118,10 @@ namespace opennlp.tools.cmdline.parser
 
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
-		Jfile modelOutFile = @params.Model;
+		Jfile modelOutFile = parameters.Model;
 		CmdLineUtil.checkOutputFile("parser model", modelOutFile);
 
 		ParserModel model;
@@ -129,21 +129,21 @@ namespace opennlp.tools.cmdline.parser
 		{
 
 		  // TODO hard-coded language reference
-		  HeadRules rules = new opennlp.tools.parser.lang.en.HeadRules(new InputStreamReader(new FileInputStream(@params.HeadRules), @params.Encoding));
+		  HeadRules rules = new opennlp.tools.parser.lang.en.HeadRules(new InputStreamReader(new FileInputStream(parameters.HeadRules), parameters.Encoding));
 
-		  var type = parseParserType(@params.ParserType);
-		  if (@params.Fun.Value)
+		  var type = parseParserType(parameters.ParserType);
+		  if (parameters.Fun.Value)
 		  {
 			  Parse.useFunctionTags(true);
 		  }
 
 		  if (ParserType.CHUNKING == type)
 		  {
-			model = Parser.train(@params.Lang, sampleStream, rules, mlParams);
+			model = Parser.train(parameters.Lang, sampleStream, rules, mlParams);
 		  }
 		  else if (ParserType.TREEINSERT == type)
 		  {
-			model = opennlp.tools.parser.treeinsert.Parser.train(@params.Lang, sampleStream, rules, mlParams);
+			model = opennlp.tools.parser.treeinsert.Parser.train(parameters.Lang, sampleStream, rules, mlParams);
 		  }
 		  else
 		  {

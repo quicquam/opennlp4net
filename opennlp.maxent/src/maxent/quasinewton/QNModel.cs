@@ -36,8 +36,8 @@ namespace opennlp.maxent.quasinewton
             : base(null, monitor.PredLabels, monitor.OutcomeLabels)
         {
             int[][] outcomePatterns = monitor.OutcomePatterns;
-            Context[] @params = new Context[monitor.PredLabels.Length];
-            for (int ci = 0; ci < @params.Length; ci++)
+            Context[] cParameters = new Context[monitor.PredLabels.Length];
+            for (int ci = 0; ci < parameters.Length; ci++)
             {
                 int[] outcomePattern = outcomePatterns[ci];
                 double[] alpha = new double[outcomePattern.Length];
@@ -45,9 +45,9 @@ namespace opennlp.maxent.quasinewton
                 {
                     alpha[oi] = parameters[ci + (outcomePattern[oi]*monitor.PredLabels.Length)];
                 }
-                @params[ci] = new Context(outcomePattern, alpha);
+                cParameters[ci] = new Context(outcomePattern, alpha);
             }
-            this.evalParams = new EvalParameters(@params, monitor.OutcomeLabels.Length);
+            this.evalParams = new EvalParameters(cParameters, monitor.OutcomeLabels.Length);
             this.prior = new UniformPrior();
             this.modelType = ModelTypeEnum.MaxentQn;
 
@@ -55,8 +55,8 @@ namespace opennlp.maxent.quasinewton
         }
 
         // FROM model reader
-        public QNModel(string[] predNames, string[] outcomeNames, Context[] @params, double[] parameters)
-            : base(@params, predNames, outcomeNames)
+        public QNModel(string[] predNames, string[] outcomeNames, Context[] cParameters, double[] parameters)
+            : base(cParameters, predNames, outcomeNames)
         {
             this.prior = new UniformPrior();
             this.modelType = ModelTypeEnum.MaxentQn;

@@ -29,7 +29,7 @@ namespace opennlp.tools.chunker
     public class ChunkerCrossValidator
     {
         private readonly string languageCode;
-        private readonly TrainingParameters @params;
+        private readonly TrainingParameters parameters;
 
         private FMeasure fmeasure = new FMeasure();
         private ChunkerEvaluationMonitor[] listeners;
@@ -43,25 +43,25 @@ namespace opennlp.tools.chunker
         {
             this.languageCode = languageCode;
 
-            @params = ModelUtil.createTrainingParameters(iterations, cutoff);
+            parameters = ModelUtil.createTrainingParameters(iterations, cutoff);
             listeners = null;
         }
 
         /// @deprecated Use <seealso cref="#ChunkerCrossValidator(String, TrainingParameters, ChunkerFactory, ChunkerEvaluationMonitor...)"/> instead.  
-        public ChunkerCrossValidator(string languageCode, TrainingParameters @params,
+        public ChunkerCrossValidator(string languageCode, TrainingParameters parameters,
             params ChunkerEvaluationMonitor[] listeners)
         {
             this.languageCode = languageCode;
-            this.@params = @params;
+            this.parameters = parameters;
             this.listeners = listeners;
         }
 
-        public ChunkerCrossValidator(string languageCode, TrainingParameters @params, ChunkerFactory factory,
+        public ChunkerCrossValidator(string languageCode, TrainingParameters parameters, ChunkerFactory factory,
             params ChunkerEvaluationMonitor[] listeners)
         {
             this.chunkerFactory = factory;
             this.languageCode = languageCode;
-            this.@params = @params;
+            this.parameters = parameters;
             this.listeners = listeners;
         }
 
@@ -83,7 +83,7 @@ namespace opennlp.tools.chunker
             {
                 CrossValidationPartitioner<ChunkSample>.TrainingSampleStream trainingSampleStream = partitioner.next();
 
-                ChunkerModel model = ChunkerME.train(languageCode, trainingSampleStream, @params, chunkerFactory);
+                ChunkerModel model = ChunkerME.train(languageCode, trainingSampleStream, parameters, chunkerFactory);
 
                 // do testing
                 ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model, ChunkerME.DEFAULT_BEAM_SIZE),

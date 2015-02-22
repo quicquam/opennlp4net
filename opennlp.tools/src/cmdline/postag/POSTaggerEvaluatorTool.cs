@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.OutputStream;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.postag;
 using FileNotFoundException = j4n.Exceptions.FileNotFoundException;
 
@@ -27,9 +27,11 @@ namespace opennlp.tools.cmdline.postag
 {
     public sealed class POSTaggerEvaluatorTool : AbstractEvaluatorTool<POSSample, POSTaggerEvaluatorTool.EvalToolParams>
 	{
-	    public interface EvalToolParams : EvaluatorParams
+	  public class EvalToolParams : EvaluatorParams
 	  {
-		Jfile ReportOutputFile {get;}
+		  public Jfile ReportOutputFile {get; private set; }
+	      public Jfile Model { get; private set; }
+	      public bool? Misclassified { get; private set; }
 	  }
 
 	  public POSTaggerEvaluatorTool() : base(typeof(POSSample), typeof(EvalToolParams))
@@ -48,16 +50,16 @@ namespace opennlp.tools.cmdline.postag
 	  {
 		base.run(format, args);
 
-		POSModel model = (new POSModelLoader()).load(@params.Model);
+		POSModel model = (new POSModelLoader()).load(parameters.Model);
 
 		POSTaggerEvaluationMonitor missclassifiedListener = null;
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  missclassifiedListener = new POSEvaluationErrorListener();
 		}
 
 		POSTaggerFineGrainedReportListener reportListener = null;
-		Jfile reportFile = @params.ReportOutputFile;
+		Jfile reportFile = parameters.ReportOutputFile;
 		OutputStream reportOutputStream = null;
 		if (reportFile != null)
 		{
@@ -101,7 +103,7 @@ namespace opennlp.tools.cmdline.postag
 
 		if (reportListener != null)
 		{
-		  Console.WriteLine("Writing fine-grained report to " + @params.ReportOutputFile.AbsolutePath);
+		  Console.WriteLine("Writing fine-grained report to " + parameters.ReportOutputFile.AbsolutePath);
 		  reportListener.writeReport();
 
 		  try

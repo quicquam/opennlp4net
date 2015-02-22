@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using j4n.IO.File;
 using j4n.IO.OutputStream;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.postag;
 using opennlp.tools.util.model;
 
@@ -48,20 +48,20 @@ namespace opennlp.tools.cmdline.postag
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
 		POSTaggerEvaluationMonitor missclassifiedListener = null;
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  missclassifiedListener = new POSEvaluationErrorListener();
 		}
 
 		POSTaggerFineGrainedReportListener reportListener = null;
-		Jfile reportFile = @params.ReportOutputFile;
+		Jfile reportFile = parameters.ReportOutputFile;
 		OutputStream reportOutputStream = null;
 		if (reportFile != null)
 		{
@@ -80,9 +80,9 @@ namespace opennlp.tools.cmdline.postag
 		POSTaggerCrossValidator validator;
 		try
 		{
-		  validator = new POSTaggerCrossValidator(@params.Lang, mlParams, @params.Dict, @params.Ngram, @params.TagDictCutoff, @params.Factory, missclassifiedListener, reportListener);
+		  validator = new POSTaggerCrossValidator(parameters.Lang, mlParams, parameters.Dict, parameters.Ngram, parameters.TagDictCutoff, parameters.Factory, missclassifiedListener, reportListener);
 
-		  validator.evaluate(sampleStream, @params.Folds.Value);
+		  validator.evaluate(sampleStream, parameters.Folds.Value);
 		}
 		catch (IOException e)
 		{
@@ -104,7 +104,7 @@ namespace opennlp.tools.cmdline.postag
 
 		if (reportListener != null)
 		{
-		  Console.WriteLine("Writing fine-grained report to " + @params.ReportOutputFile.AbsolutePath);
+		  Console.WriteLine("Writing fine-grained report to " + parameters.ReportOutputFile.AbsolutePath);
 		  reportListener.writeReport();
 
 		  try

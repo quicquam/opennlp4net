@@ -351,13 +351,13 @@ namespace opennlp.tools.postag
         public static POSModel train(string languageCode, ObjectStream<POSSample> samples, ModelType modelType,
             POSDictionary tagDictionary, Dictionary ngramDictionary, int cutoff, int iterations)
         {
-            TrainingParameters @params = new TrainingParameters();
+            TrainingParameters parameters = new TrainingParameters();
 
-            @params.put(TrainingParameters.ALGORITHM_PARAM, modelType.ToString());
-            @params.put(TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
-            @params.put(TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
+            parameters.put(TrainingParameters.ALGORITHM_PARAM, modelType.ToString());
+            parameters.put(TrainingParameters.ITERATIONS_PARAM, Convert.ToString(iterations));
+            parameters.put(TrainingParameters.CUTOFF_PARAM, Convert.ToString(cutoff));
 
-            return train(languageCode, samples, @params, tagDictionary, ngramDictionary);
+            return train(languageCode, samples, parameters, tagDictionary, ngramDictionary);
         }
 
         public static Dictionary buildNGramDictionary(ObjectStream<POSSample> samples, int cutoff)

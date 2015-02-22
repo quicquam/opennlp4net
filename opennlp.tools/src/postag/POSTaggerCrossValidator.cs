@@ -32,7 +32,7 @@ namespace opennlp.tools.postag
     {
         private readonly string languageCode;
 
-        private readonly TrainingParameters @params;
+        private readonly TrainingParameters parameters;
 
         private int? ngramCutoff;
 
@@ -56,7 +56,7 @@ namespace opennlp.tools.postag
             int? ngramCutoff, int? tagdicCutoff, string factoryClass, params POSTaggerEvaluationMonitor[] listeners)
         {
             this.languageCode = languageCode;
-            this.@params = trainParam;
+            this.parameters = trainParam;
             this.ngramCutoff = ngramCutoff;
             this.listeners = listeners;
             this.factoryClassName = factoryClass;
@@ -72,7 +72,7 @@ namespace opennlp.tools.postag
             params POSTaggerEvaluationMonitor[] listeners)
         {
             this.languageCode = languageCode;
-            this.@params = trainParam;
+            this.parameters = trainParam;
             this.listeners = listeners;
             this.factory = factory;
             this.ngramCutoff = null;
@@ -189,7 +189,7 @@ namespace opennlp.tools.postag
                     trainingSampleStream.reset();
                 }
 
-                POSModel model = POSTaggerME.train(languageCode, trainingSampleStream, @params, this.factory);
+                POSModel model = POSTaggerME.train(languageCode, trainingSampleStream, parameters, this.factory);
 
                 POSEvaluator evaluator = new POSEvaluator(new POSTaggerME(model), listeners);
 
@@ -226,9 +226,9 @@ namespace opennlp.tools.postag
 
         private static TrainingParameters create(ModelType type, int cutoff, int iterations)
         {
-            TrainingParameters @params = ModelUtil.createTrainingParameters(iterations, cutoff);
-            @params.put(TrainingParameters.ALGORITHM_PARAM, type.ToString());
-            return @params;
+            TrainingParameters parameters = ModelUtil.createTrainingParameters(iterations, cutoff);
+            parameters.put(TrainingParameters.ALGORITHM_PARAM, type.ToString());
+            return parameters;
         }
 
         private static POSTaggerFactory create(Dictionary ngram, TagDictionary pos)

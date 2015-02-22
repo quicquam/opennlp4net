@@ -21,7 +21,7 @@ using System.Linq;
 using j4n.IO.File;
 using opennlp.tools.cmdline;
 using opennlp.tools.cmdline.namefind;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.cmdline.parser;
 using opennlp.tools.cmdline.tokenizer;
 using opennlp.tools.coref;
@@ -67,15 +67,15 @@ namespace opennlp.tools.formats.muc
 	    public ObjectStream<CorefSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
-		ParserModel parserModel = (new ParserModelLoader()).load(@params.ParserModel);
+		ParserModel parserModel = (new ParserModelLoader()).load(parameters.ParserModel);
 		Parser parser = ParserFactory.create(parserModel);
 
-		TokenizerModel tokenizerModel = (new TokenizerModelLoader()).load(@params.TokenizerModel);
+		TokenizerModel tokenizerModel = (new TokenizerModelLoader()).load(parameters.TokenizerModel);
 		Tokenizer tokenizer = new TokenizerME(tokenizerModel);
 
-		ObjectStream<string> mucDocStream = new FileToStringSampleStream(new DirectorySampleStream(@params.Data, new FileFilterAnonymousInnerClassHelper(this), false), Charset.forName("UTF-8"));
+		ObjectStream<string> mucDocStream = new FileToStringSampleStream(new DirectorySampleStream(parameters.Data, new FileFilterAnonymousInnerClassHelper(this), false), Charset.forName("UTF-8"));
 
 		ObjectStream<RawCorefSample> rawSamples = new MucCorefSampleStream(tokenizer, mucDocStream);
 
@@ -87,8 +87,8 @@ namespace opennlp.tools.formats.muc
 
         IDictionary<string, Jfile> modelFileTagMap = new Dictionary<string, Jfile>();
 
-		modelFileTagMap["person"] = @params.PersonModel;
-		modelFileTagMap["organization"] = @params.OrganizationModel;
+		modelFileTagMap["person"] = parameters.PersonModel;
+		modelFileTagMap["organization"] = parameters.OrganizationModel;
 
 		IList<TokenNameFinder> nameFinders = new List<TokenNameFinder>();
 		IList<string> tags = new List<string>();

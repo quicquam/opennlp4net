@@ -19,7 +19,7 @@ using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using opennlp.model;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.dictionary;
 using opennlp.tools.sentdetect;
 using opennlp.tools.util.model;
@@ -59,7 +59,7 @@ namespace opennlp.tools.cmdline.sentdetect
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 
 		if (mlParams != null)
 		{
@@ -71,25 +71,25 @@ namespace opennlp.tools.cmdline.sentdetect
 
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
-		Jfile modelOutFile = @params.Model;
+		Jfile modelOutFile = parameters.Model;
 		CmdLineUtil.checkOutputFile("sentence detector model", modelOutFile);
 
 		char[] eos = null;
-		if (@params.EosChars != null)
+		if (parameters.EosChars != null)
 		{
-		  eos = @params.EosChars.ToCharArray();
+		  eos = parameters.EosChars.ToCharArray();
 		}
 
 		SentenceModel model;
 
 		try
 		{
-		  Dictionary dict = loadDict(@params.AbbDict);
-		  SentenceDetectorFactory sdFactory = SentenceDetectorFactory.create(@params.Factory, @params.Lang, true, dict, eos);
-		  model = SentenceDetectorME.train(@params.Lang, sampleStream, sdFactory, mlParams);
+		  Dictionary dict = loadDict(parameters.AbbDict);
+		  SentenceDetectorFactory sdFactory = SentenceDetectorFactory.create(parameters.Factory, parameters.Lang, true, dict, eos);
+		  model = SentenceDetectorME.train(parameters.Lang, sampleStream, sdFactory, mlParams);
 		}
 		catch (IOException e)
 		{

@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+using j4n.IO.File;
+
+namespace opennlp.tools.cmdline.parameters
 {
     /// <summary>
-	/// Common cross validator parameters.
+	/// Encoding parameter. The DEFAULT_CHARSET is handled by ArgumentParser.Parse().
 	/// 
 	/// Note: Do not use this class, internal use only!
 	/// </summary>
-	public interface CVParams
+	public interface EncodingParameter
 	{
 
-	  bool? Misclassified {get;}
-
-	  int? Folds {get;}
+	  Charset Encoding {get;}
 
 	}
 

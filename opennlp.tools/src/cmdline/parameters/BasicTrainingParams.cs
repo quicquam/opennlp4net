@@ -15,18 +15,21 @@
  * limitations under the License.
  */
 
-namespace opennlp.tools.cmdline.@params
+namespace opennlp.tools.cmdline.parameters
 {
     /// <summary>
-	/// EvaluatorParams for Chunker.
+	/// Common training parameters.
 	/// 
 	/// Note: Do not use this class, internal use only!
 	/// </summary>
-	public interface DetailedFMeasureEvaluatorParams
+	public interface BasicTrainingParams : LanguageParams
 	{
 
-	  bool? DetailedF {get;}
+	  int? Iterations {get;}
 
+	  int? Cutoff {get;}
+
+	  string Params {get;}
 	}
 
 }

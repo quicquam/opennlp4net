@@ -19,7 +19,7 @@ using System;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;
 
@@ -41,7 +41,7 @@ namespace opennlp.tools.formats
 		StreamFactoryRegistry<TokenSample>.registerFactory(typeof(TokenSample), StreamFactoryRegistry<TokenSample>.DEFAULT_FORMAT, new TokenSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal TokenSampleStreamFactory(Type @params) : base(@params)
+	  protected internal TokenSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
@@ -52,12 +52,12 @@ namespace opennlp.tools.formats
 
 	    public override ObjectStream<TokenSample> create(string[] args)
 	  {
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
-		CmdLineUtil.checkInputFile("Data", @params.Data);
-		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);
+		CmdLineUtil.checkInputFile("Data", parameters.Data);
+		FileInputStream sampleDataIn = CmdLineUtil.openInFile(parameters.Data);
 
-		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, @params.Encoding);
+		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, parameters.Encoding);
 
 		return new TokenSampleStream(lineStream);
 	  }

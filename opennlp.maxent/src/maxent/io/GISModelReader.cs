@@ -70,9 +70,9 @@ namespace opennlp.maxent.io
             string[] outcomeLabels = GetOutcomes();
             int[][] outcomePatterns = GetOutcomePatterns();
             string[] predLabels = GetPredicates();
-            Context[] @params = GetParameters(outcomePatterns);
+            Context[] parameters = GetParameters(outcomePatterns);
 
-            return new GISModel(@params, predLabels, outcomeLabels, correctionConstant, correctionParam);
+            return new GISModel(parameters, predLabels, outcomeLabels, correctionConstant, correctionParam);
         }
 
         public override void checkModelType()

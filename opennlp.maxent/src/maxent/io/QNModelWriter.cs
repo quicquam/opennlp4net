@@ -29,7 +29,7 @@ namespace opennlp.maxent.io
     {
         protected internal string[] outcomeNames;
         protected internal string[] predNames;
-        protected internal Context[] @params;
+        protected internal Context[] cParameters;
         protected internal double[] predParams;
         //protected EvalParameters evalParam;
 
@@ -39,7 +39,7 @@ namespace opennlp.maxent.io
         public QNModelWriter(AbstractModel model)
         {
             object[] data = model.DataStructures;
-            @params = (Context[]) data[0];
+            cParameters = (Context[])data[0];
             pmap = (IndexHashTable<string>) data[1];
             outcomeNames = (string[]) data[2];
 
@@ -69,8 +69,8 @@ namespace opennlp.maxent.io
             }
 
             // parameters
-            writeInt(@params.Length);
-            foreach (Context currContext in @params)
+            writeInt(parameters.Length);
+            foreach (Context currContext in cParameters)
             {
                 writeInt(currContext.Outcomes.Length);
                 for (int i = 0; i < currContext.Outcomes.Length; i++)

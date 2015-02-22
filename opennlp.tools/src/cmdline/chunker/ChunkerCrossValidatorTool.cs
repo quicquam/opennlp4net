@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using opennlp.tools.chunker;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.util.eval;
 using opennlp.tools.util.model;
 
@@ -48,19 +48,19 @@ namespace opennlp.tools.cmdline.chunker
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
 		IList<EvaluationMonitor<ChunkSample>> listeners = new List<EvaluationMonitor<ChunkSample>>();
 		ChunkerDetailedFMeasureListener detailedFMeasureListener = null;
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  listeners.Add(new ChunkEvaluationErrorListener());
 		}
-		if (@params.DetailedF.Value)
+		if (parameters.DetailedF.Value)
 		{
 		  detailedFMeasureListener = new ChunkerDetailedFMeasureListener();
 		  listeners.Add(detailedFMeasureListener);
@@ -70,10 +70,10 @@ namespace opennlp.tools.cmdline.chunker
 
 		try
 		{
-		  ChunkerFactory chunkerFactory = ChunkerFactory.create(@params.Factory);
+		  ChunkerFactory chunkerFactory = ChunkerFactory.create(parameters.Factory);
 
-          validator = new ChunkerCrossValidator(@params.Lang, mlParams, chunkerFactory, listeners.ToArray() as ChunkerEvaluationMonitor[]);
-		  validator.evaluate(sampleStream, @params.Folds.Value);
+          validator = new ChunkerCrossValidator(parameters.Lang, mlParams, chunkerFactory, listeners.ToArray() as ChunkerEvaluationMonitor[]);
+		  validator.evaluate(sampleStream, parameters.Folds.Value);
 		}
 		catch (IOException e)
 		{

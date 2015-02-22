@@ -20,7 +20,7 @@ using System.IO;
 using j4n.IO.File;
 using j4n.IO.InputStream;
 using opennlp.tools.cmdline;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.tokenize;
 using opennlp.tools.util;
 
@@ -32,7 +32,7 @@ namespace opennlp.tools.formats
 	public abstract class DetokenizerSampleStreamFactory<T> : AbstractSampleStreamFactory<T>
 	{
 
-	  protected internal DetokenizerSampleStreamFactory(Type @params)
+	  protected internal DetokenizerSampleStreamFactory(Type parameters)
 	  {
 	  }
 

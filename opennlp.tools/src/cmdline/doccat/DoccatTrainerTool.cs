@@ -17,7 +17,7 @@
 
 using System.IO;
 using j4n.IO.File;
-using opennlp.tools.cmdline.@params;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.doccat;
 using opennlp.tools.util.model;
 
@@ -45,20 +45,20 @@ namespace opennlp.tools.cmdline.doccat
 	  {
 		base.run(format, args);
 
-		mlParams = CmdLineUtil.loadTrainingParameters(@params.Params, false);
+		mlParams = CmdLineUtil.loadTrainingParameters(parameters.Params, false);
 		if (mlParams == null)
 		{
-		  mlParams = ModelUtil.createTrainingParameters(@params.Iterations.Value, @params.Cutoff.Value);
+		  mlParams = ModelUtil.createTrainingParameters(parameters.Iterations.Value, parameters.Cutoff.Value);
 		}
 
-		Jfile modelOutFile = @params.Model;
+		Jfile modelOutFile = parameters.Model;
 
 		CmdLineUtil.checkOutputFile("document categorizer model", modelOutFile);
 
 		DoccatModel model;
 		try
 		{
-		  model = DocumentCategorizerME.train(@params.Lang, sampleStream, mlParams);
+		  model = DocumentCategorizerME.train(parameters.Lang, sampleStream, mlParams);
 		}
 		catch (IOException e)
 		{

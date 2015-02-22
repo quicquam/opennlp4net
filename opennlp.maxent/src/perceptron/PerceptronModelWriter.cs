@@ -168,9 +168,9 @@ namespace opennlp.perceptron
             // write out the parameters
             for (int i = 0; i < sorted.Length; i++)
             {
-                for (int j = 0; j < sorted[i].@params.Length; j++)
+                for (int j = 0; j < sorted[i].parameters.Length; j++)
                 {
-                    writeDouble(sorted[i].@params[j]);
+                    writeDouble(sorted[i].parameters[j]);
                 }
             }
 

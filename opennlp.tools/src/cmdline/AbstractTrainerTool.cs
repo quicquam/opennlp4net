@@ -26,7 +26,7 @@ namespace opennlp.tools.cmdline
 	public class AbstractTrainerTool<T, P> : AbstractTypedParamTool<T, P>
 	{
 
-	  protected internal P @params;
+	  protected internal P parameters;
 	  protected internal TrainingParameters mlParams;
 	  protected internal ObjectStreamFactory<T> factory;
 	  protected internal ObjectStream<T> sampleStream;
@@ -36,7 +36,7 @@ namespace opennlp.tools.cmdline
 	  /// </summary>
 	  /// <param name="sampleType"> class of the template parameter </param>
 	  /// <param name="params">     interface with parameters </param>
-	  protected internal AbstractTrainerTool(Type sampleType, Type @params) : base(sampleType, @params)
+	  protected internal AbstractTrainerTool(Type sampleType, Type parameters) : base(sampleType, parameters)
 	  {
 	  }
 
@@ -44,7 +44,7 @@ namespace opennlp.tools.cmdline
 	  {
 		validateAllArgs<T>(args, this.paramsClass, format);
 
-		@params = ArgumentParser.parse<P>(ArgumentParser.filter(args, this.paramsClass), this.paramsClass);
+		parameters = ArgumentParser.parse<P>(ArgumentParser.filter(args, this.paramsClass), this.paramsClass);
 
 		factory = getStreamFactory(format);
 		string[] fargs = ArgumentParser.filter(args, factory.getParameters());

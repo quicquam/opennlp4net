@@ -19,7 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using opennlp.tools.cmdline.@params;
+using j4n.IO.File;
+using opennlp.tools.cmdline.parameters;
 using opennlp.tools.namefind;
 using opennlp.tools.util;
 using opennlp.tools.util.eval;
@@ -28,8 +29,11 @@ namespace opennlp.tools.cmdline.namefind
 {
     public sealed class TokenNameFinderEvaluatorTool : AbstractEvaluatorTool<NameSample, TokenNameFinderEvaluatorTool.EvalToolParams>
 	{
-	    public interface EvalToolParams : EvaluatorParams, DetailedFMeasureEvaluatorParams
+	  public class EvalToolParams : EvaluatorParams, DetailedFMeasureEvaluatorParams
 	  {
+	      public Jfile Model { get; private set; }
+	      public bool? Misclassified { get; private set; }
+	      public bool? DetailedF { get; private set; }
 	  }
 
 	  public TokenNameFinderEvaluatorTool() : base(typeof(NameSample), typeof(EvalToolParams))
@@ -48,15 +52,15 @@ namespace opennlp.tools.cmdline.namefind
 	  {
 		base.run(format, args);
 
-		TokenNameFinderModel model = (new TokenNameFinderModelLoader()).load(@params.Model);
+		TokenNameFinderModel model = (new TokenNameFinderModelLoader()).load(parameters.Model);
 
 		IList<EvaluationMonitor<NameSample>> listeners = new List<EvaluationMonitor<NameSample>>();
-		if (@params.Misclassified.Value)
+		if (parameters.Misclassified.Value)
 		{
 		  listeners.Add(new NameEvaluationErrorListener());
 		}
 		TokenNameFinderDetailedFMeasureListener detailedFListener = null;
-		if (@params.DetailedF.Value)
+		if (parameters.DetailedF.Value)
 		{
 		  detailedFListener = new TokenNameFinderDetailedFMeasureListener();
 		  listeners.Add(detailedFListener);

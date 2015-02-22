@@ -54,7 +54,7 @@ namespace opennlp.tools.formats.ad
 		StreamFactoryRegistry<ChunkSample>.registerFactory(typeof(ChunkSample), "ad", new ADChunkSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal ADChunkSampleStreamFactory(Type @params) : base(@params)
+	  protected internal ADChunkSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
@@ -66,24 +66,24 @@ namespace opennlp.tools.formats.ad
 	    public override ObjectStream<ChunkSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
-		language = @params.Lang;
+		language = parameters.Lang;
 
-		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);
+		FileInputStream sampleDataIn = CmdLineUtil.openInFile(parameters.Data);
 
-		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, @params.Encoding);
+		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, parameters.Encoding);
 
 		ADChunkSampleStream sampleStream = new ADChunkSampleStream(lineStream);
 
-		if (@params.Start != null && @params.Start > -1)
+		if (parameters.Start != null && parameters.Start > -1)
 		{
-		  sampleStream.Start = @params.Start.Value;
+		  sampleStream.Start = parameters.Start.Value;
 		}
 
-		if (@params.End != null && @params.End > -1)
+		if (parameters.End != null && parameters.End > -1)
 		{
-		  sampleStream.End = @params.End.Value;
+		  sampleStream.End = parameters.End.Value;
 		}
 
 		return sampleStream;

@@ -48,7 +48,7 @@ namespace opennlp.tools.formats.ad
 		StreamFactoryRegistry<POSSample>.registerFactory(typeof(POSSample), "ad", new ADPOSSampleStreamFactory(typeof(Parameters)));
 	  }
 
-	  protected internal ADPOSSampleStreamFactory(Type @params) : base(@params)
+	  protected internal ADPOSSampleStreamFactory(Type parameters) : base(parameters)
 	  {
 	  }
 
@@ -60,15 +60,15 @@ namespace opennlp.tools.formats.ad
 	    public override ObjectStream<POSSample> create(string[] args)
 	  {
 
-		Parameters @params = ArgumentParser.parse<Parameters>(args);
+		Parameters parameters = ArgumentParser.parse<Parameters>(args);
 
-		language = @params.Lang;
+		language = parameters.Lang;
 
-		FileInputStream sampleDataIn = CmdLineUtil.openInFile(@params.Data);
+		FileInputStream sampleDataIn = CmdLineUtil.openInFile(parameters.Data);
 
-		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, @params.Encoding);
+		ObjectStream<string> lineStream = new PlainTextByLineStream(sampleDataIn.Channel, parameters.Encoding);
 
-		ADPOSSampleStream sentenceStream = new ADPOSSampleStream(lineStream, @params.ExpandME.Value, @params.IncludeFeatures.Value);
+		ADPOSSampleStream sentenceStream = new ADPOSSampleStream(lineStream, parameters.ExpandME.Value, parameters.IncludeFeatures.Value);
 
 		return sentenceStream;
 	  }

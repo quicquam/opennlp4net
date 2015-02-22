@@ -31,13 +31,13 @@ namespace opennlp.model
     {
         public string name;
         public int[] outcomes;
-        public double[] @params;
+        public double[] parameters;
 
         public ComparablePredicate(string n, int[] ocs, double[] ps)
         {
             name = n;
             outcomes = ocs;
-            @params = ps;
+            parameters = ps;
         }
 
         public virtual int CompareTo(ComparablePredicate cp)
