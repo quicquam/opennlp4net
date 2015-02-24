@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace opennlp.tools.cmdline
@@ -592,13 +593,17 @@ namespace opennlp.tools.cmdline
             int argumentCount = 0;
             List<String> parameters = args.ToList();
 
-            foreach (var m in argProxyInterface.GetMembers())
+            foreach (var m in argProxyInterface.GetProperties().Where(x => x.MemberType == MemberTypes.Property))
             {
-                    var paramName = CmdLineUtil.StandardizeMethodName(m.Name);
-                    int paramIndex = CmdLineUtil.getParameterIndex(paramName, args);
-                    String valueString = CmdLineUtil.getParameter(paramName, args);
+                var paramName = CmdLineUtil.StandardizeMethodName(m.Name);
+                int paramIndex = CmdLineUtil.getParameterIndex(paramName, args);
+                String valueString = CmdLineUtil.getParameter(paramName, args);
                     if (valueString == null)
                     {
+                        foreach (var c  in m.GetCustomAttributes(false))
+                        {
+                            var s = c.GetType();
+                        }
                         if (!m.CustomAttributes.All(x => x.AttributeType.IsDefined(typeof (OptionalAttribute), false)))
                         {
                             if (-1 < paramIndex)

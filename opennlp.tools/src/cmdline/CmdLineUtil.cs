@@ -247,10 +247,8 @@ namespace opennlp.tools.cmdline
 
       public static string StandardizeMethodName(string param)
       {
-          if(param.StartsWith("get_"))
-          {
-              param = "-" + param.Substring("get_".Length).ToLowerInvariant();
-          }
+          param = "-" + param.ToLowerInvariant();
+          
           return param;
       }
 
