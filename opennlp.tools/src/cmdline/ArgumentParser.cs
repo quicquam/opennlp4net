@@ -574,7 +574,21 @@ namespace opennlp.tools.cmdline
 
         public static string createUsage(Type paramsClass, Type getParameters)
         {
-            throw new NotImplementedException();
+            var usage = "";
+            foreach (var m in paramsClass.GetProperties()
+                .Where(x => x.MemberType == MemberTypes.Property))
+            {
+                if ((m.GetCustomAttributes(typeof(parameters.OptionalAttribute), false)).Length != 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    usage += CmdLineUtil.StandardizeMethodName(m.Name);
+                }
+
+            }
+            return usage;
         }
 
         public static T parse<T>(string[] args, Type paramsClass)
@@ -598,39 +612,39 @@ namespace opennlp.tools.cmdline
                 var paramName = CmdLineUtil.StandardizeMethodName(m.Name);
                 int paramIndex = CmdLineUtil.getParameterIndex(paramName, args);
                 String valueString = CmdLineUtil.getParameter(paramName, args);
-                    if (valueString == null)
+                if (valueString == null)
+                {
+                    if ((m.GetCustomAttributes(typeof(parameters.OptionalAttribute), false)).Length == 0)
                     {
-                        foreach (var c  in m.GetCustomAttributes(false))
+                        if (-1 < paramIndex)
                         {
-                            var s = c.GetType();
-                        }
-                        if (!m.CustomAttributes.All(x => x.AttributeType.IsDefined(typeof (OptionalAttribute), false)))
-                        {
-                            if (-1 < paramIndex)
-                            {
-                                return "Missing mandatory parameter value: " + paramName;
-                            }
-                            else
-                            {
-                                return "Missing mandatory parameter: " + paramName;
-                            }
+                            return "Missing mandatory parameter value: " + paramName;
                         }
                         else
                         {
-                            parameters.Remove(("-" + paramName));
+                            return "Missing mandatory parameter: " + paramName;
                         }
                     }
                     else
                     {
-                        parameters.Remove(paramName);
-                        parameters.Remove(valueString);
-                        argumentCount++;
+                        parameters.Remove(("-" + paramName));
                     }
+                }
+                else
+                {
+                    parameters.Remove(paramName);
+                    parameters.Remove(valueString);
+                    argumentCount++;
+                }
             }
+
 
             if (args.Length / 2 > argumentCount)
             {
-                return "Unrecognized parameters encountered: " + parameters.ToString();
+                var paramDetails = parameters
+                    .Where(parameter => parameter.StartsWith("-"))
+                    .Aggregate("", (current, parameter) => current + string.Format(" {0} ", parameter));
+                return "Unrecognized parameters encountered: " + paramDetails.Trim();
             }
 
             return null;
