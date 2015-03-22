@@ -17,8 +17,6 @@ namespace opennlp.tools.Tests
             {
                 "-model",
                 string.Format("{0}{1}", ModelPath, "en-sent.bin"),
-                "-lang",
-                "en",
                 "-data",
                 string.Format("{0}{1}", EvalPath, "en-sent.eval"),
                 "-encoding",
@@ -26,7 +24,7 @@ namespace opennlp.tools.Tests
             };
 
             var evaluator = new SentenceDetectorEvaluatorTool();
-            evaluator.run(null, argList.ToArray());
+            evaluator.run("opennlp", argList.ToArray());
         }
     }
 }
