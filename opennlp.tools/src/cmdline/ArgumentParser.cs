@@ -596,7 +596,7 @@ namespace opennlp.tools.cmdline
             throw new NotImplementedException();
         }
 
-        public static string validateArgumentsLoudly(string[] args, Type argProxyInterface, Type getParameters)
+        public static string validateArgumentsLoudly(string[] args, params Type[] proxyclasses)
         {
             // number of parameters must be always be even
             if (args.Length % 2 != 0)
@@ -607,37 +607,40 @@ namespace opennlp.tools.cmdline
             int argumentCount = 0;
             List<String> parameters = args.ToList();
 
-            foreach (var m in argProxyInterface.GetProperties().Where(x => x.MemberType == MemberTypes.Property))
+            foreach (Type proxyclass in proxyclasses)
             {
-                var paramName = CmdLineUtil.StandardizeMethodName(m.Name);
-                int paramIndex = CmdLineUtil.getParameterIndex(paramName, args);
-                String valueString = CmdLineUtil.getParameter(paramName, args);
-                if (valueString == null)
+
+                foreach (var m in proxyclass.GetProperties().Where(x => x.MemberType == MemberTypes.Property))
                 {
-                    if ((m.GetCustomAttributes(typeof(parameters.OptionalAttribute), false)).Length == 0)
+                    var paramName = CmdLineUtil.StandardizeMethodName(m.Name);
+                    int paramIndex = CmdLineUtil.getParameterIndex(paramName, args);
+                    String valueString = CmdLineUtil.getParameter(paramName, args);
+                    if (valueString == null)
                     {
-                        if (-1 < paramIndex)
+                        if ((m.GetCustomAttributes(typeof (parameters.OptionalAttribute), false)).Length == 0)
                         {
-                            return "Missing mandatory parameter value: " + paramName;
+                            if (-1 < paramIndex)
+                            {
+                                return "Missing mandatory parameter value: " + paramName;
+                            }
+                            else
+                            {
+                                return "Missing mandatory parameter: " + paramName;
+                            }
                         }
                         else
                         {
-                            return "Missing mandatory parameter: " + paramName;
+                            parameters.Remove(("-" + paramName));
                         }
                     }
                     else
                     {
-                        parameters.Remove(("-" + paramName));
+                        parameters.Remove(paramName);
+                        parameters.Remove(valueString);
+                        argumentCount++;
                     }
                 }
-                else
-                {
-                    parameters.Remove(paramName);
-                    parameters.Remove(valueString);
-                    argumentCount++;
-                }
             }
-
 
             if (args.Length / 2 > argumentCount)
             {
